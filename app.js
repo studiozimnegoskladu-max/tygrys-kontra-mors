@@ -12,19 +12,41 @@
   const say=s=>{msg.textContent=s||''};
   const configured=()=>window.SUPABASE_URL&&window.SUPABASE_ANON_KEY;
   function connect(){if(!configured()){say('Tryb online wymaga konfiguracji Supabase.');return false}if(!client)client=window.supabase.createClient(window.SUPABASE_URL,window.SUPABASE_ANON_KEY);return true}
-  function soundAnimal(animal='tiger',celebration=false){if(!soundOn)return;try{
-    const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;
-    audioContext=audioContext||new AudioCtx();if(audioContext.state==='suspended')audioContext.resume();
-    const t=audioContext.currentTime,master=audioContext.createGain();master.gain.setValueAtTime(.0001,t);master.gain.exponentialRampToValueAtTime(celebration?.22:.16,t+.035);master.gain.exponentialRampToValueAtTime(.001,t+(celebration?1.05:.72));master.connect(audioContext.destination);
-    const osc=(type,f0,f1,level,offset=0,dur=.65)=>{const o=audioContext.createOscillator(),g=audioContext.createGain(),filter=audioContext.createBiquadFilter();o.type=type;o.frequency.setValueAtTime(f0,t+offset);o.frequency.exponentialRampToValueAtTime(Math.max(35,f1),t+offset+dur);filter.type='lowpass';filter.frequency.setValueAtTime(animal==='tiger'?1250:850,t+offset);filter.Q.value=1.2;g.gain.setValueAtTime(.0001,t+offset);g.gain.exponentialRampToValueAtTime(level,t+offset+.035);g.gain.exponentialRampToValueAtTime(.0001,t+offset+dur);o.connect(filter);filter.connect(g);g.connect(master);o.start(t+offset);o.stop(t+offset+dur+.02)};
-    if(animal==='tiger'){
-      // Niski, chropowaty ryk z krótkim, gardłowym pomrukiem.
-      osc('sawtooth',145,58,.8,0,celebration?1:.68);osc('triangle',92,43,.62,.04,celebration?.9:.58);osc('sawtooth',310,105,.2,.02,.32);
-    }else{
-      // Mors: nosowe, bulgoczące "auuu/uff" z dwoma charakterystycznymi zawołaniami.
-      osc('triangle',245,118,.72,0,.38);osc('sine',390,205,.48,.02,.34);osc('triangle',185,92,.7,.34,celebration?.65:.4);osc('sine',310,155,.35,.36,.34);
-    }
-  }catch(err){console.warn('Nie udało się odtworzyć odgłosu postaci:',err)}}
+  async function soundAnimal(animal='tiger',celebration=false){
+    if(!soundOn)return;
+    try{
+      const AudioCtx=window.AudioContext||window.webkitAudioContext;
+      if(!AudioCtx)return;
+      audioContext=audioContext||new AudioCtx();
+      if(audioContext.state!=='running')await audioContext.resume();
+      const t=audioContext.currentTime+.025;
+      const master=audioContext.createGain();
+      master.gain.setValueAtTime(0.0001,t);
+      master.gain.linearRampToValueAtTime(0.9,t+.04);
+      master.gain.setValueAtTime(0.72,t+(celebration?.75:.48));
+      master.gain.linearRampToValueAtTime(0.0001,t+(celebration?1.35:.88));
+      master.connect(audioContext.destination);
+      const tone=(type,startHz,endHz,level,delay,duration,filterHz)=>{
+        const o=audioContext.createOscillator(),g=audioContext.createGain(),f=audioContext.createBiquadFilter();
+        o.type=type;o.frequency.setValueAtTime(startHz,t+delay);o.frequency.linearRampToValueAtTime(endHz,t+delay+duration);
+        f.type='lowpass';f.frequency.setValueAtTime(filterHz,t+delay);f.Q.value=1.4;
+        g.gain.setValueAtTime(.0001,t+delay);g.gain.linearRampToValueAtTime(level,t+delay+.025);g.gain.setValueAtTime(level*.72,t+delay+duration*.55);g.gain.linearRampToValueAtTime(.0001,t+delay+duration);
+        o.connect(f);f.connect(g);g.connect(master);o.start(t+delay);o.stop(t+delay+duration+.03);
+      };
+      if(animal==='tiger'){
+        // Mocny, niski ryk z chropowatą składową i opadającym pomrukiem.
+        tone('sawtooth',175,62,.52,0,celebration?1.12:.72,900);
+        tone('square',105,48,.20,.015,celebration?1.0:.62,420);
+        tone('triangle',360,115,.17,.04,.34,1500);
+      }else{
+        // Charakterystyczne, nosowe zawołanie i bulgotliwy pomruk morsa.
+        tone('triangle',330,145,.48,0,.40,1200);
+        tone('sawtooth',225,105,.20,.025,.48,650);
+        tone('sine',470,220,.27,.30,celebration?.78:.48,1400);
+        tone('triangle',190,88,.34,.34,celebration?.72:.42,750);
+      }
+    }catch(err){console.warn('Odgłos postaci nie został odtworzony:',err)}
+  }
   function sound(freq=440,duration=.09){if(!soundOn)return;try{const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;audioContext=audioContext||new AudioCtx();if(audioContext.state==='suspended')audioContext.resume();const o=audioContext.createOscillator(),g=audioContext.createGain();o.type='sine';o.frequency.value=freq;o.connect(g);g.connect(audioContext.destination);g.gain.setValueAtTime(.0001,audioContext.currentTime);g.gain.exponentialRampToValueAtTime(.08,audioContext.currentTime+.015);g.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+duration);o.start();o.stop(audioContext.currentTime+duration)}catch(err){console.warn('Nie udało się odtworzyć dźwięku:',err)}}
   function updateSoundButton(){const b=$('soundBtn');if(!b)return;b.textContent=soundOn?'🔊 DŹWIĘK: WŁ.':'🔇 DŹWIĘK: WYŁ.';b.setAttribute('aria-pressed',String(soundOn));}
   function evaluate(board){for(const line of wins)if(board[line[0]]&&board[line[0]]===board[line[1]]&&board[line[1]]===board[line[2]])return{winner:board[line[0]],winning:line};return board.every(Boolean)?{winner:'draw',winning:[]}:{winner:null,winning:[]}}
@@ -47,7 +69,7 @@
   document.querySelectorAll('input[name="mySide"]').forEach(r=>r.addEventListener('change',()=>{document.querySelectorAll('.side-option').forEach(el=>el.classList.toggle('selected',el.querySelector('input').checked));}));
   $('createBtn').addEventListener('click',createRoom);$('joinBtn').addEventListener('click',()=>joinRoom($('roomInput').value));$('roomInput').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom(e.target.value)});$('roomInput').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));cells.forEach(c=>c.addEventListener('click',()=>move(+c.dataset.cell)));$('newRoundBtn').addEventListener('click',newRound);
   $('copyBtn').addEventListener('click',async()=>{const url=location.origin+location.pathname+'?room='+room;try{await navigator.clipboard.writeText(url);$('copyBtn').textContent='SKOPIOWANO ✓';setTimeout(()=>$('copyBtn').textContent='KOPIUJ LINK ↗',1800)}catch{prompt('Skopiuj link:',url)}});
-  $('leaveBtn').addEventListener('click',()=>{if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER)});updateSoundButton();
+  $('leaveBtn').addEventListener('click',()=>{if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});updateSoundButton();
   $('saveNameBtn').addEventListener('click',()=>{const n=$('nameInput').value.trim().slice(0,18);if(!n){say('Wpisz swój nick.');return}localStorage.setItem('tkm_nick',n);$('playerName').textContent=n;say('Nick zapisany na tym urządzeniu!')});$('nameInput').value=nick();
   const q=new URLSearchParams(location.search).get('room');if(q){$('roomInput').value=q.toUpperCase();if(configured())joinRoom(q)}if(!configured())say('Tryb online wymaga konfiguracji Supabase. Możesz jednak grać lokalnie lub z komputerem.');
 })();
