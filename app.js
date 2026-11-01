@@ -12,40 +12,27 @@
   const say=s=>{msg.textContent=s||''};
   const configured=()=>window.SUPABASE_URL&&window.SUPABASE_ANON_KEY;
   function connect(){if(!configured()){say('Tryb online wymaga konfiguracji Supabase.');return false}if(!client)client=window.supabase.createClient(window.SUPABASE_URL,window.SUPABASE_ANON_KEY);return true}
-  async function soundAnimal(animal='tiger',celebration=false){
-    if(!soundOn)return;
+  const animalAudio={
+    tiger:'https://www.mediacollege.com/downloads/sound-effects/animals/cat/tiger-01.mp3',
+    mors:'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/atoms/audio/PointLayWalrus2013_1.mp3'
+  };
+  let lastAnimalAudio=null;
+  function soundAnimal(animal='tiger',celebration=false){
+    if(!soundOn||animal==='draw')return;
     try{
-      const AudioCtx=window.AudioContext||window.webkitAudioContext;
-      if(!AudioCtx)return;
-      audioContext=audioContext||new AudioCtx();
-      if(audioContext.state!=='running')await audioContext.resume();
-      const t=audioContext.currentTime+.025;
-      const master=audioContext.createGain();
-      master.gain.setValueAtTime(0.0001,t);
-      master.gain.linearRampToValueAtTime(0.9,t+.04);
-      master.gain.setValueAtTime(0.72,t+(celebration?.75:.48));
-      master.gain.linearRampToValueAtTime(0.0001,t+(celebration?1.35:.88));
-      master.connect(audioContext.destination);
-      const tone=(type,startHz,endHz,level,delay,duration,filterHz)=>{
-        const o=audioContext.createOscillator(),g=audioContext.createGain(),f=audioContext.createBiquadFilter();
-        o.type=type;o.frequency.setValueAtTime(startHz,t+delay);o.frequency.linearRampToValueAtTime(endHz,t+delay+duration);
-        f.type='lowpass';f.frequency.setValueAtTime(filterHz,t+delay);f.Q.value=1.4;
-        g.gain.setValueAtTime(.0001,t+delay);g.gain.linearRampToValueAtTime(level,t+delay+.025);g.gain.setValueAtTime(level*.72,t+delay+duration*.55);g.gain.linearRampToValueAtTime(.0001,t+delay+duration);
-        o.connect(f);f.connect(g);g.connect(master);o.start(t+delay);o.stop(t+delay+duration+.03);
-      };
-      if(animal==='tiger'){
-        // Mocny, niski ryk z chropowatą składową i opadającym pomrukiem.
-        tone('sawtooth',175,62,.52,0,celebration?1.12:.72,900);
-        tone('square',105,48,.20,.015,celebration?1.0:.62,420);
-        tone('triangle',360,115,.17,.04,.34,1500);
-      }else{
-        // Charakterystyczne, nosowe zawołanie i bulgotliwy pomruk morsa.
-        tone('triangle',330,145,.48,0,.40,1200);
-        tone('sawtooth',225,105,.20,.025,.48,650);
-        tone('sine',470,220,.27,.30,celebration?.78:.48,1400);
-        tone('triangle',190,88,.34,.34,celebration?.72:.42,750);
-      }
-    }catch(err){console.warn('Odgłos postaci nie został odtworzony:',err)}
+      const src=animalAudio[animal]||animalAudio.tiger;
+      const audio=new Audio(src);
+      audio.preload='auto';
+      audio.volume=celebration?1:0.9;
+      // Przerywamy poprzedni efekt, żeby odgłosy ruchów nie nakładały się.
+      if(lastAnimalAudio){lastAnimalAudio.pause();lastAnimalAudio.currentTime=0;}
+      lastAnimalAudio=audio;
+      const stopAfter=animal==='mors'?4200:3500;
+      audio.addEventListener('loadedmetadata',()=>{if(animal==='mors'&&Number.isFinite(audio.duration)&&audio.duration>5)audio.currentTime=0.5;},{once:true});
+      const p=audio.play();
+      if(p&&typeof p.catch==='function')p.catch(err=>console.warn('Nie udało się odtworzyć pliku audio '+animal+':',err));
+      setTimeout(()=>{if(lastAnimalAudio===audio){audio.pause();audio.currentTime=0;lastAnimalAudio=null;}},stopAfter);
+    }catch(err){console.warn('Nie udało się uruchomić odgłosu postaci:',err);}
   }
   function sound(freq=440,duration=.09){if(!soundOn)return;try{const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;audioContext=audioContext||new AudioCtx();if(audioContext.state==='suspended')audioContext.resume();const o=audioContext.createOscillator(),g=audioContext.createGain();o.type='sine';o.frequency.value=freq;o.connect(g);g.connect(audioContext.destination);g.gain.setValueAtTime(.0001,audioContext.currentTime);g.gain.exponentialRampToValueAtTime(.08,audioContext.currentTime+.015);g.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+duration);o.start();o.stop(audioContext.currentTime+duration)}catch(err){console.warn('Nie udało się odtworzyć dźwięku:',err)}}
   function updateSoundButton(){const b=$('soundBtn');if(!b)return;b.textContent=soundOn?'🔊 DŹWIĘK: WŁ.':'🔇 DŹWIĘK: WYŁ.';b.setAttribute('aria-pressed',String(soundOn));}
