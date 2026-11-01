@@ -32,3 +32,7 @@ begin
 exception when duplicate_object then
   null;
 end $$;
+
+
+-- Migracja wyboru postaci: osoba tworząca pokój zapisuje wybraną postać.
+alter table public.game_sessions add column if not exists creator_role text not null default 'tiger';
