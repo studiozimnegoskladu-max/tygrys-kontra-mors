@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffe600">
+  <title>Tygrys kontra Mors — Studio Zimnego Składu</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="paint paint-a"></div><div class="paint paint-b"></div>
+  <header class="topbar">
+    <div class="brand-mark">SZS</div>
+    <div><div class="brand-name">STUDIO ZIMNEGO SKŁADU</div><div class="brand-sub">PRZEDSTAWIA POJEDYNEK STULECIA</div></div>
+    <div class="online-tag"><span></span> GRA ONLINE</div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow">⚡ WIELKIE STARcie ⚡</div>
+      <h1>TYGRYS <i>kontra</i> MORS</h1>
+      <p class="lead">Kółko i krzyżyk, ale bez nudy. Wybierz przeciwnika i zawalcz o chwałę!</p>
+      <div class="fighters">
+        <div class="fighter tiger-fighter"><img src="assets/tygrys-glowa.png" alt="Głowa tygrysa"><div><b>TYGRYS</b><small>KÓŁKO</small></div></div>
+        <div class="vs">VS</div>
+        <div class="fighter mors-fighter"><img src="assets/mors.png" alt="Mors"><div><b>MORS</b><small>KRZYŻYK</small></div></div>
+      </div>
+    </section>
+
+    <section id="setup" class="panel setup-panel">
+      <div class="panel-title"><span class="scribble">01</span><div><h2>ZRÓBMY POKÓJ</h2><p>Jedna osoba zakłada grę, druga dołącza z kodem.</p></div></div>
+      <div class="setup-grid">
+        <div class="setup-card">
+          <div class="card-icon">🐯</div><h3>Zakładam grę</h3>
+          <p>Stwórz pokój i wyślij link drugiemu graczowi.</p>
+          <button id="createBtn" class="btn btn-dark">UTWÓRZ POKÓJ <span>↗</span></button>
+        </div>
+        <div class="setup-card join-card">
+          <div class="card-icon">🦭</div><h3>Dołączam do gry</h3>
+          <p>Wpisz kod pokoju otrzymany od przeciwnika.</p>
+          <div class="join-row"><input id="roomInput" maxlength="6" placeholder="KOD GRY" autocomplete="off"><button id="joinBtn" class="btn btn-yellow">DOŁĄCZ</button></div>
+        </div>
+      </div>
+      <p id="setupMessage" class="message" aria-live="polite"></p>
+    </section>
+
+    <section id="game" class="panel game-panel hidden">
+      <div class="game-head">
+        <div><div class="room-label">POKÓJ <strong id="roomCode">------</strong></div><div id="roleLabel" class="role-label"></div></div>
+        <button id="copyBtn" class="btn btn-outline">KOPIUJ LINK ↗</button>
+      </div>
+      <div class="scoreboard">
+        <div class="score tiger-score"><img src="assets/tygrys-glowa.png" alt=""><div><b>TYGRYS</b><small>KÓŁKO</small></div><strong id="tigerScore">0</strong></div>
+        <div class="score mors-score"><img src="assets/mors.png" alt=""><div><b>MORS</b><small>KRZYŻYK</small></div><strong id="morsScore">0</strong></div>
+      </div>
+      <div class="turn-banner" id="turnBanner">ŁĄCZENIE Z GRĄ…</div>
+      <div class="board-wrap">
+        <div id="board" class="board" role="grid" aria-label="Plansza do gry">
+          <button class="cell" data-cell="0" aria-label="Pole 1"></button><button class="cell" data-cell="1" aria-label="Pole 2"></button><button class="cell" data-cell="2" aria-label="Pole 3"></button>
+          <button class="cell" data-cell="3" aria-label="Pole 4"></button><button class="cell" data-cell="4" aria-label="Pole 5"></button><button class="cell" data-cell="5" aria-label="Pole 6"></button>
+          <button class="cell" data-cell="6" aria-label="Pole 7"></button><button class="cell" data-cell="7" aria-label="Pole 8"></button><button class="cell" data-cell="8" aria-label="Pole 9"></button>
+        </div>
+      </div>
+      <div class="game-actions"><button id="newRoundBtn" class="btn btn-yellow" disabled>REWANŻ ↻</button><button id="leaveBtn" class="btn btn-outline">OPUŚĆ GRĘ</button></div>
+      <p class="hint">Ruchy synchronizują się automatycznie na obu urządzeniach.</p>
+    </section>
+    <footer>MADE WITH <span>♥</span> AND A LITTLE BIT OF CHAOS · STUDIO ZIMNEGO SKŁADU</footer>
+  </main>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
