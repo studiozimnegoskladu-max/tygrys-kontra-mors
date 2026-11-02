@@ -39,8 +39,9 @@
   const PLAYER_ID_KEY='tkm_player_id_v1', RANK_STATS_KEY='tkm_rank_stats_v1';
   function playerId(){let id=localStorage.getItem(PLAYER_ID_KEY);if(!id){id=(crypto.randomUUID?crypto.randomUUID():('tkm-'+Date.now()+'-'+Math.random().toString(36).slice(2)));localStorage.setItem(PLAYER_ID_KEY,id)}return id}
   function rankStats(){try{return Object.assign({played:0,wins:0,losses:0,draws:0,seen:[]},JSON.parse(localStorage.getItem(RANK_STATS_KEY)||'{}'))}catch{return{played:0,wins:0,losses:0,draws:0,seen:[]}}}
+  const LEADERBOARD_URL='https://script.google.com/macros/s/AKfycbxA24BQOkFe3LVBFwFCR1Q9AattnidtJP1YRxUHELO4nsBWZ63C6qM4U9nwnlG8xlqfcA/exec';
   async function syncLeaderboard(result,gameMode,gameRoom,board){
-    if(!['online','cpu'].includes(gameMode)||!connect())return;
+    if(!['online','cpu'].includes(gameMode))return;
     const won=(gameMode==='cpu'&&result===TIGER)||(gameMode==='online'&&result===role);
     const lost=result!=='draw'&&!won;
     const stats=rankStats(), key=[gameMode,gameRoom||'cpu',board.join(''),result,role||''].join('|');
@@ -48,20 +49,41 @@
     stats.seen.push(key);if(stats.seen.length>100)stats.seen=stats.seen.slice(-100);
     stats.played++;if(result==='draw')stats.draws++;else if(won)stats.wins++;else if(lost)stats.losses++;
     localStorage.setItem(RANK_STATS_KEY,JSON.stringify(stats));
-    const row={player_id:playerId(),nickname:nick(),played:stats.played,wins:stats.wins,losses:stats.losses,draws:stats.draws,updated_at:new Date().toISOString()};
-    const {error}=await client.from('player_leaderboard').upsert(row,{onConflict:'player_id'});
-    if(error){console.warn('Nie udało się zapisać rankingu:',error.message);const status=$('leaderboardStatus');if(status)status.textContent='Ranking czeka na konfigurację tabeli w Supabase.'}
-    else loadLeaderboard();
+    const row={player_id:playerId(),nickname:nick(),played:stats.played,wins:stats.wins,losses:stats.losses,draws:stats.draws};
+    try{
+      await fetch(LEADERBOARD_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(row)});
+      const status=$('leaderboardStatus');if(status)status.textContent='Wynik wysłany do rankingu. Odświeżam tabelę…';
+      setTimeout(loadLeaderboard,1200);
+    }catch(error){
+      console.warn('Nie udało się wysłać wyniku do rankingu:',error);
+      const status=$('leaderboardStatus');if(status)status.textContent='Nie udało się wysłać wyniku. Sprawdź wdrożenie Google Apps Script.';
+    }
   }
-  async function loadLeaderboard(){
-    const list=$('leaderboardList');if(!list||!connect())return;
+  function loadLeaderboard(){
+    const list=$('leaderboardList');if(!list)return;
     const status=$('leaderboardStatus');if(status)status.textContent='Pobieram najlepszych graczy…';
-    const {data,error}=await client.from('player_leaderboard').select('nickname,wins,losses,draws,played').order('wins',{ascending:false}).order('updated_at',{ascending:true}).limit(10);
-    if(error){if(status)status.textContent='Ranking online pojawi się po włączeniu tabeli w Supabase.';return}
-    list.innerHTML='';
-    (data||[]).forEach((row,i)=>{const item=document.createElement('div');item.className='rank-row';const rank=document.createElement('b');rank.textContent=String(i+1)+'.';const name=document.createElement('span');name.textContent=row.nickname||'Gracz';const wins=document.createElement('strong');wins.textContent=String(row.wins||0)+' WYGR.';const detail=document.createElement('small');detail.textContent='P: '+(row.played||0)+' · R: '+(row.draws||0);item.append(rank,name,wins,detail);list.append(item)});
-    if(!data||!data.length){const empty=document.createElement('p');empty.className='rank-empty';empty.textContent='Jeszcze nikt nie zdobył punktów. Zostań pierwszym liderem!';list.append(empty)}
-    if(status)status.textContent='TOP 10 GRACZY · AKTUALIZACJA PO MECZU';
+    const callback='tkmRanking_'+Date.now()+'_'+Math.floor(Math.random()*100000);
+    const script=document.createElement('script');
+    const cleanup=()=>{try{delete window[callback]}catch{window[callback]=undefined}script.remove()};
+    const timeout=setTimeout(()=>{cleanup();if(status)status.textContent='Nie udało się pobrać rankingu. Sprawdź, czy aplikacja Google jest dostępna dla każdego.'},12000);
+    window[callback]=data=>{
+      clearTimeout(timeout);cleanup();
+      if(!data||!data.success){if(status)status.textContent='Ranking zwrócił nieprawidłową odpowiedź.';return}
+      list.innerHTML='';
+      (data.players||[]).forEach((row,i)=>{
+        const item=document.createElement('div');item.className='rank-row';
+        const rank=document.createElement('b');rank.textContent=String(i+1)+'.';
+        const name=document.createElement('span');name.textContent=row.nickname||'Gracz';
+        const wins=document.createElement('strong');wins.textContent=String(row.wins||0)+' WYGR.';
+        const detail=document.createElement('small');detail.textContent='P: '+(row.played||0)+' · R: '+(row.draws||0);
+        item.append(rank,name,wins,detail);list.append(item);
+      });
+      if(!data.players||!data.players.length){const empty=document.createElement('p');empty.className='rank-empty';empty.textContent='Jeszcze nikt nie zdobył punktów. Zostań pierwszym liderem!';list.append(empty)}
+      if(status)status.textContent='TOP 10 GRACZY · AKTUALIZACJA PO MECZU';
+    };
+    script.onerror=()=>{clearTimeout(timeout);cleanup();if(status)status.textContent='Nie udało się połączyć z rankingiem Google.'};
+    script.src=LEADERBOARD_URL+'?callback='+encodeURIComponent(callback)+'&t='+Date.now();
+    document.head.appendChild(script);
   }
   function renderAchievements(){
     const el=$('achievementGrid');if(!el)return;
