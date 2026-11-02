@@ -61,6 +61,14 @@
         <div id="leaderboardList" class="rank-list"><p class="rank-empty">Ładowanie rankingu…</p></div>
         <p id="leaderboardStatus" class="rank-status" aria-live="polite"></p>
       </section>
+
+      <section class="quiz-panel" aria-labelledby="quizHeading">
+        <div class="quiz-kicker">🖨️ EGZAMIN BEZ STRESU (PRAWIE)</div><h2 id="quizHeading">CZY JESTEŚ MISTRZEM DRUKARNI?</h2>
+        <p class="quiz-intro">10 pytań z poligrafii, grafiki i przygotowania plików. Sprawdź, czy ogarniasz temat, czy tylko ładnie klikasz.</p>
+        <div class="quiz-start" id="quizStart"><div class="quiz-mascot">🦭</div><p>Mors przygotował test. Podobno tylko raz pomylił CMYK z kanapką.</p><button type="button" class="btn btn-yellow" id="quizStartBtn">ODPALAM TEST!</button></div>
+        <div class="quiz-play hidden" id="quizPlay"><div class="quiz-progress"><span id="quizProgress">PYTANIE 1 / 10</span><span id="quizScore">PUNKTY: 0</span></div><div class="quiz-track"><span id="quizTrackFill"></span></div><h3 id="quizQuestion"></h3><div class="quiz-options" id="quizOptions"></div><p class="quiz-feedback" id="quizFeedback" aria-live="polite"></p><button type="button" class="btn btn-yellow hidden" id="quizNextBtn">DALEJ →</button></div>
+        <div class="quiz-result hidden" id="quizResult" aria-live="polite"><div class="quiz-result-icon" id="quizResultIcon">🏆</div><h3 id="quizResultTitle"></h3><p id="quizResultText"></p><div class="quiz-final-score" id="quizFinalScore"></div><button type="button" class="btn btn-yellow" id="quizAgainBtn">GRAM JESZCZE RAZ ↻</button></div>
+      </section>
       <p id="setupMessage" class="message" aria-live="polite"></p>
     </section>
 
