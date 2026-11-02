@@ -13,3 +13,11 @@
 @media(max-width:600px){.mode-card{gap:8px;padding:9px}.mode-card b{font-size:15px}.mode-card small{font-size:10px}.mode-card .btn{padding:9px}.profile-row{flex-wrap:wrap}.profile-row label{width:100%}.head-actions{justify-content:flex-end}.head-actions .btn{padding:8px 9px}}
 
 .side-choice{border:2px solid var(--ink);border-radius:13px;padding:15px;margin:0 0 15px;background:#f7fbff}.side-choice h3{font:900 20px 'Barlow Condensed';margin:0 0 3px}.side-choice>p{font-size:11px;color:#666;margin:0 0 11px}.side-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}.side-option{display:flex;align-items:center;gap:9px;padding:10px;border:2px solid #bbb;border-radius:10px;background:white;cursor:pointer;min-width:0}.side-option.selected{border:3px solid var(--ink);background:#fff6a6;box-shadow:3px 3px 0 var(--ink);padding:9px}.side-option input{accent-color:#211f20}.side-option img{width:48px;height:48px;object-fit:contain}.side-option b,.side-option small{display:block;font-family:'Barlow Condensed';font-weight:900}.side-option b{font-size:15px}.side-option small{font-size:9px;color:#666;letter-spacing:.5px}@media(max-width:600px){.side-options{grid-template-columns:1fr}.side-option img{width:42px;height:42px}}
+
+.series-label{text-align:center;font:900 11px 'Barlow Condensed';letter-spacing:1.5px;color:#777;margin:9px 0 5px}
+.commentary{max-width:390px;margin:0 auto 12px;padding:11px 14px;border:2px dashed var(--ink);border-radius:11px;background:#f5fbff;text-align:center;font:900 15px 'Barlow Condensed';min-height:43px;display:flex;align-items:center;justify-content:center;animation:quipIn .22s ease-out}
+.commentary[data-mood="tiger"],.commentary[data-mood="tigerWin"]{background:#fff6c2}
+.commentary[data-mood="mors"],.commentary[data-mood="morsWin"]{background:#ffeaf4}
+.commentary[data-mood="draw"]{background:#eaf8ff}
+@keyframes quipIn{from{opacity:.35;transform:translateY(4px) scale(.98)}to{opacity:1;transform:none}}
+.game-actions{flex-wrap:wrap}
