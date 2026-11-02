@@ -9,10 +9,34 @@
   <meta property="og:description" content="Wybierz maskotkę, zagraj ze znajomym i sprawdź, kto rządzi na planszy. Gra od Studio Zimnego Składu.">
   <meta property="og:url" content="https://studiozimnegoskladu-max.github.io/tygrys-kontra-mors/">
   <title>Tygrys kontra Mors — Studio Zimnego Składu</title>
-  <link rel="stylesheet" href="style.css?v=20261102-6">
+  <link rel="stylesheet" href="style.css?v=20261102-7">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+  <section id="introScreen" class="intro-screen" aria-label="Ekran powitalny">
+    <div class="intro-card">
+      <div class="intro-brand"><span>SZS</span><div><b>STUDIO ZIMNEGO SKŁADU</b><small>DRUK • GRAFIKA • DOBRA ZABAWA</small></div></div>
+      <div class="intro-content">
+        <div class="intro-copy">
+          <div class="intro-kicker">🦭 MORS MELDUJE GOTOWOŚĆ!</div>
+          <h1>SIEMA!<br><em>TU MORS!</em></h1>
+          <p class="intro-lead">Masz ochotę na pojedynek? A może pomysł, który aż prosi się o dobry druk?</p>
+          <p class="intro-punch">TY WYMYŚLASZ. MY DRUKUJEMY. POTEM GRAMY! 🖨️</p>
+          <div class="intro-actions">
+            <button type="button" id="introEnterBtn" class="btn btn-dark intro-play">WCHODZĘ DO GRY <span>↗</span></button>
+            <a class="btn btn-yellow intro-print" href="https://m.me/61588530162365" target="_blank" rel="noopener noreferrer">MAM POMYSŁ NA DRUK ✉</a>
+          </div>
+          <small class="intro-footnote">Wskakuj, wybierz maskotkę i pokaż, kto tu rządzi!</small>
+        </div>
+        <div class="intro-mascot-wrap">
+          <div class="intro-bubble">DRUKUJEMY<br>GRUBO!<span>✦</span></div>
+          <img class="intro-mascot" src="assets/mors.png" alt="Mors, maskotka Studio Zimnego Składu">
+          <div class="intro-sticker">PŁETWA<br>DO GÓRY!</div>
+        </div>
+      </div>
+      <div class="intro-bottom"><span>TYGRYS KONTRA MORS</span><span>POJEDYNEK STULECIA · EDYCJA SZS</span></div>
+    </div>
+  </section>
   <div class="paint paint-a"></div><div class="paint paint-b"></div>
   <header class="topbar">
     <div class="brand-mark">SZS</div>
@@ -122,6 +146,6 @@
     <footer>MADE WITH <span>♥</span> AND A LITTLE BIT OF CHAOS · STUDIO ZIMNEGO SKŁADU</footer>
   </main>
   <script src="config.js"></script>
-  <script src="app.js?v=20261102-9"></script>
+  <script src="app.js?v=20261102-10"></script>
 </body>
 </html>
