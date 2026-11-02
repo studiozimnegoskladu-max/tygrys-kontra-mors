@@ -56,7 +56,7 @@
       achievementStats.wins++;achievementStats.streak++;achievementStats.bestStreak=Math.max(achievementStats.bestStreak,achievementStats.streak);
     }else{achievementStats.losses++;achievementStats.streak=0;}
     const newly=achievementList.filter(x=>x.test(achievementStats)&&!achievementStats.unlocked.includes(x.id));
-    newly.forEach(x=>achievementStats.unlocked.push(x.id));saveStats();renderAchievements();syncLeaderboard(result,gameMode,gameRoom,board);
+    newly.forEach(x=>achievementStats.unlocked.push(x.id));saveStats();renderAchievements();renderStickers();syncLeaderboard(result,gameMode,gameRoom,board);
     if(newly.length){const el=$('achievementNotice');if(el)el.textContent='NOWA ODZNAKA: '+newly.map(x=>x.icon+' '+x.name).join(' · ');celebrate();}
   }
 
@@ -117,6 +117,58 @@
   }
 
 
+  const STICKER_KEY='tkm_stickers_v1', FORTUNE_KEY='tkm_fortune_v1';
+  const stickerList=[
+    {id:'first-game',icon:'🎮',name:'Pierwszy krok',desc:'Pierwsza rozegrana partia'},
+    {id:'first-win',icon:'🏆',name:'Pogromca',desc:'Pierwsze zwycięstwo'},
+    {id:'hat-trick',icon:'🔥',name:'Hat-trick',desc:'Trzy wygrane'},
+    {id:'hot-streak',icon:'⚡',name:'Nie do zatrzymania',desc:'Seria pięciu zwycięstw'},
+    {id:'veteran',icon:'🎖️',name:'Weteran',desc:'Dziesięć rozegranych partii'},
+    {id:'peace',icon:'🤝',name:'Dyplomata',desc:'Partia zakończona remisem'},
+    {id:'champion',icon:'👑',name:'Legenda',desc:'Dziesięć zwycięstw'},
+    {id:'quiz-master',icon:'🖨️',name:'Mistrz poligrafii',desc:'Minimum 7/10 w quizie'}
+  ];
+  function unlockedStickers(){try{return JSON.parse(localStorage.getItem(STICKER_KEY)||'[]')}catch{return[]}}
+  function renderStickers(){
+    const grid=$('stickerGrid');if(!grid)return;const got=new Set([...unlockedStickers(),...achievementStats.unlocked]);
+    const cards=stickerList.map(s=>({...s,unlocked:got.has(s.id)}));
+    if(cards.some(s=>s.unlocked&& !unlockedStickers().includes(s.id)))localStorage.setItem(STICKER_KEY,JSON.stringify(cards.filter(s=>s.unlocked).map(s=>s.id)));
+    grid.innerHTML='';cards.forEach(s=>{const el=document.createElement('div');el.className='sticker'+(s.unlocked?' earned':'');const icon=document.createElement('span');icon.textContent=s.unlocked?s.icon:'🔒';const name=document.createElement('b');name.textContent=s.unlocked?s.name:'Nieodkryta';const desc=document.createElement('small');desc.textContent=s.unlocked?s.desc:'Zagraj, aby ją zdobyć';el.append(icon,name,desc);grid.append(el)});
+    $('stickerCount').textContent=cards.filter(s=>s.unlocked).length+' / '+cards.length;
+  }
+  function unlockSticker(id){const got=new Set(unlockedStickers());got.add(id);localStorage.setItem(STICKER_KEY,JSON.stringify([...got]));renderStickers()}
+  const fortunePrizes=[
+    {icon:'⭐',name:'Gwiazda studia',desc:'Dziś wszystko pójdzie jak po maśle!'},
+    {icon:'🦭',name:'Płetwa szczęścia',desc:'Mors przekazuje Ci odrobinę swojej mocy.'},
+    {icon:'🎨',name:'Kolorowy dzień',desc:'Niech CMYK będzie z Tobą!'},
+    {icon:'☕',name:'Kawa operatora',desc:'Zasłużona przerwa na kawę. Bez limitu piany.'},
+    {icon:'🐯',name:'Pazur Tygrysa',desc:'Dziś nie odpuszczasz żadnego wyzwania.'},
+    {icon:'🖨️',name:'Drukarski fart',desc:'Niech każdy projekt wyjdzie idealnie.'},
+    {icon:'✨',name:'Bonus kreatywności',desc:'Masz dziś głowę pełną dobrych pomysłów.'},
+    {icon:'🎟️',name:'Złoty kupon',desc:'Wirtualny kupon na dobry humor!'}
+  ];
+  function fortuneDate(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+  function renderFortune(){const saved=JSON.parse(localStorage.getItem(FORTUNE_KEY)||'{}');const done=saved.date===fortuneDate();$('spinFortuneBtn').disabled=done;$('spinFortuneBtn').textContent=done?'WRÓĆ JUTRO PO KOLEJNY OBRÓT':'ZAKRĘĆ KOŁEM!';$('fortuneResult').textContent=done?(saved.prize||'Dziś już zakręcono kołem!'):'Koło czeka na pierwszy obrót…';$('fortuneNote').textContent=done?'Dzisiejsza niespodzianka jest już Twoja.':'Jedno losowanie dziennie. Wynik zapisze się na tym urządzeniu.'}
+  function spinFortune(){if(JSON.parse(localStorage.getItem(FORTUNE_KEY)||'{}').date===fortuneDate())return;const p=fortunePrizes[Math.floor(Math.random()*fortunePrizes.length)];const result=p.icon+' '+p.name+' — '+p.desc;localStorage.setItem(FORTUNE_KEY,JSON.stringify({date:fortuneDate(),prize:result}));$('fortuneResult').textContent=result;$('spinFortuneBtn').disabled=true;$('spinFortuneBtn').textContent='WRÓĆ JUTRO PO KOLEJNY OBRÓT';$('fortuneNote').textContent='Wylosowano! Mors zatwierdza tę decyzję.';unlockSticker('fortune-spin')}
+  function drawPhotoCard(){
+    const canvas=$('photoCanvas'),ctx=canvas.getContext('2d');if(!ctx)return;
+    const bg=ctx.createLinearGradient(0,0,900,1100);bg.addColorStop(0,'#fff4a8');bg.addColorStop(1,'#ffe2ef');ctx.fillStyle=bg;ctx.fillRect(0,0,900,1100);
+    ctx.fillStyle='#211f20';ctx.fillRect(42,42,816,1016);ctx.fillStyle='#fff';ctx.fillRect(58,58,784,984);
+    ctx.fillStyle='#211f20';ctx.textAlign='center';ctx.font='900 34px Arial';ctx.fillText('STUDIO ZIMNEGO SKŁADU',450,125);
+    ctx.font='900 68px Arial';ctx.fillText('KARTA CHWAŁY',450,230);
+    const winner=current?.winner;const result=winner?(winner==='draw'?'REMIS!':sideLabel(winner).toUpperCase()+' WYGRYWA!'):'ZAPRASZAM DO POJEDYNKU!';
+    ctx.font='900 46px Arial';ctx.fillText(result,450,350);
+    ctx.font='900 110px Arial';ctx.fillText(winner==='draw'?'🤝':winner?characterIcons[characterForMark(winner)]||'🏆':'🐯 🦭',450,530);
+    ctx.font='900 54px Arial';ctx.fillText(scores.tiger+' : '+scores.mors,450,665);
+    ctx.font='900 30px Arial';ctx.fillText('TYGRYS                  MORS',450,725);
+    ctx.font='bold 27px Arial';ctx.fillText('GRACZ: '+nick().toUpperCase(),450,830);
+    ctx.font='bold 24px Arial';ctx.fillText('Podejmij wyzwanie na:',450,910);
+    ctx.font='bold 23px Arial';ctx.fillText('studiozimnegoskladu-max.github.io/tygrys-kontra-mors',450,960);
+    ctx.font='900 28px Arial';ctx.fillText('🐯  MORS NIE ODPUSZCZA!  🦭',450,1020);
+  }
+  function openPhotoBooth(){drawPhotoCard();$('photoBooth').classList.remove('hidden');$('photoStatus').textContent='Gotowe! Pobierz kartę jako PNG albo udostępnij.'}
+  function downloadPhoto(){const canvas=$('photoCanvas');const a=document.createElement('a');a.download='karta-chwaly-studio-zimnego-skladu.png';a.href=canvas.toDataURL('image/png');a.click();$('photoStatus').textContent='Karta PNG została przygotowana.'}
+  async function sharePhoto(){const canvas=$('photoCanvas');canvas.toBlob(async blob=>{if(!blob)return;const file=new File([blob],'karta-chwaly.png',{type:'image/png'});if(navigator.share&&navigator.canShare?.({files:[file]})){try{await navigator.share({title:'Moja karta chwały',text:'Mój pojedynek w Tygrys kontra Mors!',files:[file]})}catch(e){if(e.name!=='AbortError')$('photoStatus').textContent='Nie udało się udostępnić. Pobierz PNG i dodaj je ręcznie.'}}else{$('photoStatus').textContent='Ta przeglądarka nie udostępnia plików bezpośrednio. Pobierz PNG i dodaj je do posta.';downloadPhoto()}},'image/png')}
   const printQuiz=[
     {q:'Co oznacza skrót CMYK?',a:['Czarny, Magenta, Yellow, Khaki','Cyan, Magenta, Yellow, Key (czarny)','Czerwony, Miętowy, Żółty, Kobalt'],c:1,why:'To cztery podstawowe farby w druku procesowym.'},
     {q:'Jaka rozdzielczość jest typowym punktem wyjścia dla zdjęć do druku?',a:['Około 300 dpi w docelowym rozmiarze','72 dpi zawsze wystarczy','1200 dpi dla każdego zdjęcia'],c:0,why:'Najczęściej celujemy w około 300 dpi w rzeczywistym rozmiarze.'},
@@ -133,7 +185,7 @@
   function startPrintQuiz(){quizIndex=0;quizPoints=0;quizLocked=false;$('quizStart').classList.add('hidden');$('quizResult').classList.add('hidden');$('quizPlay').classList.remove('hidden');renderPrintQuiz();}
   function renderPrintQuiz(){const item=printQuiz[quizIndex];$('quizProgress').textContent='PYTANIE '+(quizIndex+1)+' / '+printQuiz.length;$('quizScore').textContent='PUNKTY: '+quizPoints;$('quizTrackFill').style.width=((quizIndex+1)/printQuiz.length*100)+'%';$('quizQuestion').textContent=item.q;$('quizFeedback').textContent='';$('quizNextBtn').classList.add('hidden');const wrap=$('quizOptions');wrap.innerHTML='';item.a.forEach((answer,i)=>{const b=document.createElement('button');b.type='button';b.className='quiz-option';b.textContent=String.fromCharCode(65+i)+'. '+answer;b.addEventListener('click',()=>answerPrintQuiz(i));wrap.append(b)});quizLocked=false;}
   function answerPrintQuiz(choice){if(quizLocked)return;quizLocked=true;const item=printQuiz[quizIndex],buttons=[...$('quizOptions').children];buttons.forEach((b,i)=>{b.disabled=true;if(i===item.c)b.classList.add('correct');if(i===choice&&choice!==item.c)b.classList.add('wrong')});$('quizFeedback').textContent=(choice===item.c?'✓ DOBRZE! ':'✗ OJ, MORS BY TO SPRAWDZIŁ. ')+item.why;if(choice===item.c)quizPoints++;$('quizScore').textContent='PUNKTY: '+quizPoints;$('quizNextBtn').textContent=quizIndex===printQuiz.length-1?'POKAŻ WYNIK →':'NASTĘPNE PYTANIE →';$('quizNextBtn').classList.remove('hidden');}
-  function finishPrintQuiz(){if(quizPoints>=7){todayMissions=dailyStats();todayMissions.quiz=1;saveDaily()}const levels=quizPoints>=9?['🏆','LEGENDARNY MISTRZ DRUKU','Masz poligrafię w małym palcu. Mors prosi o autograf.']:quizPoints>=7?['🥇','OPERATOR PEŁNĄ GĘBĄ','Bardzo solidna robota. Tygrys oddaje Ci próbnik kolorów.']:quizPoints>=5?['🖨️','OGARNIACZ DRUKARNI','Jest potencjał! Jeszcze kilka kaw i będzie perfekcja.']:['🦭','POMOCNIK OD SPINACZY','Spokojnie, praktyka czyni mistrza. Mors też kiedyś mylił spady z kanapkami.'];$('quizPlay').classList.add('hidden');$('quizResult').classList.remove('hidden');$('quizResultIcon').textContent=levels[0];$('quizResultTitle').textContent=levels[1];$('quizResultText').textContent=levels[2];$('quizFinalScore').textContent=quizPoints+' / '+printQuiz.length+' PUNKTÓW';}
+  function finishPrintQuiz(){if(quizPoints>=7){todayMissions=dailyStats();todayMissions.quiz=1;saveDaily();unlockSticker('quiz-master')}const levels=quizPoints>=9?['🏆','LEGENDARNY MISTRZ DRUKU','Masz poligrafię w małym palcu. Mors prosi o autograf.']:quizPoints>=7?['🥇','OPERATOR PEŁNĄ GĘBĄ','Bardzo solidna robota. Tygrys oddaje Ci próbnik kolorów.']:quizPoints>=5?['🖨️','OGARNIACZ DRUKARNI','Jest potencjał! Jeszcze kilka kaw i będzie perfekcja.']:['🦭','POMOCNIK OD SPINACZY','Spokojnie, praktyka czyni mistrza. Mors też kiedyś mylił spady z kanapkami.'];$('quizPlay').classList.add('hidden');$('quizResult').classList.remove('hidden');$('quizResultIcon').textContent=levels[0];$('quizResultTitle').textContent=levels[1];$('quizResultText').textContent=levels[2];$('quizFinalScore').textContent=quizPoints+' / '+printQuiz.length+' PUNKTÓW';}
   function nextPrintQuiz(){if(quizIndex<printQuiz.length-1){quizIndex++;renderPrintQuiz()}else finishPrintQuiz();}
 
   const GAME_URL='https://studiozimnegoskladu-max.github.io/tygrys-kontra-mors/';
@@ -250,7 +302,7 @@
   function moveCpu(i){if(busy||current.board[i])return;busy=true;current.board[i]=MORS;const r=evaluate(current.board);current.winner=r.winner;current.winning=r.winning;current.status=r.winner?'finished':'playing';current.turn=r.winner?MORS:TIGER;soundAnimal(MORS);if(current.winner){recordFinishedGame(current.winner,current.board,mode,room);if(current.winner!=='draw'){scores[current.winner]++;if(scores[current.winner]>=3)seriesWinner=current.winner;}commentary(current.winner==='draw'?'draw':current.winner==='tiger'?'tigerWin':'morsWin');celebrate()}else commentary(MORS,'mors');busy=false;render()}
   function celebrate(){document.body.classList.remove('celebrate');void document.body.offsetWidth;document.body.classList.add('celebrate');setTimeout(()=>document.body.classList.remove('celebrate'),1200)}
   async function newRound(){if(!current||current.status!=='finished'||busy||seriesWinner)return;busy=true;const next=fresh();if(mode==='online'){const{error}=await client.from('game_sessions').update({board:next.board,turn:TIGER,winner:null,status:'playing'}).eq('room_code',room);if(error)alert('Nie udało się rozpocząć rewanżu.')}current=next;commentary('tiger');busy=false;render()}
-  $('quizStartBtn')?.addEventListener('click',startPrintQuiz);$('quizNextBtn')?.addEventListener('click',nextPrintQuiz);$('quizAgainBtn')?.addEventListener('click',()=>{$('quizResult').classList.add('hidden');$('quizStart').classList.remove('hidden');$('quizTrackFill').style.width='0%';});
+  $('spinFortuneBtn')?.addEventListener('click',spinFortune);$('photoBoothBtn')?.addEventListener('click',openPhotoBooth);$('closePhotoBtn')?.addEventListener('click',()=>$('photoBooth').classList.add('hidden'));$('downloadPhotoBtn')?.addEventListener('click',downloadPhoto);$('sharePhotoBtn')?.addEventListener('click',sharePhoto);$('quizStartBtn')?.addEventListener('click',startPrintQuiz);$('quizNextBtn')?.addEventListener('click',nextPrintQuiz);$('quizAgainBtn')?.addEventListener('click',()=>{$('quizResult').classList.add('hidden');$('quizStart').classList.remove('hidden');$('quizTrackFill').style.width='0%';});
   document.querySelectorAll('input[name="character"]').forEach(r=>{r.checked=r.value===selectedCharacter;r.addEventListener('change',()=>{selectedCharacter=r.value;localStorage.setItem('tkm_character',selectedCharacter);document.querySelectorAll('.character-option').forEach(el=>el.classList.toggle('selected',el.querySelector('input').checked));});});
   document.querySelectorAll('input[name="mySide"]').forEach(r=>r.addEventListener('change',()=>{document.querySelectorAll('.side-option').forEach(el=>el.classList.toggle('selected',el.querySelector('input').checked));}));
   $('createBtn').addEventListener('click',createRoom);$('joinBtn').addEventListener('click',()=>joinRoom($('roomInput').value));$('roomInput').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom(e.target.value)});$('roomInput').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));cells.forEach(c=>c.addEventListener('click',()=>move(+c.dataset.cell)));$('newRoundBtn').addEventListener('click',newRound);$('newMatchBtn').addEventListener('click',()=>{if(mode==='online'){say('Nowy turniej rozpocznijcie po uzgodnieniu z przeciwnikiem.');return}scores={tiger:0,mors:0};seriesWinner=null;current=fresh();commentary('tiger');render();});
@@ -259,7 +311,7 @@
   $('shareResultBtn')?.addEventListener('click',()=>{const result=current?.winner?(current.winner==='draw'?'Remis!':sideLabel(current.winner)+' wygrywa!'):'Dołącz do pojedynku!';shareOnFacebook('Mój pojedynek w Tygrys kontra Mors: '+result+' Wynik serii: Tygrys '+scores.tiger+' : '+scores.mors+' Mors. Dasz radę lepiej? 🏆')});
   $('shareQuizBtn')?.addEventListener('click',()=>shareOnFacebook('Mój wynik w teście Mistrza Drukarni: '+quizPoints+' / '+printQuiz.length+' punktów! Sprawdź, czy znasz się na poligrafii. 🖨️'));
   $('copyBtn').addEventListener('click',async()=>{const url=location.origin+location.pathname+'?room='+room;try{await navigator.clipboard.writeText(url);$('copyBtn').textContent='SKOPIOWANO ✓';setTimeout(()=>$('copyBtn').textContent='KOPIUJ LINK ↗',1800)}catch{prompt('Skopiuj link:',url)}});
-  $('leaveBtn').addEventListener('click',()=>{if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);$('newBriefBtn')?.addEventListener('click',newPrintBrief);renderDailyMissions();loadLeaderboard();
+  $('leaveBtn').addEventListener('click',()=>{if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);$('newBriefBtn')?.addEventListener('click',newPrintBrief);renderDailyMissions();renderStickers();renderFortune();loadLeaderboard();
   $('saveNameBtn').addEventListener('click',()=>{const n=$('nameInput').value.trim().slice(0,18);if(!n){say('Wpisz swój nick.');return}localStorage.setItem('tkm_nick',n);$('playerName').textContent=n;say('Nick zapisany na tym urządzeniu!')});$('nameInput').value=nick();
   if($('cpuDifficulty'))$('cpuDifficulty').value=cpuDifficulty;
   $('cpuDifficulty')?.addEventListener('change',e=>{cpuDifficulty=e.target.value;localStorage.setItem('tkm_cpu_difficulty',cpuDifficulty)});
