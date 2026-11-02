@@ -121,7 +121,23 @@
   function sound(freq=440,duration=.09){if(!soundOn)return;try{const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;audioContext=audioContext||new AudioCtx();if(audioContext.state==='suspended')audioContext.resume();const o=audioContext.createOscillator(),g=audioContext.createGain();o.type='sine';o.frequency.value=freq;o.connect(g);g.connect(audioContext.destination);g.gain.setValueAtTime(.0001,audioContext.currentTime);g.gain.exponentialRampToValueAtTime(.08,audioContext.currentTime+.015);g.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+duration);o.start();o.stop(audioContext.currentTime+duration)}catch(err){console.warn('Nie udało się odtworzyć dźwięku:',err)}}
   function updateSoundButton(){const b=$('soundBtn');if(!b)return;b.textContent=soundOn?'🔊 DŹWIĘK: WŁ.':'🔇 DŹWIĘK: WYŁ.';b.setAttribute('aria-pressed',String(soundOn));}
   function evaluate(board){for(const line of wins)if(board[line[0]]&&board[line[0]]===board[line[1]]&&board[line[1]]===board[line[2]])return{winner:board[line[0]],winning:line};return board.every(Boolean)?{winner:'draw',winning:[]}:{winner:null,winning:[]}}
-  function showGame(){setup.classList.add('hidden');game.classList.remove('hidden');$('roomCode').textContent=room||'LOKALNIE';$('playerName').textContent=nick();renderAchievements();}
+  function showGame(){setup.classList.add('hidden');game.classList.remove('hidden');$('roomCode').textContent=room||'LOKALNIE';$('playerName').textContent=nick();renderAchievements();newPrintBrief();}
+  const printBriefs=[
+    {title:'NA WCZORAJ, ALE TANIO',text:'Klient chce 5000 ulotek, projekt, druk i dostawę. Termin? Najlepiej 10 minut temu.'},
+    {title:'MORS I WIELKI BANER',text:'Baner 2 × 1 metr. Ma być widoczny z kosmosu, ale plik klient wysłał w rozdzielczości znaczka pocztowego.'},
+    {title:'TAJEMNICZE CMYK',text:'Klient twierdzi, że granat to przecież prawie żółty. Tygrys już szuka próbnika kolorów.'},
+    {title:'NAKLEJKI BEZ KOŃCA',text:'Jedna naklejka próbna przerodziła się w zamówienie na dziesięć tysięcy. Mors odpala ploter!'},
+    {title:'LOGO W 5 MINUT',text:'„Mam tylko małe poprawki”. Po chwili przychodzi 37 wiadomości i zdjęcie logo zrobione kalkulatorem.'},
+    {title:'PAPIEROWA KATASTROFA',text:'Maszyna ruszyła, papier jest, kawa też. Brakuje tylko pliku, który klient obiecał wysłać wczoraj.'},
+    {title:'PROJEKT IDEALNY',text:'Klient chce większe, mniejsze, bardziej widoczne i mniej rzucające się w oczy. Powodzenia, graficy!'},
+    {title:'MISTRZ USZLACHETNIEŃ',text:'Złocenie, lakier, tłoczenie i brokat. Mors mówi, że da się zrobić. Tygrys pyta: na kiedy?'}
+  ];
+  function newPrintBrief(){
+    const brief=printBriefs[Math.floor(Math.random()*printBriefs.length)];
+    const title=$('briefTitle'),body=$('briefText');
+    if(title)title.textContent=brief.title;
+    if(body)body.textContent=brief.text;
+  }
   const quips={
     tiger:['Tygrys mierzy. Mors niech się boi!','Pazury w gotowości. Strategia w toku.','Tygrys mówi: to pole jest moje!'],
     mors:['Mors kombinuje. I to całkiem sprytnie!','Płetwy pracują na pełnych obrotach!','Mors spokojny… aż do zwycięstwa.'],
@@ -148,7 +164,7 @@
   document.querySelectorAll('input[name="mySide"]').forEach(r=>r.addEventListener('change',()=>{document.querySelectorAll('.side-option').forEach(el=>el.classList.toggle('selected',el.querySelector('input').checked));}));
   $('createBtn').addEventListener('click',createRoom);$('joinBtn').addEventListener('click',()=>joinRoom($('roomInput').value));$('roomInput').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom(e.target.value)});$('roomInput').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));cells.forEach(c=>c.addEventListener('click',()=>move(+c.dataset.cell)));$('newRoundBtn').addEventListener('click',newRound);$('newMatchBtn').addEventListener('click',()=>{if(mode==='online'){say('Nowy turniej rozpocznijcie po uzgodnieniu z przeciwnikiem.');return}scores={tiger:0,mors:0};seriesWinner=null;current=fresh();commentary('tiger');render();});
   $('copyBtn').addEventListener('click',async()=>{const url=location.origin+location.pathname+'?room='+room;try{await navigator.clipboard.writeText(url);$('copyBtn').textContent='SKOPIOWANO ✓';setTimeout(()=>$('copyBtn').textContent='KOPIUJ LINK ↗',1800)}catch{prompt('Skopiuj link:',url)}});
-  $('leaveBtn').addEventListener('click',()=>{if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);loadLeaderboard();
+  $('leaveBtn').addEventListener('click',()=>{if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);$('newBriefBtn')?.addEventListener('click',newPrintBrief);loadLeaderboard();
   $('saveNameBtn').addEventListener('click',()=>{const n=$('nameInput').value.trim().slice(0,18);if(!n){say('Wpisz swój nick.');return}localStorage.setItem('tkm_nick',n);$('playerName').textContent=n;say('Nick zapisany na tym urządzeniu!')});$('nameInput').value=nick();
   if($('cpuDifficulty'))$('cpuDifficulty').value=cpuDifficulty;
   $('cpuDifficulty')?.addEventListener('change',e=>{cpuDifficulty=e.target.value;localStorage.setItem('tkm_cpu_difficulty',cpuDifficulty)});
