@@ -67,3 +67,11 @@ body:before{content:"";position:fixed;z-index:-1;pointer-events:none;width:42vw;
 /* Character roster */
 .character-picker{margin:0 0 20px;padding:17px;border:3px solid var(--ink);border-radius:15px;background:#fff8cf;box-shadow:5px 5px 0 var(--ink)}.character-heading b,.character-heading small{display:block}.character-heading b{font:900 22px 'Barlow Condensed'}.character-heading small{font-size:11px;color:#666;margin:2px 0 12px}.character-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.character-option{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 5px;border:2px solid #aaa;border-radius:11px;background:white;cursor:pointer;text-align:center;min-width:0}.character-option input{position:absolute;opacity:0;pointer-events:none}.character-option>span{font-size:36px;line-height:1.2;filter:drop-shadow(2px 2px 0 #ddd)}.character-option b{font:900 15px 'Barlow Condensed'}.character-option small{font-size:9px;color:#666}.character-option.selected,.character-option:has(input:checked){border:3px solid var(--ink);background:#ffed35;box-shadow:3px 3px 0 var(--ink);padding:9px 4px}.character-note{font-size:10px;color:#666;margin:10px 0 0}@media(max-width:480px){.character-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .board-character{display:block;font-size:clamp(54px,12vw,92px);line-height:1;filter:drop-shadow(3px 4px 0 rgba(0,0,0,.15));animation:pop .18s ease-out}
+
+/* Facebook sharing and client bridge */
+.social-bridge{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:20px 0 4px;padding:16px;border:3px solid var(--ink);border-radius:14px;background:#eaf3ff;box-shadow:4px 4px 0 var(--ink)}
+.social-bridge-copy{flex:1 1 220px}.social-bridge-copy small,.social-bridge-copy b{display:block}.social-bridge-copy small{font:900 10px 'Barlow Condensed';letter-spacing:1.5px;color:#2456a6}.social-bridge-copy b{font:900 20px 'Barlow Condensed';margin:3px 0}.social-bridge-copy p{font-size:11px;color:#555;margin:0}
+.btn-facebook{background:#1877f2;color:white;border-color:#0d397a;text-shadow:0 1px 1px rgba(0,0,0,.18)}
+.social-bridge .btn{font-size:11px;padding:11px 12px}
+.game-actions #shareResultBtn{background:#1877f2;color:#fff;border-color:#0d397a}
+@media(max-width:500px){.social-bridge{align-items:stretch}.social-bridge .btn{width:100%}}
