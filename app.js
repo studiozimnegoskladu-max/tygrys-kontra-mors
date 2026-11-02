@@ -27,7 +27,8 @@
     achievementStats.seen.push(key);if(achievementStats.seen.length>100)achievementStats.seen=achievementStats.seen.slice(-100);
     achievementStats.played++;
     if(result==='draw'){achievementStats.draws++;achievementStats.streak=0;}
-    else if((gameMode==='local'&&result!=='draw')||(gameMode==='cpu'&&result===TIGER)||(gameMode==='online'&&result===role)){
+    else if(gameMode==='local'){achievementStats.streak=0;}
+    else if((gameMode==='cpu'&&result===TIGER)||(gameMode==='online'&&result===role)){
       achievementStats.wins++;achievementStats.streak++;achievementStats.bestStreak=Math.max(achievementStats.bestStreak,achievementStats.streak);
     }else{achievementStats.losses++;achievementStats.streak=0;}
     const newly=achievementList.filter(x=>x.test(achievementStats)&&!achievementStats.unlocked.includes(x.id));
