@@ -34,3 +34,12 @@
 .achievement-icon{font-size:21px}.achievement-copy{flex:1;min-width:0}.achievement-copy b,.achievement-copy small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.achievement-copy b{font:900 12px 'Barlow Condensed'}.achievement-copy small{font:700 9px Nunito;color:#666}.achievement>strong{font-size:12px}
 .achievement-notice{font:900 11px 'Barlow Condensed';color:#b3245e;text-align:center;margin:8px 0 0;min-height:12px}
 @media(max-width:400px){.achievement-grid{grid-template-columns:1fr}}
+
+.leaderboard-panel{margin-top:17px;border:2px solid var(--ink);border-radius:13px;padding:14px;background:#fff9df}
+.leaderboard-title{display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:'Barlow Condensed'}
+.leaderboard-title b,.leaderboard-title small{display:block}.leaderboard-title b{font-size:19px;font-weight:900}.leaderboard-title small{font:700 10px Nunito;color:#666}.leaderboard-title .btn{padding:8px 10px;font-size:10px}
+.rank-list{display:grid;gap:6px;margin-top:11px}
+.rank-row{display:grid;grid-template-columns:26px minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:8px 9px;background:white;border:1px solid #e2dba9;border-radius:8px}
+.rank-row>b{font:900 14px 'Barlow Condensed'}.rank-row>span{font:900 13px 'Barlow Condensed';overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rank-row>strong{font:900 11px 'Barlow Condensed';color:#b3245e}.rank-row>small{font:800 9px Nunito;color:#777}
+.rank-empty,.rank-status{font-size:11px;color:#777;text-align:center;margin:8px 0}.rank-status{font-weight:800;min-height:12px}
+@media(max-width:450px){.rank-row{grid-template-columns:22px minmax(0,1fr) auto}.rank-row>small{display:none}}
