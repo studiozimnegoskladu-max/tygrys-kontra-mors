@@ -72,6 +72,17 @@
         <div id="dailyMissionList" class="daily-missions" aria-live="polite"></div>
         <div class="daily-footer"><span id="dailyProgress">0 / 3 MISJE</span><b id="dailyReward">Nagroda: 3 pieczątki</b></div>
       </section>
+      <section class="fortune-panel" aria-labelledby="fortuneHeading">
+        <div class="fortune-heading"><div><small>NIESPODZIANKA OD MORSIKA</small><h2 id="fortuneHeading">🎡 KOŁO FORTUNY</h2><p>Jedno losowanie dziennie. Niech szczęście będzie z płetwą!</p></div><div class="fortune-stamp">SZCZĘŚCIE<br>★</div></div>
+        <div class="fortune-result" id="fortuneResult" aria-live="polite">Koło czeka na pierwszy obrót…</div>
+        <button type="button" id="spinFortuneBtn" class="btn btn-yellow">ZAKRĘĆ KOŁEM!</button>
+        <small class="fortune-note" id="fortuneNote">Nagroda zapisze się na tym urządzeniu.</small>
+      </section>
+      <section class="sticker-panel" aria-labelledby="stickerHeading">
+        <div class="sticker-heading"><div><small>TWOJA MAŁA WIELKA KOLEKCJA</small><h2 id="stickerHeading">🎟️ NAKLEJKI I ODZNAKI</h2></div><strong id="stickerCount">0 / 8</strong></div>
+        <p>Zdobywaj je podczas gry i quizu. Każda ma swoją historię!</p>
+        <div id="stickerGrid" class="sticker-grid"></div>
+      </section>
       <section class="quiz-panel" aria-labelledby="quizHeading">
         <div class="quiz-kicker">🖨️ EGZAMIN BEZ STRESU (PRAWIE)</div><h2 id="quizHeading">CZY JESTEŚ MISTRZEM DRUKARNI?</h2>
         <p class="quiz-intro">10 pytań z poligrafii, grafiki i przygotowania plików. Sprawdź, czy ogarniasz temat, czy tylko ładnie klikasz.</p>
@@ -105,12 +116,15 @@
           <button class="cell" data-cell="6" aria-label="Pole 7"></button><button class="cell" data-cell="7" aria-label="Pole 8"></button><button class="cell" data-cell="8" aria-label="Pole 9"></button>
         </div>
       </div>
-      <div class="game-actions"><button id="newMatchBtn" class="btn btn-outline">NOWY TURNIEJ ↻</button><button id="newRoundBtn" class="btn btn-yellow" disabled>REWANŻ ↻</button><button id="leaveBtn" class="btn btn-outline">OPUŚĆ GRĘ</button><button id="shareResultBtn" class="btn btn-facebook">f UDOSTĘPNIJ POJEDYNEK</button></div>
+      <div class="game-actions"><button id="newMatchBtn" class="btn btn-outline">NOWY TURNIEJ ↻</button><button id="newRoundBtn" class="btn btn-yellow" disabled>REWANŻ ↻</button><button id="leaveBtn" class="btn btn-outline">OPUŚĆ GRĘ</button><button id="shareResultBtn" class="btn btn-facebook">f UDOSTĘPNIJ POJEDYNEK</button><button id="photoBoothBtn" class="btn btn-yellow">📸 FOTOBUDKA MORSA</button></div>
       <p class="hint">Ruchy synchronizują się automatycznie na obu urządzeniach.</p>
+    </section>
+    <section id="photoBooth" class="photo-booth hidden" aria-labelledby="photoHeading">
+      <div class="photo-card"><button type="button" id="closePhotoBtn" class="photo-close" aria-label="Zamknij">×</button><small>STUDIO ZIMNEGO SKŁADU PREZENTUJE</small><h2 id="photoHeading">TWOJA KARTA CHWAŁY</h2><canvas id="photoCanvas" width="900" height="1100" aria-label="Karta z wynikiem pojedynku"></canvas><div class="photo-actions"><button type="button" id="downloadPhotoBtn" class="btn btn-yellow">POBIERZ PNG</button><button type="button" id="sharePhotoBtn" class="btn btn-facebook">UDOSTĘPNIJ</button></div><p id="photoStatus" aria-live="polite"></p></div>
     </section>
     <footer>MADE WITH <span>♥</span> AND A LITTLE BIT OF CHAOS · STUDIO ZIMNEGO SKŁADU</footer>
   </main>
   <script src="config.js"></script>
-  <script src="app.js?v=20261102-6"></script>
+  <script src="app.js?v=20261102-7"></script>
 </body>
 </html>
