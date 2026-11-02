@@ -9,7 +9,7 @@
   <meta property="og:description" content="Wybierz maskotkę, zagraj ze znajomym i sprawdź, kto rządzi na planszy. Gra od Studio Zimnego Składu.">
   <meta property="og:url" content="https://studiozimnegoskladu-max.github.io/tygrys-kontra-mors/">
   <title>Tygrys kontra Mors — Studio Zimnego Składu</title>
-  <link rel="stylesheet" href="style.css?v=20261102-4">
+  <link rel="stylesheet" href="style.css?v=20261102-5">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -67,6 +67,11 @@
         <p id="leaderboardStatus" class="rank-status" aria-live="polite"></p>
       </section>
 
+      <section class="daily-panel" aria-labelledby="dailyHeading">
+        <div class="daily-top"><div><small>CODZIENNA PORCJA CHAOSU</small><h2 id="dailyHeading">MISJE DNIA</h2><p>Wykonaj zadania, zgarnij pieczątki i wróć jutro po nowy zestaw.</p></div><div class="daily-stamp">SZS<br>★</div></div>
+        <div id="dailyMissionList" class="daily-missions" aria-live="polite"></div>
+        <div class="daily-footer"><span id="dailyProgress">0 / 3 MISJE</span><b id="dailyReward">Nagroda: 3 pieczątki</b></div>
+      </section>
       <section class="quiz-panel" aria-labelledby="quizHeading">
         <div class="quiz-kicker">🖨️ EGZAMIN BEZ STRESU (PRAWIE)</div><h2 id="quizHeading">CZY JESTEŚ MISTRZEM DRUKARNI?</h2>
         <p class="quiz-intro">10 pytań z poligrafii, grafiki i przygotowania plików. Sprawdź, czy ogarniasz temat, czy tylko ładnie klikasz.</p>
@@ -106,6 +111,6 @@
     <footer>MADE WITH <span>♥</span> AND A LITTLE BIT OF CHAOS · STUDIO ZIMNEGO SKŁADU</footer>
   </main>
   <script src="config.js"></script>
-  <script src="app.js?v=20261102-4"></script>
+  <script src="app.js?v=20261102-5"></script>
 </body>
 </html>
