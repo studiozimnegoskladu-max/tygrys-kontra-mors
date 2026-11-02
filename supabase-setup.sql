@@ -36,3 +36,22 @@ end $$;
 
 -- Migracja wyboru postaci: osoba tworząca pokój zapisuje wybraną postać.
 alter table public.game_sessions add column if not exists creator_role text not null default 'tiger';
+
+
+-- Globalny ranking graczy. Identyfikator jest losowy i przechowywany lokalnie w przeglądarce.
+create table if not exists public.player_leaderboard (
+  player_id text primary key,
+  nickname text not null default 'Gracz',
+  played integer not null default 0,
+  wins integer not null default 0,
+  losses integer not null default 0,
+  draws integer not null default 0,
+  updated_at timestamptz not null default now()
+);
+alter table public.player_leaderboard enable row level security;
+drop policy if exists "Public can read leaderboard" on public.player_leaderboard;
+create policy "Public can read leaderboard" on public.player_leaderboard for select to anon using (true);
+drop policy if exists "Public can add leaderboard entries" on public.player_leaderboard;
+create policy "Public can add leaderboard entries" on public.player_leaderboard for insert to anon with check (true);
+drop policy if exists "Public can update leaderboard entries" on public.player_leaderboard;
+create policy "Public can update leaderboard entries" on public.player_leaderboard for update to anon using (true) with check (true);
