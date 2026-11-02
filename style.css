@@ -21,3 +21,16 @@
 .commentary[data-mood="draw"]{background:#eaf8ff}
 @keyframes quipIn{from{opacity:.35;transform:translateY(4px) scale(.98)}to{opacity:1;transform:none}}
 .game-actions{flex-wrap:wrap}
+
+.achievement-panel{margin:18px auto 16px;max-width:440px;border:2px solid var(--ink);border-radius:13px;padding:13px;background:#fbfbff}
+.achievement-heading{display:flex;align-items:center;justify-content:space-between;font-family:'Barlow Condensed'}
+.achievement-heading b,.achievement-heading small{display:block}.achievement-heading b{font-size:17px;font-weight:900}.achievement-heading small{font:700 10px Nunito;color:#777}.achievement-heading>span{font-size:25px}
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:11px 0}
+.mini-stats>div{background:white;border:1px solid #ddd;border-radius:8px;padding:7px;text-align:center}
+.mini-stats strong,.mini-stats small{display:block}.mini-stats strong{font:900 23px 'Barlow Condensed'}.mini-stats small{font:900 9px 'Barlow Condensed';letter-spacing:.8px;color:#777}
+.achievement-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.achievement{display:flex;align-items:center;gap:7px;padding:7px;border:1px solid #ddd;border-radius:8px;background:#f0f0f0;opacity:.65;min-width:0}
+.achievement.unlocked{background:#fff5c2;border:1px solid var(--ink);opacity:1}
+.achievement-icon{font-size:21px}.achievement-copy{flex:1;min-width:0}.achievement-copy b,.achievement-copy small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.achievement-copy b{font:900 12px 'Barlow Condensed'}.achievement-copy small{font:700 9px Nunito;color:#666}.achievement>strong{font-size:12px}
+.achievement-notice{font:900 11px 'Barlow Condensed';color:#b3245e;text-align:center;margin:8px 0 0;min-height:12px}
+@media(max-width:400px){.achievement-grid{grid-template-columns:1fr}}
