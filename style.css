@@ -43,3 +43,5 @@
 .rank-row>b{font:900 14px 'Barlow Condensed'}.rank-row>span{font:900 13px 'Barlow Condensed';overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rank-row>strong{font:900 11px 'Barlow Condensed';color:#b3245e}.rank-row>small{font:800 9px Nunito;color:#777}
 .rank-empty,.rank-status{font-size:11px;color:#777;text-align:center;margin:8px 0}.rank-status{font-weight:800;min-height:12px}
 @media(max-width:450px){.rank-row{grid-template-columns:22px minmax(0,1fr) auto}.rank-row>small{display:none}}
+
+.difficulty-row{display:flex;align-items:center;gap:12px;margin:0 0 12px;padding:12px;border:2px solid var(--ink);border-radius:11px;background:#fff6c2}.difficulty-row label{font:900 14px 'Barlow Condensed';white-space:nowrap}.difficulty-row select{flex:1;min-width:0;border:2px solid var(--ink);border-radius:8px;padding:10px;background:#fff;font:800 12px Nunito;color:var(--ink)}@media(max-width:450px){.difficulty-row{align-items:stretch;flex-direction:column;gap:6px}}
