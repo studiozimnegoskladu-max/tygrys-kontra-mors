@@ -126,7 +126,8 @@
     {id:'veteran',icon:'🎖️',name:'Weteran',desc:'Dziesięć rozegranych partii'},
     {id:'peace',icon:'🤝',name:'Dyplomata',desc:'Partia zakończona remisem'},
     {id:'champion',icon:'👑',name:'Legenda',desc:'Dziesięć zwycięstw'},
-    {id:'quiz-master',icon:'🖨️',name:'Mistrz poligrafii',desc:'Minimum 7/10 w quizie'}
+    {id:'quiz-master',icon:'🖨️',name:'Mistrz poligrafii',desc:'Minimum 7/10 w quizie'},
+    {id:'fortune-spin',icon:'🎡',name:'Szczęśliwy obrót',desc:'Zakreć Kołem Fortuny'}
   ];
   function unlockedStickers(){try{return JSON.parse(localStorage.getItem(STICKER_KEY)||'[]')}catch{return[]}}
   function renderStickers(){
