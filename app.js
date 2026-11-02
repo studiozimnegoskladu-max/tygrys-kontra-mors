@@ -116,6 +116,17 @@
   function finishPrintQuiz(){const levels=quizPoints>=9?['🏆','LEGENDARNY MISTRZ DRUKU','Masz poligrafię w małym palcu. Mors prosi o autograf.']:quizPoints>=7?['🥇','OPERATOR PEŁNĄ GĘBĄ','Bardzo solidna robota. Tygrys oddaje Ci próbnik kolorów.']:quizPoints>=5?['🖨️','OGARNIACZ DRUKARNI','Jest potencjał! Jeszcze kilka kaw i będzie perfekcja.']:['🦭','POMOCNIK OD SPINACZY','Spokojnie, praktyka czyni mistrza. Mors też kiedyś mylił spady z kanapkami.'];$('quizPlay').classList.add('hidden');$('quizResult').classList.remove('hidden');$('quizResultIcon').textContent=levels[0];$('quizResultTitle').textContent=levels[1];$('quizResultText').textContent=levels[2];$('quizFinalScore').textContent=quizPoints+' / '+printQuiz.length+' PUNKTÓW';}
   function nextPrintQuiz(){if(quizIndex<printQuiz.length-1){quizIndex++;renderPrintQuiz()}else finishPrintQuiz();}
 
+  const GAME_URL='https://studiozimnegoskladu-max.github.io/tygrys-kontra-mors/';
+  function shareOnFacebook(message,extraUrl){
+    const url=extraUrl||GAME_URL;
+    const share='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url)+'&quote='+encodeURIComponent(message);
+    window.open(share,'_blank','noopener,noreferrer,width=720,height=620');
+  }
+  function copyLeadMessage(){
+    const message='Cześć! Właśnie sprawdziłem grę Tygrys kontra Mors od Studio Zimnego Składu. Mam pytanie o projekt / druk. Czy mogę podesłać szczegóły?';
+    if(navigator.clipboard?.writeText){navigator.clipboard.writeText(message).then(()=>say('Wiadomość skopiowana! Wklej ją w Messengerze do Studia.')).catch(()=>prompt('Skopiuj wiadomość do Studia:',message));}
+    else prompt('Skopiuj wiadomość do Studia:',message);
+  }
   const roomCode=()=>Math.random().toString(36).slice(2,8).toUpperCase();
   const say=s=>{msg.textContent=s||''};
   const configured=()=>window.SUPABASE_URL&&window.SUPABASE_ANON_KEY;
@@ -203,6 +214,10 @@
   document.querySelectorAll('input[name="character"]').forEach(r=>{r.checked=r.value===selectedCharacter;r.addEventListener('change',()=>{selectedCharacter=r.value;localStorage.setItem('tkm_character',selectedCharacter);document.querySelectorAll('.character-option').forEach(el=>el.classList.toggle('selected',el.querySelector('input').checked));});});
   document.querySelectorAll('input[name="mySide"]').forEach(r=>r.addEventListener('change',()=>{document.querySelectorAll('.side-option').forEach(el=>el.classList.toggle('selected',el.querySelector('input').checked));}));
   $('createBtn').addEventListener('click',createRoom);$('joinBtn').addEventListener('click',()=>joinRoom($('roomInput').value));$('roomInput').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom(e.target.value)});$('roomInput').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));cells.forEach(c=>c.addEventListener('click',()=>move(+c.dataset.cell)));$('newRoundBtn').addEventListener('click',newRound);$('newMatchBtn').addEventListener('click',()=>{if(mode==='online'){say('Nowy turniej rozpocznijcie po uzgodnieniu z przeciwnikiem.');return}scores={tiger:0,mors:0};seriesWinner=null;current=fresh();commentary('tiger');render();});
+  $('shareInviteBtn')?.addEventListener('click',()=>shareOnFacebook('Rzucam Ci wyzwanie! Wybierz swoją maskotkę i spróbuj mnie pokonać w Tygrys kontra Mors. 🐯🦭'));
+  $('copyLeadBtn')?.addEventListener('click',copyLeadMessage);
+  $('shareResultBtn')?.addEventListener('click',()=>{const result=current?.winner?(current.winner==='draw'?'Remis!':sideLabel(current.winner)+' wygrywa!'):'Dołącz do pojedynku!';shareOnFacebook('Mój pojedynek w Tygrys kontra Mors: '+result+' Wynik serii: Tygrys '+scores.tiger+' : '+scores.mors+' Mors. Dasz radę lepiej? 🏆')});
+  $('shareQuizBtn')?.addEventListener('click',()=>shareOnFacebook('Mój wynik w teście Mistrza Drukarni: '+quizPoints+' / '+printQuiz.length+' punktów! Sprawdź, czy znasz się na poligrafii. 🖨️'));
   $('copyBtn').addEventListener('click',async()=>{const url=location.origin+location.pathname+'?room='+room;try{await navigator.clipboard.writeText(url);$('copyBtn').textContent='SKOPIOWANO ✓';setTimeout(()=>$('copyBtn').textContent='KOPIUJ LINK ↗',1800)}catch{prompt('Skopiuj link:',url)}});
   $('leaveBtn').addEventListener('click',()=>{if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);$('newBriefBtn')?.addEventListener('click',newPrintBrief);loadLeaderboard();
   $('saveNameBtn').addEventListener('click',()=>{const n=$('nameInput').value.trim().slice(0,18);if(!n){say('Wpisz swój nick.');return}localStorage.setItem('tkm_nick',n);$('playerName').textContent=n;say('Nick zapisany na tym urządzeniu!')});$('nameInput').value=nick();
