@@ -45,3 +45,8 @@
 @media(max-width:450px){.rank-row{grid-template-columns:22px minmax(0,1fr) auto}.rank-row>small{display:none}}
 
 .difficulty-row{display:flex;align-items:center;gap:12px;margin:0 0 12px;padding:12px;border:2px solid var(--ink);border-radius:11px;background:#fff6c2}.difficulty-row label{font:900 14px 'Barlow Condensed';white-space:nowrap}.difficulty-row select{flex:1;min-width:0;border:2px solid var(--ink);border-radius:8px;padding:10px;background:#fff;font:800 12px Nunito;color:var(--ink)}@media(max-width:450px){.difficulty-row{align-items:stretch;flex-direction:column;gap:6px}}
+
+.print-brief{display:flex;align-items:center;gap:12px;max-width:520px;margin:0 auto 14px;padding:12px;border:2px solid var(--ink);border-radius:12px;background:linear-gradient(110deg,#fff6c2,#fff 65%);box-shadow:3px 3px 0 var(--ink)}
+.brief-stamp{flex:0 0 48px;height:48px;display:flex;align-items:center;justify-content:center;text-align:center;background:var(--pink);color:white;border:2px solid var(--ink);font:900 13px/1 'Barlow Condensed';transform:rotate(-7deg);box-shadow:2px 2px 0 var(--ink)}
+.brief-copy{flex:1;min-width:0}.brief-copy small,.brief-copy b{display:block}.brief-copy small{font:900 9px 'Barlow Condensed';letter-spacing:1px;color:#8c2854}.brief-copy b{font:900 18px 'Barlow Condensed';margin:2px 0}.brief-copy p{font:700 10px/1.4 Nunito;color:#555;margin:0}.print-brief .btn{padding:8px 9px;font-size:10px;white-space:nowrap}
+@media(max-width:500px){.print-brief{flex-wrap:wrap;gap:9px}.brief-copy{flex:1 1 calc(100% - 65px)}.print-brief .btn{margin-left:auto}}
