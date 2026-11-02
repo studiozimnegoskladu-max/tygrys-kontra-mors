@@ -75,3 +75,6 @@ body:before{content:"";position:fixed;z-index:-1;pointer-events:none;width:42vw;
 .social-bridge .btn{font-size:11px;padding:11px 12px}
 .game-actions #shareResultBtn{background:#1877f2;color:#fff;border-color:#0d397a}
 @media(max-width:500px){.social-bridge{align-items:stretch}.social-bridge .btn{width:100%}}
+
+.btn-messenger{background:#0866ff;color:#fff;border:2px solid #073b91;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.social-bridge a.btn{text-align:center}
