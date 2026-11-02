@@ -24,11 +24,31 @@
     {id:'champion',icon:'👑',name:'Legenda pojedynków',desc:'Zdobądź 10 zwycięstw',test:s=>s.wins>=10}
   ];
   function saveStats(){localStorage.setItem(STATS_KEY,JSON.stringify(achievementStats));}
+  const DAILY_KEY='tkm_daily_missions_v1';
+  const todayKey=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+  function dailyStats(){try{const saved=JSON.parse(localStorage.getItem(DAILY_KEY)||'{}');return saved.date===todayKey()?saved:{date:todayKey(),games:0,wins:0,quiz:0}}catch{return{date:todayKey(),games:0,wins:0,quiz:0}}}
+  let todayMissions=dailyStats();
+  function saveDaily(){localStorage.setItem(DAILY_KEY,JSON.stringify(todayMissions));renderDailyMissions()}
+  function renderDailyMissions(){
+    const list=$('dailyMissionList');if(!list)return;
+    const missions=[
+      {icon:'🎮',name:'Rozgrzej łapy',desc:'Rozegraj dowolną partię',value:todayMissions.games,goal:1},
+      {icon:'🏆',name:'Zgarnij zwycięstwo',desc:'Pokonaj komputer lub gracza online',value:todayMissions.wins,goal:1},
+      {icon:'🖨️',name:'Mistrz poligrafii',desc:'Zdobądź minimum 7/10 w quizie',value:todayMissions.quiz,goal:1}
+    ];
+    list.innerHTML='';let completed=0;
+    missions.forEach(m=>{const done=m.value>=m.goal;if(done)completed++;const item=document.createElement('div');item.className='daily-mission'+(done?' done':'');const icon=document.createElement('span');icon.className='daily-mission-icon';icon.textContent=done?'✓':m.icon;const copy=document.createElement('div');copy.className='daily-mission-copy';const name=document.createElement('b');name.textContent=m.name;const desc=document.createElement('small');desc.textContent=m.desc;copy.append(name,desc);const status=document.createElement('strong');status.textContent=done?'GOTOWE':m.value+'/'+m.goal;item.append(icon,copy,status);list.append(item)});
+    $('dailyProgress').textContent=completed+' / 3 MISJE';$('dailyReward').textContent=completed===3?'🏅 KOMPLET! Jesteś legendą studia.':'Nagroda: '+completed+' / 3 pieczątki';
+  }
+
   function recordFinishedGame(result,board,gameMode,gameRoom){
     if(!result)return;
     const key=[gameMode,gameRoom||'local',board.join(''),result].join('|');
     if(achievementStats.seen.includes(key))return;
     achievementStats.seen.push(key);if(achievementStats.seen.length>100)achievementStats.seen=achievementStats.seen.slice(-100);
+    todayMissions=dailyStats();todayMissions.games++;
+    if((gameMode==='cpu'&&result===TIGER)||(gameMode==='online'&&result===role))todayMissions.wins++;
+    saveDaily();
     achievementStats.played++;
     if(result==='draw'){achievementStats.draws++;achievementStats.streak=0;}
     else if(gameMode==='local'){achievementStats.streak=0;}
@@ -219,7 +239,7 @@
   $('shareResultBtn')?.addEventListener('click',()=>{const result=current?.winner?(current.winner==='draw'?'Remis!':sideLabel(current.winner)+' wygrywa!'):'Dołącz do pojedynku!';shareOnFacebook('Mój pojedynek w Tygrys kontra Mors: '+result+' Wynik serii: Tygrys '+scores.tiger+' : '+scores.mors+' Mors. Dasz radę lepiej? 🏆')});
   $('shareQuizBtn')?.addEventListener('click',()=>shareOnFacebook('Mój wynik w teście Mistrza Drukarni: '+quizPoints+' / '+printQuiz.length+' punktów! Sprawdź, czy znasz się na poligrafii. 🖨️'));
   $('copyBtn').addEventListener('click',async()=>{const url=location.origin+location.pathname+'?room='+room;try{await navigator.clipboard.writeText(url);$('copyBtn').textContent='SKOPIOWANO ✓';setTimeout(()=>$('copyBtn').textContent='KOPIUJ LINK ↗',1800)}catch{prompt('Skopiuj link:',url)}});
-  $('leaveBtn').addEventListener('click',()=>{if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);$('newBriefBtn')?.addEventListener('click',newPrintBrief);loadLeaderboard();
+  $('leaveBtn').addEventListener('click',()=>{if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);$('newBriefBtn')?.addEventListener('click',newPrintBrief);renderDailyMissions();loadLeaderboard();
   $('saveNameBtn').addEventListener('click',()=>{const n=$('nameInput').value.trim().slice(0,18);if(!n){say('Wpisz swój nick.');return}localStorage.setItem('tkm_nick',n);$('playerName').textContent=n;say('Nick zapisany na tym urządzeniu!')});$('nameInput').value=nick();
   if($('cpuDifficulty'))$('cpuDifficulty').value=cpuDifficulty;
   $('cpuDifficulty')?.addEventListener('change',e=>{cpuDifficulty=e.target.value;localStorage.setItem('tkm_cpu_difficulty',cpuDifficulty)});
