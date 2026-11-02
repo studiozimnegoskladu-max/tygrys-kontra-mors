@@ -55,6 +55,11 @@
         <div class="mode-card"><span>👥</span><div><b>Dwóch graczy przy jednym ekranie</b><small>Idealne na jednym komputerze lub telefonie.</small></div><button id="localBtn" class="btn btn-outline">GRAJ</button></div>
       </div>
       <div class="profile-row"><label for="nameInput">TWÓJ NICK</label><input id="nameInput" maxlength="18" placeholder="np. Morsik"/><button id="saveNameBtn" class="btn btn-outline">ZAPISZ</button></div>
+      <section class="leaderboard-panel">
+        <div class="leaderboard-title"><div><b>🏆 RANKING ONLINE</b><small>Najlepsi gracze Tygrysa kontra Morsa</small></div><button id="refreshLeaderboardBtn" class="btn btn-outline">ODŚWIEŻ</button></div>
+        <div id="leaderboardList" class="rank-list"><p class="rank-empty">Ładowanie rankingu…</p></div>
+        <p id="leaderboardStatus" class="rank-status" aria-live="polite"></p>
+      </section>
       <p id="setupMessage" class="message" aria-live="polite"></p>
     </section>
 
