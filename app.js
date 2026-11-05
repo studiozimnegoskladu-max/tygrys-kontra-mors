@@ -187,26 +187,55 @@
   const say=s=>{msg.textContent=s||''};
   const configured=()=>window.SUPABASE_URL&&window.SUPABASE_ANON_KEY;
   function connect(){if(!configured()){say('Tryb online wymaga konfiguracji Supabase.');return false}if(!window.supabase?.createClient){say('Nie udało się załadować biblioteki połączenia online. Odśwież stronę lub zagraj lokalnie.');return false}if(!client)client=window.supabase.createClient(window.SUPABASE_URL,window.SUPABASE_ANON_KEY);return true}
-  const animalAudio={
-    tiger:'https://www.mediacollege.com/downloads/sound-effects/animals/cat/tiger-01.mp3',
-    mors:'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/atoms/audio/PointLayWalrus2013_1.mp3'
-  };
-  let lastAnimalAudio=null;
+  // Oryginalne, generowane w przeglądarce efekty postaci — bez zewnętrznych plików.
+  let lastAnimalAudio=[];
   function soundAnimal(animal='tiger',celebration=false){
     if(!soundOn||animal==='draw')return;
     try{
-      const src=animalAudio[animal]||animalAudio.tiger;
-      const audio=new Audio(src);
-      audio.preload='auto';
-      audio.volume=celebration?1:0.9;
-      // Przerywamy poprzedni efekt, żeby odgłosy ruchów nie nakładały się.
-      if(lastAnimalAudio){lastAnimalAudio.pause();lastAnimalAudio.currentTime=0;}
-      lastAnimalAudio=audio;
-      const stopAfter=animal==='mors'?4200:3500;
-      audio.addEventListener('loadedmetadata',()=>{if(animal==='mors'&&Number.isFinite(audio.duration)&&audio.duration>5)audio.currentTime=0.5;},{once:true});
-      const p=audio.play();
-      if(p&&typeof p.catch==='function')p.catch(err=>console.warn('Nie udało się odtworzyć pliku audio '+animal+':',err));
-      setTimeout(()=>{if(lastAnimalAudio===audio){audio.pause();audio.currentTime=0;lastAnimalAudio=null;}},stopAfter);
+      const AudioCtx=window.AudioContext||window.webkitAudioContext;
+      if(!AudioCtx)return;
+      audioContext=audioContext||new AudioCtx();
+      if(audioContext.state==='suspended')audioContext.resume();
+      // Ucinamy poprzedni efekt, aby odgłosy ruchów nie nakładały się.
+      lastAnimalAudio.forEach(node=>{try{node.stop?.();node.disconnect?.()}catch{}});
+      lastAnimalAudio=[];
+      const now=audioContext.currentTime;
+      const master=audioContext.createGain();
+      master.gain.setValueAtTime(celebration?.22:.16,now);
+      master.connect(audioContext.destination);
+      const addVoice=(wave,from,to,start,duration,filterType='lowpass',cutoff=1800)=>{
+        const osc=audioContext.createOscillator();
+        const filter=audioContext.createBiquadFilter();
+        const amp=audioContext.createGain();
+        osc.type=wave;filter.type=filterType;filter.frequency.setValueAtTime(cutoff,now+start);
+        osc.frequency.setValueAtTime(from,now+start);
+        osc.frequency.exponentialRampToValueAtTime(Math.max(35,to),now+start+duration*.72);
+        amp.gain.setValueAtTime(.0001,now+start);
+        amp.gain.linearRampToValueAtTime(1,now+start+.025);
+        amp.gain.exponentialRampToValueAtTime(.0001,now+start+duration);
+        osc.connect(filter);filter.connect(amp);amp.connect(master);
+        osc.start(now+start);osc.stop(now+start+duration+.02);
+        lastAnimalAudio.push(osc,filter,amp);
+      };
+      if(animal==='mors'){
+        // Mors: piskliwy, przerysowany wrzask — trzy krótkie, falujące „iiii-ła!”.
+        addVoice('sawtooth',1250,2050,0,.22,'bandpass',2100);
+        addVoice('sine',1750,1050,.19,.28,'bandpass',1900);
+        addVoice('sawtooth',1450,2250,.52,.25,'bandpass',2400);
+        addVoice('sine',2100,1250,.75,.34,'bandpass',2200);
+        addVoice('triangle',900,1500,1.12,.32,'bandpass',1700);
+      }else{
+        // Hrabia: głupkowaty, ludzki okrzyk „HA-ŁO?!” zamiast zwierzęcego ryku.
+        addVoice('sawtooth',185,125,.0,.32,'bandpass',850);
+        addVoice('triangle',390,240,.0,.3,'bandpass',1250);
+        addVoice('sawtooth',145,95,.38,.48,'bandpass',720);
+        addVoice('triangle',310,170,.38,.45,'bandpass',1050);
+        addVoice('sine',520,260,.72,.18,'lowpass',1000);
+      }
+      const total=animal==='mors'?1.55:1.05;
+      master.gain.setValueAtTime(celebration?.22:.16,now);
+      master.gain.setValueAtTime(.0001,now+total);
+      setTimeout(()=>{lastAnimalAudio.forEach(node=>{try{node.disconnect?.()}catch{}});lastAnimalAudio=[];try{master.disconnect()}catch{}},(total+.2)*1000);
     }catch(err){console.warn('Nie udało się uruchomić odgłosu postaci:',err);}
   }
   function sound(freq=440,duration=.09){if(!soundOn)return;try{const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;audioContext=audioContext||new AudioCtx();if(audioContext.state==='suspended')audioContext.resume();const o=audioContext.createOscillator(),g=audioContext.createGain();o.type='sine';o.frequency.value=freq;o.connect(g);g.connect(audioContext.destination);g.gain.setValueAtTime(.0001,audioContext.currentTime);g.gain.exponentialRampToValueAtTime(.08,audioContext.currentTime+.015);g.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+duration);o.start();o.stop(audioContext.currentTime+duration)}catch(err){console.warn('Nie udało się odtworzyć dźwięku:',err)}}
