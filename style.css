@@ -108,3 +108,28 @@ body:before{content:"";position:fixed;z-index:-1;pointer-events:none;width:42vw;
 @media(max-width:600px){.topbar-logo{width:104px;max-height:46px}.brief-brand img{width:48px;height:16px}.footer-logo{width:66px;height:19px}}
 
 .character-option>.character-avatar{display:block;width:44px;height:44px;object-fit:contain;filter:drop-shadow(2px 2px 0 #ddd)}
+
+
+/* Koło Fortuny Absurdów — prawdziwy obrót, nie tylko losowy komunikat */
+.fortune-wheel-stage{position:relative;width:min(100%,270px);aspect-ratio:1;margin:20px auto 12px;display:grid;place-items:center}
+.fortune-wheel{position:relative;width:100%;height:100%;border:7px solid var(--ink);border-radius:50%;background:conic-gradient(#ffe600 0deg 45deg,#ff77b7 45deg 90deg,#fff 90deg 135deg,#6dd4e5 135deg 180deg,#ffb33d 180deg 225deg,#b9e8bd 225deg 270deg,#f4a6d2 270deg 315deg,#d5d5ff 315deg 360deg);box-shadow:5px 6px 0 var(--ink),inset 0 0 0 4px rgba(255,255,255,.8);transform:rotate(0deg);will-change:transform;overflow:hidden}
+.fortune-wheel:after{content:"";position:absolute;inset:9px;border:2px dashed rgba(33,31,32,.55);border-radius:50%;pointer-events:none}
+.wheel-label{position:absolute;z-index:1;left:50%;top:50%;font-size:clamp(22px,6vw,31px);line-height:1;filter:drop-shadow(1px 2px 0 rgba(0,0,0,.16))}
+.wheel-label-1{transform:translate(-50%,-50%) translateY(-91px)}
+.wheel-label-2{transform:translate(-50%,-50%) rotate(45deg) translateY(-91px) rotate(-45deg)}
+.wheel-label-3{transform:translate(-50%,-50%) rotate(90deg) translateY(-91px) rotate(-90deg)}
+.wheel-label-4{transform:translate(-50%,-50%) rotate(135deg) translateY(-91px) rotate(-135deg)}
+.wheel-label-5{transform:translate(-50%,-50%) rotate(180deg) translateY(-91px) rotate(-180deg)}
+.wheel-label-6{transform:translate(-50%,-50%) rotate(225deg) translateY(-91px) rotate(-225deg)}
+.wheel-label-7{transform:translate(-50%,-50%) rotate(270deg) translateY(-91px) rotate(-270deg)}
+.wheel-label-8{transform:translate(-50%,-50%) rotate(315deg) translateY(-91px) rotate(-315deg)}
+.wheel-hub{position:absolute;z-index:2;left:50%;top:50%;width:54px;height:54px;display:grid;place-items:center;transform:translate(-50%,-50%);border:4px solid var(--ink);border-radius:50%;background:#fff;color:var(--ink);font:900 17px 'Barlow Condensed';box-shadow:2px 3px 0 var(--ink)}
+.fortune-pointer{position:absolute;z-index:4;top:-13px;left:50%;transform:translateX(-50%);font-size:34px;line-height:1;color:var(--pink);-webkit-text-stroke:2px var(--ink);filter:drop-shadow(2px 2px 0 var(--ink))}
+.secret-event{max-width:440px;margin:12px auto 15px;padding:12px 15px;border:3px solid var(--ink);border-radius:12px;background:#ffdf43;box-shadow:4px 4px 0 var(--ink);text-align:center}
+.secret-event-kicker,.secret-event b{display:block;font-family:'Barlow Condensed';font-weight:900}
+.secret-event-kicker{font-size:10px;letter-spacing:1.8px;color:#8a3159}
+.secret-event b{font-size:21px;margin:2px 0}
+.secret-event p{margin:0;font-size:11px;font-weight:800;color:#494444}
+.secret-event.event-pop{animation:secretPop .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes secretPop{0%{opacity:0;transform:translateY(12px) rotate(-2deg) scale(.9)}70%{transform:translateY(-2px) rotate(1deg) scale(1.02)}100%{opacity:1;transform:none}}
+@media(max-width:420px){.fortune-wheel-stage{width:min(100%,235px)}.wheel-label-1{transform:translate(-50%,-50%) translateY(-78px)}.wheel-label-2{transform:translate(-50%,-50%) rotate(45deg) translateY(-78px) rotate(-45deg)}.wheel-label-3{transform:translate(-50%,-50%) rotate(90deg) translateY(-78px) rotate(-90deg)}.wheel-label-4{transform:translate(-50%,-50%) rotate(135deg) translateY(-78px) rotate(-135deg)}.wheel-label-5{transform:translate(-50%,-50%) rotate(180deg) translateY(-78px) rotate(-180deg)}.wheel-label-6{transform:translate(-50%,-50%) rotate(225deg) translateY(-78px) rotate(-225deg)}.wheel-label-7{transform:translate(-50%,-50%) rotate(270deg) translateY(-78px) rotate(-270deg)}.wheel-label-8{transform:translate(-50%,-50%) rotate(315deg) translateY(-78px) rotate(-315deg)}}
