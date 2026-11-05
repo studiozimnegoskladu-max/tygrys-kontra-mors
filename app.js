@@ -139,7 +139,7 @@
     grid.innerHTML='';cards.forEach(s=>{const el=document.createElement('div');el.className='sticker'+(s.unlocked?' earned':'');const icon=document.createElement('span');icon.textContent=s.unlocked?s.icon:'🔒';const name=document.createElement('b');name.textContent=s.unlocked?s.name:'Nieodkryta';const desc=document.createElement('small');desc.textContent=s.unlocked?s.desc:'Zagraj, aby ją zdobyć';el.append(icon,name,desc);grid.append(el)});
     $('stickerCount').textContent=cards.filter(s=>s.unlocked).length+' / '+cards.length;
   }
-  function unlockSticker(id){const got=new Set(unlockedStickers());got.add(id);localStorage.setItem(STICKER_KEY,JSON.stringify([...got]));renderStickers()}
+  function unlockSticker(id){const got=new Set(unlockedStickers());got.add(id);localStorage.setItem(STICKER_KEY,JSON.stringify([...got]));renderStickers();renderMorsClub()}
   function clubProgress(){
     const ids=new Set([...achievementStats.unlocked,...unlockedStickers()]);
     return {count:ids.size,total:stickerList.length,ready:ids.size>=3};
