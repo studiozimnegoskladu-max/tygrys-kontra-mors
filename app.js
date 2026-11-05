@@ -141,14 +141,14 @@
   }
   function unlockSticker(id){const got=new Set(unlockedStickers());got.add(id);localStorage.setItem(STICKER_KEY,JSON.stringify([...got]));renderStickers()}
   const fortunePrizes=[
-    {icon:'⭐',name:'Gwiazda studia',desc:'Dziś wszystko pójdzie jak po maśle!'},
-    {icon:'🦭',name:'Płetwa szczęścia',desc:'Mors przekazuje Ci odrobinę swojej mocy.'},
-    {icon:'🎨',name:'Kolorowy dzień',desc:'Niech CMYK będzie z Tobą!'},
-    {icon:'☕',name:'Kawa operatora',desc:'Zasłużona przerwa na kawę. Bez limitu piany.'},
-    {icon:'🐯',name:'Poprawkowy Pazur',desc:'Dziś nie odpuszczasz żadnego wyzwania.'},
-    {icon:'🖨️',name:'Drukarski fart',desc:'Niech każdy projekt wyjdzie idealnie.'},
-    {icon:'✨',name:'Bonus kreatywności',desc:'Masz dziś głowę pełną dobrych pomysłów.'},
-    {icon:'🎟️',name:'Złoty kupon',desc:'Wirtualny kupon na dobry humor!'}
+    {icon:'⭐',name:'Gwiazda studia',desc:'Mors przez 24 godziny nie będzie poprawiał kerningu. Podobno.'},
+    {icon:'🦭',name:'Płetwa szczęścia',desc:'Możesz dziś pomylić pliki tylko dwa razy. Trzeci to już tradycja.'},
+    {icon:'🎨',name:'Kolorowy dzień',desc:'Wszystkie kolory trafiają w punkt. Nawet ten „prawie taki sam”.'},
+    {icon:'☕',name:'Kawa operatora',desc:'Przysługuje Ci przerwa. Mors pilnuje ekspresu i podjada ciastka.'},
+    {icon:'🐯',name:'Poprawkowy Pazur',desc:'Hrabia zatwierdza Twój projekt bez komentarza. Cud większy niż cud.'},
+    {icon:'🖨️',name:'Drukarski fart',desc:'Plik ma spady, fonty i właściwy format. Nie płacz, to ze szczęścia.'},
+    {icon:'✨',name:'Bonus kreatywności',desc:'Masz dziś pomysł tak dobry, że klient napisze tylko: „super, drukujemy”.'},
+    {icon:'🎟️',name:'Złoty kupon',desc:'Wirtualny kupon na święty spokój. Ważny do pierwszej poprawki.'}
   ];
   function fortuneDate(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
   function renderFortune(){
@@ -331,7 +331,7 @@
     const key=(room||mode)+'|'+board.join('');
     if(key===lastSecretEventKey)return;
     lastSecretEventKey=key;
-    if(Math.random()>(finished?.34:.12))return;
+    if(Math.random()>(finished ? 0.34 : 0.12))return;
     const event=secretEvents[Math.floor(Math.random()*secretEvents.length)],box=$('secretEvent');
     if(!box)return;
     $('secretEventTitle').textContent=event.title;$('secretEventText').textContent=event.text;
