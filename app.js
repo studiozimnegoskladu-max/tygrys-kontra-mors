@@ -3,7 +3,7 @@
   const setup=$('setup'), game=$('game'), msg=$('setupMessage');
   const cells=[...document.querySelectorAll('.cell')];
   const TIGER='tiger', MORS='mors';
-  const CHARACTER_EMOJI={goat:'🐐',octopus:'🐙',mole:'🦫',llama:'🦙'};
+  const CHARACTER_EMOJI={octopus:'🐙',mole:'🦫',llama:'🦙'};
   let selectedCharacter=localStorage.getItem('tkm_character')||'tiger';
   const characterForMark=mark=>mode==='online'?(mark===role?selectedCharacter:(remoteCharacter|| (mark===TIGER?'tiger':'mors'))):(mark===TIGER?selectedCharacter:'mors');
   const sideLabel=mark=>(characterNames[characterForMark(mark)]||'Gracz')+' '+(characterIcons[characterForMark(mark)]||'');
@@ -278,10 +278,10 @@
     if(title)title.textContent=brief.title;
     if(body)body.textContent=brief.text;
   }
-  const characterNames={tiger:'Hrabia Poprawek',mors:'Mors',goat:'Koza Krysia',octopus:'Ośmiornica Drukarka',mole:'Kret Operator',llama:'Lama Drama'};
+  const characterNames={tiger:'Hrabia Poprawek',mors:'Mors',goat:'Koza Krzycha',octopus:'Ośmiornica Drukarka',mole:'Kret Operator',llama:'Lama Drama'};
   const characterIcons={tiger:'🐯',mors:'🦭',goat:'🐐',octopus:'🐙',mole:'🦫',llama:'🦙'};
   const characterQuips={
-    goat:{move:['Koza Krysia wskakuje na pole. Meeega ruch!','Kopytko postawione. Teraz będzie z górki!','Krysia skacze po planszy jak po świeżym nakładzie!'],win:['ME-E-EGA WYGRANA! Krysia zjadła konkurencję!','Koza Krysia na szczycie! Reszta niech się wspina!']},
+    goat:{move:['Koza Krzycha wskakuje na pole. Meeega ruch!','Kopytko postawione. Teraz będzie z górki!','Krzycha skacze po planszy jak po świeżym nakładzie!'],win:['ME-E-EGA WYGRANA! Krzycha zjadła konkurencję!','Koza Krzycha na szczycie! Reszta niech się wspina!']},
     octopus:{move:['Ośmiornica Drukarka ma osiem pomysłów naraz!','Macka w ruch! Kolejny kolor na planszy!','Osiem rąk, zero wymówek. Drukujemy zwycięstwo!'],win:['OSIEM MACEK I PEŁNA KONTROLA!','Drukarka wypluła zwycięstwo w najwyższej jakości!']},
     mole:{move:['Kret Operator wierci… i zajmuje pole!','Podziemna strategia właśnie weszła na planszę.','Kret zna każdy skrót. Nawet pod planszą!'],win:['KRET WYGRYWA! To był ruch z głębi strategii!','Wykopane zwycięstwo! Operator zna się na robocie!']},
     llama:{move:['Lama Drama robi wejście. Będzie gorąco!','Uwaga, plucie… znaczy, precyzyjny ruch!','Lama ma dziś dramatycznie dobry plan!'],win:['LAMA DRAMA! Finał godny owacji na stojąco!','Ależ drama! Lama zgarnia zwycięstwo!']}
@@ -300,7 +300,7 @@
     let n=Math.floor(Math.random()*list.length);if(list.length>1&&n===commentIndex)n=(n+1)%list.length;commentIndex=n;
     el.textContent=list[n];el.dataset.mood=kind;el.dataset.character=character||'classic';
   }
-  function render(){if(!current)return;cells.forEach((cell,i)=>{cell.innerHTML='';cell.classList.toggle('winning',(current.winning||[]).includes(i));const mark=current.board[i];if(mark){const character=characterForMark(mark);if(CHARACTER_EMOJI[character]){const avatar=document.createElement('span');avatar.className='board-character';avatar.textContent=CHARACTER_EMOJI[character];cell.append(avatar)}else{const im=document.createElement('img');im.src=character==='tiger'?'assets/hrabia-poprawek-transparent.svg':'assets/mors.png';im.alt=character==='tiger'?'Hrabia Poprawek':'Mors';cell.append(im)}}const canPlay=mode==='local'||(mode==='cpu'&&current.turn===TIGER)||(mode==='online'&&current.turn===role);cell.disabled=!!mark||current.status!=='playing'||!canPlay||busy});
+  function render(){if(!current)return;cells.forEach((cell,i)=>{cell.innerHTML='';cell.classList.toggle('winning',(current.winning||[]).includes(i));const mark=current.board[i];if(mark){const character=characterForMark(mark);if(CHARACTER_EMOJI[character]){const avatar=document.createElement('span');avatar.className='board-character';avatar.textContent=CHARACTER_EMOJI[character];cell.append(avatar)}else{const im=document.createElement('img');im.src=character==='tiger'?'assets/hrabia-poprawek-transparent.svg':character==='goat'?'assets/koza-krzycha.svg':'assets/mors.png';im.alt=character==='tiger'?'Hrabia Poprawek':character==='goat'?'Koza Krzycha':'Mors';cell.append(im)}}const canPlay=mode==='local'||(mode==='cpu'&&current.turn===TIGER)||(mode==='online'&&current.turn===role);cell.disabled=!!mark||current.status!=='playing'||!canPlay||busy});
     const w=current.winner;$('turnBanner').textContent=seriesWinner?('🏆 '+sideLabel(seriesWinner).toUpperCase()+' ZDOBYWA PUCHAR!'):w==='draw'?'REMIS! NIKT NIE ODPUSZCZA 😎':w?(sideLabel(w).toUpperCase()+' WYGRYWA!'):(mode==='local'?'RUCH: '+sideLabel(current.turn):mode==='cpu'?(current.turn===TIGER?'TWOJA KOLEJ — RUSZAJ!':'MORS MYŚLI…'):current.turn===role?'TWOJA KOLEJ — RUSZAJ!':'RUCH PRZECIWNIKA…');
     $('seriesLabel').textContent=(mode==='online'?'WYNIK TEJ SESJI':'SERIA DO 3 ZWYCIĘSTW')+' · '+(scores.tiger+scores.mors)+' ROZEGRANYCH RUND';$('roleLabel').textContent=mode==='local'?'DWAJ GRACZE · JEDNO URZĄDZENIE':mode==='cpu'?'TY: '+sideLabel(TIGER)+' · MORS: '+({easy:'ŁATWY',normal:'ŚREDNI',hard:'TRUDNY'}[cpuDifficulty]||'ŚREDNI'):'Grasz jako '+sideLabel(role)+' ('+(role===TIGER?'kółko':'krzyżyk')+')';$('newRoundBtn').disabled=current.status!=='finished'||!!seriesWinner;$('newMatchBtn').textContent=seriesWinner?'NOWY TURNIEJ ↻':'ZERUJ TURNIEJ ↻';$('newMatchBtn').classList.toggle('hidden',mode==='online');$('tigerScore').textContent=scores.tiger;$('morsScore').textContent=scores.mors;updateSoundButton();}
   async function fetchGame(){const{data,error}=await client.from('game_sessions').select('*').eq('room_code',room).maybeSingle();if(error||!data)throw Error('Nie znaleziono pokoju. Sprawdź kod.');return data}
