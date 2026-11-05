@@ -59,7 +59,7 @@
     }else{achievementStats.losses++;achievementStats.streak=0;}
     const newly=achievementList.filter(x=>x.test(achievementStats)&&!achievementStats.unlocked.includes(x.id));
     newly.forEach(x=>achievementStats.unlocked.push(x.id));saveStats();renderAchievements();renderStickers();syncLeaderboard(result,gameMode,gameRoom,board);
-    if(newly.length){const el=$('achievementNotice');if(el)el.textContent='NOWA ODZNAKA: '+newly.map(x=>x.icon+' '+x.name).join(' · ');celebrate();}
+    if(newly.length){const el=$('achievementNotice');if(el)el.textContent='NOWA ODZNAKA: '+newly.map(x=>x.icon+' '+x.name).join(' · ');celebrate();}renderMorsClub();
   }
 
   const PLAYER_ID_KEY='tkm_player_id_v1', RANK_STATS_KEY='tkm_rank_stats_v1';
@@ -140,6 +140,66 @@
     $('stickerCount').textContent=cards.filter(s=>s.unlocked).length+' / '+cards.length;
   }
   function unlockSticker(id){const got=new Set(unlockedStickers());got.add(id);localStorage.setItem(STICKER_KEY,JSON.stringify([...got]));renderStickers()}
+  function clubProgress(){
+    const ids=new Set([...achievementStats.unlocked,...unlockedStickers()]);
+    return {count:ids.size,total:stickerList.length,ready:ids.size>=3};
+  }
+  function renderMorsClub(){
+    const el=$('morsClubCount');if(!el)return;
+    const p=clubProgress(),fill=$('morsClubFill');
+    el.textContent=p.count+' / '+p.total+' odznak';
+    $('morsClubStatus').textContent=p.ready?'NIESPODZIANKA ODBLOKOWANA! Mors jest pod wrażeniem.':'Jeszcze '+Math.max(0,3-p.count)+' do morsowej niespodzianki.';
+    if(fill)fill.style.width=Math.min(100,p.count/p.total*100)+'%';
+    $('morsRewardTitle').textContent=p.ready?'🎉 Odblokowano morsową niespodziankę!':'🎁 Morsowa niespodzianka jest jeszcze zamknięta';
+    $('morsRewardText').textContent=p.ready?'Napisz do studia, pokaż swój dyplom i zapytaj o dostępne naklejki Morsa lub bonus do zamówienia. Studio potwierdzi aktualną nagrodę.':'Zdobądź 3 odznaki, a odblokujesz możliwość zapytania studia o naklejki Morsa lub bonus do zamówienia.';
+    $('morsRewardPanel').classList.toggle('unlocked',p.ready);
+  }
+  function diplomaTitle(){
+    const p=clubProgress();
+    if(achievementStats.wins>=10)return 'LEGENDA POJEDYNKÓW';
+    if(achievementStats.bestStreak>=5)return 'POSTRACH PLANSZY';
+    if(p.count>=7)return 'MISTRZ ABSURDU';
+    if(p.count>=3)return 'AMBASADOR MORSOWEGO CHAOSU';
+    if(achievementStats.played>=1)return 'ADEPT DWÓCH PROMILI ABSURDU';
+    return 'KANDYDAT NA ABSURDYSTĘ';
+  }
+  function createDiplomaCanvas(){
+    const canvas=document.createElement('canvas');canvas.width=1400;canvas.height=990;
+    const ctx=canvas.getContext('2d'),g=ctx.createLinearGradient(0,0,1400,990);
+    g.addColorStop(0,'#fff5a6');g.addColorStop(.52,'#fffdf4');g.addColorStop(1,'#ffd9e9');
+    ctx.fillStyle=g;ctx.fillRect(0,0,1400,990);
+    ctx.strokeStyle='#211f20';ctx.lineWidth=18;ctx.strokeRect(34,34,1332,922);
+    ctx.lineWidth=4;ctx.setLineDash([12,10]);ctx.strokeRect(62,62,1276,866);ctx.setLineDash([]);
+    ctx.textAlign='center';ctx.fillStyle='#211f20';
+    ctx.font='900 42px Arial';ctx.fillText('STUDIO ZIMNEGO SKŁADU',700,145);
+    ctx.font='900 108px Arial';ctx.fillText('DYPLOM ABSURDU',700,305);
+    ctx.font='900 112px Arial';ctx.fillStyle='#e52d83';ctx.fillText('🏅',700,465);
+    ctx.fillStyle='#211f20';ctx.font='800 38px Arial';ctx.fillText('niniejszym nadaje tytuł:',700,555);
+    ctx.font='900 66px Arial';ctx.fillStyle='#087d91';ctx.fillText(diplomaTitle(),700,655);
+    ctx.fillStyle='#211f20';ctx.font='700 34px Arial';ctx.fillText('dla: '+nick(),700,735);
+    ctx.font='700 25px Arial';ctx.fillText('Rozegrane partie: '+achievementStats.played+'   •   Wygrane: '+achievementStats.wins+'   •   Odznaki: '+clubProgress().count,700,805);
+    ctx.font='900 25px Arial';ctx.fillText('MORS POTWIERDZA. HRABIA MA ZASTRZEŻENIA.',700,885);
+    return canvas;
+  }
+  function downloadDiploma(){
+    const canvas=createDiplomaCanvas(),a=document.createElement('a');
+    a.download='dyplom-absurdu-'+nick().toLowerCase().replace(/[^a-z0-9-]+/g,'-')+'.png';
+    a.href=canvas.toDataURL('image/png');a.click();
+  }
+  function shareDiploma(){
+    const p=clubProgress();
+    const message='Mors oficjalnie nadał mi tytuł: '+diplomaTitle()+'! Mam '+p.count+' odznak w Kółko, Krzyżyk i Dwa Promile Absurdu. A Ty? 🦭🏅';
+    shareOnFacebook(message);
+  }
+  function contactMors(){
+    const p=clubProgress();
+    const message='Cześć! Wpadłem do gry Kółko, Krzyżyk i Dwa Promile Absurdu. Mój nick: '+nick()+'. Mam '+p.count+' odznak i tytuł: '+diplomaTitle()+'. Chciałbym zapytać o morsową niespodziankę / ofertę druku.';
+    const opened=window.open('https://m.me/61588530162365','_blank','noopener,noreferrer');
+    if(navigator.clipboard?.writeText)navigator.clipboard.writeText(message).then(()=>say('Wiadomość skopiowana — wklej ją w otwartym Messengerze.')).catch(()=>prompt('Skopiuj wiadomość do Messengera:',message));
+    else prompt('Skopiuj wiadomość do Messengera:',message);
+    if(!opened)say('Messenger zablokowany przez przeglądarkę. Otwórz go przyciskiem i wklej przygotowaną wiadomość.');
+  }
+
   const fortunePrizes=[
     {icon:'⭐',name:'Gwiazda studia',desc:'Mors przez 24 godziny nie będzie poprawiał kerningu. Podobno.'},
     {icon:'🦭',name:'Płetwa szczęścia',desc:'Możesz dziś pomylić pliki tylko dwa razy. Trzeci to już tradycja.'},
@@ -368,10 +428,13 @@
   $('createBtn').addEventListener('click',createRoom);$('joinBtn').addEventListener('click',()=>joinRoom($('roomInput').value));$('roomInput').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom(e.target.value)});$('roomInput').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));cells.forEach(c=>c.addEventListener('click',()=>move(+c.dataset.cell)));$('newRoundBtn').addEventListener('click',newRound);$('newMatchBtn').addEventListener('click',()=>{if(mode==='online'){say('Nowy turniej rozpocznijcie po uzgodnieniu z przeciwnikiem.');return}scores={tiger:0,mors:0};seriesWinner=null;roundId=makeRoundId();current=fresh();commentary('tiger');render();});
   $('shareInviteBtn')?.addEventListener('click',()=>shareOnFacebook('Rzucam Ci wyzwanie! Wybierz swoją maskotkę i spróbuj mnie pokonać w Kółko, Krzyżyk i Dwa Promile Absurdu. 🐯🦭'));
   $('copyLeadBtn')?.addEventListener('click',copyLeadMessage);
+  $('downloadDiplomaBtn')?.addEventListener('click',downloadDiploma);
+  $('shareDiplomaBtn')?.addEventListener('click',shareDiploma);
+  $('morsMessengerBtn')?.addEventListener('click',e=>{e.preventDefault();contactMors()});
   $('shareResultBtn')?.addEventListener('click',()=>{const result=current?.winner?(current.winner==='draw'?'Remis!':sideLabel(current.winner)+' wygrywa!'):'Dołącz do pojedynku!';shareOnFacebook('Mój pojedynek w Kółko, Krzyżyk i Dwa Promile Absurdu: '+result+' Wynik serii: Hrabia Poprawek '+scores.tiger+' : '+scores.mors+' Mors. Dasz radę lepiej? 🏆')});
   $('shareQuizBtn')?.addEventListener('click',()=>shareOnFacebook('Mój wynik w teście Mistrza Drukarni: '+quizPoints+' / '+printQuiz.length+' punktów! Sprawdź, czy znasz się na poligrafii. 🖨️'));
   $('copyBtn').addEventListener('click',async()=>{const url=location.origin+location.pathname+'?room='+room;try{await navigator.clipboard.writeText(url);$('copyBtn').textContent='SKOPIOWANO ✓';setTimeout(()=>$('copyBtn').textContent='KOPIUJ LINK ↗',1800)}catch{prompt('Skopiuj link:',url)}});
-  $('leaveBtn').addEventListener('click',()=>{if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);$('newBriefBtn')?.addEventListener('click',newPrintBrief);renderDailyMissions();renderStickers();renderFortune();loadLeaderboard();
+  $('leaveBtn').addEventListener('click',()=>{if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);$('newBriefBtn')?.addEventListener('click',newPrintBrief);renderDailyMissions();renderStickers();renderMorsClub();renderFortune();loadLeaderboard();
   $('saveNameBtn').addEventListener('click',()=>{const n=$('nameInput').value.trim().slice(0,18);if(!n){say('Wpisz swój nick.');return}localStorage.setItem('tkm_nick',n);$('playerName').textContent=n;say('Nick zapisany na tym urządzeniu!')});$('nameInput').value=nick();
   if($('cpuDifficulty'))$('cpuDifficulty').value=cpuDifficulty;
   $('cpuDifficulty')?.addEventListener('change',e=>{cpuDifficulty=e.target.value;localStorage.setItem('tkm_cpu_difficulty',cpuDifficulty)});
