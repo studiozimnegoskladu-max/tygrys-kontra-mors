@@ -9,7 +9,7 @@
   <meta property="og:description" content="Wybierz maskotkę, zagraj ze znajomym i sprawdź, kto rządzi na planszy. Gra od Studio Zimnego Składu.">
   <meta property="og:url" content="https://studiozimnegoskladu-max.github.io/tygrys-kontra-mors/">
   <title>Kółko, Krzyżyk i Dwa Promile Absurdu — Studio Zimnego Składu</title>
-  <link rel="stylesheet" href="style.css?v=20261105-4">
+  <link rel="stylesheet" href="style.css?v=20261105-5">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -116,6 +116,15 @@
         <p>Zdobywaj je podczas gry i quizu. Każda ma swoją historię!</p>
         <div id="stickerGrid" class="sticker-grid"></div>
       </section>
+
+      <section class="mors-club-panel" aria-labelledby="morsClubHeading">
+        <div class="mors-club-top"><div><small>KLUB ZASŁUŻONYCH ABSURDYSTÓW</small><h2 id="morsClubHeading">🏅 BAZA MORSOWYCH TAJEMNIC</h2><p>Zbieraj odznaki, odbieraj dyplomy i odblokuj morsową niespodziankę.</p></div><div class="mors-club-stamp">KLUB<br>SZS<br>★</div></div>
+        <div class="mors-club-progress"><div><b id="morsClubCount">0 odznak</b><small id="morsClubStatus">Pierwsza odznaka czeka na zdobycie.</small></div><div class="mors-club-track"><span id="morsClubFill"></span></div></div>
+        <div class="diploma-card"><div class="diploma-copy"><b>TWÓJ DYPLOM ABSURDU</b><small>Stwórz własny dyplom i pochwal się nim znajomym.</small></div><div class="diploma-actions"><button type="button" id="downloadDiplomaBtn" class="btn btn-dark">POBIERZ DYPLOM PNG ↓</button><button type="button" id="shareDiplomaBtn" class="btn btn-facebook">POCHWAL SIĘ NA FACEBOOKU</button></div></div>
+        <div class="mors-reward" id="morsRewardPanel"><div class="mors-reward-icon">🎁</div><div class="mors-reward-copy"><b id="morsRewardTitle">Morsowa niespodzianka jest jeszcze zamknięta</b><p id="morsRewardText">Zdobądź 3 odznaki, a odblokujesz możliwość zapytania studia o naklejki Morsa lub bonus do zamówienia.</p></div></div>
+        <a class="btn btn-messenger mors-contact-btn" id="morsMessengerBtn" href="https://m.me/61588530162365" target="_blank" rel="noopener noreferrer">✉ NAPISZ DO MORSa NA MESSENGERZE</a>
+        <small class="mors-reward-note">Nagrody rzeczowe i bonusy potwierdza Studio Zimnego Składu w rozmowie. Odznaki i postęp są zapisywane na tym urządzeniu.</small>
+      </section>
       <section class="quiz-panel" aria-labelledby="quizHeading">
         <div class="quiz-kicker">🖨️ EGZAMIN BEZ STRESU (PRAWIE)</div><h2 id="quizHeading">CZY JESTEŚ MISTRZEM DRUKARNI?</h2>
         <p class="quiz-intro">10 pytań z poligrafii, grafiki i przygotowania plików. Sprawdź, czy ogarniasz temat, czy tylko ładnie klikasz.</p>
@@ -155,6 +164,6 @@
     <footer>MADE WITH <span>♥</span> AND A LITTLE BIT OF CHAOS · <img class="footer-logo" src="assets/szs-logo.png?v=20261105-2" alt="Studio Zimnego Składu"></footer>
   </main>
   <script src="config.js"></script>
-  <script src="app.js?v=20261105-4"></script>
+  <script src="app.js?v=20261105-5"></script>
 </body>
 </html>
