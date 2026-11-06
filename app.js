@@ -438,7 +438,46 @@
   $('shareResultBtn')?.addEventListener('click',()=>{const result=current?.winner?(current.winner==='draw'?'Remis!':sideLabel(current.winner)+' wygrywa!'):'Dołącz do pojedynku!';shareOnFacebook('Mój pojedynek w Kółko, Krzyżyk i Dwa Promile Absurdu: '+result+' Wynik serii: Hrabia Poprawek '+scores.tiger+' : '+scores.mors+' Mors. Dasz radę lepiej? 🏆')});
   $('shareQuizBtn')?.addEventListener('click',()=>shareOnFacebook('Mój wynik w teście Mistrza Drukarni: '+quizPoints+' / '+printQuiz.length+' punktów! Sprawdź, czy znasz się na poligrafii. 🖨️'));
   $('copyBtn').addEventListener('click',async()=>{const url=location.origin+location.pathname+'?room='+room;try{await navigator.clipboard.writeText(url);$('copyBtn').textContent='SKOPIOWANO ✓';setTimeout(()=>$('copyBtn').textContent='KOPIUJ LINK ↗',1800)}catch{prompt('Skopiuj link:',url)}});
-  $('leaveBtn').addEventListener('click',()=>{if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);$('newBriefBtn')?.addEventListener('click',newPrintBrief);renderDailyMissions();renderStickers();renderMorsClub();renderFortune();loadLeaderboard();
+  $('leaveBtn').addEventListener('click',()=>{if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);$('newBriefBtn')?.addEventListener('click',newPrintBrief);
+  // Morsowy Park Absurdu — minigry używają wyłącznie oryginalnego assets/mors.png.
+  function initMiniArcade(){
+    const colors=[{id:'cyan',name:'CYAN',hex:'#00a9ce'},{id:'magenta',name:'MAGENTA',hex:'#ec268f'},{id:'yellow',name:'ŻÓŁTY',hex:'#ffe600'},{id:'black',name:'CZARNY',hex:'#211f24'}];
+    let paintTimer=null,paintTime=20,paintScore=0,paintTarget='cyan';
+    const paintPlay=$('paintPlay'),paintChoices=$('paintChoices'),paintPrompt=$('paintPrompt'),paintStatus=$('paintStatus');
+    function nextPaint(){
+      paintTarget=colors[Math.floor(Math.random()*3)].id;
+      paintPrompt.textContent='ŁAP '+colors.find(c=>c.id===paintTarget).name+'!';
+      const opts=[...colors].sort(()=>Math.random()-.5);
+      paintChoices.innerHTML=opts.map(c=>'<button type="button" class="paint-chip paint-'+c.id+'" data-paint="'+c.id+'" aria-label="'+c.name+'"></button>').join('');
+    }
+    $('paintStart')?.addEventListener('click',()=>{
+      clearInterval(paintTimer);paintScore=0;paintTime=20;paintPlay.classList.remove('hidden');$('paintStart').classList.add('hidden');paintStatus.textContent='Wynik: 0 · Zostało 20 sekund';nextPaint();
+      paintTimer=setInterval(()=>{paintTime--;paintStatus.textContent='Wynik: '+paintScore+' · Zostało '+paintTime+' sekund';if(paintTime<=0){clearInterval(paintTimer);paintChoices.innerHTML='';paintPrompt.textContent='KONIEC FARBOBRANIA!';paintStatus.textContent='Mors zdobył '+paintScore+' punktów. '+(paintScore>=12?'Ale chlupnęło CMYK-iem!':'Trening czyni drukarza.');$('paintStart').textContent='JESZCZE RAZ ↻';$('paintStart').classList.remove('hidden')}},1000);
+    });
+    paintChoices?.addEventListener('click',e=>{const b=e.target.closest('[data-paint]');if(!b||paintTime<=0)return;if(b.dataset.paint===paintTarget){paintScore+=2;paintStatus.textContent='DOBRZE! +2 · Wynik: '+paintScore; }else{paintScore=Math.max(0,paintScore-1);paintStatus.textContent='OJOJ! ZŁY KOLOR · Wynik: '+paintScore}nextPaint()});
+    // Fontowy Bałagan: 3 znaki mają tę samą kreskę, jeden jest typograficznym intruzem.
+    let fontRound=0,fontScore=0,fontOdd=0;
+    const fontPlay=$('fontPlay'),fontChoices=$('fontChoices'),fontStatus=$('fontStatus');
+    function nextFont(){
+      fontOdd=Math.floor(Math.random()*4);
+      const glyphs=['A','R','S','Z','M','K','O','Ł','W','Ż'];
+      const letter=glyphs[Math.floor(Math.random()*glyphs.length)];
+      fontChoices.innerHTML=Array.from({length:4},(_,i)=>'<button type="button" class="font-sample '+(i===fontOdd?'font-intruder':'font-normal')+'" data-font="'+i+'">'+letter+'</button>').join('');
+      fontStatus.textContent='Runda '+(fontRound+1)+' z 8 · Punkty: '+fontScore;
+    }
+    $('fontStart')?.addEventListener('click',()=>{fontRound=0;fontScore=0;fontPlay.classList.remove('hidden');$('fontStart').classList.add('hidden');$('fontPrompt').textContent='ZNAJDŹ TYPOGRAFICZNEGO INTRUZA!';nextFont()});
+    fontChoices?.addEventListener('click',e=>{const b=e.target.closest('[data-font]');if(!b)return;if(Number(b.dataset.font)===fontOdd){fontScore++;b.classList.add('font-right')}else{b.classList.add('font-wrong')}fontRound++;if(fontRound>=8){fontChoices.innerHTML='';$('fontPrompt').textContent=fontScore>=6?'OKO TYPOGRAFA!':'MORS WIDZIAŁ GORSZE PROJEKTY…';fontStatus.textContent='Wynik: '+fontScore+' / 8. '+(fontScore===8?'Ani jednej literowej wtopy!':'Jeszcze kilka rund i będziesz fontowym ninja.');$('fontStart').textContent='GRAM PONOWNIE ↻';$('fontStart').classList.remove('hidden')}else{setTimeout(nextFont,260)}});
+    // Morsowanie: seria 10 sygnałów do skoku, bez odruchowego klikania na ślepo.
+    let iceRound=0,iceHits=0,iceReady=false,iceTimer=null,iceWindow=null;
+    const icePlay=$('icePlay'),iceJump=$('iceJump'),icePrompt=$('icePrompt'),iceStatus=$('iceStatus');
+    function finishIce(){clearTimeout(iceTimer);clearTimeout(iceWindow);iceReady=false;iceJump.disabled=true;icePrompt.textContent='KONIEC MORSOWANIA!';$('iceWater').textContent='🏆 ❄️ 🏆';iceStatus.textContent='Udane skoki: '+iceHits+' / 10. '+(iceHits>=8?'Lodowy kozak!':'Mors zaleca rozgrzewkę.');$('iceStart').textContent='JESZCZE JEDNA KĄPIEL ↻';$('iceStart').classList.remove('hidden')}
+    function scheduleIce(){if(iceRound>=10){finishIce();return}icePrompt.textContent='CZEKAJ…';$('iceWater').textContent='🌊  🧊  🌊';iceJump.disabled=true;iceReady=false;iceTimer=setTimeout(()=>{iceReady=true;icePrompt.textContent='TERAZ! SKACZ!!!';$('iceWater').textContent='💦  🧊  💦';iceJump.disabled=false;iceStatus.textContent='SKOK, PŁETWO!';iceWindow=setTimeout(()=>{if(!iceReady)return;iceReady=false;iceRound++;iceJump.disabled=true;iceStatus.textContent='CHLUP! Przegapiona kra. '+iceRound+'/10';scheduleIce()},1050)},650+Math.random()*1450)}
+    $('iceStart')?.addEventListener('click',()=>{clearTimeout(iceTimer);clearTimeout(iceWindow);iceRound=0;iceHits=0;icePlay.classList.remove('hidden');$('iceStart').classList.add('hidden');iceStatus.textContent='10 lodowych przeszkód. Czekaj na sygnał!';scheduleIce()});
+    iceJump?.addEventListener('click',()=>{if(!iceReady)return;iceReady=false;clearTimeout(iceWindow);iceRound++;iceHits++;iceJump.disabled=true;iceStatus.textContent='PIĘKNY SKOK! '+iceRound+'/10';$('iceWater').textContent='💥  🦭  💥';setTimeout(scheduleIce,420)});
+  }
+
+  initMiniArcade();
+  renderDailyMissions();renderStickers();renderMorsClub();renderFortune();loadLeaderboard();
   $('saveNameBtn').addEventListener('click',()=>{const n=$('nameInput').value.trim().slice(0,18);if(!n){say('Wpisz swój nick.');return}localStorage.setItem('tkm_nick',n);$('playerName').textContent=n;say('Nick zapisany na tym urządzeniu!')});$('nameInput').value=nick();
   if($('cpuDifficulty'))$('cpuDifficulty').value=cpuDifficulty;
   $('cpuDifficulty')?.addEventListener('change',e=>{cpuDifficulty=e.target.value;localStorage.setItem('tkm_cpu_difficulty',cpuDifficulty)});
