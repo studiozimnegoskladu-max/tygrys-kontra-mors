@@ -209,7 +209,7 @@
     {icon:'🐯',name:'Hrabia kontruje',desc:'Powiedz z kamienną twarzą: „to już ostatnia poprawka”. Hrabia Poprawek parska śmiechem.'},
     {icon:'🖨️',name:'Spad czy nie spad?',desc:'Pokaż rękami, gdzie kończy się format netto, a zaczyna spad. Bez używania słowa „no”.'},
     {icon:'✨',name:'Brief z kosmosu',desc:'Wymyśl absurdalne zlecenie dla studia: np. wizytówki dla UFO albo baner dla yeti.'},
-    {icon:'🍬',name:'KRÓWKOWY JACKPOT SZS!',desc:'Wygrywasz garść krówek z nadrukiem Studio Zimnego Składu! Zrób zrzut ekranu wyniku i napisz do nas na Messengerze. Odbiór osobisty albo dorzucimy słodkości do Twojego zamówienia.'}
+    {icon:'🍬',name:'KRÓWKOWY JACKPOT SZS!',desc:'Wygrywasz garść krówek z nadrukiem Studio Zimnego Składu! Zrób zrzut ekranu wyniku i napisz do nas na Messengerze — wyślemy słodką nagrodę razem z Twoim zamówieniem.'}
   ];
   function fortuneDate(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
   function renderFortune(){
