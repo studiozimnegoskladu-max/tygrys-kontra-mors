@@ -209,12 +209,13 @@
     {icon:'🐯',name:'Hrabia kontruje',desc:'Powiedz z kamienną twarzą: „to już ostatnia poprawka”. Hrabia Poprawek parska śmiechem.'},
     {icon:'🖨️',name:'Spad czy nie spad?',desc:'Pokaż rękami, gdzie kończy się format netto, a zaczyna spad. Bez używania słowa „no”.'},
     {icon:'✨',name:'Brief z kosmosu',desc:'Wymyśl absurdalne zlecenie dla studia: np. wizytówki dla UFO albo baner dla yeti.'},
-    {icon:'🎟️',name:'Fontowy detektyw',desc:'Wskaż najbliższy napis i zgadnij, czy to Arial, czy „jakaś podobna, tylko ładniejsza”.'}
+    {icon:'🍬',name:'KRÓWKOWY JACKPOT SZS!',desc:'Wygrywasz garść krówek z nadrukiem Studio Zimnego Składu! Zrób zrzut ekranu wyniku i napisz do nas na Messengerze. Odbiór osobisty albo dorzucimy słodkości do Twojego zamówienia.'}
   ];
   function fortuneDate(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
   function renderFortune(){
     let saved={};try{saved=JSON.parse(localStorage.getItem(FORTUNE_KEY)||'{}')||{}}catch{}
-    const done=saved.date===fortuneDate(),wheel=$('fortuneWheel'),button=$('spinFortuneBtn');
+    const done=saved.date===fortuneDate(),wheel=$('fortuneWheel'),button=$('spinFortuneBtn'),claim=$('fortuneClaimLink');
+    if(claim)claim.hidden=!(done&&saved.prizeIndex===7);
     if(wheel&&done&&Number.isFinite(saved.rotation)){wheel.style.transition='none';wheel.style.transform='rotate('+saved.rotation+'deg)'}
     button.disabled=done;button.textContent=done?'WRÓĆ JUTRO PO KOLEJNY OBRÓT':'ZAKRĘĆ KOŁEM ABSURDU!';
     $('fortuneResult').textContent=done?(saved.prize||'Dziś już zakręcono kołem!'):'Koło czeka na pierwszy obrót…';
@@ -231,7 +232,7 @@
     if(wheel){wheel.style.transition='none';wheel.style.transform='rotate(0deg)';void wheel.offsetWidth;wheel.style.transition='transform 4.6s cubic-bezier(.12,.72,.12,1)';wheel.style.transform='rotate('+rotation+'deg)'}
     window.setTimeout(()=>{
       localStorage.setItem(FORTUNE_KEY,JSON.stringify({date:fortuneDate(),prize,prizeIndex:index,rotation}));
-      result.textContent=prize;stage?.classList.remove('spinning');button.textContent='WRÓĆ JUTRO PO KOLEJNY OBRÓT';
+      result.textContent=prize;stage?.classList.remove('spinning');const claim=$('fortuneClaimLink');if(claim)claim.hidden=index!==7;button.textContent='WRÓĆ JUTRO PO KOLEJNY OBRÓT';
       note.textContent='Wylosowano! Mors zatwierdza tę decyzję, Koza Krzycha nie zgłasza reklamacji.';
       unlockSticker('fortune-spin');
     },4700);
