@@ -202,14 +202,14 @@
   }
 
   const fortunePrizes=[
-    {icon:'⭐',name:'Gwiazda studia',desc:'Mors przez 24 godziny nie będzie poprawiał kerningu. Podobno.'},
-    {icon:'🦭',name:'Płetwa szczęścia',desc:'Możesz dziś pomylić pliki tylko dwa razy. Trzeci to już tradycja.'},
-    {icon:'🎨',name:'Kolorowy dzień',desc:'Wszystkie kolory trafiają w punkt. Nawet ten „prawie taki sam”.'},
-    {icon:'☕',name:'Kawa operatora',desc:'Przysługuje Ci przerwa. Mors pilnuje ekspresu i podjada ciastka.'},
-    {icon:'🐯',name:'Poprawkowy Pazur',desc:'Hrabia zatwierdza Twój projekt bez komentarza. Cud większy niż cud.'},
-    {icon:'🖨️',name:'Drukarski fart',desc:'Plik ma spady, fonty i właściwy format. Nie płacz, to ze szczęścia.'},
-    {icon:'✨',name:'Bonus kreatywności',desc:'Masz dziś pomysł tak dobry, że klient napisze tylko: „super, drukujemy”.'},
-    {icon:'🎟️',name:'Złoty kupon',desc:'Wirtualny kupon na święty spokój. Ważny do pierwszej poprawki.'}
+    {icon:'⭐',name:'Klient: „zrób większe”',desc:'Pokaż palcami, jak duże jest „trochę większe”. Mors i tak poprosi o jeszcze 2 mm.'},
+    {icon:'🦭',name:'Płetwa grafika',desc:'Wymyśl w 10 sekund hasło reklamowe dla morsiej budki z goframi. Ma się rymować z CMYK.'},
+    {icon:'🎨',name:'CMYKowy zawrót głowy',desc:'Wymień cztery składowe CMYK bez zaglądania do internetu. Mors sprawdza!' },
+    {icon:'☕',name:'Kawa operatora',desc:'Zrób minę człowieka, który właśnie usłyszał: „wysłałem plik w Wordzie, może być?”'},
+    {icon:'🐯',name:'Hrabia kontruje',desc:'Powiedz z kamienną twarzą: „to już ostatnia poprawka”. Hrabia Poprawek parska śmiechem.'},
+    {icon:'🖨️',name:'Spad czy nie spad?',desc:'Pokaż rękami, gdzie kończy się format netto, a zaczyna spad. Bez używania słowa „no”.'},
+    {icon:'✨',name:'Brief z kosmosu',desc:'Wymyśl absurdalne zlecenie dla studia: np. wizytówki dla UFO albo baner dla yeti.'},
+    {icon:'🎟️',name:'Fontowy detektyw',desc:'Wskaż najbliższy napis i zgadnij, czy to Arial, czy „jakaś podobna, tylko ładniejsza”.'}
   ];
   function fortuneDate(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
   function renderFortune(){
@@ -223,15 +223,15 @@
   function spinFortune(){
     let saved={};try{saved=JSON.parse(localStorage.getItem(FORTUNE_KEY)||'{}')||{}}catch{}
     if(saved.date===fortuneDate())return;
-    const wheel=$('fortuneWheel'),button=$('spinFortuneBtn'),result=$('fortuneResult'),note=$('fortuneNote');
+    const wheel=$('fortuneWheel'),button=$('spinFortuneBtn'),result=$('fortuneResult'),note=$('fortuneNote'),stage=document.querySelector('.fortune-wheel-stage');
     const index=Math.floor(Math.random()*fortunePrizes.length),p=fortunePrizes[index];
     const center=index*45+22.5,rotation=2160+(360-center),prize=p.icon+' '+p.name+' — '+p.desc;
-    button.disabled=true;button.textContent='MORS KRĘCI…';result.textContent='Trwa losowanie. Nie podglądać, to uczciwy chaos!';
+    button.disabled=true;button.textContent='MORS KRĘCI…';stage?.classList.add('spinning');result.textContent='Trwa losowanie. Nie podglądać, to uczciwy chaos!';
     note.textContent='Koza Krzycha pilnuje, żeby nikt nie oszukiwał.';
     if(wheel){wheel.style.transition='none';wheel.style.transform='rotate(0deg)';void wheel.offsetWidth;wheel.style.transition='transform 4.6s cubic-bezier(.12,.72,.12,1)';wheel.style.transform='rotate('+rotation+'deg)'}
     window.setTimeout(()=>{
       localStorage.setItem(FORTUNE_KEY,JSON.stringify({date:fortuneDate(),prize,prizeIndex:index,rotation}));
-      result.textContent=prize;button.textContent='WRÓĆ JUTRO PO KOLEJNY OBRÓT';
+      result.textContent=prize;stage?.classList.remove('spinning');button.textContent='WRÓĆ JUTRO PO KOLEJNY OBRÓT';
       note.textContent='Wylosowano! Mors zatwierdza tę decyzję, Koza Krzycha nie zgłasza reklamacji.';
       unlockSticker('fortune-spin');
     },4700);
