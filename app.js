@@ -221,10 +221,12 @@
     $('fortuneResult').textContent=done?(saved.prize||'Dziś już zakręcono kołem!'):'Koło czeka na pierwszy obrót…';
     $('fortuneNote').textContent=done?'Dzisiejsza niespodzianka jest już Twoja.':'Jedno losowanie dziennie. Wynik zapisze się na tym urządzeniu.';
   }
+
+  $('closeCandyJackpot')?.addEventListener('click',()=>{$('candyJackpot').hidden=true;document.body.classList.remove('jackpot-open')});
   function spinFortune(){
     let saved={};try{saved=JSON.parse(localStorage.getItem(FORTUNE_KEY)||'{}')||{}}catch{}
     if(saved.date===fortuneDate())return;
-    const wheel=$('fortuneWheel'),button=$('spinFortuneBtn'),result=$('fortuneResult'),note=$('fortuneNote'),stage=document.querySelector('.fortune-wheel-stage');
+    const wheel=$('fortuneWheel'),button=$('spinFortuneBtn'),result=$('fortuneResult'),note=$('fortuneNote'),stage=document.querySelector('.fortune-wheel-stage');const jackpot=$('candyJackpot');
     const index=Math.floor(Math.random()*fortunePrizes.length),p=fortunePrizes[index];
     const center=index*45+22.5,rotation=2160+(360-center),prize=p.icon+' '+p.name+' — '+p.desc;
     button.disabled=true;button.textContent='MORS KRĘCI…';stage?.classList.add('spinning');result.textContent='Trwa losowanie. Nie podglądać, to uczciwy chaos!';
@@ -232,7 +234,7 @@
     if(wheel){wheel.style.transition='none';wheel.style.transform='rotate(0deg)';void wheel.offsetWidth;wheel.style.transition='transform 4.6s cubic-bezier(.12,.72,.12,1)';wheel.style.transform='rotate('+rotation+'deg)'}
     window.setTimeout(()=>{
       localStorage.setItem(FORTUNE_KEY,JSON.stringify({date:fortuneDate(),prize,prizeIndex:index,rotation}));
-      result.textContent=prize;stage?.classList.remove('spinning');const claim=$('fortuneClaimLink');if(claim)claim.hidden=index!==7;button.textContent='WRÓĆ JUTRO PO KOLEJNY OBRÓT';
+      result.textContent=prize;stage?.classList.remove('spinning');const claim=$('fortuneClaimLink');if(claim)claim.hidden=index!==7;if(index===7&&jackpot){jackpot.hidden=false;document.body.classList.add('jackpot-open');window.setTimeout(()=>{jackpot.hidden=true;document.body.classList.remove('jackpot-open')},7500)}button.textContent='WRÓĆ JUTRO PO KOLEJNY OBRÓT';
       note.textContent='Wylosowano! Mors zatwierdza tę decyzję, Koza Krzycha nie zgłasza reklamacji.';
       unlockSticker('fortune-spin');
     },4700);
