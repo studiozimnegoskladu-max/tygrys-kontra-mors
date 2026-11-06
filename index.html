@@ -9,7 +9,7 @@
   <meta property="og:description" content="Wybierz maskotkę, zagraj ze znajomym i sprawdź, kto rządzi na planszy. Gra od Studio Zimnego Składu.">
   <meta property="og:url" content="https://studiozimnegoskladu-max.github.io/tygrys-kontra-mors/">
   <title>Kółko, Krzyżyk i Dwa Promile Absurdu — Studio Zimnego Składu</title>
-  <link rel="stylesheet" href="style.css?v=20261106-7">
+  <link rel="stylesheet" href="style.css?v=20261106-8">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -136,7 +136,38 @@
         <div class="quiz-play hidden" id="quizPlay"><div class="quiz-progress"><span id="quizProgress">PYTANIE 1 / 10</span><span id="quizScore">PUNKTY: 0</span></div><div class="quiz-track"><span id="quizTrackFill"></span></div><h3 id="quizQuestion"></h3><div class="quiz-options" id="quizOptions"></div><p class="quiz-feedback" id="quizFeedback" aria-live="polite"></p><button type="button" class="btn btn-yellow hidden" id="quizNextBtn">DALEJ →</button></div>
         <div class="quiz-result hidden" id="quizResult" aria-live="polite"><div class="quiz-result-icon" id="quizResultIcon">🏆</div><h3 id="quizResultTitle"></h3><p id="quizResultText"></p><div class="quiz-final-score" id="quizFinalScore"></div><button type="button" class="btn btn-facebook" id="shareQuizBtn">f POCHWAL SIĘ WYNIKIEM</button><button type="button" class="btn btn-yellow" id="quizAgainBtn">GRAM JESZCZE RAZ ↻</button></div>
       </section>
-      <section class="social-bridge"><div class="social-bridge-copy"><small>PUŚĆ MORSIKA W ŚWIAT</small><b>Znajomy też da radę Cię pokonać?</b><p>Rzuć mu wyzwanie na Facebooku. Niech zacznie się pojedynek!</p></div><button type="button" id="shareInviteBtn" class="btn btn-facebook">f&nbsp; WYŚLIJ WYZWANIE NA FACEBOOKA</button><a href="https://m.me/61588530162365" target="_blank" rel="noopener noreferrer" class="btn btn-messenger">✉ NAPISZ DO NAS NA MESSENGERZE</a><a href="https://www.facebook.com/profile.php?id=61588530162365" target="_blank" rel="noopener noreferrer" class="btn btn-outline">f ODWIEDŹ NASZ FACEBOOK</a><button type="button" id="copyLeadBtn" class="btn btn-outline">SKOPIUJ WIADOMOŚĆ DO STUDIA</button></section><p id="setupMessage" class="message" aria-live="polite"></p>
+      
+      <section class="mini-arcade" aria-labelledby="miniArcadeHeading">
+        <div class="mini-arcade-heading"><div><small>NOWA STREFA ZABAWY · EDYCJA SZS</small><h2 id="miniArcadeHeading">🎮 MORSOWY PARK ABSURDU</h2><p>Trzy krótkie gry. Zero nudy. Dużo farby, lodu i drukarskich wpadek.</p></div><img src="assets/mors.png" alt="Oryginalny Mors Studio Zimnego Składu"></div>
+        <div class="mini-game-grid">
+          <article class="mini-game-card paint-game">
+            <div class="mini-game-art"><span class="comic-burst">CMYK!</span><img src="assets/mors.png" alt="Mors"></div>
+            <div class="mini-game-copy"><small>GRA 01 · REFLEKS</small><h3>MORS KONTRA PLAMA</h3><p>Łap wskazany kolor farby. Uważaj, bo drukarski bałagan nie wybacza!</p></div>
+            <div class="mini-game-play hidden" id="paintPlay">
+              <b id="paintPrompt">ŁAP CYAN!</b><div id="paintChoices" class="paint-choices"></div><small id="paintStatus" aria-live="polite">Masz 20 sekund. Nie łap czerni!</small>
+            </div>
+            <button type="button" class="btn btn-yellow mini-start" id="paintStart">ODPALAM PLAMY ↗</button>
+          </article>
+          <article class="mini-game-card font-game">
+            <div class="mini-game-art"><span class="comic-burst pink-burst">FONT!</span><img src="assets/mors.png" alt="Mors"></div>
+            <div class="mini-game-copy"><small>GRA 02 · SPOSTRZEGAWCZOŚĆ</small><h3>FONTOWY BAŁAGAN</h3><p>Trzy litery wyglądają normalnie, jedna udaje, że jest z innej drukarni. Znajdź intruza!</p></div>
+            <div class="mini-game-play hidden" id="fontPlay">
+              <b id="fontPrompt">KTÓRA LITERA SIĘ WYŁAMUJE?</b><div id="fontChoices" class="font-choices"></div><small id="fontStatus" aria-live="polite">Runda 1 z 8</small>
+            </div>
+            <button type="button" class="btn btn-yellow mini-start" id="fontStart">SZUKAM FONTU ↗</button>
+          </article>
+          <article class="mini-game-card ice-game">
+            <div class="mini-game-art"><span class="comic-burst blue-burst">Brrr!</span><img src="assets/mors.png" alt="Mors"></div>
+            <div class="mini-game-copy"><small>GRA 03 · REFLEKS</small><h3>MORSOWANIE EKSTREMALNE</h3><p>Wskakuj na krę, kiedy pojawi się sygnał. Nie skacz za wcześnie, bo chlupniesz!</p></div>
+            <div class="mini-game-play hidden" id="icePlay">
+              <b id="icePrompt">CZEKAJ NA KRĘ!</b><div class="ice-water" id="iceWater">🌊 ❄️ 🌊</div><button type="button" class="btn btn-dark ice-jump" id="iceJump" disabled>SKACZ!</button><small id="iceStatus" aria-live="polite">Złap rytm lodowej fali.</small>
+            </div>
+            <button type="button" class="btn btn-yellow mini-start" id="iceStart">WCHODZĘ DO WODY ↗</button>
+          </article>
+        </div>
+        <p class="mini-arcade-foot"><img src="assets/mors.png" alt=""> Wszystkie gry z udziałem tego samego, oryginalnego Morsa. Żadnych podróbek płetwiastych!</p>
+      </section>
+<section class="social-bridge"><div class="social-bridge-copy"><small>PUŚĆ MORSIKA W ŚWIAT</small><b>Znajomy też da radę Cię pokonać?</b><p>Rzuć mu wyzwanie na Facebooku. Niech zacznie się pojedynek!</p></div><button type="button" id="shareInviteBtn" class="btn btn-facebook">f&nbsp; WYŚLIJ WYZWANIE NA FACEBOOKA</button><a href="https://m.me/61588530162365" target="_blank" rel="noopener noreferrer" class="btn btn-messenger">✉ NAPISZ DO NAS NA MESSENGERZE</a><a href="https://www.facebook.com/profile.php?id=61588530162365" target="_blank" rel="noopener noreferrer" class="btn btn-outline">f ODWIEDŹ NASZ FACEBOOK</a><button type="button" id="copyLeadBtn" class="btn btn-outline">SKOPIUJ WIADOMOŚĆ DO STUDIA</button></section><p id="setupMessage" class="message" aria-live="polite"></p>
     </section>
 
     <section id="game" class="panel game-panel hidden">
@@ -168,6 +199,6 @@
     <footer>MADE WITH <span>♥</span> AND A LITTLE BIT OF CHAOS · <img class="footer-logo" src="assets/szs-logo.png?v=20261105-2" alt="Studio Zimnego Składu"></footer>
   </main>
   <script src="config.js"></script>
-  <script src="app.js?v=20261106-7"></script>
+  <script src="app.js?v=20261106-8"></script>
 </body>
 </html>
