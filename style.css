@@ -168,3 +168,6 @@ body:before{content:"";position:fixed;z-index:-1;pointer-events:none;width:42vw;
 
 .fortune-claim-link{display:inline-flex;margin:10px auto 0;max-width:100%;text-align:center;justify-content:center;white-space:normal;background:#ec268f;color:#fff;border:3px solid #211f24;box-shadow:3px 3px 0 #211f24}
 .fortune-claim-link[hidden]{display:none}
+
+
+.fortune-candy-art{display:block;width:min(210px,54vw);height:auto;margin:8px auto 12px;filter:drop-shadow(3px 4px 0 rgba(33,31,36,.22))}
