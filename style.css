@@ -174,3 +174,52 @@ body:before{content:"";position:fixed;z-index:-1;pointer-events:none;width:42vw;
 
 /* KRÓWKOWE BUUUM — wystrzałowa nagroda z oryginalnym Morsem SZS */
 .candy-jackpot[hidden]{display:none!important}.candy-jackpot{position:fixed;z-index:5000;inset:0;display:grid;place-items:center;overflow:hidden;padding:14px;background:rgba(22,20,24,.88);isolation:isolate}.jackpot-burst{position:absolute;inset:-30%;z-index:-1;background:repeating-conic-gradient(from 4deg,#ffe600 0deg 10deg,#ec268f 10deg 18deg,#00a9ce 18deg 27deg,#fff 27deg 32deg);clip-path:polygon(50% 0,57% 34%,75% 8%,68% 40%,100% 28%,72% 52%,98% 70%,64% 66%,76% 100%,51% 72%,30% 100%,38% 66%,0 76%,32% 52%,0 30%,38% 39%,25% 0,48% 34%);animation:jackpotBlast .75s cubic-bezier(.1,.8,.2,1) both}.jackpot-confetti{position:absolute;inset:0;display:grid;place-items:center;color:#ffe600;font-size:clamp(24px,6vw,62px);font-weight:1000;letter-spacing:1.2em;text-shadow:3px 3px #211f24;animation:jackpotConfetti 1.8s ease-out infinite alternate;pointer-events:none}.jackpot-card{position:relative;width:min(100%,680px);max-height:94dvh;overflow:auto;text-align:center;padding:clamp(14px,3vw,28px);border:5px solid #211f24;border-radius:24px;background:#fff8d7;box-shadow:9px 10px 0 #211f24;animation:jackpotCard .65s cubic-bezier(.15,1.55,.35,1) both}.jackpot-kicker{display:inline-block;padding:7px 13px;background:#ec268f;color:#fff;border:3px solid #211f24;font:1000 clamp(13px,2.6vw,20px) 'Barlow Condensed';transform:rotate(-2deg);box-shadow:3px 3px #211f24}.jackpot-art-row{display:flex;align-items:center;justify-content:center;gap:clamp(2px,2vw,20px);margin:4px auto 0;max-height:clamp(180px,37vh,330px)}.jackpot-mors{width:auto;height:clamp(170px,34vh,300px);max-width:46%;object-fit:contain;filter:drop-shadow(4px 5px 0 #211f24);animation:jackpotMors .9s ease-in-out infinite alternate}.jackpot-candies{width:48%;max-height:clamp(130px,28vh,240px);object-fit:contain;filter:drop-shadow(3px 4px 0 #211f24);animation:jackpotCandy .8s ease-in-out infinite alternate}.jackpot-card h2{margin:0;color:#ec268f;font:1000 clamp(34px,8vw,68px)/.95 'Barlow Condensed';letter-spacing:-1px;-webkit-text-stroke:1px #211f24;text-shadow:3px 4px #211f24;transform:rotate(-2deg)}.jackpot-card p{margin:12px 0 8px;font:1000 clamp(15px,3vw,23px)/1.1 'Barlow Condensed';color:#211f24}.jackpot-spark{font:1000 clamp(15px,3vw,21px) 'Barlow Condensed';color:#087d91;margin:8px 0 14px}.jackpot-card .btn{min-width:min(100%,220px);border:3px solid #211f24;box-shadow:4px 4px #211f24}.jackpot-open{overflow:hidden}@keyframes jackpotBlast{0%{transform:scale(.05) rotate(-35deg);opacity:0}65%{transform:scale(1.05) rotate(8deg);opacity:1}100%{transform:scale(1) rotate(0);opacity:1}}@keyframes jackpotCard{0%{transform:scale(.15) rotate(-12deg);opacity:0}70%{transform:scale(1.06) rotate(2deg)}100%{transform:scale(1) rotate(0);opacity:1}}@keyframes jackpotMors{from{transform:translateY(8px) rotate(-4deg)}to{transform:translateY(-10px) rotate(4deg)}}@keyframes jackpotCandy{from{transform:rotate(-5deg) scale(.94)}to{transform:rotate(5deg) scale(1.04)}}@keyframes jackpotConfetti{from{transform:scale(.7) rotate(-7deg);opacity:.65}to{transform:scale(1.15) rotate(7deg);opacity:1}}@media(max-width:480px){.jackpot-card{padding:12px;border-width:4px}.jackpot-art-row{max-height:31vh}.jackpot-mors{height:28vh}.jackpot-candies{max-height:25vh}.jackpot-card p{max-width:300px;margin:10px auto}}@media(prefers-reduced-motion:reduce){.jackpot-burst,.jackpot-confetti,.jackpot-card,.jackpot-mors,.jackpot-candies{animation:none!important}}
+
+
+/* Komiksowe koło Morsa — nieregularna kreska, CMYK i naklejki zamiast emoji */
+.fortune-wheel{
+  background:conic-gradient(from -22deg,
+    #ffe600 0deg 45deg,#ec268f 45deg 90deg,
+    #00a9ce 90deg 135deg,#211f24 135deg 180deg,
+    #ffe600 180deg 225deg,#ec268f 225deg 270deg,
+    #00a9ce 270deg 315deg,#fff7d0 315deg 360deg);
+  border:9px solid #211f24;
+  border-radius:48% 52% 49% 51% / 51% 48% 52% 49%;
+  box-shadow:7px 8px 0 #211f24, inset 0 0 0 5px #fff7d0, inset 0 0 0 8px #211f24;
+}
+.fortune-wheel:after{
+  inset:13px;border:3px dashed rgba(33,31,36,.72);
+  border-radius:48% 52% 49% 51% / 51% 48% 52% 49%;
+}
+.wheel-label{
+  display:block;min-width:57px;padding:5px 7px;
+  color:#211f24;background:#fff7d0;
+  border:3px solid #211f24;border-radius:7px 11px 6px 10px;
+  box-shadow:3px 3px 0 #211f24;
+  font-family:'Barlow Condensed','Arial Black',sans-serif;
+  font-size:clamp(11px,3.1vw,15px);font-weight:1000;
+  letter-spacing:-.3px;text-align:center;white-space:nowrap;
+  -webkit-text-stroke:.25px #211f24;
+  filter:drop-shadow(1px 1px 0 rgba(255,255,255,.7));
+}
+.wheel-label-1{background:#ffe600;transform:translate(-50%,-50%) translateY(-91px) rotate(-8deg)}
+.wheel-label-2{background:#ec268f;color:#fff;transform:translate(-50%,-50%) rotate(45deg) translateY(-91px) rotate(-51deg)}
+.wheel-label-3{background:#00a9ce;transform:translate(-50%,-50%) rotate(90deg) translateY(-91px) rotate(-84deg)}
+.wheel-label-4{background:#fff7d0;transform:translate(-50%,-50%) rotate(135deg) translateY(-91px) rotate(-142deg)}
+.wheel-label-5{background:#ffe600;transform:translate(-50%,-50%) rotate(180deg) translateY(-91px) rotate(-174deg)}
+.wheel-label-6{background:#ec268f;color:#fff;transform:translate(-50%,-50%) rotate(225deg) translateY(-91px) rotate(-219deg)}
+.wheel-label-7{background:#00a9ce;transform:translate(-50%,-50%) rotate(270deg) translateY(-91px) rotate(-263deg)}
+.wheel-label-8{background:#ffe600;transform:translate(-50%,-50%) rotate(315deg) translateY(-91px) rotate(-322deg)}
+.wheel-hub{background:#ffe600;border:5px solid #211f24;border-radius:43% 57% 48% 52%;box-shadow:3px 4px 0 #211f24,inset 0 0 0 3px #fff7d0;font-family:'Barlow Condensed','Arial Black',sans-serif;font-weight:1000;transform:translate(-50%,-50%) rotate(-7deg)}
+.fortune-pointer{font-size:39px;color:#ec268f;-webkit-text-stroke:3px #211f24;filter:drop-shadow(3px 3px 0 #211f24)}
+@media(max-width:500px){
+ .wheel-label{min-width:48px;padding:4px 5px;font-size:11px;border-width:2px;box-shadow:2px 2px 0 #211f24}
+ .wheel-label-1{transform:translate(-50%,-50%) translateY(-79px) rotate(-8deg)}
+ .wheel-label-2{transform:translate(-50%,-50%) rotate(45deg) translateY(-79px) rotate(-51deg)}
+ .wheel-label-3{transform:translate(-50%,-50%) rotate(90deg) translateY(-79px) rotate(-84deg)}
+ .wheel-label-4{transform:translate(-50%,-50%) rotate(135deg) translateY(-79px) rotate(-142deg)}
+ .wheel-label-5{transform:translate(-50%,-50%) rotate(180deg) translateY(-79px) rotate(-174deg)}
+ .wheel-label-6{transform:translate(-50%,-50%) rotate(225deg) translateY(-79px) rotate(-219deg)}
+ .wheel-label-7{transform:translate(-50%,-50%) rotate(270deg) translateY(-79px) rotate(-263deg)}
+ .wheel-label-8{transform:translate(-50%,-50%) rotate(315deg) translateY(-79px) rotate(-322deg)}
+}
