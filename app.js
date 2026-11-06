@@ -4,7 +4,7 @@
   const cells=[...document.querySelectorAll('.cell')];
   const TIGER='tiger', MORS='mors';
   const CHARACTER_EMOJI={octopus:'🐙',mole:'🦫',llama:'🦙'};
-  const characterAssets={tiger:'assets/hrabia-poprawek-transparent.svg',mors:'assets/mors.png',goat:'assets/koza-krzycha.png'};
+  const characterAssets={tiger:'assets/hrabia-poprawek-transparent.svg',mors:'assets/mors.png',goat:'assets/koza-krzycha.jpg'};
   let selectedCharacter=localStorage.getItem('tkm_character')||'tiger';
   const characterForMark=mark=>mode==='online'?(mark===role?selectedCharacter:(remoteCharacter|| (mark===TIGER?'tiger':'mors'))):(mark===TIGER?selectedCharacter:'mors');
   const sideLabel=mark=>(characterNames[characterForMark(mark)]||'Gracz')+' '+(characterIcons[characterForMark(mark)]||'');
