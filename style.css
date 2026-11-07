@@ -468,3 +468,77 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
 @media(prefers-reduced-motion:reduce){
   .btn:hover,.mini-game-card:hover{transform:none}
 }
+
+
+/* SZS COMIC ACTION LAYER — kadry, pieczątki i ruch papierowych plansz */
+.intro-card,.panel,.fortune-panel,.diploma-card,.character-option,.side-option,
+.setup-card,.mode-card,.mini-game-card,.leaderboard-panel,.daily-panel,
+.sticker-panel,.mors-club-panel,.quiz-panel,.print-brief{
+  transform-origin:50% 18%;
+}
+.intro-card{animation:comicPaperIn .62s cubic-bezier(.2,.8,.2,1) both}
+.intro-dismissed{animation:comicPaperOut .42s ease-in forwards}
+.panel:not(.hidden){animation:comicPaperIn .48s cubic-bezier(.2,.8,.2,1) both}
+.character-option,.side-option{
+  transition:transform .16s ease,box-shadow .16s ease,background-color .16s ease;
+}
+.character-option:hover,.side-option:hover{transform:translateY(-3px) rotate(-.6deg);box-shadow:4px 5px 0 var(--szs-ink)}
+.character-option.selected,.side-option.selected{
+  background-image:radial-gradient(circle at 90% 12%,rgba(255,230,0,.55),transparent 38%);
+  box-shadow:4px 5px 0 var(--szs-ink),inset 0 0 0 2px var(--szs-cyan);
+  transform:translateY(-2px) rotate(-.5deg);
+}
+.character-option.selected:after,.side-option.selected:after{
+  content:"WYBRANE!";position:absolute;right:7px;top:-10px;padding:3px 7px;
+  background:var(--szs-magenta);color:#fff;border:2px solid var(--szs-ink);
+  box-shadow:2px 2px 0 var(--szs-ink);font-size:9px;font-weight:1000;
+  transform:rotate(4deg);letter-spacing:.5px;
+}
+.character-option,.side-option{position:relative}
+.fortune-wheel-stage{filter:drop-shadow(4px 5px 0 var(--szs-ink))}
+.fortune-wheel{border:4px solid var(--szs-ink);box-shadow:inset 0 0 0 4px rgba(255,255,255,.5),5px 6px 0 var(--szs-ink)}
+.fortune-pointer{filter:drop-shadow(2px 2px 0 var(--szs-ink))}
+.fortune-hand{animation:comicHandWiggle 1.8s ease-in-out infinite}
+.fortune-result{border:3px solid var(--szs-ink);box-shadow:4px 4px 0 var(--szs-ink);font-weight:1000}
+.fortune-wheel-stage.spinning{animation:comicShake .35s ease-in-out infinite}
+.diploma-card{border:3px solid var(--szs-ink);border-radius:5px 15px 6px 12px;box-shadow:4px 5px 0 var(--szs-ink);background:linear-gradient(135deg,#fffdf2 0 72%,#ffe77b 72% 100%)}
+.diploma-card:before{content:"★ OFICJALNY DOKUMENT ABSURDU ★";display:block;margin-bottom:8px;color:var(--szs-magenta);font-size:10px;font-weight:1000;letter-spacing:1.1px}
+.diploma-copy b{letter-spacing:.7px;text-shadow:1px 1px 0 #ffe600}
+.game-panel{position:relative;overflow:hidden}
+.game-panel.round-finished:after{
+  content:"KONIEC RUNDY!";position:absolute;z-index:5;right:12px;top:12px;
+  padding:7px 11px;background:#ffe600;color:var(--szs-ink);
+  border:3px solid var(--szs-ink);box-shadow:3px 3px 0 var(--szs-ink);
+  font-size:clamp(11px,2vw,16px);font-weight:1000;letter-spacing:1px;
+  transform:rotate(5deg);pointer-events:none;animation:comicStamp .38s cubic-bezier(.2,1.5,.5,1) both;
+}
+.game-panel.round-draw:after{content:"REMIS!";background:#bdefff}
+.game-panel.series-won:after{content:"PUCHAR!!!";background:#ff9ac9;transform:rotate(-5deg) scale(1.08)}
+.game-panel.round-finished .turn-banner{animation:comicStamp .42s cubic-bezier(.2,1.5,.5,1) both;background:#ffe66b}
+.game-panel.round-draw .turn-banner{background:#c9f2ff}
+.game-panel.series-won .turn-banner{background:#ffc1df}
+.cell.winning{animation:comicWinningCell .42s ease-in-out infinite alternate}
+.commentary.comic-line-pop{animation:comicLinePop .34s cubic-bezier(.2,1.4,.5,1)}
+.commentary[data-mood="tigerWin"],.commentary[data-mood="morsWin"]{background:#fff0a8;border-width:3px}
+.commentary[data-mood="draw"]{background:#d9f5ff}
+.secret-event.event-pop{animation:comicStamp .4s cubic-bezier(.2,1.5,.5,1) both}
+.btn:active{transform:translate(2px,2px) rotate(0);box-shadow:1px 1px 0 var(--szs-ink)}
+@keyframes comicPaperIn{0%{opacity:0;transform:translateY(13px) rotate(-1.2deg) scale(.985)}70%{opacity:1;transform:translateY(-2px) rotate(.25deg) scale(1.003)}100%{opacity:1;transform:none}}
+@keyframes comicPaperOut{to{opacity:0;transform:translateY(-12px) rotate(1.5deg) scale(.98);pointer-events:none}}
+@keyframes comicStamp{0%{opacity:0;transform:scale(2.2) rotate(12deg)}75%{opacity:1;transform:scale(.92) rotate(-3deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes comicLinePop{0%{transform:scale(.94) rotate(-1deg)}65%{transform:scale(1.035) rotate(.5deg)}100%{transform:none}}
+@keyframes comicWinningCell{from{transform:scale(1);box-shadow:0 0 0 0 rgba(255,230,0,0)}to{transform:scale(1.035);box-shadow:0 0 0 4px rgba(255,230,0,.8),3px 4px 0 var(--szs-ink)}}
+@keyframes comicShake{0%,100%{transform:rotate(-.5deg)}50%{transform:rotate(.5deg)}}
+@keyframes comicHandWiggle{0%,100%{transform:rotate(-8deg) translateY(0)}50%{transform:rotate(8deg) translateY(-4px)}}
+@media(max-width:720px){
+  .game-panel.round-finished:after{position:relative;display:table;right:auto;top:auto;margin:0 auto 8px;font-size:12px}
+  .character-option.selected:after,.side-option.selected:after{font-size:8px;right:4px}
+  .fortune-wheel-stage{filter:drop-shadow(2px 3px 0 var(--szs-ink))}
+  .diploma-card{padding:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  .intro-card,.panel:not(.hidden),.intro-dismissed,.fortune-hand,.fortune-wheel-stage.spinning,
+  .game-panel.round-finished:after,.game-panel.round-finished .turn-banner,
+  .cell.winning,.commentary.comic-line-pop,.secret-event.event-pop{animation:none!important}
+  .character-option,.side-option{transition:none!important}
+}
