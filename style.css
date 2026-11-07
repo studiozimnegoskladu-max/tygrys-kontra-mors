@@ -353,3 +353,118 @@ body:before{content:"";position:fixed;z-index:-1;pointer-events:none;width:42vw;
 
 .mini-game-play.comic-good{animation:comicCorrect .32s ease-out;border-color:#12834a;background-color:#d9ffd9}
 .mini-game-play.comic-bad{animation:comicWrong .28s ease-out;border-color:#b3245e;background-color:#ffc7d9}
+
+
+/* SZS PAPER COMIC EDITION — papier, raster i ręcznie tuszowane kadry */
+:root{
+  --szs-paper:#fff8df;
+  --szs-paper-light:#fffdf2;
+  --szs-ink:#171515;
+  --szs-cyan:#00a9cf;
+  --szs-magenta:#e52d83;
+}
+body{
+  background-color:#ffe600!important;
+  background-image:
+    radial-gradient(circle at 12% 18%,rgba(255,255,255,.23) 0 1px,transparent 1.7px),
+    radial-gradient(circle at 76% 62%,rgba(23,21,21,.09) 0 .8px,transparent 1.6px),
+    radial-gradient(ellipse at 50% 40%,rgba(255,250,218,.22),transparent 62%),
+    radial-gradient(ellipse 42% 24% at 0% 12%,rgba(0,190,220,.78),transparent 100%),
+    radial-gradient(ellipse 40% 28% at 100% 20%,rgba(235,35,125,.72),transparent 100%),
+    radial-gradient(ellipse 44% 28% at 85% 100%,rgba(20,20,20,.72),transparent 100%),
+    radial-gradient(ellipse 38% 25% at 10% 95%,rgba(255,120,0,.78),transparent 100%),
+    linear-gradient(135deg,#ffe600 0%,#ffed35 50%,#ffe600 100%)!important;
+  background-size:11px 11px,13px 13px,auto,auto,auto,auto,auto,auto!important;
+}
+body:after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.16;
+  background-image:repeating-linear-gradient(0deg,rgba(35,28,15,.12) 0,rgba(35,28,15,.12) 1px,transparent 1px,transparent 4px);
+  mix-blend-mode:multiply;
+}
+body>*{z-index:1}
+.panel,.intro-card,.mini-game-card,.leaderboard-panel,.daily-panel,.fortune-panel,
+.sticker-panel,.mors-club-panel,.quiz-panel,.achievement-panel,.print-brief,
+.social-bridge,.setup-card,.mode-card{
+  background-color:var(--szs-paper-light);
+  border:3px solid var(--szs-ink);
+  border-radius:5px 16px 7px 13px;
+  box-shadow:5px 6px 0 var(--szs-ink),inset 0 0 0 2px rgba(255,255,255,.72);
+  position:relative;
+}
+.panel:before,.intro-card:before,.mini-game-card:before,.daily-panel:before,
+.fortune-panel:before,.sticker-panel:before,.mors-club-panel:before,.quiz-panel:before{
+  content:"";position:absolute;inset:5px;border:1px dashed rgba(23,21,21,.19);
+  border-radius:3px 12px 4px 10px;pointer-events:none;
+}
+.hero h1,.intro-copy h1{
+  text-shadow:3px 3px 0 var(--szs-paper-light),5px 5px 0 var(--szs-ink);
+}
+.eyebrow,.scribble,.daily-stamp,.fortune-stamp,.mors-club-stamp,.brief-stamp{
+  box-shadow:3px 3px 0 var(--szs-ink);
+}
+.btn{
+  border-width:3px;border-radius:4px 10px 5px 9px;
+  box-shadow:4px 4px 0 var(--szs-ink);
+  background-image:linear-gradient(135deg,rgba(255,255,255,.16),transparent 48%);
+}
+.btn:hover{box-shadow:6px 6px 0 var(--szs-ink);transform:translate(-2px,-2px) rotate(-.5deg)}
+.btn:focus-visible,.cell:focus-visible,input:focus-visible,select:focus-visible{
+  outline:4px solid var(--szs-cyan);outline-offset:3px;
+}
+.character-option,.side-option,.score,.rank-row,.daily-mission,.sticker-item,
+.achievement-item,.fortune-result,.commentary,.turn-banner,.secret-event{
+  border-radius:4px 11px 5px 9px;
+}
+.character-option,.side-option,.score,.daily-mission,.sticker-item,.achievement-item{
+  border:2px solid var(--szs-ink);
+  box-shadow:2px 3px 0 rgba(23,21,21,.9);
+}
+.setup-card,.mode-card{box-shadow:3px 4px 0 var(--szs-ink)}
+.mini-game-card{overflow:hidden}
+.mini-game-card:nth-child(odd){transform:rotate(-.35deg)}
+.mini-game-card:nth-child(even){transform:rotate(.35deg)}
+.mini-game-card:hover{transform:translateY(-3px) rotate(0deg)}
+.mini-game-art,.intro-mascot-wrap,.fighters{
+  filter:drop-shadow(1px 2px 0 rgba(23,21,21,.12));
+}
+.fighter img,.intro-mascot,.mini-game-art img{
+  image-rendering:auto;
+}
+.board-wrap{
+  background:var(--szs-paper);border:3px solid var(--szs-ink);
+  border-radius:5px 13px 6px 11px;box-shadow:5px 5px 0 var(--szs-ink);
+  padding:8px;
+}
+.cell{
+  border:3px solid var(--szs-ink)!important;
+  border-radius:3px 8px 4px 7px!important;
+  background-color:#fffdf2!important;
+  background-image:radial-gradient(rgba(23,21,21,.12) .8px,transparent .8px)!important;
+  background-size:8px 8px!important;
+}
+.turn-banner,.commentary{
+  border:2px solid var(--szs-ink);box-shadow:3px 3px 0 var(--szs-ink);
+  background-color:#fffdf2;
+}
+.commentary{position:relative}
+.commentary:after{
+  content:"";position:absolute;left:22px;bottom:-9px;width:14px;height:14px;
+  background:inherit;border-right:2px solid var(--szs-ink);border-bottom:2px solid var(--szs-ink);
+  transform:rotate(45deg);
+}
+.online-tag{border:2px solid var(--szs-ink);box-shadow:2px 2px 0 var(--szs-ink)}
+.topbar-logo,.footer-logo{filter:drop-shadow(2px 2px 0 rgba(23,21,21,.22))}
+input,select,textarea{
+  border:2px solid var(--szs-ink)!important;border-radius:4px 9px 5px 8px!important;
+  background-color:#fffdf2!important;
+}
+footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper)}
+@media(max-width:720px){
+  .panel{padding:16px;border-radius:5px 12px 6px 10px;box-shadow:4px 5px 0 var(--szs-ink)}
+  .mini-game-card:nth-child(n){transform:none}
+  .board-wrap{padding:5px;box-shadow:3px 4px 0 var(--szs-ink)}
+  .btn{min-height:44px}
+}
+@media(prefers-reduced-motion:reduce){
+  .btn:hover,.mini-game-card:hover{transform:none}
+}
