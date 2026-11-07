@@ -542,3 +542,19 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
   .cell.winning,.commentary.comic-line-pop,.secret-event.event-pop{animation:none!important}
   .character-option,.side-option{transition:none!important}
 }
+
+
+/* PEŁNY KADR WERDYKTU — osobna plansza końca rundy */
+.round-result-overlay{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:18px;background:rgba(18,16,16,.78);backdrop-filter:blur(3px)}
+.round-result-overlay[hidden]{display:none!important}
+.round-result-card{position:relative;width:min(560px,100%);padding:clamp(24px,5vw,42px);text-align:center;background:#fff9e5;border:4px solid #171515;border-radius:6px 18px 7px 15px;box-shadow:9px 10px 0 #171515,inset 0 0 0 3px #fff;overflow:hidden;animation:comicStamp .48s cubic-bezier(.2,1.45,.5,1) both}
+.round-result-card:before{content:"";position:absolute;inset:9px;border:2px dashed rgba(23,21,21,.25);pointer-events:none}
+.round-result-card:after{content:"BAM!";position:absolute;left:-10px;top:12px;padding:6px 13px;background:#00b9d7;color:#171515;border:3px solid #171515;box-shadow:3px 3px 0 #171515;font-size:clamp(15px,3vw,22px);font-weight:1000;transform:rotate(-12deg);clip-path:polygon(50% 0,62% 20%,85% 5%,82% 32%,100% 42%,82% 58%,95% 83%,65% 78%,50% 100%,36% 79%,8% 94%,17% 62%,0 48%,19% 32%,11% 8%,39% 20%)}
+.round-result-icon{font-size:clamp(48px,10vw,76px);line-height:1.1;margin:6px 0 12px;filter:drop-shadow(3px 3px 0 #ffe600)}
+.round-result-kicker{display:block;font-size:10px;font-weight:1000;letter-spacing:1.2px;color:#e52d83}
+.round-result-card h2{margin:12px 0;font-size:clamp(24px,6vw,40px);line-height:1.02;text-shadow:2px 2px 0 #ffe600,4px 4px 0 #171515}
+.round-result-card p{max-width:38ch;margin:0 auto 22px;font-weight:800;line-height:1.5}
+.round-result-stamp{position:absolute;right:12px;top:12px;padding:5px 8px;border:3px solid #171515;background:#ffe600;font-size:10px;line-height:1.05;font-weight:1000;transform:rotate(9deg);box-shadow:2px 2px 0 #171515}
+.round-result-card .btn{position:relative;z-index:1;min-width:190px}
+@media(max-width:520px){.round-result-card{padding:28px 18px 22px}.round-result-card:after{left:-7px;top:8px;font-size:14px}.round-result-stamp{right:8px;top:8px;font-size:8px}}
+@media(prefers-reduced-motion:reduce){.round-result-card{animation:none!important}}
