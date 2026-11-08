@@ -19,6 +19,9 @@ h1{font-size:clamp(27px,6vw,48px);line-height:.98;margin:0 0 8px;font-weight:100
 .mors.shake{animation:shake .5s ease-in-out infinite}
 .mors.dance{animation:dance .75s ease-in-out infinite}
 .mors.idle{animation:idle 2s ease-in-out infinite}
+/* Kadry o szerszym rysunku dostają osobne kadrowanie, bez obcinania płetw i rekwizytów. */
+.mors.pose-triumph{background-size:400% 400%!important;background-position:40% 33.333%!important}
+.mors.pose-paint{background-size:300% 400%!important;background-position:80% 33.333%!important}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
 @keyframes shake{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
 @keyframes dance{0%,100%{transform:rotate(-8deg) translateY(0)}25%{transform:rotate(8deg) translateY(-12px)}50%{transform:rotate(-8deg) translateY(0)}75%{transform:rotate(8deg) translateY(-12px)}}
@@ -69,7 +72,7 @@ button.active{background:var(--ink);color:var(--yellow);transform:translate(2px,
 const el=document.getElementById('mors'),caption=document.getElementById('caption'),desc=document.getElementById('desc'),bubble=document.getElementById('bubble'),buttons=[...document.querySelectorAll('button[data-pose]')],auto=document.getElementById('auto');
 const positions=['0% 0%','33.333% 0%','66.666% 0%','100% 0%','0% 33.333%','33.333% 33.333%','66.666% 33.333%','0% 66.666%','33.333% 66.666%','66.666% 66.666%','100% 66.666%','0% 100%','33.333% 100%','66.666% 100%','100% 100%'];
 let timer=null,index=0;
-function show(b){index=Number(b.dataset.pose);el.style.backgroundPosition=positions[index];el.className='mors '+b.dataset.motion;caption.textContent=b.dataset.title;desc.textContent=b.dataset.desc;bubble.textContent=b.dataset.bubble;buttons.forEach(x=>x.classList.toggle('active',x===b));}
+function show(b){index=Number(b.dataset.pose);el.style.backgroundSize='400% 400%';el.style.backgroundPosition=positions[index];el.className='mors '+b.dataset.motion+(index===5?' pose-triumph':index===6?' pose-paint':'');caption.textContent=b.dataset.title;desc.textContent=b.dataset.desc;bubble.textContent=b.dataset.bubble;buttons.forEach(x=>x.classList.toggle('active',x===b));}
 buttons.forEach(b=>b.addEventListener('click',()=>{stop();show(b)}));
 function stop(){if(timer){clearInterval(timer);timer=null}auto.textContent='▶ POKAŻ WSZYSTKIE POZY';auto.classList.remove('active')}
 auto.addEventListener('click',()=>{if(timer){stop();return}auto.textContent='Ⅱ ZATRZYMAJ POKAZ';auto.classList.add('active');let i=0;const tick=()=>{show(buttons[i]);i=(i+1)%buttons.length};tick();timer=setInterval(tick,1800)});
