@@ -13,6 +13,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+  <audio id="backgroundMusic" src="assets/szs-game-music.mp3" loop preload="auto"></audio>
   <section id="introScreen" class="intro-screen" aria-label="Ekran powitalny">
     <div class="intro-card">
       <div class="intro-brand"><img src="assets/szs-logo.png?v=20261105-2" alt="Studio Zimnego Składu — logo"></div>
@@ -40,7 +41,7 @@
   <header class="topbar">
     <img class="topbar-logo" src="assets/szs-logo.png?v=20261105-2" alt="Studio Zimnego Składu">
     <div><div class="brand-sub">PRZEDSTAWIA POJEDYNEK STULECIA</div></div>
-    <div class="topbar-actions"><button type="button" id="soundBtn" class="btn btn-outline sound-toggle" aria-pressed="true" aria-label="Włącz lub wyłącz dźwięk">🔊 DŹWIĘK</button><div class="online-tag"><span></span> GRA ONLINE</div></div>
+    <div class="topbar-actions"><button type="button" id="soundBtn" class="btn btn-outline sound-toggle" aria-pressed="true" aria-label="Włącz lub wyłącz efekty dźwiękowe">🔊 DŹWIĘK</button><button type="button" id="musicBtn" class="btn btn-outline sound-toggle music-toggle" aria-pressed="true" aria-label="Włącz lub wyłącz muzykę">🎵 MUZYKA</button><div class="online-tag"><span></span> GRA ONLINE</div></div>
   </header>
 
   <main class="shell">
