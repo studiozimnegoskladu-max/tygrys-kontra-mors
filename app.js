@@ -9,7 +9,7 @@
   const characterForMark=mark=>mode==='online'?(mark===role?selectedCharacter:(remoteCharacter|| (mark===TIGER?'tiger':'mors'))):(mark===TIGER?selectedCharacter:'mors');
   const sideLabel=mark=>(characterNames[characterForMark(mark)]||'Gracz')+' '+(characterIcons[characterForMark(mark)]||'');
   let client,room=null,role=null,channel=null,current=null,remoteCharacter=null,mode='online',busy=false,cpuDifficulty=localStorage.getItem('tkm_cpu_difficulty')||'normal';
-  let scores={tiger:0,mors:0},seriesWinner=null,commentIndex=0,achievementStats=loadStats(),soundOn=localStorage.getItem('tkm_sound')!=='off',musicOn=localStorage.getItem('tkm_music')!=='off',startedAt=0,timer=null,audioContext=null;
+  let scores={tiger:0,mors:0},seriesWinner=null,commentIndex=0,morsIdleTimer=null,achievementStats=loadStats(),soundOn=localStorage.getItem('tkm_sound')!=='off',musicOn=localStorage.getItem('tkm_music')!=='off',startedAt=0,timer=null,audioContext=null;
   const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
   const fresh=()=>({board:Array(9).fill(''),turn:TIGER,winner:null,status:'playing',winning:[]});
   const nick=()=>localStorage.getItem('tkm_nick')||'Gracz';
@@ -435,12 +435,41 @@
     if(secretEventTimer)clearTimeout(secretEventTimer);
     secretEventTimer=window.setTimeout(()=>box.classList.add('hidden'),5200);
   }
+  function setMorsPose(pose){
+    const art=$('morsReaction');if(!art)return;
+    const poses={sleep:1,music:2,run:3,panic:4,angry:5,shout:6,paint:7,clap:8,gesture:9,fierce:10,sad:11,celebrate:12,wave:13,sit:14,think:15};
+    const value=poses[pose]?pose:'wave';
+    art.dataset.pose=String(poses[value]);
+    const labels={sleep:'Mors zasypia',music:'Mors słucha muzyki',run:'Mors biegnie',panic:'Mors jest zaskoczony',angry:'Mors jest wściekły',shout:'Mors krzyczy',paint:'Mors maluje',clap:'Mors klaszcze',gesture:'Mors pokazuje gest',fierce:'Mors robi groźną minę',sad:'Mors jest smutny',celebrate:'Mors świętuje',wave:'Mors macha na powitanie',sit:'Mors siedzi i czeka',think:'Mors się zastanawia'};
+    art.setAttribute('aria-label',labels[value]);
+  }
+  function scheduleMorsIdle(){
+    if(morsIdleTimer)clearTimeout(morsIdleTimer);
+    if(game.classList.contains('hidden')||!current||current.status!=='playing')return;
+    morsIdleTimer=window.setTimeout(()=>{
+      if(!current||current.status!=='playing'||game.classList.contains('hidden'))return;
+      setMorsPose('sleep');
+      const copy=$('commentaryText');if(copy)copy.textContent='ZZZ… Obudźcie mnie, jak ktoś wreszcie wygra.';
+      const box=$('commentary');if(box){box.dataset.mood='idle';box.classList.remove('comic-line-pop');void box.offsetWidth;box.classList.add('comic-line-pop');}
+    },22000);
+  }
   function commentary(kind,character){
     const el=$('commentary');if(!el)return;
     const custom=characterQuips[character];
     const list=custom?(kind==='tigerWin'||kind==='morsWin'?custom.win:custom.move):(quips[kind]||quips.tiger);
     let n=Math.floor(Math.random()*list.length);if(list.length>1&&n===commentIndex)n=(n+1)%list.length;commentIndex=n;
-    el.textContent=list[n];el.dataset.mood=kind;el.dataset.character=character||'classic';el.classList.remove('comic-line-pop');void el.offsetWidth;el.classList.add('comic-line-pop');
+    const copy=$('commentaryText');if(copy)copy.textContent=list[n];else el.textContent=list[n];
+    el.dataset.mood=kind;el.dataset.character=character||'classic';
+    let pose='wave';
+    if(kind==='draw')pose='think';
+    else if(kind==='tigerWin')pose='sad';
+    else if(kind==='morsWin')pose='celebrate';
+    else if(character==='mors'||kind==='mors')pose=['clap','paint','gesture'][Math.floor(Math.random()*3)];
+    else if(character==='tiger'||kind==='tiger')pose=['run','fierce','think'][Math.floor(Math.random()*3)];
+    else pose=['wave','gesture','sit'][Math.floor(Math.random()*3)];
+    setMorsPose(pose);
+    el.classList.remove('comic-line-pop');void el.offsetWidth;el.classList.add('comic-line-pop');
+    scheduleMorsIdle();
   }
   function render(){if(!current)return;cells.forEach((cell,i)=>{cell.innerHTML='';cell.classList.toggle('winning',(current.winning||[]).includes(i));const mark=current.board[i];if(mark){const character=characterForMark(mark);if(CHARACTER_EMOJI[character]){const avatar=document.createElement('span');avatar.className='board-character';avatar.textContent=CHARACTER_EMOJI[character];cell.append(avatar)}else{const im=document.createElement('img');im.className='board-avatar';im.src=characterAssets[character]||characterAssets.mors;im.alt=characterNames[character]||'Maskotka SZS';cell.append(im)}}const canPlay=mode==='local'||(mode==='cpu'&&current.turn===TIGER)||(mode==='online'&&current.turn===role);cell.disabled=!!mark||current.status!=='playing'||!canPlay||busy});
     const w=current.winner;game.classList.toggle('round-finished',current.status==='finished');game.classList.toggle('round-draw',w==='draw');game.classList.toggle('series-won',!!seriesWinner);$('turnBanner').textContent=seriesWinner?('🏆 '+sideLabel(seriesWinner).toUpperCase()+' ZDOBYWA PUCHAR!'):w==='draw'?'REMIS! NIKT NIE ODPUSZCZA 😎':w?(sideLabel(w).toUpperCase()+' WYGRYWA!'):(mode==='local'?'RUCH: '+sideLabel(current.turn):mode==='cpu'?(current.turn===TIGER?'TWOJA KOLEJ — RUSZAJ!':'MORS MYŚLI…'):current.turn===role?'TWOJA KOLEJ — RUSZAJ!':'RUCH PRZECIWNIKA…');
