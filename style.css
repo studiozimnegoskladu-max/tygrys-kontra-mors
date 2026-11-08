@@ -268,9 +268,9 @@ body:before{content:"";position:fixed;z-index:-1;pointer-events:none;width:42vw;
   border:4px solid #171515;border-radius:7px 23px 8px 20px;
   box-shadow:9px 9px 0 #171515,14px 14px 0 rgba(236,38,143,.24);
   background-color:#fffdf4;
-  background-image:radial-gradient(#171515 1.15px,transparent 1.15px),linear-gradient(135deg,rgba(255,230,0,.13),transparent 45%);
-  background-size:12px 12px,100% 100%;
+  background-image:linear-gradient(135deg,rgba(255,230,0,.13),transparent 45%);
 }
+.mini-arcade:before{display:none!important}
 .mini-arcade-heading h2{ text-shadow:2px 2px 0 #ffe600,-1px -1px 0 #fff; }
 .mini-arcade-heading>img{animation:morsComicIdle 2.8s ease-in-out infinite;transform-origin:50% 85%}
 .mini-game-card{
@@ -283,8 +283,8 @@ body:before{content:"";position:fixed;z-index:-1;pointer-events:none;width:42vw;
 .mini-game-art{
   border:3px solid #171515;border-radius:5px 13px 6px 12px;
   background-color:#ffe600;
-  background-image:radial-gradient(#171515 1px,transparent 1.5px),linear-gradient(125deg,rgba(0,169,206,.34),transparent 38%,rgba(236,38,143,.3));
-  background-size:11px 11px,100% 100%;
+  background-image:linear-gradient(125deg,rgba(0,169,206,.34),transparent 38%,rgba(236,38,143,.3));
+  background-size:100% 100%;
   box-shadow:inset 0 0 0 3px rgba(255,255,255,.55);
 }
 .mini-game-art img{animation:morsCardBounce 2.1s ease-in-out infinite;filter:drop-shadow(3px 3px 0 #171515) drop-shadow(-1px -1px 0 rgba(255,255,255,.8))}
@@ -297,8 +297,7 @@ body:before{content:"";position:fixed;z-index:-1;pointer-events:none;width:42vw;
 .mini-game-play{
   position:relative;overflow:hidden;border:3px solid #171515;border-radius:5px 13px 6px 12px;
   background-color:#fff5a8;
-  background-image:radial-gradient(rgba(23,21,21,.16) 1px,transparent 1px);
-  background-size:9px 9px;box-shadow:3px 4px 0 #171515;
+  background-image:none;box-shadow:3px 4px 0 #171515;
 }
 .mini-game-play> b{
   display:inline-block;padding:5px 9px;background:#fff;border:2px solid #171515;
