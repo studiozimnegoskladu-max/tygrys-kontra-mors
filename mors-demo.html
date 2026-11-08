@@ -14,15 +14,11 @@ h1{font-size:clamp(27px,6vw,48px);line-height:.98;margin:0 0 8px;font-weight:100
 .stage{position:relative;min-height:390px;border:3px solid var(--ink);border-radius:14px;background:#fff2b8;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .stage:before,.stage:after{content:"";position:absolute;width:170px;height:90px;background:var(--pink);opacity:.8;clip-path:polygon(0 40%,20% 0,34% 30%,60% 0,68% 32%,100% 10%,84% 70%,50% 100%,25% 70%);transform:rotate(-18deg);left:-35px;bottom:12px}
 .stage:after{left:auto;right:-35px;top:14px;bottom:auto;background:var(--cyan);transform:rotate(155deg)}
-.mors{width:min(75vw,310px);aspect-ratio:1097/1473;background-image:url('assets/komplet%20ikon.png');background-repeat:no-repeat;background-size:400% 400%;background-position:0 0;position:relative;z-index:1;filter:drop-shadow(5px 6px 0 rgba(23,21,21,.2));transition:background-position .35s ease,transform .25s ease,filter .25s ease}
+.mors{width:min(75vw,310px);height:340px;object-fit:contain;position:relative;z-index:1;filter:drop-shadow(5px 6px 0 rgba(23,21,21,.2));transition:transform .25s ease}
 .mors.bounce{animation:bounce .65s ease-in-out infinite}
 .mors.shake{animation:shake .5s ease-in-out infinite}
 .mors.dance{animation:dance .75s ease-in-out infinite}
 .mors.idle{animation:idle 2s ease-in-out infinite}
-/* Kadry o szerszym rysunku dostają osobne kadrowanie, bez obcinania płetw i rekwizytów. */
-.mors.pose-triumph{background-size:400% 400%!important;background-position:33.333% 33.333%!important}
-.mors.pose-paint{background-size:400% 400%!important;background-position:66.666% 33.333%!important;animation:paintBob .8s ease-in-out infinite}
-@keyframes paintBob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-9px) rotate(1deg)}}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
 @keyframes shake{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
 @keyframes dance{0%,100%{transform:rotate(-8deg) translateY(0)}25%{transform:rotate(8deg) translateY(-12px)}50%{transform:rotate(-8deg) translateY(0)}75%{transform:rotate(8deg) translateY(-12px)}}
@@ -41,10 +37,10 @@ button.active{background:var(--ink);color:var(--yellow);transform:translate(2px,
 <body>
 <main class="wrap">
 <h1>Mors w ruchu!</h1>
-<p class="lead">Pełna demonstracja oparta na oryginalnym arkuszu ikonek ze Studio Zimnego Składu. Wybieraj pozy albo włącz automatyczny pokaz — Mors zmienia pozy i porusza się w rytmie animacji.</p>
+<p class="lead">Każda poza Morsa jest osobnym, przezroczystym kadrem wyciętym z oryginalnego arkusza. Wybieraj pozy albo włącz pokaz — Mors naprawdę zmienia ilustracje i porusza się.</p>
 <div class="stage">
 <div class="bubble" id="bubble">SIEMA! 🦭</div>
-<div class="mors idle" id="mors" role="img" aria-label="Oryginalna ilustracja Morsa"></div>
+<img class="mors idle" id="mors" src="assets/mors-00.png" alt="Oryginalna ilustracja Morsa" width="310" height="340">
 </div>
 <div class="caption" id="caption">Mors łapie oddech</div>
 <p class="desc" id="desc">Spokojny tryb czuwania. Płetwy gotowe do akcji.</p>
@@ -66,17 +62,16 @@ button.active{background:var(--ink);color:var(--yellow);transform:translate(2px,
 <button data-pose="14" data-motion="idle" data-title="Chwila namysłu" data-desc="Mors analizuje sytuację. To może chwilę potrwać." data-bubble="HMMMM...">🤔 MYŚLENIE</button>
 <button id="auto">▶ POKAŻ WSZYSTKIE POZY</button>
 </div>
-<p class="note">Użyte są oryginalne rysunki z pliku <b>assets/komplet ikon.png</b>. Przyciski przełączają rzeczywiste kadry arkusza; animacje CSS dodają podskok, kołysanie i taneczny ruch, a pokaz automatyczny przełącza pozy w krótszych odstępach. To animacja z gotowych póz, nie szkieletowa animacja poszczególnych płetw.</p>
+<p class="note">Każda ilustracja została oddzielnie wycięta z oryginalnego pliku <b>assets/komplet ikon.png</b>, z zachowaniem przezroczystości i bez sąsiednich postaci. Pokaz automatyczny przełącza osobne kadry co 0,7 sekundy. Ruch podskoku, kołysania i tańca jest dodatkowo animowany CSS-em.</p>
 </main>
 <script>
 (()=>{
 const el=document.getElementById('mors'),caption=document.getElementById('caption'),desc=document.getElementById('desc'),bubble=document.getElementById('bubble'),buttons=[...document.querySelectorAll('button[data-pose]')],auto=document.getElementById('auto');
-const positions=['0% 0%','33.333% 0%','66.666% 0%','100% 0%','0% 33.333%','33.333% 33.333%','66.666% 33.333%','0% 66.666%','33.333% 66.666%','66.666% 66.666%','100% 66.666%','0% 100%','33.333% 100%','66.666% 100%','100% 100%'];
 let timer=null,index=0;
-function show(b){index=Number(b.dataset.pose);el.style.backgroundSize='400% 400%';el.style.backgroundPosition=positions[index];el.className='mors '+b.dataset.motion+(index===5?' pose-triumph':index===6?' pose-paint':'');caption.textContent=b.dataset.title;desc.textContent=b.dataset.desc;bubble.textContent=b.dataset.bubble;buttons.forEach(x=>x.classList.toggle('active',x===b));}
+function show(b){index=Number(b.dataset.pose);el.src='assets/mors-'+String(index).padStart(2,'0')+'.png';el.className='mors '+b.dataset.motion;caption.textContent=b.dataset.title;desc.textContent=b.dataset.desc;bubble.textContent=b.dataset.bubble;buttons.forEach(x=>x.classList.toggle('active',x===b));}
 buttons.forEach(b=>b.addEventListener('click',()=>{stop();show(b)}));
 function stop(){if(timer){clearInterval(timer);timer=null}auto.textContent='▶ POKAŻ WSZYSTKIE POZY';auto.classList.remove('active')}
-auto.addEventListener('click',()=>{if(timer){stop();return}auto.textContent='Ⅱ ZATRZYMAJ POKAZ';auto.classList.add('active');let i=0;const tick=()=>{show(buttons[i]);i=(i+1)%buttons.length};tick();timer=setInterval(tick,950)});
+auto.addEventListener('click',()=>{if(timer){stop();return}auto.textContent='Ⅱ ZATRZYMAJ POKAZ';auto.classList.add('active');let i=0;const tick=()=>{show(buttons[i]);i=(i+1)%buttons.length};tick();timer=setInterval(tick,700)});
 show(buttons[0]);
 })();
 </script>
