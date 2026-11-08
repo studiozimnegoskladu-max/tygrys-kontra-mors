@@ -513,7 +513,7 @@
     let paintTimer=null,paintTime=20,paintScore=0,paintTarget='cyan';
     const paintPlay=$('paintPlay'),paintChoices=$('paintChoices'),paintPrompt=$('paintPrompt'),paintStatus=$('paintStatus');
     function nextPaint(){
-      paintTarget=colors[Math.floor(Math.random()*3)].id;
+      paintTarget=colors[Math.floor(Math.random()*colors.length)].id;
       paintPrompt.textContent='ŁAP '+colors.find(c=>c.id===paintTarget).name+'!';
       const opts=[...colors].sort(()=>Math.random()-.5);
       paintChoices.innerHTML=opts.map(c=>'<button type="button" class="paint-chip paint-'+c.id+'" data-paint="'+c.id+'" aria-label="'+c.name+'"></button>').join('');
