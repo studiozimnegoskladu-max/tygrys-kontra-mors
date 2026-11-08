@@ -7,77 +7,83 @@
 <title>Mors w ruchu — Studio Zimnego Składu</title>
 <style>
 :root{--ink:#171515;--yellow:#ffe600;--pink:#f02c8b;--cyan:#00b9d7}
-*{box-sizing:border-box}body{margin:0;padding:22px;background:var(--yellow);color:var(--ink);font-family:Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;padding:22px;background:var(--yellow);color:var(--ink);font-family:Arial,sans-serif}
 .wrap{max-width:900px;margin:auto;background:#fff9e8;border:4px solid var(--ink);border-radius:18px;padding:clamp(16px,4vw,30px);box-shadow:8px 9px 0 var(--ink)}
 h1{font-size:clamp(27px,6vw,48px);line-height:.98;margin:0 0 8px;font-weight:1000;text-transform:uppercase;text-shadow:3px 3px 0 var(--yellow)}
 .lead{font-weight:800;margin:0 0 18px;line-height:1.45}
-.stage{position:relative;min-height:390px;border:3px solid var(--ink);border-radius:14px;background:#fff2b8;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.stage:before,.stage:after{content:"";position:absolute;width:170px;height:90px;background:var(--pink);opacity:.8;clip-path:polygon(0 40%,20% 0,34% 30%,60% 0,68% 32%,100% 10%,84% 70%,50% 100%,25% 70%);transform:rotate(-18deg);left:-35px;bottom:12px}
+.stage{position:relative;min-height:410px;border:3px solid var(--ink);border-radius:14px;background:#fff2b8;display:flex;align-items:center;justify-content:center;overflow:hidden;isolation:isolate}
+.stage:before,.stage:after{content:"";position:absolute;width:170px;height:90px;background:var(--pink);opacity:.8;clip-path:polygon(0 40%,20% 0,34% 30%,60% 0,68% 32%,100% 10%,84% 70%,50% 100%,25% 70%);transform:rotate(-18deg);left:-35px;bottom:12px;z-index:-1}
 .stage:after{left:auto;right:-35px;top:14px;bottom:auto;background:var(--cyan);transform:rotate(155deg)}
-.mors{width:min(75vw,310px);aspect-ratio:1097/1473;background-image:url('assets/komplet%20ikon.png');background-repeat:no-repeat;background-size:400% 400%;background-position:0 0;position:relative;z-index:1;filter:drop-shadow(5px 6px 0 rgba(23,21,21,.2));transition:background-position .35s ease,transform .25s ease,filter .25s ease}
-.mors.bounce{animation:bounce .65s ease-in-out infinite}
-.mors.shake{animation:shake .5s ease-in-out infinite}
-.mors.dance{animation:dance .75s ease-in-out infinite}
-.mors.idle{animation:idle 2s ease-in-out infinite}
-/* Kadry o szerszym rysunku dostają osobne kadrowanie, bez obcinania płetw i rekwizytów. */
-.mors.pose-triumph{background-size:400% 400%!important;background-position:33.333% 33.333%!important}
-.mors.pose-paint{background-size:400% 400%!important;background-position:66.666% 33.333%!important;animation:paintBob .8s ease-in-out infinite}
-@keyframes paintBob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-9px) rotate(1deg)}}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
-@keyframes shake{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
-@keyframes dance{0%,100%{transform:rotate(-8deg) translateY(0)}25%{transform:rotate(8deg) translateY(-12px)}50%{transform:rotate(-8deg) translateY(0)}75%{transform:rotate(8deg) translateY(-12px)}}
-@keyframes idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.bubble{position:absolute;z-index:2;top:18px;left:18px;padding:10px 14px;background:white;border:3px solid var(--ink);border-radius:13px;font-weight:1000;transform:rotate(-4deg);box-shadow:3px 3px 0 var(--ink)}
+.mors{display:block;width:min(72vw,340px);height:min(68vw,340px);object-fit:contain;position:relative;z-index:1;filter:drop-shadow(5px 6px 0 rgba(23,21,21,.22));transform-origin:50% 75%;will-change:transform}
+.mors.idle{animation:idle 1.6s ease-in-out infinite}
+.mors.bounce{animation:bounce .58s cubic-bezier(.3,.7,.3,1) infinite}
+.mors.shake{animation:shake .34s ease-in-out infinite}
+.mors.dance{animation:dance .62s ease-in-out infinite}
+.mors.paint{animation:paint .72s ease-in-out infinite}
+@keyframes idle{0%,100%{transform:translateY(0) rotate(-1deg) scale(1)}50%{transform:translateY(-13px) rotate(1deg) scale(1.025)}}
+@keyframes bounce{0%,100%{transform:translateY(0) rotate(0) scale(1)}35%{transform:translateY(-30px) rotate(-5deg) scale(1.04)}65%{transform:translateY(2px) rotate(4deg) scale(.97)}}
+@keyframes shake{0%,100%{transform:translateX(0) rotate(-5deg)}25%{transform:translateX(-9px) rotate(5deg)}75%{transform:translateX(9px) rotate(-5deg)}}
+@keyframes dance{0%,100%{transform:rotate(-10deg) translateY(0)}25%{transform:rotate(10deg) translateY(-15px)}50%{transform:rotate(-10deg) translateY(0)}75%{transform:rotate(10deg) translateY(-15px)}}
+@keyframes paint{0%,100%{transform:translateY(0) rotate(-2deg) scale(1)}50%{transform:translateY(-12px) rotate(3deg) scale(1.04)}}
+.bubble{position:absolute;z-index:2;top:18px;left:18px;padding:10px 14px;background:white;border:3px solid var(--ink);border-radius:13px;font-weight:1000;transform:rotate(-4deg);box-shadow:3px 3px 0 var(--ink);animation:bubble .9s ease-in-out infinite alternate}
+@keyframes bubble{to{transform:rotate(3deg) scale(1.06)}}
 .caption{text-align:center;font-size:clamp(18px,4vw,25px);font-weight:1000;margin:16px 0 5px;text-transform:uppercase}
 .desc{text-align:center;font-weight:700;margin:0 0 17px;min-height:20px}
 .controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:9px}
 button{font:900 13px Arial,sans-serif;color:var(--ink);background:#fff;border:3px solid var(--ink);border-radius:10px;padding:12px 9px;box-shadow:3px 3px 0 var(--ink);cursor:pointer}
 button.active{background:var(--ink);color:var(--yellow);transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
 .note{margin:18px 0 0;padding-top:12px;border-top:2px dashed #777;font-size:12px;line-height:1.5;font-weight:700}
-@media(max-width:520px){body{padding:10px}.stage{min-height:330px}.mors{width:min(78vw,260px)}.bubble{top:10px;left:10px;font-size:12px}}
-@media(prefers-reduced-motion:reduce){.mors{animation:none!important;transition:none}}
+@media(max-width:520px){body{padding:10px}.stage{min-height:340px}.mors{width:min(78vw,290px);height:290px}.bubble{top:10px;left:10px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){.mors,.bubble{animation:none!important}}
 </style>
 </head>
 <body>
 <main class="wrap">
 <h1>Mors w ruchu!</h1>
-<p class="lead">Pełna demonstracja oparta na oryginalnym arkuszu ikonek ze Studio Zimnego Składu. Wybieraj pozy albo włącz automatyczny pokaz — Mors zmienia pozy i porusza się w rytmie animacji.</p>
+<p class="lead">Każda poza ma osobny, dokładnie przycięty kadr z oryginalnego arkusza. Wybieraj pozy albo włącz automatyczny pokaz — Mors naprawdę się rusza!</p>
 <div class="stage">
 <div class="bubble" id="bubble">SIEMA! 🦭</div>
-<div class="mors idle" id="mors" role="img" aria-label="Oryginalna ilustracja Morsa"></div>
+<img class="mors idle" id="mors" src="assets/mors-00.png" alt="Oryginalna ilustracja Morsa">
 </div>
 <div class="caption" id="caption">Mors łapie oddech</div>
 <p class="desc" id="desc">Spokojny tryb czuwania. Płetwy gotowe do akcji.</p>
-<div class="controls" id="controls">
+<div class="controls">
 <button data-pose="0" data-motion="idle" data-title="Mors łapie oddech" data-desc="Spokojny tryb czuwania. Płetwy gotowe do akcji." data-bubble="SIEMA! 🦭">😌 SPOKÓJ</button>
 <button data-pose="1" data-motion="dance" data-title="Muzyka gra!" data-desc="Mors słyszy dobry bit i nie potrafi usiedzieć." data-bubble="DAWAJ GŁOŚNIEJ!">🎵 TANIEC</button>
 <button data-pose="2" data-motion="bounce" data-title="Mors w natarciu" data-desc="Ruszamy do działania. Tusze w gotowości!" data-bubble="NAPRZÓD!">🏃 RUCH</button>
 <button data-pose="3" data-motion="shake" data-title="O MATKO!" data-desc="Ktoś właśnie wysłał plik w Wordzie do druku." data-bubble="COOO?!">😱 ZDZIWIENIE</button>
 <button data-pose="4" data-motion="shake" data-title="Mors się wkurzył" data-desc="Trzecia poprawka do poprawki. Cierpliwość na wyczerpaniu." data-bubble="GRRR!">😡 ZŁOŚĆ</button>
 <button data-pose="5" data-motion="bounce" data-title="Zwycięstwo!" data-desc="Projekt zaakceptowany bez ani jednej poprawki!" data-bubble="JEST MOC!">🏆 TRIUMF</button>
-<button data-pose="6" data-motion="idle" data-title="Mors artysta" data-desc="Powstaje arcydzieło. Farba wszędzie, ale jest efekt." data-bubble="MALUJEMY!">🎨 MALOWANIE</button>
-<button data-pose="7" data-motion="idle" data-title="Przybij piątkę!" data-desc="Dobra robota, ekipo. Płetwa przybita." data-bubble="PIĄTECZKA!">🙌 PIĄTKA</button>
+<button data-pose="6" data-motion="paint" data-title="Mors artysta" data-desc="Powstaje arcydzieło. Farba wszędzie, ale jest efekt." data-bubble="MALUJEMY!">🎨 MALOWANIE</button>
+<button data-pose="7" data-motion="bounce" data-title="Przybij piątkę!" data-desc="Dobra robota, ekipo. Płetwa przybita." data-bubble="PIĄTECZKA!">🙌 PIĄTKA</button>
 <button data-pose="8" data-motion="dance" data-title="Mors pozdrawia" data-desc="Wysyła serdeczne pozdrowienia całej ekipie." data-bubble="POZDRAWIAM!">👋 POZDROWIENIE</button>
 <button data-pose="9" data-motion="shake" data-title="Nie podoba mi się" data-desc="Mors właśnie zobaczył źle ustawione spady." data-bubble="NO NIE...">😤 FOCH</button>
 <button data-pose="10" data-motion="idle" data-title="Smuteczek" data-desc="Drukarka zjadła ostatni arkusz. Chwila ciszy." data-bubble="BUU...">🥺 SMUTEK</button>
 <button data-pose="11" data-motion="bounce" data-title="Ręce w górę!" data-desc="To jest ten moment, kiedy wszystko się udało." data-bubble="HURA!!!">🎉 HURA</button>
 <button data-pose="12" data-motion="dance" data-title="Hej, hej!" data-desc="Mors macha do obserwujących." data-bubble="CZEŚĆ!">🙋 MACHANIE</button>
-<button data-pose="13" data-motion="idle" data-title="Mors gotowy" data-desc="Zebrany, skupiony, czeka na kolejne zadanie." data-bubble="NO TO CO?">✊ GOTOWOŚĆ</button>
+<button data-pose="13" data-motion="bounce" data-title="Mors gotowy" data-desc="Zebrany, skupiony, czeka na kolejne zadanie." data-bubble="NO TO CO?">✊ GOTOWOŚĆ</button>
 <button data-pose="14" data-motion="idle" data-title="Chwila namysłu" data-desc="Mors analizuje sytuację. To może chwilę potrwać." data-bubble="HMMMM...">🤔 MYŚLENIE</button>
 <button id="auto">▶ POKAŻ WSZYSTKIE POZY</button>
 </div>
-<p class="note">Użyte są oryginalne rysunki z pliku <b>assets/komplet ikon.png</b>. Przyciski przełączają rzeczywiste kadry arkusza; animacje CSS dodają podskok, kołysanie i taneczny ruch, a pokaz automatyczny przełącza pozy w krótszych odstępach. To animacja z gotowych póz, nie szkieletowa animacja poszczególnych płetw.</p>
+<p class="note">Wykorzystane są oryginalne rysunki Morsa, bez przerabiania ich stylu. Każdy kadr jest osobnym plikiem PNG z przezroczystym tłem; ruch tworzą wyraźne animacje oraz automatyczne przełączanie póz.</p>
 </main>
 <script>
 (()=>{
 const el=document.getElementById('mors'),caption=document.getElementById('caption'),desc=document.getElementById('desc'),bubble=document.getElementById('bubble'),buttons=[...document.querySelectorAll('button[data-pose]')],auto=document.getElementById('auto');
-const positions=['0% 0%','33.333% 0%','66.666% 0%','100% 0%','0% 33.333%','33.333% 33.333%','66.666% 33.333%','0% 66.666%','33.333% 66.666%','66.666% 66.666%','100% 66.666%','0% 100%','33.333% 100%','66.666% 100%','100% 100%'];
-let timer=null,index=0;
-function show(b){index=Number(b.dataset.pose);el.style.backgroundSize='400% 400%';el.style.backgroundPosition=positions[index];el.className='mors '+b.dataset.motion+(index===5?' pose-triumph':index===6?' pose-paint':'');caption.textContent=b.dataset.title;desc.textContent=b.dataset.desc;bubble.textContent=b.dataset.bubble;buttons.forEach(x=>x.classList.toggle('active',x===b));}
-buttons.forEach(b=>b.addEventListener('click',()=>{stop();show(b)}));
+let timer=null;
+function show(button){
+ const index=Number(button.dataset.pose);
+ el.src='assets/mors-'+String(index).padStart(2,'0')+'.png';
+ el.className='mors '+button.dataset.motion;
+ caption.textContent=button.dataset.title;desc.textContent=button.dataset.desc;bubble.textContent=button.dataset.bubble;
+ buttons.forEach(item=>item.classList.toggle('active',item===button));
+}
 function stop(){if(timer){clearInterval(timer);timer=null}auto.textContent='▶ POKAŻ WSZYSTKIE POZY';auto.classList.remove('active')}
-auto.addEventListener('click',()=>{if(timer){stop();return}auto.textContent='Ⅱ ZATRZYMAJ POKAZ';auto.classList.add('active');let i=0;const tick=()=>{show(buttons[i]);i=(i+1)%buttons.length};tick();timer=setInterval(tick,950)});
+buttons.forEach(button=>button.addEventListener('click',()=>{stop();show(button)}));
+auto.addEventListener('click',()=>{if(timer){stop();return}auto.textContent='Ⅱ ZATRZYMAJ POKAZ';auto.classList.add('active');let index=0;const tick=()=>{show(buttons[index]);index=(index+1)%buttons.length};tick();timer=setInterval(tick,1250)});
 show(buttons[0]);
 })();
 </script>
-</body></html>
+</body>
+</html>
