@@ -17,3 +17,5 @@ for i, region in enumerate(regions):
         crop=crop.crop((max(0,l-pad),max(0,t-pad),min(crop.width,r+pad),min(crop.height,b+pad)))
     crop.save(out/f"mors-{i:02d}.png", optimize=True)
 print(f"Przygotowano {len(regions)} kadrów z arkusza {W}x{H}.")
+
+# Generator wersja 1.0 — oddzielne kadry do demonstracji Morsa.
