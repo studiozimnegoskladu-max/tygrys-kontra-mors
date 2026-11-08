@@ -16,16 +16,16 @@ h1{font-size:clamp(27px,6vw,48px);line-height:.98;margin:0 0 8px;font-weight:100
 .stage:before,.stage:after{content:"";position:absolute;width:170px;height:90px;background:var(--pink);opacity:.8;clip-path:polygon(0 40%,20% 0,34% 30%,60% 0,68% 32%,100% 10%,84% 70%,50% 100%,25% 70%);transform:rotate(-18deg);left:-35px;bottom:12px;z-index:-1}
 .stage:after{left:auto;right:-35px;top:14px;bottom:auto;background:var(--cyan);transform:rotate(155deg)}
 .mors{display:block;width:min(72vw,340px);height:min(68vw,340px);object-fit:contain;position:relative;z-index:1;filter:drop-shadow(5px 6px 0 rgba(23,21,21,.22));transform-origin:50% 75%;will-change:transform}
-.mors.idle{animation:idle 1.6s ease-in-out infinite}
-.mors.bounce{animation:bounce .58s cubic-bezier(.3,.7,.3,1) infinite}
-.mors.shake{animation:shake .34s ease-in-out infinite}
-.mors.dance{animation:dance .62s ease-in-out infinite}
-.mors.paint{animation:paint .72s ease-in-out infinite}
-@keyframes idle{0%,100%{transform:translateY(0) rotate(-1deg) scale(1)}50%{transform:translateY(-13px) rotate(1deg) scale(1.025)}}
-@keyframes bounce{0%,100%{transform:translateY(0) rotate(0) scale(1)}35%{transform:translateY(-30px) rotate(-5deg) scale(1.04)}65%{transform:translateY(2px) rotate(4deg) scale(.97)}}
-@keyframes shake{0%,100%{transform:translateX(0) rotate(-5deg)}25%{transform:translateX(-9px) rotate(5deg)}75%{transform:translateX(9px) rotate(-5deg)}}
-@keyframes dance{0%,100%{transform:rotate(-10deg) translateY(0)}25%{transform:rotate(10deg) translateY(-15px)}50%{transform:rotate(-10deg) translateY(0)}75%{transform:rotate(10deg) translateY(-15px)}}
-@keyframes paint{0%,100%{transform:translateY(0) rotate(-2deg) scale(1)}50%{transform:translateY(-12px) rotate(3deg) scale(1.04)}}
+.mors.idle{animation:idle 2.2s ease-in-out infinite}
+.mors.bounce{animation:bounce 1.05s cubic-bezier(.22,.8,.25,1) infinite}
+.mors.shake{animation:shake .58s cubic-bezier(.36,.07,.19,.97) infinite}
+.mors.dance{animation:dance .92s ease-in-out infinite}
+.mors.paint{animation:paint 1.15s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes idle{0%,100%{transform:translateY(0) rotate(-1deg) scale(1,1)}25%{transform:translateY(-4px) rotate(1deg) scale(1.012,.99)}50%{transform:translateY(-10px) rotate(1.5deg) scale(1.025,1.015)}75%{transform:translateY(-4px) rotate(-1deg) scale(.995,1.01)}}
+@keyframes bounce{0%,100%{transform:translateY(0) rotate(0) scale(1,1)}12%{transform:translateY(5px) rotate(-2deg) scale(1.08,.88)}28%{transform:translateY(-38px) rotate(-7deg) scale(.96,1.08)}48%{transform:translateY(-45px) rotate(3deg) scale(1.02,1.02)}68%{transform:translateY(3px) rotate(5deg) scale(1.1,.86)}82%{transform:translateY(-7px) rotate(-2deg) scale(.98,1.04)}}
+@keyframes shake{0%,100%{transform:translateX(0) rotate(-4deg) skewX(0)}15%{transform:translateX(-13px) rotate(7deg) skewX(-3deg)}30%{transform:translateX(11px) rotate(-8deg) skewX(3deg)}45%{transform:translateX(-10px) rotate(6deg) skewX(-2deg)}60%{transform:translateX(8px) rotate(-5deg) skewX(2deg)}75%{transform:translateX(-4px) rotate(3deg)}}
+@keyframes dance{0%,100%{transform:translateY(0) rotate(-9deg) scale(1,1)}20%{transform:translateY(-12px) rotate(9deg) scale(1.03,.98)}40%{transform:translateY(1px) rotate(13deg) scale(.96,1.04)}60%{transform:translateY(-16px) rotate(-11deg) scale(1.04,.97)}80%{transform:translateY(0) rotate(7deg) scale(.98,1.02)}}
+@keyframes paint{0%,100%{transform:translate(0,0) rotate(-2deg) scale(1,1)}20%{transform:translate(-7px,-8px) rotate(-5deg) scale(1.03,.98)}45%{transform:translate(8px,-16px) rotate(5deg) scale(.98,1.04)}70%{transform:translate(-4px,-5px) rotate(-3deg) scale(1.04,.96)}}
 .bubble{position:absolute;z-index:2;top:18px;left:18px;padding:10px 14px;background:white;border:3px solid var(--ink);border-radius:13px;font-weight:1000;transform:rotate(-4deg);box-shadow:3px 3px 0 var(--ink);animation:bubble .9s ease-in-out infinite alternate}
 @keyframes bubble{to{transform:rotate(3deg) scale(1.06)}}
 .caption{text-align:center;font-size:clamp(18px,4vw,25px);font-weight:1000;margin:16px 0 5px;text-transform:uppercase}
@@ -81,7 +81,7 @@ function show(button){
 }
 function stop(){if(timer){clearInterval(timer);timer=null}auto.textContent='▶ POKAŻ WSZYSTKIE POZY';auto.classList.remove('active')}
 buttons.forEach(button=>button.addEventListener('click',()=>{stop();show(button)}));
-auto.addEventListener('click',()=>{if(timer){stop();return}auto.textContent='Ⅱ ZATRZYMAJ POKAZ';auto.classList.add('active');let index=0;const tick=()=>{show(buttons[index]);index=(index+1)%buttons.length};tick();timer=setInterval(tick,1250)});
+auto.addEventListener('click',()=>{if(timer){stop();return}auto.textContent='Ⅱ ZATRZYMAJ POKAZ';auto.classList.add('active');let index=0;const tick=()=>{show(buttons[index]);index=(index+1)%buttons.length};tick();timer=setInterval(tick,1900)});
 show(buttons[0]);
 })();
 </script>
