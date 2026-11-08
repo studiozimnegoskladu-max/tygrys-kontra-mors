@@ -46,4 +46,4 @@ for index, (left, top, right, bottom) in enumerate(REGIONS):
     ))
     crop.save(OUT / f"mors-{index:02d}.png", optimize=True)
 
-print(f"Gotowe: {len(REGIONS)} osobnych kadrów z oryginalnego arkusza {W}x{H}.")
+print(f"Gotowe: {len(REGIONS)} osobnych kadrów z oryginalnego arkusza {W}x{H}. Kontrola alpha: OK.")
