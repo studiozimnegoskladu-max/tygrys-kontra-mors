@@ -17,7 +17,7 @@
   <meta name="twitter:image" content="https://raw.githubusercontent.com/studiozimnegoskladu-max/tygrys-kontra-mors/main/assets/plansza%20FB%20zaproszeniowa.jpg">
   <meta property="og:url" content="https://studiozimnegoskladu-max.github.io/tygrys-kontra-mors/">
   <title>Kółko, Krzyżyk i Dwa Promile Absurdu — Studio Zimnego Składu</title>
-  <link rel="stylesheet" href="style.css?v=20261108-mors-park-no-dots">
+  <link rel="stylesheet" href="style.css?v=20261108-six-mascots">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -68,11 +68,12 @@
       <div class="panel-title"><span class="scribble">01</span><div><h2>ZRÓBMY POKÓJ</h2><p>Jedna osoba zakłada grę, druga dołącza z kodem.</p></div></div>
       <section class="character-picker"><div class="character-heading"><b>WYBIERZ SWOJĄ MASKOTKĘ</b><small>Kim dziś wchodzisz na arenę?</small></div><div class="character-grid"><label class="character-option selected"><input type="radio" name="character" value="tiger" checked><img class="character-avatar" src="assets/hrabia-poprawek-transparent.svg?v=20261105-3" alt="Hrabia Poprawek"><b>Hrabia Poprawek</b><small>Władca drobnych korekt</small></label><label class="character-option"><input type="radio" name="character" value="mors"><span>🦭</span><b>Mors</b><small>Pan lodowiska</small></label><label class="character-option"><input type="radio" name="character" value="goat"><img class="character-avatar" src="assets/koza-krzycha.jpg?v=20261106-2" alt="Koza Krzycha"><b>Koza Krzycha</b><small>Skacze po nakładzie</small></label><label class="character-option"><input type="radio" name="character" value="octopus"><span>🐙</span><b>Ośmiornica Drukarka</b><small>Osiem rąk do roboty</small></label><label class="character-option"><input type="radio" name="character" value="mole"><span>🦫</span><b>Kret Operator</b><small>Wierci w papierach</small></label><label class="character-option"><input type="radio" name="character" value="llama"><span>🦙</span><b>Lama Drama</b><small>Pluje na błędy</small></label></div><p class="character-note">Wybór zapamięta się na tym urządzeniu. W grze online przeciwnik zobaczy Twoją maskotkę na swojej planszy.</p></section>
       <div class="side-choice">
-        <h3>WYBIERZ, KIM GRASZ</h3>
-        <p>Ty zakładasz pokój, ale to Ty wybierasz swoją postać. Drugi gracz otrzyma przeciwną.</p>
+        <h3>TWOJA MASKOTKA I KOLEJNOŚĆ RUCHU</h3>
+        <p>Wybierz dowolną z sześciu postaci powyżej. Tutaj decydujesz tylko, czy zaczynasz jako kółko, czy krzyżyk.</p>
+        <div id="roomCharacterPreview" class="room-character-preview" aria-live="polite"></div>
         <div class="side-options">
-          <label class="side-option tiger-option selected"><input type="radio" name="mySide" value="tiger" checked><img src="assets/hrabia-poprawek-transparent.svg" alt=""><span><b>GRAM JAKO HRABIA POPRAWEK</b><small>KÓŁKO · PIERWSZY RUCH</small></span></label>
-          <label class="side-option mors-option"><input type="radio" name="mySide" value="mors"><img src="assets/mors.png" alt=""><span><b>GRAM JAKO MORS</b><small>KRZYŻYK · DRUGI RUCH</small></span></label>
+          <label class="side-option selected"><input type="radio" name="mySide" value="tiger" checked><span class="side-mark">⭕</span><span><b>ZACZYNAM JAKO PIERWSZY</b><small>KÓŁKO · PIERWSZY RUCH</small></span></label>
+          <label class="side-option"><input type="radio" name="mySide" value="mors"><span class="side-mark">❌</span><span><b>ZACZYNAM JAKO DRUGI</b><small>KRZYŻYK · DRUGI RUCH</small></span></label>
         </div>
       </div>
       <div class="setup-grid">
