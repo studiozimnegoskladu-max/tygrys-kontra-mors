@@ -40,7 +40,7 @@
   <header class="topbar">
     <img class="topbar-logo" src="assets/szs-logo.png?v=20261105-2" alt="Studio Zimnego Składu">
     <div><div class="brand-sub">PRZEDSTAWIA POJEDYNEK STULECIA</div></div>
-    <div class="online-tag"><span></span> GRA ONLINE</div>
+    <div class="topbar-actions"><button type="button" id="soundBtn" class="btn btn-outline sound-toggle" aria-pressed="true" aria-label="Włącz lub wyłącz dźwięk">🔊 DŹWIĘK</button><div class="online-tag"><span></span> GRA ONLINE</div></div>
   </header>
 
   <main class="shell">
@@ -173,7 +173,7 @@
     <section id="game" class="panel game-panel hidden">
       <div class="game-head">
         <div><div class="room-label">POKÓJ <strong id="roomCode">------</strong></div><div id="roleLabel" class="role-label"></div><div class="role-label">GRACZ: <strong id="playerName">Gracz</strong></div></div>
-        <div class="head-actions"><button type="button" id="soundBtn" class="btn btn-outline" aria-pressed="true">🔊 DŹWIĘK</button><button id="copyBtn" class="btn btn-outline">KOPIUJ LINK ↗</button></div>
+        <div class="head-actions"><button id="copyBtn" class="btn btn-outline">KOPIUJ LINK ↗</button></div>
       </div>
       <div id="roundResultOverlay" class="round-result-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="roundResultTitle"><div class="round-result-card"><div id="roundResultIcon" class="round-result-icon">🏆</div><small class="round-result-kicker">OFICJALNY KOMUNIKAT KOMISJI ABSURDU</small><h2 id="roundResultTitle">KONIEC RUNDY!</h2><p id="roundResultText">Plansza wydała werdykt.</p><div class="round-result-stamp">SZS<br>★</div><button type="button" id="roundResultClose" class="btn btn-yellow">POKAŻ PLANSZĘ</button></div></div>
       <div class="scoreboard">
