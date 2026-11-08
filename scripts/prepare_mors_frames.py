@@ -6,8 +6,9 @@ OUT = Path("assets")
 image = Image.open(SOURCE).convert("RGBA")
 W, H = image.size
 
-# Rzeczywiste obszary poszczególnych rysunków na arkuszu 1097 x 1473.
-# Każda poza ma własny kadr; nie dzielimy arkusza na równą siatkę.
+# Współrzędne rozpoznane na podglądzie arkusza (1100 x 1473).
+# Przeliczamy je proporcjonalnie na rzeczywistą rozdzielczość PNG.
+REFERENCE_W, REFERENCE_H = 1100, 1473
 REGIONS = [
     (25, 25, 285, 285),       # 00 śpi
     (295, 15, 530, 290),      # 01 stoi i macha
@@ -18,32 +19,27 @@ REGIONS = [
     (630, 300, 980, 625),     # 06 maluje
     (0, 680, 285, 1030),      # 07 piątka
     (275, 680, 575, 1030),    # 08 pozdrawia
-    (565, 680, 875, 1030),   # 09 foch
-    (865, 680, W, 1030),     # 10 smutek
-    (10, 1060, 260, H),      # 11 hura
-    (270, 1060, 555, H),     # 12 macha
-    (555, 1060, 865, H),     # 13 gotowość
-    (860, 1060, W, H),       # 14 myśli
+    (565, 680, 875, 1030),    # 09 foch
+    (865, 680, 1100, 1030),   # 10 smutek
+    (10, 1060, 260, 1473),    # 11 hura
+    (270, 1060, 555, 1473),  # 12 macha
+    (555, 1060, 865, 1473),  # 13 gotowość
+    (860, 1060, 1100, 1473), # 14 myśli
 ]
 
 if len(REGIONS) != 15:
     raise SystemExit("Lista kadrów musi zawierać dokładnie 15 pozycji.")
 
-for index, (left, top, right, bottom) in enumerate(REGIONS):
-    left, top = max(0, left), max(0, top)
-    right, bottom = min(W, right), min(H, bottom)
-    crop = image.crop((left, top, right, bottom))
-    alpha = crop.getchannel("A")
-    bbox = alpha.getbbox()
+sx, sy = W / REFERENCE_W, H / REFERENCE_H
+for index, (x0, y0, x1, y1) in enumerate(REGIONS):
+    box = (round(x0*sx), round(y0*sy), round(x1*sx), round(y1*sy))
+    crop = image.crop(box)
+    bbox = crop.getchannel("A").getbbox()
     if bbox is None:
-        raise SystemExit(f"Kadr {index} jest pusty: {(left, top, right, bottom)}")
-    # Przycinamy do faktycznie widocznych pikseli z niewielkim marginesem.
-    x0, y0, x1, y1 = bbox
-    pad = 9
-    crop = crop.crop((
-        max(0, x0 - pad), max(0, y0 - pad),
-        min(crop.width, x1 + pad), min(crop.height, y1 + pad)
-    ))
+        raise SystemExit(f"Kadr {index} jest pusty: {box}")
+    l, t, r, b = bbox
+    pad = 12
+    crop = crop.crop((max(0,l-pad), max(0,t-pad), min(crop.width,r+pad), min(crop.height,b+pad)))
     crop.save(OUT / f"mors-{index:02d}.png", optimize=True)
 
-print(f"Gotowe: {len(REGIONS)} osobnych kadrów z oryginalnego arkusza {W}x{H}. Kontrola alpha: OK.")
+print(f"Gotowe: {len(REGIONS)} kadrów. Oryginał: {W}x{H}; skala: {sx:.3f} x {sy:.3f}.")
