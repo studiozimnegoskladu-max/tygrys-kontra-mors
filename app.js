@@ -223,18 +223,33 @@
   }
 
   $('closeCandyJackpot')?.addEventListener('click',()=>{$('candyJackpot').hidden=true;document.body.classList.remove('jackpot-open')});
+  function fortuneTickSequence(){
+    // Krótkie „klik” przy kolejnych polach — odstępy rosną, gdy koło zwalnia.
+    const gaps=[65,70,75,80,85,95,105,120,135,155,180,210,245,285,330,380,430,480];
+    let elapsed=0;
+    gaps.forEach((gap,i)=>{
+      elapsed+=gap;
+      window.setTimeout(()=>{if(soundOn)sound(720+(i%3)*95,.035)},elapsed);
+    });
+  }
+  function fortuneFinishSound(){
+    if(!soundOn)return;
+    sound(880,.16);
+    window.setTimeout(()=>{if(soundOn)sound(1175,.22)},130);
+    window.setTimeout(()=>{if(soundOn)sound(1568,.3)},280);
+  }
   function spinFortune(){
     let saved={};try{saved=JSON.parse(localStorage.getItem(FORTUNE_KEY)||'{}')||{}}catch{}
     if(saved.date===fortuneDate())return;
     const wheel=$('fortuneWheel'),button=$('spinFortuneBtn'),result=$('fortuneResult'),note=$('fortuneNote'),stage=document.querySelector('.fortune-wheel-stage');const jackpot=$('candyJackpot');
     const index=Math.floor(Math.random()*fortunePrizes.length),p=fortunePrizes[index];
     const center=index*45+22.5,rotation=2160+(360-center),prize=p.icon+' '+p.name+' — '+p.desc;
-    button.disabled=true;button.textContent='MORS KRĘCI…';stage?.classList.add('spinning');result.textContent='Trwa losowanie. Nie podglądać, to uczciwy chaos!';
+    button.disabled=true;button.textContent='MORS KRĘCI…';stage?.classList.add('spinning');result.textContent='Trwa losowanie. Nie podglądać, to uczciwy chaos!';fortuneTickSequence();
     note.textContent='Koza Krzycha pilnuje, żeby nikt nie oszukiwał.';
     if(wheel){wheel.style.transition='none';wheel.style.transform='rotate(0deg)';void wheel.offsetWidth;wheel.style.transition='transform 4.6s cubic-bezier(.12,.72,.12,1)';wheel.style.transform='rotate('+rotation+'deg)'}
     window.setTimeout(()=>{
       localStorage.setItem(FORTUNE_KEY,JSON.stringify({date:fortuneDate(),prize,prizeIndex:index,rotation}));
-      result.textContent=prize;stage?.classList.remove('spinning');const claim=$('fortuneClaimLink');if(claim)claim.hidden=index!==7;if(index===7&&jackpot){jackpot.hidden=false;document.body.classList.add('jackpot-open');window.setTimeout(()=>{jackpot.hidden=true;document.body.classList.remove('jackpot-open')},7500)}button.textContent='WRÓĆ JUTRO PO KOLEJNY OBRÓT';
+      result.textContent=prize;fortuneFinishSound();stage?.classList.remove('spinning');const claim=$('fortuneClaimLink');if(claim)claim.hidden=index!==7;if(index===7&&jackpot){jackpot.hidden=false;document.body.classList.add('jackpot-open');window.setTimeout(()=>{jackpot.hidden=true;document.body.classList.remove('jackpot-open')},7500)}button.textContent='WRÓĆ JUTRO PO KOLEJNY OBRÓT';
       note.textContent='Wylosowano! Mors zatwierdza tę decyzję, Koza Krzycha nie zgłasza reklamacji.';
       unlockSticker('fortune-spin');
     },4700);
