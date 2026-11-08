@@ -20,8 +20,9 @@ h1{font-size:clamp(27px,6vw,48px);line-height:.98;margin:0 0 8px;font-weight:100
 .mors.dance{animation:dance .75s ease-in-out infinite}
 .mors.idle{animation:idle 2s ease-in-out infinite}
 /* Kadry o szerszym rysunku dostają osobne kadrowanie, bez obcinania płetw i rekwizytów. */
-.mors.pose-triumph{background-size:400% 400%!important;background-position:40% 33.333%!important}
-.mors.pose-paint{background-size:300% 400%!important;background-position:80% 33.333%!important}
+.mors.pose-triumph{width:300px;height:310px;aspect-ratio:auto;background-size:1364px 1834px!important;background-position:-409px -372px!important}
+.mors.pose-paint{width:330px;height:300px;aspect-ratio:auto;background-size:1344px 1805px!important;background-position:-820px -370px!important}
+@media(max-width:520px){.mors.pose-triumph{width:260px;height:270px}.mors.pose-paint{width:290px;height:265px}}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
 @keyframes shake{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
 @keyframes dance{0%,100%{transform:rotate(-8deg) translateY(0)}25%{transform:rotate(8deg) translateY(-12px)}50%{transform:rotate(-8deg) translateY(0)}75%{transform:rotate(8deg) translateY(-12px)}}
