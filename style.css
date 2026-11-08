@@ -558,3 +558,21 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
 .round-result-card .btn{position:relative;z-index:1;min-width:190px}
 @media(max-width:520px){.round-result-card{padding:28px 18px 22px}.round-result-card:after{left:-7px;top:8px;font-size:14px}.round-result-stamp{right:8px;top:8px;font-size:8px}}
 @media(prefers-reduced-motion:reduce){.round-result-card{animation:none!important}}
+
+/* Stały przełącznik dźwięku — widoczny również na ekranie startowym i telefonach. */
+.topbar{gap:10px}
+.topbar-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-left:auto;flex-wrap:wrap}
+.topbar-actions .sound-toggle{white-space:nowrap;min-height:38px;padding:8px 11px;font-size:11px}
+@media(max-width:600px){
+  .topbar{display:flex;align-items:center;gap:7px;padding:10px 9px}
+  .topbar-logo{width:76px;max-height:40px}
+  .topbar>div:nth-child(2){min-width:0;flex:1}
+  .topbar-actions{gap:5px;margin-left:0;flex-wrap:nowrap}
+  .topbar-actions .sound-toggle{min-height:34px;padding:6px 7px;font-size:10px}
+  .online-tag{font-size:7px;padding:6px 7px;white-space:nowrap}
+}
+@media(max-width:360px){
+  .topbar-logo{width:62px}
+  .topbar-actions .sound-toggle{font-size:9px;padding:6px 5px}
+  .online-tag{font-size:6px;padding:5px}
+}
