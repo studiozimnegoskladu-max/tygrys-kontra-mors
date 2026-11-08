@@ -273,6 +273,21 @@
   const say=s=>{msg.textContent=s||''};
   const configured=()=>window.SUPABASE_URL&&window.SUPABASE_ANON_KEY;
   function connect(){if(!configured()){say('Tryb online wymaga konfiguracji Supabase.');return false}if(!window.supabase?.createClient){say('Nie udało się załadować biblioteki połączenia online. Odśwież stronę lub zagraj lokalnie.');return false}if(!client)client=window.supabase.createClient(window.SUPABASE_URL,window.SUPABASE_ANON_KEY);return true}
+  // Odblokowanie Web Audio po pierwszym geście użytkownika (ważne zwłaszcza na Androidzie/iOS).
+  document.addEventListener('pointerdown',()=>{
+    if(!soundOn)return;
+    try{
+      const AudioCtx=window.AudioContext||window.webkitAudioContext;
+      if(!AudioCtx)return;
+      audioContext=audioContext||new AudioCtx();
+      if(audioContext.state==='suspended')audioContext.resume().catch(err=>console.warn('Nie udało się odblokować audio:',err));
+    }catch(err){console.warn('Nie udało się przygotować audio:',err);}
+  },{passive:true});
+  document.addEventListener('visibilitychange',()=>{
+    if(!document.hidden&&soundOn&&audioContext?.state==='suspended'){
+      audioContext.resume().catch(err=>console.warn('Nie udało się wznowić audio:',err));
+    }
+  });
   // Oryginalne, generowane w przeglądarce efekty postaci — bez zewnętrznych plików.
   let lastAnimalAudio=[];
   function soundAnimal(animal='tiger',celebration=false){
