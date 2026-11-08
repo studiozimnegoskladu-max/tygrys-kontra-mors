@@ -601,3 +601,26 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
 .topbar-actions .music-toggle{white-space:nowrap}
 @media(max-width:600px){.topbar-actions .sound-toggle{font-size:9px;padding:6px 6px}.topbar-actions .music-toggle{font-size:9px;padding:6px 6px}}
 @media(max-width:380px){.topbar-actions{gap:3px}.topbar-actions .sound-toggle{font-size:8px;padding:5px 4px}.online-tag{font-size:6px;padding:5px 5px}}
+
+
+/* Morsowy komentator — oryginalna plansza ikon, bez przerabiania rysunków */
+.mors-commentary{display:flex;align-items:center;gap:12px;min-height:104px;padding:8px 14px;text-align:left}
+.mors-reaction{display:block;flex:0 0 82px;width:82px;height:94px;background-image:url('assets/komplet%20ikon.png');background-repeat:no-repeat;background-size:400% 400%;background-position:33.333% 100%;filter:drop-shadow(2px 3px 0 rgba(0,0,0,.12))}
+.mors-reaction[data-pose="1"]{background-position:0 0}
+.mors-reaction[data-pose="2"]{background-position:33.333% 0}
+.mors-reaction[data-pose="3"]{background-position:66.667% 0}
+.mors-reaction[data-pose="4"]{background-position:100% 0}
+.mors-reaction[data-pose="5"]{background-position:16.667% 33.333%}
+.mors-reaction[data-pose="6"]{background-position:50% 33.333%}
+.mors-reaction[data-pose="7"]{background-position:83.333% 33.333%}
+.mors-reaction[data-pose="8"]{background-position:0 66.667%}
+.mors-reaction[data-pose="9"]{background-position:33.333% 66.667%}
+.mors-reaction[data-pose="10"]{background-position:66.667% 66.667%}
+.mors-reaction[data-pose="11"]{background-position:100% 66.667%}
+.mors-reaction[data-pose="12"]{background-position:0 100%}
+.mors-reaction[data-pose="13"]{background-position:33.333% 100%}
+.mors-reaction[data-pose="14"]{background-position:66.667% 100%}
+.mors-reaction[data-pose="15"]{background-position:100% 100%}
+.commentary-copy{flex:1;min-width:0}
+.commentary[data-mood="idle"]{background:#fff9cf}
+@media(max-width:600px){.mors-commentary{min-height:88px;gap:8px;padding:7px 9px;font-size:13px}.mors-reaction{flex-basis:68px;width:68px;height:78px}}
