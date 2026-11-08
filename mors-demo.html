@@ -15,17 +15,33 @@ h1{font-size:clamp(27px,6vw,48px);line-height:.98;margin:0 0 8px;font-weight:100
 .stage{position:relative;min-height:410px;border:3px solid var(--ink);border-radius:14px;background:#fff2b8;display:flex;align-items:center;justify-content:center;overflow:hidden;isolation:isolate}
 .stage:before,.stage:after{content:"";position:absolute;width:170px;height:90px;background:var(--pink);opacity:.8;clip-path:polygon(0 40%,20% 0,34% 30%,60% 0,68% 32%,100% 10%,84% 70%,50% 100%,25% 70%);transform:rotate(-18deg);left:-35px;bottom:12px;z-index:-1}
 .stage:after{left:auto;right:-35px;top:14px;bottom:auto;background:var(--cyan);transform:rotate(155deg)}
-.mors{display:block;width:min(72vw,340px);height:min(68vw,340px);object-fit:contain;position:relative;z-index:1;filter:drop-shadow(5px 6px 0 rgba(23,21,21,.22));transform-origin:50% 75%;will-change:transform}
-.mors.idle{animation:idle 2.2s ease-in-out infinite}
-.mors.bounce{animation:bounce 1.05s cubic-bezier(.22,.8,.25,1) infinite}
-.mors.shake{animation:shake .58s cubic-bezier(.36,.07,.19,.97) infinite}
-.mors.dance{animation:dance .92s ease-in-out infinite}
-.mors.paint{animation:paint 1.15s cubic-bezier(.4,0,.2,1) infinite}
-@keyframes idle{0%,100%{transform:translateY(0) rotate(-1deg) scale(1,1)}25%{transform:translateY(-4px) rotate(1deg) scale(1.012,.99)}50%{transform:translateY(-10px) rotate(1.5deg) scale(1.025,1.015)}75%{transform:translateY(-4px) rotate(-1deg) scale(.995,1.01)}}
-@keyframes bounce{0%,100%{transform:translateY(0) rotate(0) scale(1,1)}12%{transform:translateY(5px) rotate(-2deg) scale(1.08,.88)}28%{transform:translateY(-38px) rotate(-7deg) scale(.96,1.08)}48%{transform:translateY(-45px) rotate(3deg) scale(1.02,1.02)}68%{transform:translateY(3px) rotate(5deg) scale(1.1,.86)}82%{transform:translateY(-7px) rotate(-2deg) scale(.98,1.04)}}
-@keyframes shake{0%,100%{transform:translateX(0) rotate(-4deg) skewX(0)}15%{transform:translateX(-13px) rotate(7deg) skewX(-3deg)}30%{transform:translateX(11px) rotate(-8deg) skewX(3deg)}45%{transform:translateX(-10px) rotate(6deg) skewX(-2deg)}60%{transform:translateX(8px) rotate(-5deg) skewX(2deg)}75%{transform:translateX(-4px) rotate(3deg)}}
-@keyframes dance{0%,100%{transform:translateY(0) rotate(-9deg) scale(1,1)}20%{transform:translateY(-12px) rotate(9deg) scale(1.03,.98)}40%{transform:translateY(1px) rotate(13deg) scale(.96,1.04)}60%{transform:translateY(-16px) rotate(-11deg) scale(1.04,.97)}80%{transform:translateY(0) rotate(7deg) scale(.98,1.02)}}
-@keyframes paint{0%,100%{transform:translate(0,0) rotate(-2deg) scale(1,1)}20%{transform:translate(-7px,-8px) rotate(-5deg) scale(1.03,.98)}45%{transform:translate(8px,-16px) rotate(5deg) scale(.98,1.04)}70%{transform:translate(-4px,-5px) rotate(-3deg) scale(1.04,.96)}}
+.character-wrap{position:relative;width:min(72vw,340px);height:min(68vw,340px);z-index:1;display:grid;place-items:center;transform-origin:50% 85%;will-change:transform}
+.mors{display:block;width:100%;height:100%;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(5px 6px 0 rgba(23,21,21,.18));transform-origin:50% 78%;will-change:transform}
+.shadow{position:absolute;width:56%;height:7%;left:22%;bottom:2%;border-radius:50%;background:rgba(23,21,21,.23);filter:blur(5px);z-index:0;transform:scaleX(1);animation:shadowPulse 1.6s ease-in-out infinite}
+.splash{position:absolute;width:17px;height:17px;border:2px solid var(--ink);border-radius:50% 45% 55% 40%;opacity:0;z-index:1}
+.splash.one{left:4%;top:44%;background:var(--pink)}.splash.two{right:4%;top:30%;width:12px;height:12px;background:var(--cyan)}.splash.three{right:13%;bottom:16%;width:9px;height:9px;background:var(--yellow)}
+.character-wrap.idle{animation:floatBody 2.2s ease-in-out infinite}
+.character-wrap.bounce{animation:jumpBody 1.05s cubic-bezier(.22,.8,.25,1) infinite}
+.character-wrap.shake{animation:shakeBody .58s cubic-bezier(.36,.07,.19,.97) infinite}
+.character-wrap.dance{animation:danceBody .92s ease-in-out infinite}
+.character-wrap.paint{animation:paintBody 1.15s cubic-bezier(.4,0,.2,1) infinite}
+.character-wrap.bounce .mors{animation:squash 1.05s cubic-bezier(.22,.8,.25,1) infinite}
+.character-wrap.dance .mors{animation:tiltDance .92s ease-in-out infinite}
+.character-wrap.shake .mors{animation:headRattle .58s ease-in-out infinite}
+.character-wrap.paint .mors{animation:brushStroke 1.15s ease-in-out infinite}
+.character-wrap.paint .splash{animation:pop 1.15s ease-out infinite}
+.character-wrap.paint .splash.two{animation-delay:.22s}.character-wrap.paint .splash.three{animation-delay:.45s}
+@keyframes floatBody{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes jumpBody{0%,100%{transform:translateY(0)}13%{transform:translateY(7px)}38%,52%{transform:translateY(-38px)}72%{transform:translateY(3px)}86%{transform:translateY(-5px)}}
+@keyframes shakeBody{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-7px)}80%{transform:translateX(4px)}}
+@keyframes danceBody{0%,100%{transform:translateY(0)}25%{transform:translateY(-11px)}50%{transform:translateY(1px)}75%{transform:translateY(-13px)}}
+@keyframes paintBody{0%,100%{transform:translate(0,0)}25%{transform:translate(-5px,-7px)}50%{transform:translate(6px,-12px)}75%{transform:translate(-3px,-5px)}}
+@keyframes squash{0%,100%{transform:scale(1,1)}13%{transform:scale(1.08,.88)}38%{transform:scale(.97,1.07)}68%{transform:scale(1.1,.87)}86%{transform:scale(.99,1.03)}}
+@keyframes tiltDance{0%,100%{transform:rotate(-7deg)}25%{transform:rotate(8deg)}50%{transform:rotate(12deg)}75%{transform:rotate(-10deg)}}
+@keyframes headRattle{0%,100%{transform:rotate(-3deg)}25%{transform:rotate(5deg)}50%{transform:rotate(-6deg)}75%{transform:rotate(4deg)}}
+@keyframes brushStroke{0%,100%{transform:rotate(-2deg)}35%{transform:rotate(-5deg)}70%{transform:rotate(5deg)}}
+@keyframes shadowPulse{0%,100%{transform:scaleX(1);opacity:.22}40%{transform:scaleX(.68);opacity:.12}70%{transform:scaleX(1.12);opacity:.27}}
+@keyframes pop{0%,100%{opacity:0;transform:translate(0,8px) scale(.2)}25%{opacity:1;transform:translate(-8px,-13px) scale(1.15)}70%{opacity:.8;transform:translate(8px,-28px) scale(.7)}}
 .bubble{position:absolute;z-index:2;top:18px;left:18px;padding:10px 14px;background:white;border:3px solid var(--ink);border-radius:13px;font-weight:1000;transform:rotate(-4deg);box-shadow:3px 3px 0 var(--ink);animation:bubble .9s ease-in-out infinite alternate}
 @keyframes bubble{to{transform:rotate(3deg) scale(1.06)}}
 .caption{text-align:center;font-size:clamp(18px,4vw,25px);font-weight:1000;margin:16px 0 5px;text-transform:uppercase}
@@ -34,17 +50,17 @@ h1{font-size:clamp(27px,6vw,48px);line-height:.98;margin:0 0 8px;font-weight:100
 button{font:900 13px Arial,sans-serif;color:var(--ink);background:#fff;border:3px solid var(--ink);border-radius:10px;padding:12px 9px;box-shadow:3px 3px 0 var(--ink);cursor:pointer}
 button.active{background:var(--ink);color:var(--yellow);transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
 .note{margin:18px 0 0;padding-top:12px;border-top:2px dashed #777;font-size:12px;line-height:1.5;font-weight:700}
-@media(max-width:520px){body{padding:10px}.stage{min-height:340px}.mors{width:min(78vw,290px);height:290px}.bubble{top:10px;left:10px;font-size:12px}}
-@media(prefers-reduced-motion:reduce){.mors,.bubble{animation:none!important}}
+@media(max-width:520px){body{padding:10px}.stage{min-height:340px}.character-wrap{width:min(78vw,290px);height:290px}.bubble{top:10px;left:10px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){.character-wrap,.mors,.bubble,.shadow,.splash{animation:none!important}}
 </style>
 </head>
 <body>
 <main class="wrap">
 <h1>Mors w ruchu!</h1>
-<p class="lead">Każda poza ma osobny, dokładnie przycięty kadr z oryginalnego arkusza. Wybieraj pozy albo włącz automatyczny pokaz — Mors naprawdę się rusza!</p>
+<p class="lead">Każda poza ma osobny kadr z oryginalnego arkusza. Mors podskakuje, kołysze się, łapie równowagę, a przy malowaniu chlapią farbne kleksy.</p>
 <div class="stage">
 <div class="bubble" id="bubble">SIEMA! 🦭</div>
-<img class="mors idle" id="mors" src="assets/mors-00.png" alt="Oryginalna ilustracja Morsa">
+<div class="character-wrap idle" id="character"><div class="shadow"></div><span class="splash one"></span><span class="splash two"></span><span class="splash three"></span><img class="mors" id="mors" src="assets/mors-00.png" alt="Oryginalna ilustracja Morsa"></div>
 </div>
 <div class="caption" id="caption">Mors łapie oddech</div>
 <p class="desc" id="desc">Spokojny tryb czuwania. Płetwy gotowe do akcji.</p>
@@ -66,16 +82,16 @@ button.active{background:var(--ink);color:var(--yellow);transform:translate(2px,
 <button data-pose="14" data-motion="idle" data-title="Chwila namysłu" data-desc="Mors analizuje sytuację. To może chwilę potrwać." data-bubble="HMMMM...">🤔 MYŚLENIE</button>
 <button id="auto">▶ POKAŻ WSZYSTKIE POZY</button>
 </div>
-<p class="note">Wykorzystane są oryginalne rysunki Morsa, bez przerabiania ich stylu. Każdy kadr jest osobnym plikiem PNG z przezroczystym tłem; ruch tworzą wyraźne animacje oraz automatyczne przełączanie póz.</p>
+<p class="note">Oryginalne rysunki Morsa pozostają nietknięte. Ruch tworzą osobne warstwy animacji: podskok, przechył, squash & stretch, cień reagujący na wyskok oraz farbne kleksy.</p>
 </main>
 <script>
 (()=>{
-const el=document.getElementById('mors'),caption=document.getElementById('caption'),desc=document.getElementById('desc'),bubble=document.getElementById('bubble'),buttons=[...document.querySelectorAll('button[data-pose]')],auto=document.getElementById('auto');
+const el=document.getElementById('mors'),character=document.getElementById('character'),caption=document.getElementById('caption'),desc=document.getElementById('desc'),bubble=document.getElementById('bubble'),buttons=[...document.querySelectorAll('button[data-pose]')],auto=document.getElementById('auto');
 let timer=null;
 function show(button){
  const index=Number(button.dataset.pose);
  el.src='assets/mors-'+String(index).padStart(2,'0')+'.png';
- el.className='mors '+button.dataset.motion;
+ character.className='character-wrap '+button.dataset.motion;
  caption.textContent=button.dataset.title;desc.textContent=button.dataset.desc;bubble.textContent=button.dataset.bubble;
  buttons.forEach(item=>item.classList.toggle('active',item===button));
 }
