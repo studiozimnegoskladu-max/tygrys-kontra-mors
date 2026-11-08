@@ -439,7 +439,9 @@
     const art=$('morsReaction');if(!art)return;
     const poses={sleep:1,music:2,run:3,panic:4,angry:5,shout:6,paint:7,clap:8,gesture:9,fierce:10,sad:11,celebrate:12,wave:13,sit:14,think:15};
     const value=poses[pose]?pose:'wave';
+    const poseIndex=poses[value]-1;
     art.dataset.pose=String(poses[value]);
+    art.style.backgroundImage="url('assets/mors-"+String(poseIndex).padStart(2,'0')+".png?v=20261108-moods')";
     const labels={sleep:'Mors zasypia',music:'Mors słucha muzyki',run:'Mors biegnie',panic:'Mors jest zaskoczony',angry:'Mors jest wściekły',shout:'Mors krzyczy',paint:'Mors maluje',clap:'Mors klaszcze',gesture:'Mors pokazuje gest',fierce:'Mors robi groźną minę',sad:'Mors jest smutny',celebrate:'Mors świętuje',wave:'Mors macha na powitanie',sit:'Mors siedzi i czeka',think:'Mors się zastanawia'};
     art.setAttribute('aria-label',labels[value]);
   }
@@ -460,6 +462,8 @@
     let n=Math.floor(Math.random()*list.length);if(list.length>1&&n===commentIndex)n=(n+1)%list.length;commentIndex=n;
     const copy=$('commentaryText');if(copy)copy.textContent=list[n];else el.textContent=list[n];
     el.dataset.mood=kind;el.dataset.character=character||'classic';
+    const moodLabels={tiger:'HRABIA POPRAWEK W AKCJI',mors:'MORS KOMENTUJE',draw:'REMIS — NIKT NIE PĘKA',tigerWin:'HRABIA ŚWIĘTUJE · MORS MA FOCHA',morsWin:'MORS ŚWIĘTUJE ZWYCIĘSTWO'};
+    const mood=$('commentaryMood');if(mood)mood.textContent=moodLabels[kind]||(characterNames[character]||'EKIPA SZS')+' KOMENTUJE';
     let pose='wave';
     if(kind==='draw')pose='think';
     else if(kind==='tigerWin')pose='sad';
