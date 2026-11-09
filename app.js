@@ -189,27 +189,58 @@
     const status=$('diplomaCollectionStatus');if(status)status.textContent=count+' / '+diplomaList.length+' dyplomów zdobytych';
   }
   function createDiplomaCanvas(item){
-    const canvas=document.createElement('canvas');canvas.width=1600;canvas.height=1120;
-    const ctx=canvas.getContext('2d'),g=ctx.createLinearGradient(0,0,1600,1120);
-    g.addColorStop(0,'#fff3a0');g.addColorStop(.52,'#fffdf5');g.addColorStop(1,'#ffd5e8');
-    ctx.fillStyle=g;ctx.fillRect(0,0,1600,1120);
-    // Nieregularne plamy CMYK w narożnikach.
-    const splashes=[['#00a9ce',120,130,95],['#ec268f',1480,145,110],['#ffe600',145,990,125],['#211f24',1460,980,90]];
-    splashes.forEach(([color,x,y,r],i)=>{ctx.fillStyle=color;ctx.globalAlpha=.72;ctx.beginPath();ctx.ellipse(x,y,r,r*.58,i*.7,0,Math.PI*2);ctx.fill();for(let n=0;n<7;n++){const a=n*Math.PI*2/7;ctx.beginPath();ctx.arc(x+Math.cos(a)*r*1.15,y+Math.sin(a)*r*.8,9+(n%3)*4,0,Math.PI*2);ctx.fill()}});ctx.globalAlpha=1;
-    ctx.strokeStyle='#211f20';ctx.lineWidth=22;ctx.strokeRect(38,38,1524,1044);
-    ctx.lineWidth=5;ctx.setLineDash([15,12]);ctx.strokeRect(72,72,1456,976);ctx.setLineDash([]);
+    const canvas=document.createElement('canvas');canvas.width=1800;canvas.height=1272;
+    const ctx=canvas.getContext('2d');
+    const W=canvas.width,H=canvas.height;
+    // Papier certyfikatowy z lekką fakturą i ciepłym, drukarskim tłem.
+    const paper=ctx.createLinearGradient(0,0,W,H);
+    paper.addColorStop(0,'#fff8cf');paper.addColorStop(.48,'#fffdf4');paper.addColorStop(1,'#ffe4ed');
+    ctx.fillStyle=paper;ctx.fillRect(0,0,W,H);
+    ctx.globalAlpha=.10;ctx.fillStyle='#211f20';
+    for(let y=18;y<H;y+=34)for(let x=(y%2?12:28);x<W;x+=42)ctx.fillRect(x,y,2,2);
+    ctx.globalAlpha=1;
+    // Duże, nieregularne ślady farby w narożnikach.
+    const splash=(color,x,y,rx,ry,rot)=>{
+      ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.fillStyle=color;ctx.globalAlpha=.78;
+      ctx.beginPath();ctx.ellipse(0,0,rx,ry,0,0,Math.PI*2);ctx.fill();
+      for(let n=0;n<11;n++){const a=n*Math.PI*2/11;const r=rx*(.78+(n%3)*.12);ctx.beginPath();ctx.arc(Math.cos(a)*r,Math.sin(a)*ry*1.35,7+(n%4)*5,0,Math.PI*2);ctx.fill()}
+      ctx.restore();ctx.globalAlpha=1;
+    };
+    splash('#00a9ce',95,105,112,52,-.35);splash('#ec268f',1700,115,125,58,.28);
+    splash('#ffe000',105,1165,135,60,.2);splash('#252329',1700,1160,95,48,-.4);
+    // Ramka drukarska i wewnętrzna linia.
+    ctx.strokeStyle='#211f20';ctx.lineWidth=25;ctx.strokeRect(38,38,W-76,H-76);
+    ctx.strokeStyle='#ec268f';ctx.lineWidth=5;ctx.strokeRect(68,68,W-136,H-136);
+    ctx.strokeStyle='#211f20';ctx.lineWidth=2;ctx.setLineDash([10,12]);ctx.strokeRect(88,88,W-176,H-176);ctx.setLineDash([]);
+    // Górna belka i sygnet studia.
     ctx.textAlign='center';ctx.fillStyle='#211f20';
-    ctx.font='900 44px Arial';ctx.fillText('STUDIO ZIMNEGO SKŁADU',800,165);
-    ctx.font='900 112px Arial';ctx.fillText('DYPLOM ABSURDU',800,330);
-    ctx.fillStyle='#ec268f';ctx.font='900 128px Arial';ctx.fillText(item.icon,800,505);
-    ctx.fillStyle='#211f20';ctx.font='800 38px Arial';ctx.fillText('niniejszym nadaje tytuł:',800,605);
-    ctx.fillStyle='#087d91';ctx.font='900 68px Arial';
-    let title=item.name;if(ctx.measureText(title).width>1320)ctx.font='900 54px Arial';
-    ctx.fillText(title,800,715);
-    ctx.fillStyle='#211f20';ctx.font='700 34px Arial';ctx.fillText('dla: '+nick(),800,805);
-    ctx.font='italic 28px Arial';ctx.fillText(item.detail,800,875);
-    ctx.font='800 26px Arial';ctx.fillText('PRZYZNANO ZA: '+item.desc.toUpperCase(),800,950);
-    ctx.font='900 27px Arial';ctx.fillText('MORS POTWIERDZA. HRABIA MA ZASTRZEŻENIA.',800,1010);
+    ctx.font='900 42px Arial';ctx.fillText('STUDIO ZIMNEGO SKŁADU',W/2,168);
+    ctx.fillStyle='#ec268f';ctx.fillRect(560,194,680,8);
+    ctx.fillStyle='#211f20';ctx.font='900 105px Arial';ctx.fillText('DYPLOM ABSURDU',W/2,330);
+    ctx.font='700 27px Arial';ctx.fillStyle='#087d91';ctx.fillText('MORSOWA KAPITUŁA OSIĄGNIĘĆ  •  CERTYFIKAT OFICJALNIE NIEPOWAŻNY',W/2,382);
+    // Medal z podwójną obwódką.
+    const cx=W/2,cy=535;
+    ctx.fillStyle='#ec268f';ctx.beginPath();ctx.moveTo(cx-52,cy+56);ctx.lineTo(cx-92,cy+190);ctx.lineTo(cx-12,cy+155);ctx.lineTo(cx+24,cy+205);ctx.lineTo(cx+48,cy+56);ctx.closePath();ctx.fill();
+    ctx.fillStyle='#00a9ce';ctx.beginPath();ctx.moveTo(cx+8,cy+55);ctx.lineTo(cx+52,cy+194);ctx.lineTo(cx+88,cy+151);ctx.lineTo(cx+120,cy+181);ctx.lineTo(cx+76,cy+48);ctx.closePath();ctx.fill();
+    ctx.fillStyle='#ffe000';ctx.strokeStyle='#211f20';ctx.lineWidth=12;ctx.beginPath();ctx.arc(cx,cy,112,0,Math.PI*2);ctx.fill();ctx.stroke();
+    ctx.strokeStyle='#fffdf4';ctx.lineWidth=7;ctx.beginPath();ctx.arc(cx,cy,91,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle='#211f20';ctx.font='900 86px Arial';ctx.fillText(item.icon,cx,cy+29);
+    ctx.fillStyle='#211f20';ctx.font='800 35px Arial';ctx.fillText('niniejszym nadaje tytuł:',W/2,790);
+    // Nazwa osiągnięcia w kolorowym polu.
+    const title=item.name.toUpperCase();
+    ctx.font='900 70px Arial';let titleSize=70;
+    while(ctx.measureText(title).width>1450&&titleSize>42){titleSize-=2;ctx.font='900 '+titleSize+'px Arial'}
+    const tw=Math.min(1510,Math.max(700,ctx.measureText(title).width+130));
+    ctx.fillStyle='#ffe000';ctx.strokeStyle='#211f20';ctx.lineWidth=8;
+    ctx.beginPath();ctx.roundRect((W-tw)/2,830,tw,112,18);ctx.fill();ctx.stroke();
+    ctx.fillStyle='#211f20';ctx.fillText(title,W/2,907);
+    ctx.font='700 38px Arial';ctx.fillText('dla: '+nick(),W/2,1010);
+    ctx.font='italic 29px Arial';ctx.fillStyle='#087d91';ctx.fillText(item.detail,W/2,1060);
+    ctx.font='800 24px Arial';ctx.fillStyle='#211f20';ctx.fillText('PRZYZNANO ZA: '+item.desc.toUpperCase(),W/2,1112);
+    // Pieczęć kapituły w dolnym prawym rogu.
+    ctx.save();ctx.translate(1480,1030);ctx.rotate(-.13);ctx.strokeStyle='#ec268f';ctx.lineWidth=10;ctx.beginPath();ctx.arc(0,0,104,0,Math.PI*2);ctx.stroke();ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,88,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#ec268f';ctx.font='900 22px Arial';ctx.fillText('MORS',0,-8);ctx.font='900 17px Arial';ctx.fillText('ZATWIERDZA',0,22);ctx.font='28px Arial';ctx.fillText('✦',0,57);ctx.restore();
+    ctx.font='900 21px Arial';ctx.fillStyle='#211f20';ctx.fillText('MORS POTWIERDZA. HRABIA MA ZASTRZEŻENIA.',W/2,1190);
+    ctx.font='20px Arial';ctx.fillStyle='#555';ctx.fillText('STUDIO ZIMNEGO SKŁADU  •  '+new Date().toLocaleDateString('pl-PL'),W/2,1220);
     return canvas;
   }
   function downloadDiploma(id){
