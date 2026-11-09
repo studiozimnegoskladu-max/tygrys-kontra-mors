@@ -15,3 +15,5 @@ crops = {
 for filename, bounds in crops.items():
     image.crop(bounds).save(out / filename, optimize=True)
     print(f"Saved {out / filename}")
+
+# Updated crop pipeline for the current mascot set.
