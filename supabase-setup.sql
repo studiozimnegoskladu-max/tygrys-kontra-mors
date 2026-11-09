@@ -55,3 +55,181 @@ drop policy if exists "Public can add leaderboard entries" on public.player_lead
 create policy "Public can add leaderboard entries" on public.player_leaderboard for insert to anon with check (true);
 drop policy if exists "Public can update leaderboard entries" on public.player_leaderboard;
 create policy "Public can update leaderboard entries" on public.player_leaderboard for update to anon using (true) with check (true);
+
+
+-- =========================================================
+-- BEZPIECZNIEJSZA OBSŁUGA POKOI (migracja 2026-11)
+-- Zmiany stanu gry przechodzą przez funkcje RPC, które
+-- atomowo sprawdzają kolejkę, zajętość pola i koniec partii.
+-- Klient nie może już bezpośrednio INSERT/UPDATE tabeli.
+-- =========================================================
+
+-- Dłuższe kody nowych pokoi utrudniają ich odgadnięcie.
+-- Stare pokoje z krótszymi kodami pozostają dostępne do końca partii.
+
+drop policy if exists "Public can create game rooms" on public.game_sessions;
+drop policy if exists "Public can update game rooms" on public.game_sessions;
+
+revoke insert, update, delete on public.game_sessions from anon, authenticated;
+grant select on public.game_sessions to anon, authenticated;
+
+create or replace function public.szs_create_room(
+  p_room_code text,
+  p_creator_role text
+) returns public.game_sessions
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  created public.game_sessions;
+begin
+  if p_room_code !~ '^[A-Z0-9]{12}$' then
+    raise exception 'Nieprawidłowy kod pokoju.';
+  end if;
+  if p_creator_role not in ('tiger','mors') then
+    raise exception 'Nieprawidłowa strona gracza.';
+  end if;
+
+  insert into public.game_sessions
+    (room_code, creator_role, board, turn, winner, status, guest_joined)
+  values
+    (p_room_code, p_creator_role, '["","","","","","","","",""]'::jsonb,
+     'tiger', null, 'playing', false)
+  returning * into created;
+
+  return created;
+end;
+$$;
+
+create or replace function public.szs_join_room(
+  p_room_code text
+) returns public.game_sessions
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  joined public.game_sessions;
+begin
+  update public.game_sessions
+     set guest_joined = true
+   where room_code = upper(p_room_code)
+     and guest_joined = false
+     and status = 'playing'
+  returning * into joined;
+
+  if not found then
+    raise exception 'Pokój nie istnieje albo ma już dwóch graczy.';
+  end if;
+  return joined;
+end;
+$$;
+
+create or replace function public.szs_make_move(
+  p_room_code text,
+  p_role text,
+  p_cell integer
+) returns public.game_sessions
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  game public.game_sessions;
+  b jsonb;
+  next_turn text;
+  win text := null;
+  line integer[];
+  a text;
+  c text;
+  d text;
+  empty_left boolean;
+begin
+  if p_role not in ('tiger','mors') or p_cell < 0 or p_cell > 8 then
+    raise exception 'Nieprawidłowy ruch.';
+  end if;
+
+  select * into game
+    from public.game_sessions
+   where room_code = upper(p_room_code)
+   for update;
+
+  if not found then raise exception 'Nie znaleziono pokoju.'; end if;
+  if game.status <> 'playing' then raise exception 'Ta partia jest już zakończona.'; end if;
+  if game.guest_joined is not true then raise exception 'Czekamy na drugiego gracza.'; end if;
+  if game.turn <> p_role then raise exception 'Teraz ruch przeciwnika.'; end if;
+  if game.board ->> p_cell <> '' then raise exception 'To pole jest już zajęte.'; end if;
+
+  b := game.board;
+  b := jsonb_set(b, array[p_cell::text], to_jsonb(p_role), false);
+
+  foreach line slice 1 in array array[
+    array[0,1,2], array[3,4,5], array[6,7,8],
+    array[0,3,6], array[1,4,7], array[2,5,8],
+    array[0,4,8], array[2,4,6]
+  ] loop
+    a := b ->> line[1];
+    c := b ->> line[2];
+    d := b ->> line[3];
+    if a <> '' and a = c and c = d then
+      win := a;
+      exit;
+    end if;
+  end loop;
+
+  select exists (
+    select 1 from generate_series(0,8) i where b ->> i = ''
+  ) into empty_left;
+
+  next_turn := case when win is not null or not empty_left then game.turn
+                    when p_role = 'tiger' then 'mors' else 'tiger' end;
+
+  update public.game_sessions
+     set board = b,
+         turn = next_turn,
+         winner = coalesce(win, case when not empty_left then 'draw' else null end),
+         status = case when win is not null or not empty_left then 'finished' else 'playing' end
+   where room_code = upper(p_room_code)
+  returning * into game;
+
+  return game;
+end;
+$$;
+
+create or replace function public.szs_restart_room(
+  p_room_code text,
+  p_role text
+) returns public.game_sessions
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  restarted public.game_sessions;
+begin
+  if p_role not in ('tiger','mors') then raise exception 'Nieprawidłowy gracz.'; end if;
+
+  update public.game_sessions
+     set board = '["","","","","","","","",""]'::jsonb,
+         turn = 'tiger',
+         winner = null,
+         status = 'playing'
+   where room_code = upper(p_room_code)
+     and status = 'finished'
+     and guest_joined = true
+  returning * into restarted;
+
+  if not found then raise exception 'Nie można rozpocząć kolejnej rundy.'; end if;
+  return restarted;
+end;
+$$;
+
+revoke all on function public.szs_create_room(text,text) from public;
+revoke all on function public.szs_join_room(text) from public;
+revoke all on function public.szs_make_move(text,text,integer) from public;
+revoke all on function public.szs_restart_room(text,text) from public;
+grant execute on function public.szs_create_room(text,text) to anon, authenticated;
+grant execute on function public.szs_join_room(text) to anon, authenticated;
+grant execute on function public.szs_make_move(text,text,integer) to anon, authenticated;
+grant execute on function public.szs_restart_room(text,text) to anon, authenticated;
