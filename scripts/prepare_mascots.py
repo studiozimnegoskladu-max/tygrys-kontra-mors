@@ -13,7 +13,11 @@ crops = {
     "mascot-mors.png": (328, 1475, 731, 1955),
 }
 for filename, bounds in crops.items():
-    image.crop(bounds).save(out / filename, optimize=True)
+    cropped = image.crop(bounds)
+    if filename == "mascot-osmiornica.png":
+        from PIL import ImageDraw
+        ImageDraw.Draw(cropped).rectangle((530, 320, cropped.width, cropped.height), fill=(0, 0, 0, 0))
+    cropped.save(out / filename, optimize=True)
     print(f"Saved {out / filename}")
 
 # Updated crop pipeline for the current mascot set.
