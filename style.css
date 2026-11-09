@@ -636,3 +636,11 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
 
 /* Czytelne rozdzielenie wyboru maskotki od wyboru kolejności ruchu */
 .room-character-preview{display:flex;align-items:center;gap:10px;padding:9px 12px;margin:0 0 10px;border:1px dashed #211f20;border-radius:10px;background:#fff}.room-character-visual{width:48px;height:48px;object-fit:contain;display:block}.room-character-visual:not(img){font-size:38px;line-height:1}.room-character-name{font:900 15px 'Barlow Condensed';}.side-mark{font-size:34px;line-height:1;min-width:42px;text-align:center}.side-option{min-height:68px}.side-option b{font-size:14px}
+
+/* Ekran powitalny — bez cieni pod tekstem i Morsem, logo centralnie */
+#introScreen .intro-brand{justify-content:center!important;text-align:center}
+#introScreen .intro-brand img{object-position:center center!important;margin-inline:auto}
+#introScreen .intro-copy h1,
+#introScreen .intro-copy h1 em{ text-shadow:none!important }
+#introScreen .intro-mascot,
+#introScreen .intro-mascot-wrap{filter:none!important}
