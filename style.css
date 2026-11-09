@@ -759,3 +759,14 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
 .hrabia-badges{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;background:#e8faff}.hrabia-badges p{font-size:12px;font-weight:700}.hrabia-badge-list{display:grid;gap:7px;align-content:center}.hrabia-badge-list span{padding:8px 10px;border:1.5px solid #171515;border-radius:7px;font-size:12px;font-weight:900;background:#fff}.hrabia-badge-list .earned{background:#ffe600}.hrabia-badge-list .locked{opacity:.48;filter:grayscale(1)}
 .hrabia-footnote{position:relative;margin:14px 0 0;font-size:10px;font-weight:800;text-align:center;color:#554b62}
 @media(max-width:650px){.hrabia-hero{grid-template-columns:1fr;gap:8px}.hrabia-art{min-height:110px}.hrabia-art img{max-height:190px;max-width:190px}.hrabia-tools-grid{grid-template-columns:1fr}.hrabia-tool-card p{min-height:0}.hrabia-badges{grid-template-columns:1fr}.hrabia-institute-head h2{font-size:24px}.hrabia-stamp{font-size:9px;padding:7px}}
+
+/* Plansza: Hrabia Poprawek ma mieścić się w całości w kratce */
+.cell img.board-avatar-tiger{
+  width:90%!important;
+  height:90%!important;
+  max-width:90%!important;
+  max-height:90%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  flex:0 1 90%!important;
+}
