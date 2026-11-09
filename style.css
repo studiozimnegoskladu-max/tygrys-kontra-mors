@@ -741,3 +741,21 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
   max-width:none!important;
   max-height:none!important;
 }
+
+
+/* MORSOWY INSTYTUT BADAŃ NAD HRABIĄ POPRAWEK */
+.hrabia-institute{position:relative;margin:28px 0;padding:clamp(18px,3vw,30px);background:#f3f0ff;border:3px solid #171515;border-radius:15px 5px 13px 7px;box-shadow:5px 6px 0 #171515;overflow:hidden}
+.hrabia-institute:before{content:"";position:absolute;inset:7px;border:1px dashed rgba(23,21,21,.25);pointer-events:none;border-radius:10px 3px 9px 4px}
+.hrabia-institute-head{position:relative;display:flex;justify-content:space-between;gap:15px;align-items:flex-start;margin-bottom:18px}
+.hrabia-institute-head small,.hrabia-tool-card>small,.hrabia-meter-copy>small,.hrabia-badges small{font-size:10px;font-weight:1000;letter-spacing:1px;color:#7c3db5}
+.hrabia-institute-head h2{margin:6px 0;font-size:clamp(23px,4vw,36px);line-height:1.04;text-shadow:2px 2px #ffe600}
+.hrabia-institute-head p{margin:7px 0 0;font-size:13px;font-weight:750}
+.hrabia-stamp{flex:0 0 auto;padding:10px;background:#ffe600;border:3px solid #171515;box-shadow:3px 3px 0 #171515;font-size:10px;font-weight:1000;line-height:1.1;text-align:center;transform:rotate(5deg)}
+.hrabia-hero{position:relative;display:grid;grid-template-columns:minmax(130px,240px) 1fr;gap:20px;align-items:center;padding:clamp(14px,2.5vw,22px);background:linear-gradient(120deg,#fff,#fce9f2);border:2px solid #171515;border-radius:7px 14px 6px 12px;box-shadow:3px 4px 0 #171515}
+.hrabia-art{display:grid;place-items:center;min-height:150px}.hrabia-art img{display:block;width:100%;max-width:225px;max-height:240px;object-fit:contain;filter:drop-shadow(3px 4px 0 rgba(23,21,21,.15))}
+.hrabia-intro-copy>b{font-size:12px;letter-spacing:.4px}.hrabia-intro-copy p{font-size:14px;line-height:1.5;font-weight:700}.hrabia-intro-copy blockquote{margin:12px 0 0;padding:12px 14px;background:#fff0a8;border-left:5px solid #171515;font-weight:900}.hrabia-intro-copy blockquote span{display:block;margin-top:6px;font-size:11px}
+.hrabia-tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}.hrabia-tool-card,.hrabia-meter-card,.hrabia-badges{position:relative;padding:16px;background:#fff;border:2px solid #171515;border-radius:8px 13px 5px 11px;box-shadow:3px 3px 0 #171515}.hrabia-tool-card h3,.hrabia-badges h3{margin:6px 0;font-size:20px}.hrabia-tool-card p{min-height:90px;margin:8px 0 14px;font-size:14px;line-height:1.5;font-weight:750}.hrabia-tool-card .btn,.hrabia-meter-card .btn{width:100%;white-space:normal}
+.hrabia-meter-card{margin-top:16px;background:#fff4bd}.hrabia-meter-copy b{display:block;margin:7px 0;font-size:18px}.hrabia-meter-copy p{font-size:13px;font-weight:750}.hrabia-meter-track{height:17px;margin:12px 0 15px;background:#fff;border:2px solid #171515;border-radius:20px;overflow:hidden}.hrabia-meter-track span{display:block;height:100%;background:repeating-linear-gradient(135deg,#ef2787 0 10px,#ffe600 10px 20px);transition:width .25s}
+.hrabia-badges{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;background:#e8faff}.hrabia-badges p{font-size:12px;font-weight:700}.hrabia-badge-list{display:grid;gap:7px;align-content:center}.hrabia-badge-list span{padding:8px 10px;border:1.5px solid #171515;border-radius:7px;font-size:12px;font-weight:900;background:#fff}.hrabia-badge-list .earned{background:#ffe600}.hrabia-badge-list .locked{opacity:.48;filter:grayscale(1)}
+.hrabia-footnote{position:relative;margin:14px 0 0;font-size:10px;font-weight:800;text-align:center;color:#554b62}
+@media(max-width:650px){.hrabia-hero{grid-template-columns:1fr;gap:8px}.hrabia-art{min-height:110px}.hrabia-art img{max-height:190px;max-width:190px}.hrabia-tools-grid{grid-template-columns:1fr}.hrabia-tool-card p{min-height:0}.hrabia-badges{grid-template-columns:1fr}.hrabia-institute-head h2{font-size:24px}.hrabia-stamp{font-size:9px;padding:7px}}
