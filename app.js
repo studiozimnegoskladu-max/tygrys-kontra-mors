@@ -44,6 +44,53 @@
     $('dailyProgress').textContent=completed+' / 3 MISJE';$('dailyReward').textContent=completed===3?'🏅 KOMPLET! Jesteś legendą studia.':'Nagroda: '+completed+' / 3 pieczątki';
   }
 
+
+  // Dziennik Morsa — codzienny wpis wybierany automatycznie według daty.
+  const morsJournalEntries=[
+    {title:'Płetwa lewa, płetwa prawa',text:'Poniedziałek. Wstałem lewą płetwą. Prawa jeszcze śpi. Przegrałem dziś trzy razy w kółko i krzyżyk, ale przynajmniej mam piękne kły. Nie można mieć wszystkiego.',challenge:'Zagraj dziś jedną partię. Jeśli wygrasz, nie chwal się. Jeśli przegrasz, zwal winę na grawitację.',mood:'REFLEKSJA Z LODÓWKI'},
+    {title:'Ekspert od nicnierobienia',text:'Opracowałem dziś nową metodę pracy. Najpierw patrzę na zadanie. Potem patrzę w dal. Po godzinie zadanie samo robi się mniej pilne. Jestem geniuszem.',challenge:'Zrób jedną rzecz, którą odkładasz od tygodnia. Potem odpocznij jak profesjonalista.',mood:'BADANIA WŁASNE'},
+    {title:'Sprawa podejrzanej ryby',text:'Ktoś zostawił rybę bez nadzoru. Oczywiście przeprowadziłem kontrolę jakości. Wynik: ryba zniknęła, kontrola zakończona sukcesem.',challenge:'Wygraj partię z Morsikiem. Nie przyjmujemy reklamacji na poziomie trudności.',mood:'RAPORT ŚLEDCZY'},
+    {title:'Nie każda plama to błąd',text:'W drukarni powiedzieli, że zrobiłem plamę. Odpowiedziałem, że to nowoczesna kompozycja. Od tamtej pory każda moja wpadka ma nazwę artystyczną.',challenge:'Odwiedź dziś quiz poligraficzny i zdobądź przynajmniej 7 punktów.',mood:'SZTUKA WSPÓŁCZESNA'},
+    {title:'Dzień bez dramatu',text:'Postanowiłem dziś nie robić dramatu. Wytrzymałem jedenaście sekund. Potem ktoś powiedział, że skończyła się kawa. To był koniec mojej cierpliwości.',challenge:'Rozegraj dwie partie. Spróbuj choć raz nie komentować wyniku.',mood:'SPOKÓJ WEWNĘTRZNY'},
+    {title:'Kły to nie argument',text:'Hrabia Poprawek twierdzi, że zawsze ma rację. Ja też tak twierdzę. Różnica jest taka, że ja mam kły i nie muszę tego udowadniać.',challenge:'Rzuć wyzwanie komuś znajomemu. Niech rozstrzygnie to plansza.',mood:'POJEDYNEK NA OPINIE'},
+    {title:'Wielki plan na jutro',text:'Mam plan. Jutro zrobię wszystko, czego nie zrobiłem dzisiaj. Pojutrze odpocznę po tym wielkim wysiłku. Kalendarz już się boi.',challenge:'Zagraj dziś choć jedną rundę. Nie odkładaj zwycięstwa na jutro.',mood:'STRATEGIA DŁUGOFALOWA'},
+    {title:'Kolor ma znaczenie',text:'Ktoś zapytał, czy widzę różnicę między cyanem a turkusem. Oczywiście. Jeden jest bardziej cyanowy, a drugi bardziej turkusowy. Proszę nie zadawać trudnych pytań przed obiadem.',challenge:'Odwiedź Morsowy Park Absurdu i sprawdź swój refleks.',mood:'KOLOROWA EKSPERTYZA'},
+    {title:'Mors kontra budzik',text:'Budzik zadzwonił o szóstej. Zignorowałem go. Zadzwonił o siódmej. Zignorowałem go bardziej. O ósmej wstałem, żeby go wyłączyć. Technicznie rzecz biorąc, wygrałem.',challenge:'Zrób dziś serię trzech rozgrywek. Zobaczymy, kto ma więcej wytrwałości.',mood:'PORANNY RAPORT'},
+    {title:'Instrukcja obsługi Morsa',text:'Punkt pierwszy: nie poganiać. Punkt drugi: nie zabierać ryby. Punkt trzeci: jeśli punkty pierwszy i drugi zawiodą, udawać, że to był test charakteru.',challenge:'Wybierz inną maskotkę niż zwykle i rozegraj nią partię.',mood:'DOKUMENT WEWNĘTRZNY'},
+    {title:'Remis też jest wynikiem',text:'Dziś zremisowałem. Niektórzy mówią, że nikt nie wygrał. Ja mówię, że obaj przegrali ze mną, tylko jeszcze o tym nie wiedzą.',challenge:'Spróbuj dziś doprowadzić do remisu. Strategia: kontrolowany chaos.',mood:'MĄDROŚĆ PŁETWIASTA'},
+    {title:'Kreatywność kontrolowana',text:'Narysowałem dziś prostą kreskę. Ktoś zapytał, czy to projekt. Odpowiedziałem: to początek wielkiej koncepcji. Potem dorysowałem drugą kreskę i podniosłem cenę.',challenge:'Zagraj partię i zakończ ją zwycięstwem. Morsowa kapituła patrzy.',mood:'DZIAŁ KREATYWNY'},
+    {title:'Nie ufaj cichej drukarce',text:'Drukarka milczy. To nie znaczy, że nie planuje. Znam te urządzenia. Najpierw cisza, potem komunikat: papier zacięty. A papier leży obok.',challenge:'Zagraj dziś z komputerem na trudnym poziomie. Odważ się.',mood:'OSTRZEŻENIE TECHNICZNE'},
+    {title:'Wielka teoria płetwy',text:'Uważam, że każda decyzja powinna być podejmowana po krótkiej drzemce. Niestety niektóre decyzje podejmuję w trakcie drzemki. Stąd tyle niespodzianek.',challenge:'Zrób dziś coś inaczej: wybierz nową maskotkę albo przeciwnika.',mood:'FILOZOFIA LODOWA'},
+    {title:'Raport z pola bitwy',text:'Plansza była bezlitosna. Przeciwnik sprytny. Ja piękny. Bilans? Nie będziemy psuć dobrego nastroju szczegółami.',challenge:'Zaproś znajomego do pojedynku i sprawdź, czy też ma tyle uroku.',mood:'KRONIKA ZWYCIĘSTW'},
+    {title:'Morsowa motywacja',text:'Pamiętaj: jeśli życie rzuca ci kłody pod płetwy, zbuduj z nich tratwę. Jeśli rzuca fakturę, przekaż ją księgowości.',challenge:'Wykonaj jedną misję dnia. Małe zwycięstwa też pachną rybą.',mood:'MOTYWACYJNY CHLUP'},
+    {title:'Nie jestem uparty',text:'Nie jestem uparty. Po prostu moje zdanie jest tak dobre, że nie widzę powodu, żeby je zmieniać. To zupełnie co innego.',challenge:'Zagraj rewanż z przeciwnikiem, który ostatnio Cię pokonał.',mood:'OFICJALNE STANOWISKO'},
+    {title:'Ostatnie słowo należy do Morsa',text:'Mówili, że nie dam rady. Mówili, że to niemożliwe. Mówili też, że mam przestać mówić. Tego ostatniego nie przyjąłem do wiadomości.',challenge:'Zagraj dziś trzy partie i zostaw po sobie legendę. Albo przynajmniej ślad płetwy.',mood:'MOWA KOŃCOWA'}
+  ];
+  const journalDate=(offset=0)=>{const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-offset);return d};
+  const journalIndex=(date)=>{const utc=Math.floor(Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())/86400000);const start=Math.floor(Date.UTC(2026,0,1)/86400000);return ((utc-start)%morsJournalEntries.length+morsJournalEntries.length)%morsJournalEntries.length};
+  const journalDateLabel=(date)=>date.toLocaleDateString('pl-PL',{day:'numeric',month:'long',year:'numeric'});
+  function renderMorsJournal(){
+    const card=$('morsJournalToday'),archive=$('morsJournalArchive');
+    if(!card||!archive)return;
+    const today=journalDate(),entry=morsJournalEntries[journalIndex(today)];
+    $('morsJournalDate').textContent=journalDateLabel(today);
+    $('morsJournalMood').textContent=entry.mood;
+    $('morsJournalTitle').textContent=entry.title;
+    $('morsJournalText').textContent='„'+entry.text+'”';
+    $('morsJournalChallenge').textContent=entry.challenge;
+    const share=$('morsJournalShare');
+    if(share)share.onclick=()=>shareOnFacebook('DZIENNIK MORSA · '+journalDateLabel(today)+'\n'+entry.title+'\n\n„'+entry.text+'”\n\nWYZWANIE: '+entry.challenge+'\n\nWięcej absurdów w grze Kółko, Krzyżyk i Dwa Promile Absurdu — Studio Zimnego Składu 🦭');
+    archive.innerHTML='';
+    for(let offset=1;offset<=5;offset++){
+      const date=journalDate(offset),old=morsJournalEntries[journalIndex(date)];
+      const item=document.createElement('article');item.className='mors-journal-archive-item';
+      const day=document.createElement('small');day.textContent=journalDateLabel(date);
+      const title=document.createElement('b');title.textContent=old.title;
+      const excerpt=document.createElement('p');excerpt.textContent=old.text;
+      item.append(day,title,excerpt);archive.append(item);
+    }
+  }
+
   function recordFinishedGame(result,board,gameMode,gameRoom){
     if(!result)return;
     const key=[gameMode,gameRoom||'local',roundId,board.join(''),result].join('|');
@@ -620,7 +667,7 @@
   }
 
   initMiniArcade();
-  renderDailyMissions();renderStickers();renderDiplomas();renderMorsClub();renderFortune();loadLeaderboard();
+  renderDailyMissions();renderMorsJournal();renderStickers();renderDiplomas();renderMorsClub();renderFortune();loadLeaderboard();
   $('saveNameBtn').addEventListener('click',()=>{const n=$('nameInput').value.trim().slice(0,18);if(!n){say('Wpisz swój nick.');return}localStorage.setItem('tkm_nick',n);$('playerName').textContent=n;say('Nick zapisany na tym urządzeniu!')});$('nameInput').value=nick();
   if($('cpuDifficulty'))$('cpuDifficulty').value=cpuDifficulty;
   $('cpuDifficulty')?.addEventListener('change',e=>{cpuDifficulty=e.target.value;localStorage.setItem('tkm_cpu_difficulty',cpuDifficulty)});
