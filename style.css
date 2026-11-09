@@ -672,3 +672,26 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
     max-height:287px;
   }
 }
+
+
+/* Plansza: większe, ciasno wykadrowane portrety głów maskotek */
+.cell{
+  padding:0!important;
+  overflow:hidden;
+}
+.cell img.board-avatar{
+  width:116%!important;
+  height:116%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:cover!important;
+  object-position:center 27%!important;
+  flex:0 0 116%;
+}
+@media(max-width:600px){
+  .cell img.board-avatar{
+    width:116%!important;
+    height:116%!important;
+    flex-basis:116%;
+  }
+}
