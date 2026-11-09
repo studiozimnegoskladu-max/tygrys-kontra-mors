@@ -659,3 +659,16 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
 .earned-diploma-actions .btn{font-size:10px;padding:9px 10px}
 @media(max-width:720px){.diploma-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.earned-diploma-card{padding:12px 8px}.earned-diploma-actions{flex-direction:column}.earned-diploma-actions .btn{width:100%}}
 @media(max-width:380px){.diploma-grid{grid-template-columns:1fr}}
+
+
+/* Ekran tytułowy: grafika Morsa z napisem powiększona o ok. 1/3 */
+#introScreen .intro-mascot{
+  width:min(100%, 413px);
+  max-height:400px;
+}
+@media(max-width:650px){
+  #introScreen .intro-mascot{
+    width:min(88%, 293px);
+    max-height:287px;
+  }
+}
