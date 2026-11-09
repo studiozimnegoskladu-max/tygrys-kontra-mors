@@ -242,3 +242,8 @@ drop policy if exists "Public can add leaderboard entries" on public.player_lead
 drop policy if exists "Public can update leaderboard entries" on public.player_leaderboard;
 revoke insert, update, delete on public.player_leaderboard from anon, authenticated;
 grant select on public.player_leaderboard to anon, authenticated;
+
+
+-- Uprawnienia i odświeżenie cache API po wdrożeniu funkcji RPC.
+grant usage on schema public to anon, authenticated;
+notify pgrst, 'reload schema';
