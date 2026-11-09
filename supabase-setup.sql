@@ -233,3 +233,12 @@ grant execute on function public.szs_create_room(text,text) to anon, authenticat
 grant execute on function public.szs_join_room(text) to anon, authenticated;
 grant execute on function public.szs_make_move(text,text,integer) to anon, authenticated;
 grant execute on function public.szs_restart_room(text,text) to anon, authenticated;
+
+
+-- Tabela rankingu nie jest używana bezpośrednio przez klienta gry.
+-- Zapis odbywa się przez osobny skrypt rankingowy; blokujemy anonimowe
+-- modyfikacje tabeli Supabase, pozostawiając odczyt.
+drop policy if exists "Public can add leaderboard entries" on public.player_leaderboard;
+drop policy if exists "Public can update leaderboard entries" on public.player_leaderboard;
+revoke insert, update, delete on public.player_leaderboard from anon, authenticated;
+grant select on public.player_leaderboard to anon, authenticated;
