@@ -4,7 +4,8 @@ on:
     branches: [main]
     paths:
       - 'scripts/prepare_mors_frames.py'
-      - 'assets/komplet ikon.png'
+      - 'scripts/prepare_mascots.py'
+      - 'assets/Studio Zimnego Składu ikony llllllllll.png'
   workflow_dispatch:
 permissions:
   contents: write
@@ -18,10 +19,11 @@ jobs:
           python-version: '3.12'
       - run: pip install pillow
       - run: python scripts/prepare_mors_frames.py
+      - run: python scripts/prepare_mascots.py
       - name: Zapisz przygotowane kadry
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/mors-*.png
+          git add assets/mors-*.png assets/mascot-*.png
           git diff --cached --quiet || git commit -m "Przygotuj osobne przezroczyste kadry Morsa"
           git push
