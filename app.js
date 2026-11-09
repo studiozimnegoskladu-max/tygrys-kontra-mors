@@ -687,6 +687,57 @@
     iceJump?.addEventListener('click',()=>{if(!iceReady)return;iceReady=false;clearTimeout(iceWindow);iceRound++;iceHits++;iceJump.disabled=true;iceStatus.textContent='PIĘKNY SKOK! '+iceRound+'/10';icePlay.classList.remove('comic-good','comic-bad');void icePlay.offsetWidth;icePlay.classList.add('comic-good');$('iceWater').textContent='💥  🦭  💥';iceNextTimer=setTimeout(scheduleIce,420)});
   }
 
+
+  // Morsowy Instytut Badań nad Hrabią Poprawek.
+  function initHrabiaInstitute(){
+    const reports=[
+      'Hrabia zaakceptował projekt. Po chwili poprosił o zmianę. Po zmianie zapytał, dlaczego zmieniliśmy. Mors zalecił terapię plikiem PDF.',
+      'Hrabia chce, żeby logo było większe, ale nie zajmowało więcej miejsca. Instytut rozważa zgłoszenie tego zjawiska do fizyki kwantowej.',
+      'Przysłano inspirację. Nie pasuje do projektu, branży ani planety. Hrabia lubi w niej „to coś”. Mors nadal szuka.',
+      'Plik FINAL doczekał się wersji 2, 3, OSTATECZNEJ i OSTATECZNEJ_poprawionej. Hrabia pyta, czy mamy tę pierwszą.',
+      'Hrabia poprosił o przesunięcie elementu o dwa piksele w lewo. Po wykonaniu polecił przesunąć go odrobinę w prawo. Mors wyszedł na spacer.',
+      'Kolor jest prawie idealny, ale powinien być cieplejszy, chłodniejszy i bardziej zdecydowany. Instytut zamówił termometr do palety CMYK.',
+      'Hrabia napisał: „Mam drobną uwagę”. Mors natychmiast wyłączył telefon, zamknął drzwi i udawał fokę.',
+      'Po siedemnastej korekcie Hrabia stwierdził, że pierwsza wersja miała potencjał. Mors przyznał projektowi status zabytku.',
+      'Hrabia chce nowocześnie, ale klasycznie; prosto, ale bogato; spokojnie, ale z energią. Mors zapytał, czy może po prostu narysować rybę.',
+      'Dziś Hrabia przesłał poprawki w trzech plikach, z których każdy zawierał inne poprawki. Mors powołał komisję śledczą.'
+    ];
+    const corrections=[
+      '„Proszę powiększyć, ale żeby było subtelniej i nie rzucało się w oczy”.',
+      '„Kolor jest dobry, tylko proszę użyć innego dobrego koloru”.',
+      '„Wróćmy do pierwszej wersji, ale zostawmy zmiany z ostatniej”.',
+      '„Może bardziej premium, ale bez przesady z tym premium”.',
+      '„Proszę przesunąć o dwa piksele. Nie wiem w którą stronę, ale będzie widać”.',
+      '„Jest świetnie. Proszę tylko zrobić od nowa, żeby było tak samo, ale lepiej”.',
+      '„Niech będzie minimalistycznie, ale proszę dodać jeszcze kilka rzeczy”.',
+      '„Logo jest za duże. Teraz za małe. Poprzednie było chyba w sam raz”.',
+      '„Proszę dać więcej oddechu, ale nie zostawiać tyle pustego miejsca”.',
+      '„Chodzi mi o klimat. Taki konkretny, ale trudno go opisać”.',
+      '„Zróbmy wersję odważną, tylko żeby nikogo nie zaskoczyła”.',
+      '„To już ostatnia poprawka. Tym razem naprawdę, prawie na pewno”.'
+    ];
+    const levels=['Spokojny klient','Mam jedną uwagę','A może spróbujmy inaczej','Proszę o nową wersję','Wróćmy do początku','To nie jest ten odcień','Czy można jeszcze dziś?','Plik FINAL_FINAL','Mors zamawia urlop','ALARM: HRABIA ZOBACZYŁ PIXEL'];
+    const comments=['Mors jeszcze wierzy w ludzi. To się zmieni.','Pojawiły się pierwsze objawy drżenia płetwy.','Hrabia otworzył plik. Instytut wstrzymał oddech.','Korekta zaczyna mieć własną korektę.','Mors rozważa przejście na rybołówstwo.','Wersja projektu numeruje się już sama.','Zespół komunikuje się wyłącznie westchnieniami.','W drukarni zgasło światło. To tylko Hrabia szukał suwaka jasności.','Mors założył kask ochronny.','Instytut ogłasza stan pełnej katastrofy typograficznej.'];
+    let count=Number(localStorage.getItem('szs_hrabia_actions')||0);
+    let level=Number(localStorage.getItem('szs_hrabia_level')||3);
+    const report=$('hrabiaReportText'),correction=$('hrabiaCorrectionText'),fill=$('hrabiaLevelFill'),label=$('hrabiaLevelLabel'),comment=$('hrabiaLevelComment'),progress=$('hrabiaBadgeProgress'),badges=$('hrabiaBadgeList');
+    const pick=a=>a[Math.floor(Math.random()*a.length)];
+    function update(){
+      if(fill)fill.style.width=(level*10)+'%';
+      if(label)label.textContent=level+'/10 · „'+levels[level-1]+'”';
+      if(comment)comment.textContent=comments[level-1];
+      const unlocked=[count>=1,count>=5,count>=12];
+      if(progress)progress.textContent='Wygenerowane materiały: '+count+' · Zdobyte odznaki: '+unlocked.filter(Boolean).length+'/3';
+      if(badges)badges.innerHTML=['🗂️ Stażysta od poprawek','🧯 Strażak plików FINAL','🧘 Mistrz zen po 17 rundach'].map((x,i)=>'<span class="'+(unlocked[i]?'earned':'locked')+'">'+(unlocked[i]?'🏅 ':'🔒 ')+x+'</span>').join('');
+    }
+    function action(){count++;localStorage.setItem('szs_hrabia_actions',String(count));update()}
+    $('hrabiaReportBtn')?.addEventListener('click',()=>{if(report)report.textContent=pick(reports);action()});
+    $('hrabiaCorrectionBtn')?.addEventListener('click',()=>{if(correction)correction.textContent=pick(corrections);action()});
+    $('hrabiaLevelBtn')?.addEventListener('click',()=>{level=Math.min(10,level+1);localStorage.setItem('szs_hrabia_level',String(level));if(level===10&&comment)comment.textContent='Mors opuścił instytut. Zostawił tylko karteczkę: „Nie dzwońcie”.';update();action()});
+    update();
+  }
+
+  initHrabiaInstitute();
   initMiniArcade();
   renderDailyMissions();renderMorsJournal();renderStickers();renderDiplomas();renderMorsClub();renderFortune();loadLeaderboard();
   $('saveNameBtn').addEventListener('click',()=>{const n=$('nameInput').value.trim().slice(0,18);if(!n){say('Wpisz swój nick.');return}localStorage.setItem('tkm_nick',n);$('playerName').textContent=n;say('Nick zapisany na tym urządzeniu!')});$('nameInput').value=nick();
