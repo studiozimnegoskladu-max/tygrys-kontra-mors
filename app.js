@@ -85,14 +85,21 @@
   function renderMorsJournal(){
     const card=$('morsJournalToday'),archive=$('morsJournalArchive');
     if(!card||!archive)return;
-    const today=journalDate(),entry=morsJournalEntries[journalIndex(today)];
-    $('morsJournalDate').textContent=journalDateLabel(today);
-    $('morsJournalMood').textContent=entry.mood;
-    $('morsJournalTitle').textContent=entry.title;
-    $('morsJournalText').textContent='„'+entry.text+'”';
-    $('morsJournalChallenge').textContent=entry.challenge;
-    const share=$('morsJournalShare');
-    if(share)share.onclick=()=>shareOnFacebook('DZIENNIK MORSA · '+journalDateLabel(today)+'\n'+entry.title+'\n\n„'+entry.text+'”\n\nWYZWANIE: '+entry.challenge+'\n\nWięcej absurdów w grze Kółko, Krzyżyk i Dwa Promile Absurdu — Studio Zimnego Składu 🦭');
+    const today=journalDate();
+    const todayBtn=$('morsJournalTodayBtn');
+    function showEntry(date){
+      const entry=morsJournalEntries[journalIndex(date)];
+      $('morsJournalDate').textContent=journalDateLabel(date);
+      $('morsJournalMood').textContent=entry.mood;
+      $('morsJournalTitle').textContent=entry.title;
+      $('morsJournalText').textContent='„'+entry.text+'”';
+      $('morsJournalChallenge').textContent=entry.challenge;
+      if(todayBtn)todayBtn.hidden=date.toDateString()===today.toDateString();
+      const share=$('morsJournalShare');
+      if(share)share.onclick=()=>shareOnFacebook('DZIENNIK MORSA · '+journalDateLabel(date)+'\\n'+entry.title+'\\n\\n„'+entry.text+'”\\n\\nWYZWANIE: '+entry.challenge+'\\n\\nWięcej absurdów w grze Kółko, Krzyżyk i Dwa Promile Absurdu — Studio Zimnego Składu 🦭');
+    }
+    if(todayBtn)todayBtn.onclick=()=>showEntry(today);
+    showEntry(today);
     archive.innerHTML='';
     for(let offset=1;offset<=5;offset++){
       const date=journalDate(offset),old=morsJournalEntries[journalIndex(date)];
@@ -100,7 +107,8 @@
       const day=document.createElement('small');day.textContent=journalDateLabel(date);
       const title=document.createElement('b');title.textContent=old.title;
       const excerpt=document.createElement('p');excerpt.textContent=old.text;
-      item.append(day,title,excerpt);archive.append(item);
+      const open=document.createElement('button');open.type='button';open.className='mors-journal-read';open.textContent='CZYTAJ WPIS →';open.onclick=()=>{showEntry(date);card.scrollIntoView({behavior:'smooth',block:'center'});};
+      item.append(day,title,excerpt,open);archive.append(item);
     }
   }
 
