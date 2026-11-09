@@ -644,3 +644,18 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
 #introScreen .intro-copy h1 em{ text-shadow:none!important }
 #introScreen .intro-mascot,
 #introScreen .intro-mascot-wrap{filter:none!important}
+
+/* Kolekcja osobnych dyplomów za osiągnięcia */
+.diploma-collection{display:block!important}
+.diploma-collection>.diploma-copy{margin-bottom:18px}
+.diploma-collection>.diploma-copy small{display:block;margin-top:5px}
+.diploma-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.earned-diploma-card{min-width:0;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:16px 12px;border:2px dashed #777;border-radius:14px;background:rgba(255,255,255,.62)}
+.earned-diploma-card.is-earned{border:3px solid #211f20;background:linear-gradient(145deg,#fff4a8,#fffdf7 60%,#ffd8e9);box-shadow:4px 4px 0 #211f20}
+.earned-diploma-mark{font-size:34px;line-height:1.2}
+.earned-diploma-card>b{font-size:13px;line-height:1.25}
+.earned-diploma-card>small{font-size:11px;line-height:1.35;min-height:30px}
+.earned-diploma-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;width:100%}
+.earned-diploma-actions .btn{font-size:10px;padding:9px 10px}
+@media(max-width:720px){.diploma-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.earned-diploma-card{padding:12px 8px}.earned-diploma-actions{flex-direction:column}.earned-diploma-actions .btn{width:100%}}
+@media(max-width:380px){.diploma-grid{grid-template-columns:1fr}}
