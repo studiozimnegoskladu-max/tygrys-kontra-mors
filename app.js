@@ -3,9 +3,9 @@
   const setup=$('setup'), game=$('game'), msg=$('setupMessage');
   const cells=[...document.querySelectorAll('.cell')];
   const TIGER='tiger', MORS='mors';
-  const CHARACTER_EMOJI={octopus:'🐙',mole:'🦫',llama:'🦙'};
-  const characterAssets={tiger:'assets/hrabia-poprawek-transparent.svg',mors:'assets/mors.png',goat:'assets/koza-krzycha.jpg'};
-  let selectedCharacter=localStorage.getItem('tkm_character')||'tiger';
+  const CHARACTER_EMOJI={};
+  const characterAssets={tiger:'assets/hrabia-poprawek-transparent.svg',mors:'assets/mascot-mors.png',goat:'assets/koza-krzycha.jpg',bobr:'assets/mascot-bobr.png',llama:'assets/mascot-lama.png',octopus:'assets/mascot-osmiornica.png'};
+  let selectedCharacter=localStorage.getItem('tkm_character')||'tiger';if(selectedCharacter==='mole'){selectedCharacter='bobr';localStorage.setItem('tkm_character','bobr');}
   const characterForMark=mark=>mode==='online'?(mark===role?selectedCharacter:(remoteCharacter|| (mark===TIGER?'tiger':'mors'))):(mark===TIGER?selectedCharacter:'mors');
   const sideLabel=mark=>(characterNames[characterForMark(mark)]||'Gracz')+' '+(characterIcons[characterForMark(mark)]||'');
   let client,room=null,role=null,channel=null,current=null,remoteCharacter=null,mode='online',busy=false,cpuDifficulty=localStorage.getItem('tkm_cpu_difficulty')||'normal';
@@ -396,12 +396,12 @@
     if(title)title.textContent=brief.title;
     if(body)body.textContent=brief.text;
   }
-  const characterNames={tiger:'Hrabia Poprawek',mors:'Mors',goat:'Koza Krzycha',octopus:'Ośmiornica Drukarka',mole:'Kret Operator',llama:'Lama Drama'};
-  const characterIcons={tiger:'🐯',mors:'🦭',goat:'🐐',octopus:'🐙',mole:'🦫',llama:'🦙'};
+  const characterNames={tiger:'Hrabia Poprawek',mors:'Mors',goat:'Koza Krzycha',octopus:'Ośmiornica Drukarka',bobr:'Bóbr',llama:'Lama Drama'};
+  const characterIcons={tiger:'🐯',mors:'🦭',goat:'🐐',octopus:'🐙',bobr:'🦫',llama:'🦙'};
   const characterQuips={
     goat:{move:['Koza Krzycha melduje: kopyto postawione, proszę nie regulować odbiorników.','Mee-e-eega ruch! Nawet Hrabia musi poprawić koronę.','Krzychu, to było Twoje kopyto czy pieczątka?','Koza Krzycha skacze po planszy. Kontrola jakości uciekła.','Beee-zdyskusyjny ruch. Komisja kopyt zatwierdza.','Koza Krzycha mówi: ja tu tylko przyszłam skubać zwycięstwo.','Uwaga na rogi! Strategia weszła na pełnej.','Kopytko w pole, rozum na urlopie.'],win:['KOZA KRZYCHA WYGRYWA! Reszta może iść skubać trawę.','BEEE-zapelacyjna wygrana! Krzychu, odbierz puchar!','Koza Krzycha rozniosła planszę. Dosłownie prawie ją zjadła.','Kopyta górą! Hrabia składa oficjalny protest.']},
     octopus:{move:['Ośmiornica Drukarka ma osiem pomysłów naraz!','Macka w ruch! Kolejny kolor na planszy!','Osiem rąk, zero wymówek. Drukujemy zwycięstwo!'],win:['OSIEM MACEK I PEŁNA KONTROLA!','Drukarka wypluła zwycięstwo w najwyższej jakości!']},
-    mole:{move:['Kret Operator wierci… i zajmuje pole!','Podziemna strategia właśnie weszła na planszę.','Kret zna każdy skrót. Nawet pod planszą!'],win:['KRET WYGRYWA! To był ruch z głębi strategii!','Wykopane zwycięstwo! Operator zna się na robocie!']},
+    bobr:{move:['Bóbr melduje: tama zbudowana, pole zajęte!','Zęby naostrzone, strategia dopięta.','Bóbr nie gryzie się w język. Ani w planszę!'],win:['BÓBR WYGRYWA! Tama zwycięstwa stoi!','To nie przypadek — to bobrza robota!']},
     llama:{move:['Lama Drama robi wejście. Będzie gorąco!','Uwaga, plucie… znaczy, precyzyjny ruch!','Lama ma dziś dramatycznie dobry plan!'],win:['LAMA DRAMA! Finał godny owacji na stojąco!','Ależ drama! Lama zgarnia zwycięstwo!']}
   };
   const quips={
