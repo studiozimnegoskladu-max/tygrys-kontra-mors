@@ -397,10 +397,12 @@
     const start=e=>{
       let saved={};try{saved=JSON.parse(localStorage.getItem(FORTUNE_KEY)||'{}')||{}}catch{}
       if(dragging||saved.date===fortuneDate()||stage.classList.contains('spinning'))return;
-      e.preventDefault();dragging=true;activePointer=e.pointerId;hand.setPointerCapture?.(e.pointerId);
+      if(e.button!==undefined&&e.button!==0)return;
+      e.preventDefault();dragging=true;activePointer=e.pointerId;
+      try{stage.setPointerCapture(e.pointerId)}catch{}
       lastAngle=angleAt(e);lastTime=performance.now();velocity=0;lastDelta=0;
       rotation=Number(wheel.dataset.rotation||0);wheel.style.transition='none';stage.classList.add('dragging');hand.classList.add('dragging');
-      $('fortuneResult').textContent='Mors nabiera rozpędu…';$('fortuneNote').textContent='Kręć łapką dookoła koła. Im żwawiej, tym większy rozmach!';
+      $('fortuneResult').textContent='Mors nabiera rozpędu…';$('fortuneNote').textContent='Przeciągnij palcem lub myszką po obwodzie koła i puść. Możesz złapać za łapkę albo samo koło!';
       placeHand(e);
     };
     const move=e=>{
@@ -412,7 +414,7 @@
     };
     const end=e=>{
       if(!dragging||e.pointerId!==activePointer)return;e.preventDefault();dragging=false;activePointer=null;
-      try{hand.releasePointerCapture?.(e.pointerId)}catch{}
+      try{stage.releasePointerCapture(e.pointerId)}catch{}
       const direction=Math.sign(velocity||lastDelta||1),extraTurns=4+Math.min(2,Math.abs(velocity)*1.8);
       const target=rotation+direction*(360*extraTurns);
       stage.classList.remove('dragging');stage.classList.add('spinning');
@@ -425,11 +427,12 @@
       wheel.addEventListener('transitionend',ev=>{if(ev.propertyName==='transform')finish()},{once:true});
       finishTimer=window.setTimeout(finish,5100);
     };
-    hand.addEventListener('pointerdown',start);
-    hand.addEventListener('pointermove',move);
-    hand.addEventListener('pointerup',end);
-    hand.addEventListener('pointercancel',end);
-    hand.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!hand.hasAttribute('aria-disabled')){e.preventDefault();$('fortuneNote').textContent='Użyj myszki lub palca, aby przeciągnąć łapkę po okręgu.'}});
+    // Zdarzenia na całej tarczy, nie tylko na małym obrazku łapki.
+    stage.addEventListener('pointerdown',start);
+    stage.addEventListener('pointermove',move);
+    stage.addEventListener('pointerup',end);
+    stage.addEventListener('pointercancel',end);
+    hand.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!hand.hasAttribute('aria-disabled')){e.preventDefault();$('fortuneNote').textContent='Chwyć myszką lub palcem dowolne miejsce na kole, zakreśl pełny obrót i puść.'}});
   }
   const printQuiz=[
     {q:'Co oznacza skrót CMYK?',a:['Czarny, Magenta, Yellow, Khaki','Cyan, Magenta, Yellow, Key (czarny)','Czerwony, Miętowy, Żółty, Kobalt'],c:1,why:'To cztery podstawowe farby w druku procesowym.'},
