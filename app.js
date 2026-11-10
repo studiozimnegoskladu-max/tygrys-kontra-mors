@@ -399,7 +399,6 @@
       if(dragging||saved.date===fortuneDate()||stage.classList.contains('spinning'))return;
       if(e.button!==undefined&&e.button!==0)return;
       e.preventDefault();dragging=true;activePointer=e.pointerId;
-      try{stage.setPointerCapture(e.pointerId)}catch{}
       lastAngle=angleAt(e);lastTime=performance.now();velocity=0;lastDelta=0;
       rotation=Number(wheel.dataset.rotation||0);wheel.style.transition='none';stage.classList.add('dragging');hand.classList.add('dragging');
       $('fortuneResult').textContent='Mors nabiera rozpędu…';$('fortuneNote').textContent='Przeciągnij palcem lub myszką po obwodzie koła i puść. Możesz złapać za łapkę albo samo koło!';
@@ -414,7 +413,6 @@
     };
     const end=e=>{
       if(!dragging||e.pointerId!==activePointer)return;e.preventDefault();dragging=false;activePointer=null;
-      try{stage.releasePointerCapture(e.pointerId)}catch{}
       const direction=Math.sign(velocity||lastDelta||1),extraTurns=4+Math.min(2,Math.abs(velocity)*1.8);
       const target=rotation+direction*(360*extraTurns);
       stage.classList.remove('dragging');stage.classList.add('spinning');
@@ -429,9 +427,11 @@
     };
     // Zdarzenia na całej tarczy, nie tylko na małym obrazku łapki.
     stage.addEventListener('pointerdown',start);
-    stage.addEventListener('pointermove',move);
-    stage.addEventListener('pointerup',end);
-    stage.addEventListener('pointercancel',end);
+    // Ruch i puszczenie nasłuchujemy na oknie — kursor nie może „zgubić” koła,
+    // gdy wyjedzie poza jego krawędź podczas przeciągania.
+    window.addEventListener('pointermove',move,{passive:false});
+    window.addEventListener('pointerup',end,{passive:false});
+    window.addEventListener('pointercancel',end,{passive:false});
     hand.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!hand.hasAttribute('aria-disabled')){e.preventDefault();$('fortuneNote').textContent='Chwyć myszką lub palcem dowolne miejsce na kole, zakreśl pełny obrót i puść.'}});
   }
   const printQuiz=[
