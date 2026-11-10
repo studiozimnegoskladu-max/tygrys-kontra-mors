@@ -847,3 +847,109 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
  .wheel-label-7{transform:translate(-50%,-50%) rotate(270deg) translateY(-105px) rotate(-270deg)}
  .wheel-label-8{transform:translate(-50%,-50%) rotate(315deg) translateY(-105px) rotate(-315deg)}
 }
+
+
+/* NOWA OPRAWA EKRANU GŁÓWNEGO — komiksowy plakat SZS, bez zmian w mechanice */
+:root{--yellow:#ffe600;--ink:#171515;--pink:#ed2785;--blue:#08b8d4;--paper:#fffdf3}
+.topbar{max-width:1120px;padding:18px 22px 12px;gap:16px}
+.topbar-logo{width:clamp(112px,15vw,172px);height:auto;max-height:58px;object-fit:contain}
+.topbar-actions{display:flex;align-items:center;gap:8px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+.topbar-actions .btn{padding:9px 12px;font-size:11px}
+.online-tag{border-radius:7px;box-shadow:2px 2px 0 var(--ink);transform:rotate(1deg)}
+.shell{max-width:980px;padding:12px 22px 42px}
+.hero{position:relative;isolation:isolate;overflow:hidden;text-align:left;margin:12px 0 28px;padding:clamp(22px,4vw,38px);border:3px solid var(--ink);border-radius:8px 24px 9px 18px;background:#fffdf4;box-shadow:8px 9px 0 var(--ink)}
+.hero:before{content:"";position:absolute;z-index:-1;width:310px;height:310px;right:-105px;top:-155px;border-radius:50%;background:var(--yellow);border:3px solid var(--ink)}
+.hero:after{content:"";position:absolute;z-index:-1;width:190px;height:130px;right:7%;bottom:-88px;transform:rotate(-17deg);background:var(--pink);border:3px solid var(--ink);border-radius:48% 52% 38% 62%}
+.hero .eyebrow{background:var(--ink);color:var(--yellow);border:0;border-radius:3px;padding:7px 12px;transform:rotate(-2deg);box-shadow:3px 3px 0 var(--pink);font-size:13px}
+.hero h1{max-width:760px;margin:18px 0 10px;font-size:clamp(46px,8vw,82px);line-height:.88;letter-spacing:-1.5px;text-transform:uppercase}
+.hero h1 i{display:block;width:max-content;max-width:100%;margin:10px 0 0 5px;padding:4px 11px;background:var(--pink);color:var(--ink);font-size:clamp(21px,3.2vw,34px);line-height:1;letter-spacing:0;transform:rotate(-2deg);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.hero .lead{max-width:600px;margin:16px 0 0;text-align:left;color:#393434;font-size:15px;font-weight:800}
+.fighters{position:relative;z-index:1;max-width:610px;justify-content:flex-start;gap:14px;margin:22px 0 0}
+.fighter{min-width:0;padding:8px 12px 8px 7px;border:2px solid var(--ink);border-radius:8px;background:#fff;box-shadow:3px 3px 0 var(--ink)}
+.tiger-fighter{background:#ffe9a5}
+.mors-fighter{background:#d9f7fb}
+.fighter img{width:70px;height:70px;filter:none}
+.mors-fighter img{width:66px;height:70px}
+.fighter b{font-size:clamp(15px,2vw,19px);line-height:1}
+.fighter small{margin-top:4px;font-size:10px;color:var(--ink);letter-spacing:1.6px}
+.vs{flex:0 0 42px;width:42px;height:42px;display:grid;place-items:center;padding:0;border:2px solid var(--ink);border-radius:50%;background:var(--pink);color:var(--ink);box-shadow:2px 2px 0 var(--ink)}
+.setup-panel{max-width:100%;padding:clamp(17px,3vw,28px);border-radius:9px 19px 8px 17px;background:#fff;border-width:3px;box-shadow:8px 8px 0 var(--ink)}
+.panel-title{align-items:center;padding-bottom:15px;border-bottom:2px dashed #c9c3b6}
+.scribble{min-width:48px;text-align:center;background:var(--pink);box-shadow:2px 2px 0 var(--ink);border-radius:4px}
+.panel-title h2{font-size:clamp(27px,4vw,36px);letter-spacing:.5px}
+.panel-title p{font-size:13px;color:#514b4b;font-weight:700}
+.character-picker{margin:20px 0 18px;padding:17px;border:2px solid var(--ink);border-radius:8px 15px 7px 13px;background:#f1fbff;box-shadow:4px 4px 0 var(--ink)}
+.character-heading{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.character-heading b{font:900 21px 'Barlow Condensed';letter-spacing:.5px}
+.character-heading small{font-size:11px;font-weight:800;color:#555}
+.character-grid{gap:10px}
+.character-option{position:relative;min-width:0;padding:11px 8px 10px;border:2px solid var(--ink)!important;border-radius:8px 13px 7px 11px!important;background:#fff!important;box-shadow:2px 2px 0 var(--ink);transition:transform .14s,box-shadow .14s,background .14s}
+.character-option:hover{transform:translateY(-3px) rotate(-1deg);box-shadow:4px 5px 0 var(--ink)}
+.character-option.selected{background:#fff0a6!important;border:3px solid var(--ink)!important;box-shadow:4px 4px 0 var(--pink)!important}
+.character-option.selected:after{content:"TWÓJ WYBÓR";position:absolute;top:-9px;right:5px;padding:3px 6px;background:var(--pink);border:1.5px solid var(--ink);font:900 9px 'Barlow Condensed';transform:rotate(3deg)}
+.character-avatar{width:clamp(64px,8vw,88px)!important;height:clamp(64px,8vw,88px)!important;object-fit:contain!important}
+.character-option b{font:900 15px 'Barlow Condensed';line-height:1.1}
+.character-option small{font-size:10px;line-height:1.25;color:#595454}
+.character-note{margin:12px 0 0;font-size:11px;font-weight:700;color:#514b4b}
+.side-choice{padding:17px;border:2px dashed var(--ink);border-radius:8px;background:#fff8df}
+.side-choice h3{font:900 18px 'Barlow Condensed';margin:0 0 5px}
+.side-choice>p{margin:0 0 12px;font-size:12px;font-weight:700;color:#514b4b}
+.room-character-preview{border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
+.side-option{border:2px solid var(--ink)!important;border-radius:8px!important;background:#fff!important;box-shadow:2px 2px 0 var(--ink)}
+.side-option.selected{background:#ffe9a5!important;box-shadow:3px 3px 0 var(--pink)!important}
+.setup-grid{gap:16px;margin-top:20px}
+.setup-card{position:relative;border:2px solid var(--ink);border-radius:8px 15px 7px 12px;padding:19px;background:#fff2c2;box-shadow:4px 4px 0 var(--ink)}
+.join-card{background:#e5f8fc}
+.setup-card .card-icon{display:inline-grid;width:44px;height:44px;place-items:center;border:2px solid var(--ink);border-radius:50%;background:var(--yellow);box-shadow:2px 2px 0 var(--ink)}
+.join-card .card-icon{background:#ffb8d7}
+.setup-card h3{font-size:24px}
+.setup-card p{color:#413b3b;font-weight:700;line-height:1.45}
+.setup-card .btn{min-height:46px}
+.btn{border-radius:5px;box-shadow:4px 4px 0 var(--ink);font-size:14px}
+.btn:hover{transform:translate(-2px,-2px) rotate(-.5deg);box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-yellow{background:var(--yellow)}
+.extra-modes{margin-top:20px;gap:12px}
+.mode-card{border:2px solid var(--ink);border-radius:7px 13px 6px 10px;padding:13px 15px;background:#f4efff;box-shadow:3px 3px 0 var(--ink)}
+.mode-card:nth-child(3){background:#fceaf2}
+.mode-card b{font-size:19px}
+.mode-card small{color:#454040;font-weight:700}
+.difficulty-row,.profile-row{border:2px dashed #777;border-radius:7px;padding:12px;background:#fffdf4}
+.profile-row{box-shadow:2px 2px 0 var(--ink)}
+.extra-drawer{border-radius:8px 15px 7px 12px;box-shadow:4px 4px 0 var(--ink)}
+.extra-drawer>summary{padding:16px}
+.extra-drawer>summary b{font-size:21px}
+.drawer-icon{border-radius:7px;box-shadow:2px 2px 0 var(--ink)}
+@media(max-width:650px){
+ .topbar{padding:12px 14px;gap:8px;flex-wrap:wrap}
+ .topbar-logo{width:105px;max-height:42px}
+ .topbar-actions{gap:6px}
+ .topbar-actions .btn{padding:7px 8px;font-size:10px}
+ .online-tag{padding:6px 8px}
+ .shell{padding:5px 12px 28px}
+ .hero{margin:8px 0 22px;padding:20px 16px 18px;box-shadow:5px 6px 0 var(--ink)}
+ .hero:before{width:190px;height:190px;right:-105px;top:-105px}
+ .hero h1{font-size:clamp(43px,12vw,66px);max-width:100%}
+ .hero h1 i{font-size:clamp(18px,5vw,25px)}
+ .hero .lead{font-size:13px;max-width:85%}
+ .fighters{gap:7px;margin-top:18px}
+ .fighter{gap:5px;padding:6px 7px 6px 4px}
+ .fighter img{width:48px;height:52px}
+ .mors-fighter img{width:45px;height:52px}
+ .fighter b{font-size:13px}
+ .fighter small{font-size:8px}
+ .vs{flex-basis:32px;width:32px;height:32px;font-size:16px}
+ .setup-panel{padding:15px 11px;box-shadow:5px 5px 0 var(--ink)}
+ .character-picker{padding:12px 9px;box-shadow:3px 3px 0 var(--ink)}
+ .character-grid{gap:8px}
+ .character-option{padding:9px 5px 8px}
+ .character-option b{font-size:13px}
+ .character-option small{font-size:9px}
+ .setup-card{padding:15px;box-shadow:3px 3px 0 var(--ink)}
+ .extra-drawer>summary{padding:12px}
+}
+@media(prefers-reduced-motion:reduce){
+ .character-option,.btn{transition:none!important}
+ .character-option:hover,.btn:hover{transform:none!important}
+}
