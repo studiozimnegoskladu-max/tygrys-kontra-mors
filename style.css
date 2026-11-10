@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Nunito:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Bangers&family=Nunito:wght@600;700;800;900&display=swap');
 :root{--yellow:#ffe600;--ink:#211f20;--pink:#e52d83;--blue:#12a8d3;--paper:#fffdf4}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Nunito,Arial,sans-serif;min-height:100vh;overflow-x:hidden}
 html{background:#ffe600}
@@ -952,4 +952,30 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
 @media(prefers-reduced-motion:reduce){
  .character-option,.btn{transition:none!important}
  .character-option:hover,.btn:hover{transform:none!important}
+}
+
+
+/* BOHATEROWIE NA PLAKACIE — większe avatary, bez etykiet symboli */
+.fighters{max-width:760px;gap:22px;align-items:center}
+.fighter{gap:12px;padding:10px 16px 10px 9px;min-height:150px}
+.fighter img{width:140px;height:140px;max-width:none;flex:0 0 140px;object-fit:contain}
+.mors-fighter img{width:132px;height:140px;flex-basis:132px}
+.fighter small{display:none!important}
+.fighter b{font-family:'Bangers','Barlow Condensed',cursive;font-size:clamp(25px,3.3vw,36px);font-weight:400;letter-spacing:1px;line-height:.95;text-transform:uppercase;text-shadow:1px 1px 0 #fff}
+.vs{font-family:'Bangers','Barlow Condensed',cursive;font-size:32px;letter-spacing:1px;transform:rotate(-8deg)}
+@media(max-width:650px){
+ .fighters{gap:8px;max-width:100%;justify-content:space-between}
+ .fighter{gap:5px;min-height:94px;padding:5px 7px 5px 4px;flex:1}
+ .fighter img{width:96px;height:96px;flex:0 0 96px}
+ .mors-fighter img{width:90px;height:96px;flex-basis:90px}
+ .fighter b{font-size:clamp(19px,5vw,25px);letter-spacing:.4px}
+ .vs{flex:0 0 34px;width:34px;height:34px;font-size:25px}
+}
+@media(max-width:390px){
+ .fighters{gap:5px}
+ .fighter{gap:2px;padding:4px}
+ .fighter img{width:78px;height:82px;flex-basis:78px}
+ .mors-fighter img{width:74px;height:82px;flex-basis:74px}
+ .fighter b{font-size:18px}
+ .vs{flex-basis:29px;width:29px;height:29px;font-size:22px}
 }
