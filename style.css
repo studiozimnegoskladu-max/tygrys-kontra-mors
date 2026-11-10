@@ -495,10 +495,10 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
   transform:rotate(4deg);letter-spacing:.5px;
 }
 .character-option,.side-option{position:relative}
-.fortune-wheel-stage{filter:drop-shadow(4px 5px 0 var(--szs-ink))}
+.fortune-wheel-stage{filter:drop-shadow(4px 5px 0 var(--szs-ink));touch-action:none;user-select:none;-webkit-user-select:none}
 .fortune-wheel{border:4px solid var(--szs-ink);box-shadow:inset 0 0 0 4px rgba(255,255,255,.5),5px 6px 0 var(--szs-ink)}
 .fortune-pointer{filter:drop-shadow(2px 2px 0 var(--szs-ink))}
-.fortune-hand{animation:comicHandWiggle 1.8s ease-in-out infinite}
+.fortune-hand{animation:comicHandWiggle 1.8s ease-in-out infinite;pointer-events:none}
 .fortune-result{border:3px solid var(--szs-ink);box-shadow:4px 4px 0 var(--szs-ink);font-weight:1000}
 .fortune-wheel-stage.spinning{animation:comicShake .35s ease-in-out infinite}
 .diploma-card{border:3px solid var(--szs-ink);border-radius:5px 15px 6px 12px;box-shadow:4px 5px 0 var(--szs-ink);background:linear-gradient(135deg,#fffdf2 0 72%,#ffe77b 72% 100%)}
