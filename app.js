@@ -5,6 +5,7 @@
   const TIGER='tiger', MORS='mors';
   const CHARACTER_EMOJI={};
   const characterAssets={tiger:'assets/hrabia-poprawek-transparent.svg',mors:'assets/mascot-mors.png',goat:'assets/koza-krzycha.jpg',bobr:'assets/mascot-bobr.png',llama:'assets/mascot-lama.png',octopus:'assets/mascot-osmiornica.png'};
+  const characterAssetUrl=character=>characterAssets[character]||characterAssets.mors;
   let selectedCharacter=localStorage.getItem('tkm_character')||'tiger';if(selectedCharacter==='mole'){selectedCharacter='bobr';localStorage.setItem('tkm_character','bobr');}
   const characterForMark=mark=>mode==='online'?(mark===role?selectedCharacter:(remoteCharacter|| (mark===TIGER?'tiger':'mors'))):(mark===TIGER?selectedCharacter:'mors');
   const sideLabel=mark=>(characterNames[characterForMark(mark)]||'Gracz')+' '+(characterIcons[characterForMark(mark)]||'');
@@ -497,8 +498,9 @@
   function evaluate(board){for(const line of wins)if(board[line[0]]&&board[line[0]]===board[line[1]]&&board[line[1]]===board[line[2]])return{winner:board[line[0]],winning:line};return board.every(Boolean)?{winner:'draw',winning:[]}:{winner:null,winning:[]}}
   function setScoreCharacter(card,character){
     if(!card)return;const name=characterNames[character]||'Gracz';const icon=characterIcons[character]||'🐯';
+    card.dataset.character=character;
     card.querySelector('b').textContent=name.toUpperCase();
-    const img=card.querySelector('img');if(img){img.style.display=CHARACTER_EMOJI[character]?'none':'';if(!CHARACTER_EMOJI[character]){img.src=characterAssets[character]||characterAssets.mors;img.alt=name;}}
+    const img=card.querySelector('img');if(img){img.style.display=CHARACTER_EMOJI[character]?'none':'';if(!CHARACTER_EMOJI[character]){img.src=characterAssetUrl(character)+'?v=20261110-mascots-1';img.alt=name;}}
     let badge=card.querySelector('.score-custom-icon');
     if(CHARACTER_EMOJI[character]){if(!badge){badge=document.createElement('span');badge.className='score-custom-icon';card.insertBefore(badge,card.querySelector('div'));}badge.textContent=icon;}else if(badge)badge.remove();
   }
@@ -535,6 +537,7 @@
     if(body)body.textContent=brief.text;
   }
   const characterNames={tiger:'Hrabia Poprawek',mors:'Mors',goat:'Koza Krzycha',octopus:'Ośmiornica Drukarka',bobr:'Bóbr',llama:'Lama Drama'};
+  function applyCanonicalCharacterAssets(){document.querySelectorAll('img[data-character]').forEach(img=>{const character=img.dataset.character;if(characterAssets[character]){img.src=characterAssetUrl(character)+'?v=20261110-mascots-1';img.alt=characterNames[character]||img.alt;}});}
   const characterIcons={tiger:'🐯',mors:'🦭',goat:'🐐',octopus:'🐙',bobr:'🦫',llama:'🦙'};
   const characterQuips={
     goat:{move:['Koza Krzycha melduje: kopyto postawione, proszę nie regulować odbiorników.','Mee-e-eega ruch! Nawet Hrabia musi poprawić koronę.','Krzychu, to było Twoje kopyto czy pieczątka?','Koza Krzycha skacze po planszy. Kontrola jakości uciekła.','Beee-zdyskusyjny ruch. Komisja kopyt zatwierdza.','Koza Krzycha mówi: ja tu tylko przyszłam skubać zwycięstwo.','Uwaga na rogi! Strategia weszła na pełnej.','Kopytko w pole, rozum na urlopie.'],win:['KOZA KRZYCHA WYGRYWA! Reszta może iść skubać trawę.','BEEE-zapelacyjna wygrana! Krzychu, odbierz puchar!','Koza Krzycha rozniosła planszę. Dosłownie prawie ją zjadła.','Kopyta górą! Hrabia składa oficjalny protest.']},
@@ -604,7 +607,7 @@
     el.classList.remove('comic-line-pop');void el.offsetWidth;el.classList.add('comic-line-pop');
     scheduleMorsIdle();
   }
-  function render(){if(!current)return;cells.forEach((cell,i)=>{cell.innerHTML='';cell.classList.toggle('winning',(current.winning||[]).includes(i));const mark=current.board[i];if(mark){const character=characterForMark(mark);if(CHARACTER_EMOJI[character]){const avatar=document.createElement('span');avatar.className='board-character';avatar.textContent=CHARACTER_EMOJI[character];cell.append(avatar)}else{const im=document.createElement('img');im.className='board-avatar board-avatar-'+character;im.src=characterAssets[character]||characterAssets.mors;im.alt=characterNames[character]||'Maskotka SZS';cell.append(im)}}const canPlay=mode==='local'||(mode==='cpu'&&current.turn===TIGER)||(mode==='online'&&current.turn===role&&(current.guestJoined||role===current.creatorRole));cell.disabled=!!mark||current.status!=='playing'||!canPlay||busy});
+  function render(){if(!current)return;cells.forEach((cell,i)=>{cell.innerHTML='';cell.classList.toggle('winning',(current.winning||[]).includes(i));const mark=current.board[i];if(mark){const character=characterForMark(mark);if(CHARACTER_EMOJI[character]){const avatar=document.createElement('span');avatar.className='board-character';avatar.textContent=CHARACTER_EMOJI[character];cell.append(avatar)}else{const im=document.createElement('img');im.className='board-avatar board-avatar-'+character;im.src=characterAssetUrl(character)+'?v=20261110-mascots-1';im.alt=characterNames[character]||'Maskotka SZS';cell.append(im)}}const canPlay=mode==='local'||(mode==='cpu'&&current.turn===TIGER)||(mode==='online'&&current.turn===role&&(current.guestJoined||role===current.creatorRole));cell.disabled=!!mark||current.status!=='playing'||!canPlay||busy});
     const w=current.winner;game.classList.toggle('round-finished',current.status==='finished');game.classList.toggle('round-draw',w==='draw');game.classList.toggle('series-won',!!seriesWinner);$('turnBanner').textContent=seriesWinner?('🏆 '+sideLabel(seriesWinner).toUpperCase()+' ZDOBYWA PUCHAR!'):w==='draw'?'REMIS! NIKT NIE ODPUSZCZA 😎':w?(sideLabel(w).toUpperCase()+' WYGRYWA!'):(mode==='local'?'RUCH: '+sideLabel(current.turn):mode==='cpu'?(current.turn===TIGER?'TWOJA KOLEJ — RUSZAJ!':'MORS MYŚLI…'):current.turn===role&&(!current.guestJoined?role===current.creatorRole:true)?'TWOJA KOLEJ — RUSZAJ!':!current.guestJoined?'PIERWSZY RUCH ZROBIONY — DRUGI GRACZ MOŻE DOŁĄCZYĆ W DOWOLNEJ CHWILI':'RUCH PRZECIWNIKA…');
     $('seriesLabel').textContent=(mode==='online'?'WYNIK TEJ SESJI':'SERIA DO 3 ZWYCIĘSTW')+' · '+(scores.tiger+scores.mors)+' ROZEGRANYCH RUND';$('roleLabel').textContent=mode==='local'?'DWAJ GRACZE · JEDNO URZĄDZENIE':mode==='cpu'?'TY: '+sideLabel(TIGER)+' · MORS: '+({easy:'ŁATWY',normal:'ŚREDNI',hard:'TRUDNY'}[cpuDifficulty]||'ŚREDNI'):'Grasz jako '+sideLabel(role)+' ('+(role===TIGER?'kółko':'krzyżyk')+')';$('newRoundBtn').disabled=current.status!=='finished'||!!seriesWinner;$('newMatchBtn').textContent=seriesWinner?'NOWY TURNIEJ ↻':'ZERUJ TURNIEJ ↻';$('newMatchBtn').classList.toggle('hidden',mode==='online');$('tigerScore').textContent=scores.tiger;$('morsScore').textContent=scores.mors;const resultOverlay=$('roundResultOverlay');if(resultOverlay){const resultTitle=$('roundResultTitle'),resultText=$('roundResultText'),resultIcon=$('roundResultIcon');if(current.status==='finished'){if(current.winner==='draw'){if(resultTitle)resultTitle.textContent='REMIS!';if(resultText)resultText.textContent='Nikt nie odpuszcza. Plansza potrzebuje dogrywki, a Mors — kawy.';if(resultIcon)resultIcon.textContent='🤝';}else{if(resultTitle)resultTitle.textContent=sideLabel(current.winner).toUpperCase()+' WYGRYWA!';if(resultText)resultText.textContent=seriesWinner?'PUCHAR WĘDRUJE DO ZWYCIĘZCY!':mode==='local'?'Runda rozstrzygnięta. Druga strona już szykuje protest.':(mode==='cpu'&&current.winner===TIGER)||(mode==='online'&&current.winner===role)?'Piękna robota! Hrabia właśnie sprawdza regulamin.':'Tym razem przeciwnik był górą. Rewanż czeka!';if(resultIcon)resultIcon.textContent=seriesWinner?'🏆':'💥';}}resultOverlay.hidden=current.status!=='finished'||resultOverlayDismissed;}updateSoundButton();}
   async function fetchGame(){const{data,error}=await client.from('game_sessions').select('*').eq('room_code',room).maybeSingle();if(error||!data)throw Error('Nie znaleziono pokoju. Sprawdź kod.');return data}
@@ -689,7 +692,7 @@
     const box=$('roomCharacterPreview');if(!box)return;
     const name=characterNames[selectedCharacter]||characterNames.tiger;
     const visual=CHARACTER_EMOJI[selectedCharacter]?document.createElement('span'):document.createElement('img');
-    if(visual.tagName==='IMG'){visual.src=characterAssets[selectedCharacter]||characterAssets.tiger;visual.alt=name;}
+    if(visual.tagName==='IMG'){visual.src=characterAssetUrl(selectedCharacter)+'?v=20261110-mascots-1';visual.alt=name;}
     else visual.textContent=CHARACTER_EMOJI[selectedCharacter];
     visual.className='room-character-visual';
     const copy=document.createElement('span');copy.className='room-character-name';copy.textContent='Do pokoju wchodzisz jako: '+name;
@@ -697,6 +700,7 @@
   }
   document.querySelectorAll('input[name="character"]').forEach(r=>{r.checked=r.value===selectedCharacter;r.addEventListener('change',()=>{selectedCharacter=r.value;localStorage.setItem('tkm_character',selectedCharacter);document.querySelectorAll('.character-option').forEach(el=>el.classList.toggle('selected',el.querySelector('input').checked));renderSelectedCharacterPreview();});});
   document.querySelectorAll('input[name="mySide"]').forEach(r=>r.addEventListener('change',()=>{document.querySelectorAll('.side-option').forEach(el=>el.classList.toggle('selected',el.querySelector('input').checked));}));
+  applyCanonicalCharacterAssets();
   renderSelectedCharacterPreview();
   $('createBtn').addEventListener('click',createRoom);$('joinBtn').addEventListener('click',()=>joinRoom($('roomInput').value));$('roomInput').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom(e.target.value)});$('roomInput').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));cells.forEach(c=>c.addEventListener('click',()=>move(+c.dataset.cell)));$('newRoundBtn').addEventListener('click',newRound);$('newMatchBtn').addEventListener('click',()=>{if(mode==='online'){say('Nowy turniej rozpocznijcie po uzgodnieniu z przeciwnikiem.');return}scores={tiger:0,mors:0};seriesWinner=null;resultOverlayDismissed=false;roundId=makeRoundId();current=fresh();commentary('tiger');render();});
   $('shareInviteBtn')?.addEventListener('click',()=>shareOnFacebook('Rzucam Ci wyzwanie! Wybierz swoją maskotkę i spróbuj mnie pokonać w Kółko, Krzyżyk i Dwa Promile Absurdu. 🐯🦭'));
