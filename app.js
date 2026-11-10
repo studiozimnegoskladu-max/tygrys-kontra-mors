@@ -516,20 +516,6 @@
     if(roomWaitTimer){clearTimeout(roomWaitTimer);roomWaitTimer=null;}
     if(found){
       if(arrived){setMorsPose('wave');const mood=$('commentaryMood'),copy=$('commentaryText'),box=$('commentary');if(mood)mood.textContent='ALARM! RYWAL DOTARŁ';if(copy)copy.textContent='Koniec drzemki! Przeciwnik jest na miejscu. Płetwy na planszę!';if(box)box.dataset.mood='mors';}
-    }else if(current&&current.board.every(cell=>!cell)){
-      const mood=$('commentaryMood'),copy=$('commentaryText'),box=$('commentary');
-      if(mood)mood.textContent='POKÓJ GOTOWY';
-      if(copy)copy.textContent='Plansza przygotowana. Mors pełni wartę… jeszcze na stojąco.';
-      if(box)box.dataset.mood='idle';
-      roomWaitTimer=window.setTimeout(()=>{
-        if(mode==='online'&&!remoteCharacter&&current&&current.board.every(cell=>!cell)){
-          setMorsPose('sleep');
-          if(mood)mood.textContent='DRZEMKA TAKTYCZNA';
-          if(copy)copy.textContent='ZZZ… Mors zasnął na warcie. Niech ktoś go obudzi!';
-          if(box){box.dataset.mood='idle';box.classList.remove('comic-line-pop');void box.offsetWidth;box.classList.add('comic-line-pop');}
-        }
-        roomWaitTimer=null;
-      },8000);
     }
     updateOnlineCharacters();render();
   }
