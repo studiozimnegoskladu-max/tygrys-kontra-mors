@@ -95,7 +95,7 @@ begin
     (room_code, creator_role, board, turn, winner, status, guest_joined)
   values
     (p_room_code, p_creator_role, '["","","","","","","","",""]'::jsonb,
-     'tiger', null, 'playing', false)
+     p_creator_role, null, 'playing', false)
   returning * into created;
 
   return created;
@@ -157,7 +157,9 @@ begin
 
   if not found then raise exception 'Nie znaleziono pokoju.'; end if;
   if game.status <> 'playing' then raise exception 'Ta partia jest już zakończona.'; end if;
-  if game.guest_joined is not true then raise exception 'Czekamy na drugiego gracza.'; end if;
+  if game.guest_joined is not true and game.creator_role <> p_role then
+    raise exception 'Przed dołączeniem drugiego gracza może wykonać ruch tylko osoba, która utworzyła pokój.';
+  end if;
   if game.turn <> p_role then raise exception 'Teraz ruch przeciwnika.'; end if;
   if game.board ->> p_cell <> '' then raise exception 'To pole jest już zajęte.'; end if;
 
@@ -212,7 +214,7 @@ begin
 
   update public.game_sessions
      set board = '["","","","","","","","",""]'::jsonb,
-         turn = 'tiger',
+         turn = creator_role,
          winner = null,
          status = 'playing'
    where room_code = upper(p_room_code)
