@@ -351,12 +351,12 @@
   function fortuneDate(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
   function renderFortune(){
     let saved={};try{saved=JSON.parse(localStorage.getItem(FORTUNE_KEY)||'{}')||{}}catch{}
-    const done=saved.date===fortuneDate(),wheel=$('fortuneWheel'),button=$('spinFortuneBtn'),claim=$('fortuneClaimLink');
+    const done=saved.date===fortuneDate(),wheel=$('fortuneWheel'),hand=$('fortuneHand'),claim=$('fortuneClaimLink');
     if(claim)claim.hidden=!(done&&saved.prizeIndex===7);
     if(wheel&&done&&Number.isFinite(saved.rotation)){wheel.style.transition='none';wheel.style.transform='rotate('+saved.rotation+'deg)'}
-    button.disabled=done;button.textContent=done?'WRÓĆ JUTRO PO KOLEJNY OBRÓT':'ZAKRĘĆ KOŁEM ABSURDU!';
+    if(hand){hand.setAttribute('aria-disabled',String(done));hand.tabIndex=done?-1:0}
     $('fortuneResult').textContent=done?(saved.prize||'Dziś już zakręcono kołem!'):'Koło czeka na pierwszy obrót…';
-    $('fortuneNote').textContent=done?'Dzisiejsza niespodzianka jest już Twoja.':'Jedno losowanie dziennie. Wynik zapisze się na tym urządzeniu.';
+    $('fortuneNote').textContent=done?'Dzisiejsza niespodzianka jest już Twoja.':'Chwyć żółtą łapkę Morsa, przeciągnij ją po okręgu i puść. Jedno losowanie dziennie.';
   }
 
   $('closeCandyJackpot')?.addEventListener('click',()=>{$('candyJackpot').hidden=true;document.body.classList.remove('jackpot-open')});
@@ -375,21 +375,61 @@
     window.setTimeout(()=>{if(soundOn)sound(1175,.22)},130);
     window.setTimeout(()=>{if(soundOn)sound(1568,.3)},280);
   }
-  function spinFortune(){
-    let saved={};try{saved=JSON.parse(localStorage.getItem(FORTUNE_KEY)||'{}')||{}}catch{}
-    if(saved.date===fortuneDate())return;
-    const wheel=$('fortuneWheel'),button=$('spinFortuneBtn'),result=$('fortuneResult'),note=$('fortuneNote'),stage=document.querySelector('.fortune-wheel-stage');const jackpot=$('candyJackpot');
-    const index=Math.floor(Math.random()*fortunePrizes.length),p=fortunePrizes[index];
-    const center=index*45+22.5,rotation=2160+(360-center),prize=p.icon+' '+p.name+' — '+p.desc;
-    button.disabled=true;button.textContent='MORS KRĘCI…';stage?.classList.add('spinning');result.textContent='Trwa losowanie. Nie podglądać, to uczciwy chaos!';fortuneTickSequence();
-    note.textContent='Koza Krzycha pilnuje, żeby nikt nie oszukiwał.';
-    if(wheel){wheel.style.transition='none';wheel.style.transform='rotate(0deg)';void wheel.offsetWidth;wheel.style.transition='transform 4.6s cubic-bezier(.12,.72,.12,1)';wheel.style.transform='rotate('+rotation+'deg)'}
-    window.setTimeout(()=>{
-      localStorage.setItem(FORTUNE_KEY,JSON.stringify({date:fortuneDate(),prize,prizeIndex:index,rotation}));
-      result.textContent=prize;fortuneFinishSound();stage?.classList.remove('spinning');const claim=$('fortuneClaimLink');if(claim)claim.hidden=index!==7;if(index===7&&jackpot){jackpot.hidden=false;document.body.classList.add('jackpot-open');window.setTimeout(()=>{jackpot.hidden=true;document.body.classList.remove('jackpot-open')},7500)}button.textContent='WRÓĆ JUTRO PO KOLEJNY OBRÓT';
-      note.textContent='Wylosowano! Mors zatwierdza tę decyzję, Koza Krzycha nie zgłasza reklamacji.';
-      unlockSticker('fortune-spin');
-    },4700);
+  function finishFortuneSpin(rotation,stage,hand){
+    const normalized=((360-(rotation%360))%360+360)%360;
+    const index=Math.min(fortunePrizes.length-1,Math.floor(normalized/45));
+    const p=fortunePrizes[index],prize=p.icon+' '+p.name+' — '+p.desc;
+    localStorage.setItem(FORTUNE_KEY,JSON.stringify({date:fortuneDate(),prize,prizeIndex:index,rotation}));
+    $('fortuneResult').textContent=prize;fortuneFinishSound();stage?.classList.remove('spinning','dragging');
+    if(hand){hand.classList.remove('dragging');hand.style.left='';hand.style.top='';hand.style.right='';hand.style.bottom='';hand.style.transform=''}
+    const claim=$('fortuneClaimLink'),jackpot=$('candyJackpot');if(claim)claim.hidden=index!==7;
+    if(index===7&&jackpot){jackpot.hidden=false;document.body.classList.add('jackpot-open');window.setTimeout(()=>{jackpot.hidden=true;document.body.classList.remove('jackpot-open')},7500)}
+    $('fortuneNote').textContent='Wylosowano! Mors zatwierdza tę decyzję, Koza Krzycha nie zgłasza reklamacji.';
+    unlockSticker('fortune-spin');
+  }
+  function setupFortuneDrag(){
+    const hand=$('fortuneHand'),wheel=$('fortuneWheel'),stage=document.querySelector('.fortune-wheel-stage');
+    if(!hand||!wheel||!stage)return;
+    let dragging=false,lastAngle=0,rotation=0,lastTime=0,velocity=0,lastDelta=0,finishTimer=null,activePointer=null;
+    const angleAt=e=>{const r=wheel.getBoundingClientRect();return Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))*180/Math.PI};
+    const angleDelta=(next,prev)=>{let d=next-prev;while(d>180)d-=360;while(d<-180)d+=360;return d};
+    const placeHand=e=>{const r=stage.getBoundingClientRect();hand.style.right='auto';hand.style.bottom='auto';hand.style.left=(e.clientX-r.left)+'px';hand.style.top=(e.clientY-r.top)+'px';hand.style.transform='translate(-50%,-50%) rotate('+(angleAt(e)+90)+'deg)'};
+    const start=e=>{
+      let saved={};try{saved=JSON.parse(localStorage.getItem(FORTUNE_KEY)||'{}')||{}}catch{}
+      if(dragging||saved.date===fortuneDate()||stage.classList.contains('spinning'))return;
+      e.preventDefault();dragging=true;activePointer=e.pointerId;hand.setPointerCapture?.(e.pointerId);
+      lastAngle=angleAt(e);lastTime=performance.now();velocity=0;lastDelta=0;
+      rotation=Number(wheel.dataset.rotation||0);wheel.style.transition='none';stage.classList.add('dragging');hand.classList.add('dragging');
+      $('fortuneResult').textContent='Mors nabiera rozpędu…';$('fortuneNote').textContent='Kręć łapką dookoła koła. Im żwawiej, tym większy rozmach!';
+      placeHand(e);
+    };
+    const move=e=>{
+      if(!dragging||e.pointerId!==activePointer)return;e.preventDefault();
+      const now=performance.now(),angle=angleAt(e),delta=angleDelta(angle,lastAngle),dt=Math.max(8,now-lastTime);
+      rotation+=delta;lastDelta=delta;velocity=velocity*.55+(delta/dt)*.45;lastAngle=angle;lastTime=now;
+      wheel.style.transform='rotate('+rotation+'deg)';wheel.dataset.rotation=String(rotation);placeHand(e);
+      if(soundOn&&Math.abs(delta)>2)sound(420,.018);
+    };
+    const end=e=>{
+      if(!dragging||e.pointerId!==activePointer)return;e.preventDefault();dragging=false;activePointer=null;
+      try{hand.releasePointerCapture?.(e.pointerId)}catch{}
+      const direction=Math.sign(velocity||lastDelta||1),extraTurns=4+Math.min(2,Math.abs(velocity)*1.8);
+      const target=rotation+direction*(360*extraTurns);
+      stage.classList.remove('dragging');stage.classList.add('spinning');
+      $('fortuneResult').textContent='Koło nabiera obrotów! Mors zaleca nie mrugać.';
+      $('fortuneNote').textContent='Koza Krzycha pilnuje, żeby nikt nie próbował zatrzymać losu.';
+      fortuneTickSequence();wheel.style.transition='transform 4.8s cubic-bezier(.12,.72,.12,1)';void wheel.offsetWidth;wheel.style.transform='rotate('+target+'deg)';
+      wheel.dataset.rotation=String(target);
+      let finished=false;
+      const finish=()=>{if(finished)return;finished=true;if(finishTimer)clearTimeout(finishTimer);finishFortuneSpin(target,stage,hand)};
+      wheel.addEventListener('transitionend',ev=>{if(ev.propertyName==='transform')finish()},{once:true});
+      finishTimer=window.setTimeout(finish,5100);
+    };
+    hand.addEventListener('pointerdown',start);
+    hand.addEventListener('pointermove',move);
+    hand.addEventListener('pointerup',end);
+    hand.addEventListener('pointercancel',end);
+    hand.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!hand.hasAttribute('aria-disabled')){e.preventDefault();$('fortuneNote').textContent='Użyj myszki lub palca, aby przeciągnąć łapkę po okręgu.'}});
   }
   const printQuiz=[
     {q:'Co oznacza skrót CMYK?',a:['Czarny, Magenta, Yellow, Khaki','Cyan, Magenta, Yellow, Key (czarny)','Czerwony, Miętowy, Żółty, Kobalt'],c:1,why:'To cztery podstawowe farby w druku procesowym.'},
@@ -687,7 +727,7 @@
   $('roundResultClose')?.addEventListener('click',()=>{resultOverlayDismissed=true;$('roundResultOverlay').hidden=true;});
   // Delikatny odgłos papierowego stempla dla kliknięć interfejsu; respektuje przełącznik dźwięku.
   document.addEventListener('click',event=>{const control=event.target.closest('button.btn, a.btn');if(!control||control.id==='soundBtn'||control.classList.contains('cell')||control.disabled)return;sound(260,.045);window.setTimeout(()=>sound(390,.035),38);});
-  $('spinFortuneBtn')?.addEventListener('click',spinFortune);$('quizStartBtn')?.addEventListener('click',startPrintQuiz);$('quizNextBtn')?.addEventListener('click',nextPrintQuiz);$('quizAgainBtn')?.addEventListener('click',()=>{$('quizResult').classList.add('hidden');$('quizStart').classList.remove('hidden');$('quizTrackFill').style.width='0%';});
+  setupFortuneDrag();$('quizStartBtn')?.addEventListener('click',startPrintQuiz);$('quizNextBtn')?.addEventListener('click',nextPrintQuiz);$('quizAgainBtn')?.addEventListener('click',()=>{$('quizResult').classList.add('hidden');$('quizStart').classList.remove('hidden');$('quizTrackFill').style.width='0%';});
   function renderSelectedCharacterPreview(){
     const box=$('roomCharacterPreview');if(!box)return;
     const name=characterNames[selectedCharacter]||characterNames.tiger;
