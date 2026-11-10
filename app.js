@@ -8,7 +8,7 @@
   let selectedCharacter=localStorage.getItem('tkm_character')||'tiger';if(selectedCharacter==='mole'){selectedCharacter='bobr';localStorage.setItem('tkm_character','bobr');}
   const characterForMark=mark=>mode==='online'?(mark===role?selectedCharacter:(remoteCharacter|| (mark===TIGER?'tiger':'mors'))):(mark===TIGER?selectedCharacter:'mors');
   const sideLabel=mark=>(characterNames[characterForMark(mark)]||'Gracz')+' '+(characterIcons[characterForMark(mark)]||'');
-  let client,room=null,role=null,channel=null,current=null,remoteCharacter=null,roomWaitTimer=null,mode='online',busy=false,cpuDifficulty=localStorage.getItem('tkm_cpu_difficulty')||'normal';
+  let client,room=null,role=null,channel=null,current=null,remoteCharacter=null,mode='online',busy=false,cpuDifficulty=localStorage.getItem('tkm_cpu_difficulty')||'normal';
   let scores={tiger:0,mors:0},seriesWinner=null,commentIndex=0,morsIdleTimer=null,achievementStats=loadStats(),soundOn=localStorage.getItem('tkm_sound')!=='off',musicOn=localStorage.getItem('tkm_music')!=='off',startedAt=0,timer=null,audioContext=null;
   const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
   const fresh=()=>({board:Array(9).fill(''),turn:TIGER,winner:null,status:'playing',winning:[]});
@@ -513,10 +513,6 @@
     Object.entries(state).forEach(([key,entries])=>{if(key!==String(role)&&Array.isArray(entries)&&entries.length){const meta=entries[entries.length-1];if(meta&&characterNames[meta.character])found=meta.character;}});
     const arrived=!!found&&!remoteCharacter;
     remoteCharacter=found;
-    if(roomWaitTimer){clearTimeout(roomWaitTimer);roomWaitTimer=null;}
-    if(found){
-      if(arrived){setMorsPose('wave');const mood=$('commentaryMood'),copy=$('commentaryText'),box=$('commentary');if(mood)mood.textContent='ALARM! RYWAL DOTARŁ';if(copy)copy.textContent='Koniec drzemki! Przeciwnik jest na miejscu. Płetwy na planszę!';if(box)box.dataset.mood='mors';}
-    }
     updateOnlineCharacters();render();
   }
   function showGame(){resultOverlayDismissed=false;setup.classList.add('hidden');game.classList.remove('hidden');$('roomCode').textContent=room||'LOKALNIE';$('playerName').textContent=nick();if(mode==='online'){updateOnlineCharacters()}else{const ownCard=document.querySelector('.tiger-score');setScoreCharacter(ownCard,selectedCharacter);setScoreCharacter(document.querySelector('.mors-score'),'mors');}renderAchievements();newPrintBrief();}
@@ -585,16 +581,7 @@
     const labels={sleep:'Mors zasypia',music:'Mors słucha muzyki',run:'Mors biegnie',panic:'Mors jest zaskoczony',angry:'Mors jest wściekły',shout:'Mors krzyczy',paint:'Mors maluje',clap:'Mors klaszcze',gesture:'Mors pokazuje gest',fierce:'Mors robi groźną minę',sad:'Mors jest smutny',celebrate:'Mors świętuje',wave:'Mors macha na powitanie',sit:'Mors siedzi i czeka',think:'Mors się zastanawia'};
     art.setAttribute('aria-label',labels[value]);
   }
-  function scheduleMorsIdle(){
-    if(morsIdleTimer)clearTimeout(morsIdleTimer);
-    if(game.classList.contains('hidden')||!current||current.status!=='playing')return;
-    morsIdleTimer=window.setTimeout(()=>{
-      if(!current||current.status!=='playing'||game.classList.contains('hidden'))return;
-      setMorsPose('sleep');
-      const copy=$('commentaryText');if(copy)copy.textContent='ZZZ… Obudźcie mnie, jak ktoś wreszcie wygra.';
-      const box=$('commentary');if(box){box.dataset.mood='idle';box.classList.remove('comic-line-pop');void box.offsetWidth;box.classList.add('comic-line-pop');}
-    },22000);
-  }
+  function scheduleMorsIdle(){if(morsIdleTimer){clearTimeout(morsIdleTimer);morsIdleTimer=null;}}
   function commentary(kind,character){
     const el=$('commentary');if(!el)return;
     const custom=characterQuips[character];
@@ -616,7 +603,7 @@
     scheduleMorsIdle();
   }
   function render(){if(!current)return;cells.forEach((cell,i)=>{cell.innerHTML='';cell.classList.toggle('winning',(current.winning||[]).includes(i));const mark=current.board[i];if(mark){const character=characterForMark(mark);if(CHARACTER_EMOJI[character]){const avatar=document.createElement('span');avatar.className='board-character';avatar.textContent=CHARACTER_EMOJI[character];cell.append(avatar)}else{const im=document.createElement('img');im.className='board-avatar board-avatar-'+character;im.src=characterAssets[character]||characterAssets.mors;im.alt=characterNames[character]||'Maskotka SZS';cell.append(im)}}const canPlay=mode==='local'||(mode==='cpu'&&current.turn===TIGER)||(mode==='online'&&current.turn===role);cell.disabled=!!mark||current.status!=='playing'||!canPlay||busy});
-    const w=current.winner;game.classList.toggle('round-finished',current.status==='finished');game.classList.toggle('round-draw',w==='draw');game.classList.toggle('series-won',!!seriesWinner);$('turnBanner').textContent=seriesWinner?('🏆 '+sideLabel(seriesWinner).toUpperCase()+' ZDOBYWA PUCHAR!'):w==='draw'?'REMIS! NIKT NIE ODPUSZCZA 😎':w?(sideLabel(w).toUpperCase()+' WYGRYWA!'):(mode==='local'?'RUCH: '+sideLabel(current.turn):mode==='cpu'?(current.turn===TIGER?'TWOJA KOLEJ — RUSZAJ!':'MORS MYŚLI…'):!remoteCharacter&&current.board.every(cell=>!cell)?'PLANSZA GOTOWA · MORS NA WARcie'.toUpperCase():current.turn===role?'TWOJA KOLEJ — RUSZAJ!':'RUCH PRZECIWNIKA…');
+    const w=current.winner;game.classList.toggle('round-finished',current.status==='finished');game.classList.toggle('round-draw',w==='draw');game.classList.toggle('series-won',!!seriesWinner);$('turnBanner').textContent=seriesWinner?('🏆 '+sideLabel(seriesWinner).toUpperCase()+' ZDOBYWA PUCHAR!'):w==='draw'?'REMIS! NIKT NIE ODPUSZCZA 😎':w?(sideLabel(w).toUpperCase()+' WYGRYWA!'):(mode==='local'?'RUCH: '+sideLabel(current.turn):mode==='cpu'?(current.turn===TIGER?'TWOJA KOLEJ — RUSZAJ!':'MORS MYŚLI…'):current.turn===role?'TWOJA KOLEJ — RUSZAJ!':'RUCH PRZECIWNIKA…');
     $('seriesLabel').textContent=(mode==='online'?'WYNIK TEJ SESJI':'SERIA DO 3 ZWYCIĘSTW')+' · '+(scores.tiger+scores.mors)+' ROZEGRANYCH RUND';$('roleLabel').textContent=mode==='local'?'DWAJ GRACZE · JEDNO URZĄDZENIE':mode==='cpu'?'TY: '+sideLabel(TIGER)+' · MORS: '+({easy:'ŁATWY',normal:'ŚREDNI',hard:'TRUDNY'}[cpuDifficulty]||'ŚREDNI'):'Grasz jako '+sideLabel(role)+' ('+(role===TIGER?'kółko':'krzyżyk')+')';$('newRoundBtn').disabled=current.status!=='finished'||!!seriesWinner;$('newMatchBtn').textContent=seriesWinner?'NOWY TURNIEJ ↻':'ZERUJ TURNIEJ ↻';$('newMatchBtn').classList.toggle('hidden',mode==='online');$('tigerScore').textContent=scores.tiger;$('morsScore').textContent=scores.mors;const resultOverlay=$('roundResultOverlay');if(resultOverlay){const resultTitle=$('roundResultTitle'),resultText=$('roundResultText'),resultIcon=$('roundResultIcon');if(current.status==='finished'){if(current.winner==='draw'){if(resultTitle)resultTitle.textContent='REMIS!';if(resultText)resultText.textContent='Nikt nie odpuszcza. Plansza potrzebuje dogrywki, a Mors — kawy.';if(resultIcon)resultIcon.textContent='🤝';}else{if(resultTitle)resultTitle.textContent=sideLabel(current.winner).toUpperCase()+' WYGRYWA!';if(resultText)resultText.textContent=seriesWinner?'PUCHAR WĘDRUJE DO ZWYCIĘZCY!':mode==='local'?'Runda rozstrzygnięta. Druga strona już szykuje protest.':(mode==='cpu'&&current.winner===TIGER)||(mode==='online'&&current.winner===role)?'Piękna robota! Hrabia właśnie sprawdza regulamin.':'Tym razem przeciwnik był górą. Rewanż czeka!';if(resultIcon)resultIcon.textContent=seriesWinner?'🏆':'💥';}}resultOverlay.hidden=current.status!=='finished'||resultOverlayDismissed;}updateSoundButton();}
   async function fetchGame(){const{data,error}=await client.from('game_sessions').select('*').eq('room_code',room).maybeSingle();if(error||!data)throw Error('Nie znaleziono pokoju. Sprawdź kod.');return data}
   function fromRow(row){const board=row.board||Array(9).fill('');return{board,turn:row.turn||TIGER,winner:row.winner||null,status:row.status||'playing',winning:evaluate(board).winning}}
