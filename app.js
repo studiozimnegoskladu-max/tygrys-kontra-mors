@@ -922,7 +922,7 @@
     function soccerCanMove(to){return soccerNeighbors(soccer.position).some(p=>p.c===to.c&&p.r===to.r)&&!soccer.lines.has(soccerKey(soccer.position,to))}
     function soccerDraw(){
       if(!soccerBoard)return;
-      const p=soccer.position,available=soccer.started&&!soccer.over&&(!soccerOnline||soccerOnlineRole===soccer.turn)&&!soccerOnlineBusy?soccerNeighbors(p).filter(n=>soccerCanMove(n)):[];
+      const p=soccer.position,available=soccer.started&&!soccer.over&&(!soccerOnline||(soccerOnlineGuestJoined&&soccerOnlineRole===soccer.turn))&&!soccerOnlineBusy?soccerNeighbors(p).filter(n=>soccerCanMove(n)):[];
       const lineMarkup=[...soccer.lines].map(key=>{const [a,b]=key.split('|'),[ac,ar]=a.split(',').map(Number),[bc,br]=b.split(',').map(Number);return '<line class="field-line" x1="'+soccerX(ac)+'" y1="'+soccerY(ar)+'" x2="'+soccerX(bc)+'" y2="'+soccerY(br)+'"/>'}).join('');
       const dots=[];for(let r=0;r<soccerRows;r++)for(let c=0;c<soccerCols;c++){const active=available.some(n=>n.c===c&&n.r===r),current=p.c===c&&p.r===r;dots.push('<circle class="paper-dot'+(current?' current':'')+(active?' available':'')+'" cx="'+soccerX(c)+'" cy="'+soccerY(r)+'" r="'+(active?3.1:current?2.8:1.25)+'" '+(active?'data-soccer-point="'+c+','+r+'" tabindex="0" role="button" aria-label="Ruch do pola '+(c+1)+', '+(r+1)+'"':'')+'/>')};
       soccerBoard.innerHTML='<rect class="goal-zone" x="145" y="0" width="45" height="8"/><rect class="goal-zone bottom" x="145" y="168" width="45" height="12"/><path class="field-line" d="M40 8H145 M190 8H280 M40 168H145 M190 168H280 M40 8V168H280V8 M40 88H280 M100 8V40H220V8 M100 168V136H220V168"/>'+lineMarkup+dots.join('')+'<circle class="ball" cx="'+soccerX(p.c)+'" cy="'+soccerY(p.r)+'" r="5.5"/>';
@@ -994,7 +994,7 @@
     }
 
     // Pojedynek online Mors Cup — serwer jest jedynym źródłem prawdy o ruchach.
-    let soccerOnline=false,soccerOnlineRole=null,soccerOnlineRoom=null,soccerOnlineToken=null,soccerOnlinePoll=null,soccerOnlineBusy=false;
+    let soccerOnline=false,soccerOnlineRole=null,soccerOnlineRoom=null,soccerOnlineToken=null,soccerOnlinePoll=null,soccerOnlineBusy=false,soccerOnlineGuestJoined=false;
     const soccerOnlineMessage=$('soccerOnlineMessage');
     const soccerOnlineNote=(message)=>{if(soccerOnlineMessage)soccerOnlineMessage.textContent=message};
     const soccerOnlineCode=()=>Array.from(crypto.getRandomValues(new Uint8Array(8)),b=>'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'[b%36]).join('');
@@ -1009,7 +1009,7 @@
       soccer.turn=Number(state.turn)||0;soccer.started=state.started!==false;soccer.over=!!state.over;
       soccer.score=Array.isArray(state.score)?state.score.map(Number):[0,0];
       soccer.history=Array.isArray(state.history)?state.history:[];
-      soccerOnlineNote(data.guest_joined?'Przeciwnik dołączył. Mecz trwa!':'Pokój gotowy — czekamy na drugiego gracza…');
+      soccerOnlineGuestJoined=!!data.guest_joined;soccerOnlineNote(soccerOnlineGuestJoined?'Przeciwnik dołączył. Mecz trwa!':'Pokój gotowy — czekamy na drugiego gracza…');
       $('soccerPlayerOne').textContent='MORS / GRACZ 1';
       $('soccerPlayerTwo').textContent='HRABIA / GRACZ 2';
       $('soccerUndo').disabled=true;
@@ -1088,7 +1088,7 @@
     }
     function soccerLeaveOnline(){
       if(soccerOnlinePoll){clearInterval(soccerOnlinePoll);soccerOnlinePoll=null}
-      soccerOnline=false;soccerOnlineRole=null;soccerOnlineRoom=null;soccerOnlineToken=null;soccerOnlineBusy=false;
+      soccerOnline=false;soccerOnlineRole=null;soccerOnlineRoom=null;soccerOnlineToken=null;soccerOnlineBusy=false;soccerOnlineGuestJoined=false;
       $('soccerUndo').disabled=false;$('soccerExit').textContent='WRÓĆ DO MENU ↩';
       $('soccerRoomCreated').classList.add('hidden');$('soccerOnlineStart')?.classList.remove('hidden');
       history.replaceState({},'',location.pathname);
