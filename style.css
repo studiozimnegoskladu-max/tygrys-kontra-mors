@@ -1882,3 +1882,6 @@ body.view-fortune .fortune-hand{right:-38px;bottom:10px;width:112px}
 /* Morsowa grafika planszy piłkarzyków — warstwa interaktywna pozostaje bez zmian. */
 .soccer-board{background:#f5f0df url('./assets/mors%20pi%C5%82karzyki.png') center/100% 100% no-repeat!important}
 .soccer-board .field-line,.soccer-board .goal-zone{display:none!important}
+
+/* Ruch przeciwnika w Mors Cup — wyłącznie zielony tusz. */
+.soccer-board .move-line.ink-green{stroke:#35A853!important}
