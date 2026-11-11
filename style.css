@@ -1866,3 +1866,9 @@ body.view-fortune .fortune-hand{right:-38px;bottom:10px;width:112px}
 @font-face{font-family:'SZS-Bazgrol';src:url('./assets/MsPaintMouse-Regular.otf') format('opentype');font-style:normal;font-weight:400;font-display:swap}
 @font-face{font-family:'SZS-Bazgrol';src:url('./assets/MsPaintMouse-Regular.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}
 .attractions-menu .attractions-intro #attractionsTitle{font-family:'SZS-Bazgrol'!important;font-weight:400!important;font-style:normal!important;letter-spacing:-.035em!important;text-transform:uppercase!important;line-height:1!important;transform:rotate(-1deg);}
+
+
+/* Nagłówek atrakcji — podział na kolory CMYK */
+.attractions-menu .attractions-intro #attractionsTitle .cmyk-word{display:inline-block!important}
+.attractions-menu .attractions-intro #attractionsTitle .cmyk-cyan{color:#00AEEF!important;-webkit-text-fill-color:#00AEEF!important}
+.attractions-menu .attractions-intro #attractionsTitle .cmyk-magenta{color:#EC008C!important;-webkit-text-fill-color:#EC008C!important}
