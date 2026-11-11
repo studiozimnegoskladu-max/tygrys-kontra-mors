@@ -1111,3 +1111,55 @@ body.soccer-fullscreen-open{overflow:hidden}
  .soccer-game .soccer-play:not(.hidden) .soccer-board{max-height:calc(100dvh - 185px);max-width:min(100%,calc((100dvh - 185px)*16/9))}
  .soccer-game .soccer-play:not(.hidden) .soccer-comment{display:none}
 }
+
+
+/* MORS CUP — większe boisko, delikatniejsze oznaczenia */
+.soccer-game .soccer-play:not(.hidden) .soccer-board{
+ width:min(100%,calc((100dvh - 190px)*16/9));
+ max-width:1500px;
+ max-height:calc(100dvh - 190px);
+ flex:1 1 auto;
+ min-height:0;
+ border:2px solid rgba(70,66,58,.42);
+ box-shadow:0 3px 12px rgba(40,35,25,.12);
+}
+.soccer-board .field-line{
+ stroke:#777164;
+ stroke-width:1.45;
+ stroke-opacity:.72;
+}
+.soccer-board .paper-dot{
+ stroke:#777164;
+ stroke-width:.75;
+}
+.soccer-board .paper-dot.current{
+ stroke:#8a806c;
+ stroke-width:1.15;
+}
+.soccer-board .paper-dot.available{
+ stroke:#7e9ca0;
+ stroke-width:1;
+}
+.soccer-board .paper-dot.available:focus{
+ stroke:#d65b91;
+ stroke-width:1.8;
+}
+.soccer-board .ball{
+ stroke:#8a6574;
+ stroke-width:1.15;
+}
+@media(max-width:700px){
+ .soccer-game .soccer-play:not(.hidden) .soccer-board{
+  width:100%;
+  max-width:min(100%,calc((100dvh - 205px)*16/9));
+  max-height:calc(100dvh - 205px);
+  flex:1 1 auto;
+  min-height:0;
+ }
+}
+@media(max-height:560px){
+ .soccer-game .soccer-play:not(.hidden) .soccer-board{
+  width:min(100%,calc((100dvh - 165px)*16/9));
+  max-height:calc(100dvh - 165px);
+ }
+}
