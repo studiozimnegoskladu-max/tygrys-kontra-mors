@@ -5,8 +5,14 @@
 </defs>
 <rect width="360" height="520" fill="#f5f0df"/>
 <rect width="360" height="520" filter="url(#paperNoise)" opacity=".22"/>
-<path d="M0 46H360 M0 94H360 M0 142H360 M0 190H360 M0 238H360 M0 286H360 M0 334H360 M0 382H360 M0 430H360 M0 478H360" stroke="#75a8d2" stroke-width=".65" opacity=".68"/>
-<path d="M55 0V520" stroke="#d76d70" stroke-width="1.05" opacity=".75"/>
+<g stroke="#78a9d0" stroke-width=".72" opacity=".72">
+ <path d="M30 0V520 M80 0V520 M130 0V520 M180 0V520 M230 0V520 M280 0V520 M330 0V520"/>
+ <path d="M0 30H360 M0 76H360 M0 122H360 M0 168H360 M0 214H360 M0 260H360 M0 306H360 M0 352H360 M0 398H360 M0 444H360 M0 490H360"/>
+</g>
+<g stroke="#1741a0" stroke-width="1.8" opacity=".16" fill="none">
+ <path d="M30 30H330V490H30Z"/>
+</g>
+<path d="M14 0V520" stroke="#d76d70" stroke-width="1.05" opacity=".72"/>
 <g fill="none" stroke="#1741a0" stroke-linecap="round" stroke-linejoin="round">
  <path d="M-12 14 Q18 -3 39 11 T83 8 M-8 26 Q17 8 47 22 T74 19 M-6 39 Q21 19 42 35 T88 29" stroke-width="2.3" opacity=".85"/>
  <path d="M-10 454 L15 420 L2 473 L30 438 L18 495 L47 455 M-8 484 L23 452 L16 511 L45 476" stroke-width="3" opacity=".78"/>
