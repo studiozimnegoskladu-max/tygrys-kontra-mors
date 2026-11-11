@@ -22,6 +22,7 @@
 </head>
 <body>
   <audio id="backgroundMusic" src="assets/szs-game-music.mp3" preload="auto"></audio>
+  <audio id="morsCupMusic" src="assets/AQOTgr_8_o9bY9zWdzF8k7vcgZtoevWA8RrfpB1ClQe1xlgC1j_tUI49_IcoZ1WTk6DUs5_2DOdv0GKymy6Ai6_rgE5Q1HrFdhk.mp4" preload="metadata"></audio>
   <section id="introScreen" class="intro-screen" aria-label="Ekran powitalny">
     <div class="intro-card">
       <div class="intro-brand"><img src="assets/szs-logo.png?v=20261105-2" alt="Studio Zimnego Składu — logo"></div>
@@ -216,7 +217,7 @@
               <svg id="soccerBoard" class="soccer-board" viewBox="0 0 320 180" role="group" aria-label="Boisko do papierowych piłkarzyków"></svg>
               <small id="soccerStatus" class="soccer-status" aria-live="polite">Wybierz sąsiednią kropkę, aby poprowadzić piłkę.</small>
                <div class="soccer-comment" id="soccerComment" aria-live="polite">🦭 MORS: Piłka jest okrągła. To już dobry początek.</div>
-              <div class="soccer-actions"><button type="button" class="btn btn-dark" id="soccerReset">NOWY MECZ ↻</button><button type="button" class="btn btn-outline" id="soccerUndo">COFNIJ RUCH</button></div>
+              <div class="soccer-actions"><button type="button" class="btn btn-dark" id="soccerReset">NOWY MECZ ↻</button><button type="button" class="btn btn-outline" id="soccerUndo">COFNIJ RUCH</button><button type="button" class="btn btn-outline" id="soccerExit">WYJDŹ Z MORS CUP ↩</button></div>
             </div>
             <div class="soccer-start-actions"><button type="button" class="btn btn-yellow mini-start" id="soccerTrain">TRENING Z MORSEM 🦭</button><button type="button" class="btn btn-outline mini-start" id="soccerTwoPlayers">DWÓCH GRACZY 👥</button></div>
                       <div class="morscup-league-divider"></div>
@@ -290,6 +291,6 @@
     <footer>MADE WITH <span>♥</span> AND A LITTLE BIT OF CHAOS · <img class="footer-logo" src="assets/szs-logo.png?v=20261105-2" alt="Studio Zimnego Składu"></footer>
   </main>
   <script src="config.js"></script>
-  <script src="app.js?v=20261111-mors-cup-league-1"></script>
+  <script src="app.js?v=20261111-mors-cup-audio-1"></script>
 </body>
 </html>
