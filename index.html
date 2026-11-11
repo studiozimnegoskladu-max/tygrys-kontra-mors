@@ -223,6 +223,22 @@
         </div>
         
       </section></details>
+      <section class="morscup-league-panel" id="morsCupLeague" aria-labelledby="morsCupLeagueTitle">
+        <div class="morscup-league-heading"><div><small>OFICJALNE ROZGRYWKI STUDIA ZIMNEGO SKŁADU</small><h2 id="morsCupLeagueTitle">🏆 MORS CUP — LIGA ABSURDU</h2><p>Załóż profil, zgłoś się do rozgrywek i sprawdź, kto rządzi na papierowym boisku.</p></div><div class="morscup-league-stamp">MORS<br>CUP<br>★</div></div>
+        <div class="morscup-profile">
+          <div><b>TWÓJ ZAWODNIK</b><small>Profil zapisujemy pod pseudonimem na tym urządzeniu.</small></div>
+          <label for="morsCupNickname">PSEUDONIM</label><input id="morsCupNickname" maxlength="18" autocomplete="nickname" placeholder="np. Płetwa Lewa">
+          <label for="morsCupMascot">MASKOTKA</label><select id="morsCupMascot"><option value="mors">Mors</option><option value="tiger">Hrabia Poprawek</option><option value="goat">Koza Krzycha</option><option value="bobr">Bóbr</option><option value="llama">Lama Drama</option><option value="octopus">Ośmiornica Drukarka</option></select>
+          <button type="button" class="btn btn-yellow" id="morsCupSaveProfile">ZAPISZ PROFIL ↗</button>
+          <p id="morsCupProfileStatus" class="morscup-feedback" aria-live="polite">Uzupełnij pseudonim i dołącz do ligi.</p>
+        </div>
+        <div class="morscup-season"><small>AKTYWNY SEZON</small><strong id="morsCupSeasonName">Ładowanie sezonu…</strong><span id="morsCupSeasonStatus">Sprawdzam rozgrywki w bazie Morsa.</span></div>
+        <div class="morscup-table-wrap"><div class="morscup-subheading"><h3>📋 TABELA LIGOWA</h3><button type="button" class="btn btn-outline" id="morsCupRefresh">ODŚWIEŻ ↻</button></div>
+          <div class="morscup-table-scroll"><table class="morscup-table"><thead><tr><th>#</th><th>ZAWODNIK</th><th>MECZE</th><th>W</th><th>R</th><th>P</th><th>PKT</th></tr></thead><tbody id="morsCupStandings"><tr><td colspan="7">Tabela czeka na pierwszych zawodników.</td></tr></tbody></table></div>
+          <p class="morscup-footnote">W = wygrane · R = remisy · P = porażki · 3 pkt za wygraną, 1 pkt za remis.</p>
+        </div>
+        <div class="morscup-tournaments"><div class="morscup-subheading"><h3>🎟️ TURNIEJE OTWARTE</h3></div><div id="morsCupTournamentList" class="morscup-tournament-list"><p>Sprawdzam, czy Mors już coś organizuje…</p></div></div>
+      </section>
       <details class="extra-drawer collection-drawer"><summary><span class="drawer-icon">🎖️</span><span><b>KOLEKCJA I OSIĄGNIĘCIA</b><small>Naklejki, odznaki i dyplomy</small></span><span class="drawer-arrow">＋</span></summary>
       <section class="sticker-panel" aria-labelledby="stickerHeading">
         <div class="sticker-heading"><div><small>TWOJA MAŁA WIELKA KOLEKCJA</small><h2 id="stickerHeading">🎟️ NAKLEJKI I ODZNAKI</h2></div><strong id="stickerCount">0 / 8</strong></div>
