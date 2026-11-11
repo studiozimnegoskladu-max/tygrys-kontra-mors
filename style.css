@@ -1798,3 +1798,8 @@ body.view-mors-zone #setup .mors-zone-drawer .morscup-league-panel{
 .soccer-board .paper-dot.available{r:2.45;fill:#00AEEF;stroke:#171717;stroke-width:.9;opacity:1}
 .soccer-board .paper-dot.available:focus{stroke:#EC008C;stroke-width:1.8;outline:none}
 .soccer-board .ball{r:4.4;fill:#EC008C;stroke:#171717;stroke-width:1.5}
+
+
+/* Główne hasło wyboru atrakcji — krój MsPaintMouse z assets */
+@font-face{font-family:'MsPaintMouse';src:url('assets/MsPaintMouse-Regular.woff2') format('woff2'),url('assets/MsPaintMouse-Regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+#attractionsTitle{font-family:'MsPaintMouse','Comic Sans MS',cursive!important;font-weight:400!important;letter-spacing:0!important;line-height:1.12;text-transform:uppercase;transform:rotate(-1deg);}
