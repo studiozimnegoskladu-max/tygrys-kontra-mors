@@ -815,7 +815,7 @@
       if(soccerCommentEl)soccerCommentEl.textContent=(Math.random()<.5?'🦭 MORS: ':'🐯 HRABIA: ')+line;
     }
     const soccerKey=(a,b)=>{const p=[a.c+','+a.r,b.c+','+b.r].sort();return p.join('|')};
-    const soccerNeighbors=(p)=>{const out=[];for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){if(!dc&&!dr)continue;const c=p.c+dc,r=p.r+dr;if(c>=0&&c<soccerCols&&r>=0&&r<soccerRows)out.push({c,r})}return out};
+    const soccerNeighbors=(p)=>{const out=[];for(const [dc,dr] of [[1,0],[-1,0],[0,1],[0,-1]]){const c=p.c+dc,r=p.r+dr;if(c>=0&&c<soccerCols&&r>=0&&r<soccerRows)out.push({c,r})}return out};
     function soccerCanMove(to){return soccerNeighbors(soccer.position).some(p=>p.c===to.c&&p.r===to.r)&&!soccer.lines.has(soccerKey(soccer.position,to))}
     function soccerDraw(){
       if(!soccerBoard)return;
