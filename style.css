@@ -1872,3 +1872,8 @@ body.view-fortune .fortune-hand{right:-38px;bottom:10px;width:112px}
 .attractions-menu .attractions-intro #attractionsTitle .cmyk-word{display:inline-block!important}
 .attractions-menu .attractions-intro #attractionsTitle .cmyk-cyan{color:#00AEEF!important;-webkit-text-fill-color:#00AEEF!important}
 .attractions-menu .attractions-intro #attractionsTitle .cmyk-magenta{color:#EC008C!important;-webkit-text-fill-color:#EC008C!important}
+
+
+/* Custom uppercase E-ogonek: MsPaintMouse has no uppercase Ę glyph. */
+.attractions-menu .attractions-intro #attractionsTitle .szs-ogonek-e{position:relative;display:inline-block!important;}
+.attractions-menu .attractions-intro #attractionsTitle .szs-ogonek-e:after{content:'˛';position:absolute;left:-.015em;top:.43em;font-family:Arial,sans-serif;font-size:.68em;font-weight:400;line-height:1;color:inherit;-webkit-text-fill-color:currentColor;transform:rotate(7deg) scaleX(.9);transform-origin:top left;pointer-events:none;}
