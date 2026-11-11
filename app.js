@@ -594,13 +594,25 @@
     window.scrollTo({top:0,behavior:'smooth'});
   }
   function openAttraction(which){
-    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone');
+    // Widoki atrakcji muszą działać także po wcześniejszym wejściu do gry,
+    // gdy panel konfiguracji (#setup) mógł pozostać ukryty.
+    setup?.classList.remove('hidden');
+    game?.classList.add('hidden');
+    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','soccer-fullscreen-open');
     document.body.classList.add('view-'+which);
-    if(which==='soccer'||which==='fortune'||which==='mors-zone'){const drawer=document.querySelector('.mors-zone-drawer');if(drawer)drawer.open=true;}
-    window.scrollTo({top:0,behavior:'smooth'});
+    const drawer=document.querySelector('.mors-zone-drawer');
+    if(drawer && (which==='soccer'||which==='fortune'||which==='mors-zone')) drawer.open=true;
+    if(which==='mors-zone'){
+      document.querySelectorAll('.mors-zone-drawer > section').forEach(section=>{
+        section.hidden = section.classList.contains('fortune-panel');
+      });
+      const zone=document.querySelector('.mors-zone-drawer');
+      if(zone){zone.style.display='block';zone.open=true;}
+    }
+    window.scrollTo({top:0,behavior:'instant'});
     if(which==='soccer')document.querySelector('.soccer-game')?.scrollIntoView({behavior:'smooth',block:'start'});
     if(which==='fortune')$('fortuneHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
-    if(which==='mors-zone')document.querySelector('.mors-zone-drawer')?.scrollIntoView({behavior:'smooth',block:'start'});
+    if(which==='mors-zone')$('hrabiaInstituteHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
   }
   $('openTicTacToe')?.addEventListener('click',()=>openAttraction('tictactoe'));
   $('openSoccer')?.addEventListener('click',()=>openAttraction('soccer'));
