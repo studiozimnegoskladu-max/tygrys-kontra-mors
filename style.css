@@ -1788,7 +1788,7 @@ body.view-mors-zone #setup .mors-zone-drawer .morscup-league-panel{
 
 /* MORS CUP — kreski jak odręczny zapis długopisem, paleta CMYK */
 .soccer-board .field-line{stroke:#242124;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;opacity:.76}
-.soccer-board .move-line{fill:none;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round;opacity:.96;filter:url(#pen-wobble)}
+.soccer-board .move-line{fill:none;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round;opacity:1;filter:none}
 .soccer-board .move-line.ink-cyan{stroke:#00AEEF}
 .soccer-board .move-line.ink-magenta{stroke:#EC008C}
 .soccer-board .move-line.ink-yellow{stroke:#E6C900}
@@ -1803,3 +1803,15 @@ body.view-mors-zone #setup .mors-zone-drawer .morscup-league-panel{
 /* Główne hasło wyboru atrakcji — krój MsPaintMouse z assets */
 @font-face{font-family:'MsPaintMouse';src:url('assets/MsPaintMouse-Regular.woff2') format('woff2'),url('assets/MsPaintMouse-Regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
 #attractionsTitle{font-family:'MsPaintMouse','Comic Sans MS',cursive!important;font-weight:400!important;letter-spacing:0!important;line-height:1.12;text-transform:uppercase;transform:rotate(-1deg);}
+
+
+/* Wzmocniony wygląd Mors Cup — wyraźny długopis i drobna siatka */
+.soccer-board .move-line{stroke-width:2.8!important;opacity:1!important;filter:none!important}
+.soccer-board .move-line.ink-cyan{stroke:#00AEEF!important}
+.soccer-board .move-line.ink-magenta{stroke:#EC008C!important}
+.soccer-board .move-line.ink-yellow{stroke:#FFED00!important}
+.soccer-board .move-line.ink-black{stroke:#171717!important}
+.soccer-board circle.paper-dot{r:.72!important;fill:#29262a!important;stroke:none!important;opacity:.88!important}
+.soccer-board circle.paper-dot.current{r:2.35!important;fill:#FFED00!important;stroke:#171717!important;stroke-width:1.15!important;opacity:1!important}
+.soccer-board circle.paper-dot.available{r:2.7!important;fill:#00AEEF!important;stroke:#171717!important;stroke-width:.9!important;opacity:1!important}
+.soccer-board circle.ball{r:4.6!important;fill:#EC008C!important;stroke:#171717!important;stroke-width:1.5!important}
