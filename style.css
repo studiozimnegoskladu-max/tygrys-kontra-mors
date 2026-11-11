@@ -1725,3 +1725,30 @@ body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) #soccerExit{
     width:min(100%,calc((100dvh - 120px)*16/9))!important;
   }
 }
+
+/* STREFA MORSA — stabilny widok niezależny od stanu <details> i poprzedniej gry */
+body.view-mors-zone .shell,
+body.view-mors-zone .shell > #setup,
+body.view-mors-zone #setup .mors-zone-drawer{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+body.view-mors-zone #setup .mors-zone-drawer > section:not([hidden]){
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+body.view-mors-zone #setup .mors-zone-drawer > section[hidden],
+body.view-mors-zone #setup .mors-zone-drawer > .fortune-panel{
+  display:none!important;
+}
+body.view-mors-zone #setup .mors-zone-drawer > summary{display:none!important}
+body.view-mors-zone #setup .mors-zone-drawer .morscup-league-panel{
+  display:block!important;
+  position:relative;
+  z-index:1;
+}
