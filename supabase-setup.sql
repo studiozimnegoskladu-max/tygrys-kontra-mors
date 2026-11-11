@@ -113,7 +113,7 @@ create or replace function public.szs_join_room(
 language plpgsql
 security definer
 set search_path = public
-as $
+as $$
 declare
   joined public.game_sessions;
 begin
@@ -134,7 +134,7 @@ begin
   end if;
   return joined;
 end;
-$;
+$$;
 
 create or replace function public.szs_make_move(
   p_room_code text,
