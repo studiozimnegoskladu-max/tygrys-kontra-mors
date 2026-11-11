@@ -259,3 +259,157 @@ grant select on public.player_leaderboard to anon, authenticated;
 -- Uprawnienia i odświeżenie cache API po wdrożeniu funkcji RPC.
 grant usage on schema public to anon, authenticated;
 notify pgrst, 'reload schema';
+
+
+-- =========================================================
+-- MORS CUP ONLINE — pokoje i atomowe ruchy papierowych piłkarzyków
+-- Dostęp do stanu wyłącznie przez RPC z tokenem gracza.
+-- =========================================================
+create table if not exists public.szs_soccer_rooms (
+  room_code text primary key,
+  host_token text not null,
+  guest_token text,
+  guest_joined boolean not null default false,
+  state jsonb not null,
+  updated_at timestamptz not null default now()
+);
+alter table public.szs_soccer_rooms enable row level security;
+revoke all on public.szs_soccer_rooms from anon, authenticated;
+
+create or replace function public.szs_soccer_create_room(p_room_code text,p_host_token text)
+returns jsonb language plpgsql security definer set search_path = ''
+as $$
+declare r public.szs_soccer_rooms;
+begin
+  if p_room_code !~ '^[A-Z0-9]{8}$' or length(coalesce(p_host_token,'')) < 20 then
+    raise exception 'Nieprawidłowy kod lub token pokoju.';
+  end if;
+  insert into public.szs_soccer_rooms(room_code,host_token,state)
+  values(p_room_code,p_host_token,jsonb_build_object(
+    'lines','[]'::jsonb,'visits',jsonb_build_object('8,5',1),
+    'position',jsonb_build_object('c',8,'r',5),'turn',0,
+    'started',true,'over',false,'score','[0,0]'::jsonb,'history','[]'::jsonb))
+  returning * into r;
+  return jsonb_build_object('state',r.state,'guest_joined',r.guest_joined,'updated_at',r.updated_at);
+end; $$;
+
+create or replace function public.szs_soccer_join_room(p_room_code text,p_guest_token text)
+returns jsonb language plpgsql security definer set search_path = ''
+as $$
+declare r public.szs_soccer_rooms;
+begin
+  if length(coalesce(p_guest_token,'')) < 20 then raise exception 'Brak tokenu gracza.'; end if;
+  update public.szs_soccer_rooms
+     set guest_joined=true,guest_token=p_guest_token,updated_at=now()
+   where room_code=upper(p_room_code) and (guest_joined=false or guest_token=p_guest_token)
+  returning * into r;
+  if not found then raise exception 'Pokój nie istnieje albo jest już zajęty.'; end if;
+  return jsonb_build_object('state',r.state,'guest_joined',r.guest_joined,'updated_at',r.updated_at);
+end; $$;
+
+create or replace function public.szs_soccer_get_room(p_room_code text,p_player_token text)
+returns jsonb language plpgsql security definer set search_path = ''
+as $$
+declare r public.szs_soccer_rooms;
+begin
+  select * into r from public.szs_soccer_rooms
+   where room_code=upper(p_room_code) and (host_token=p_player_token or (guest_joined and guest_token=p_player_token));
+  if not found then raise exception 'Nie znaleziono pokoju lub token gracza jest nieprawidłowy.'; end if;
+  return jsonb_build_object('state',r.state,'guest_joined',r.guest_joined,'updated_at',r.updated_at);
+end; $$;
+
+create or replace function public.szs_soccer_move(p_room_code text,p_player_token text,p_c integer,p_r integer)
+returns jsonb language plpgsql security definer set search_path = ''
+as $$
+declare
+  g public.szs_soccer_rooms;
+  st jsonb;
+  pc integer; pr integer; turn_no integer; prior integer:=0;
+  from_key text; to_key text; line_key text;
+  edge boolean; goal boolean; can_move boolean:=false;
+  nc integer; nr integer; score jsonb; lines jsonb; visits jsonb;
+begin
+  select * into g from public.szs_soccer_rooms
+   where room_code=upper(p_room_code) and (host_token=p_player_token or (guest_joined and guest_token=p_player_token))
+   for update;
+  if not found then raise exception 'Nie znaleziono pokoju lub token gracza jest nieprawidłowy.'; end if;
+  if not g.guest_joined then raise exception 'Czekamy na drugiego gracza.'; end if;
+  st:=g.state;turn_no:=(st->>'turn')::integer;
+  if (g.host_token=p_player_token and turn_no<>0) or (g.guest_token=p_player_token and turn_no<>1) then
+    raise exception 'Teraz ruch przeciwnika.';
+  end if;
+  if coalesce((st->>'over')::boolean,true) then raise exception 'Mecz jest zakończony.'; end if;
+  if p_c<0 or p_c>16 or p_r<0 or p_r>10 then raise exception 'Ruch poza boiskiem.'; end if;
+  pc:=(st#>>'{position,c}')::integer;pr:=(st#>>'{position,r}')::integer;
+  if abs(p_c-pc)+abs(p_r-pr)<>1 then raise exception 'Możesz przesunąć piłkę tylko na sąsiednią kropkę.'; end if;
+  from_key:=pc||','||pr;to_key:=p_c||','||p_r;
+  line_key:=least(from_key,to_key)||'|'||greatest(from_key,to_key);
+  lines:=coalesce(st->'lines','[]'::jsonb);
+  if lines ? line_key then raise exception 'Ta kreska została już wykorzystana.'; end if;
+  visits:=coalesce(st->'visits','{}'::jsonb);
+  prior:=coalesce((visits->>to_key)::integer,0);
+  lines:=lines||jsonb_build_array(line_key);
+  visits:=jsonb_set(visits,array[to_key],to_jsonb(prior+1),true);
+  score:=coalesce(st->'score','[0,0]'::jsonb);
+  goal:=(p_r=0 or p_r=10) and p_c between 7 and 9;
+  edge:=p_c=0 or p_c=16 or p_r=0 or p_r=10;
+  if goal then
+    score:=jsonb_set(score,array[turn_no::text],to_jsonb((score->>turn_no)::integer+1),false);
+    st:=jsonb_set(st,'{over}','true'::jsonb,true);
+  elsif prior=0 and not edge then
+    st:=jsonb_set(st,'{turn}',to_jsonb(1-turn_no),true);
+  end if;
+  st:=jsonb_set(st,'{lines}',lines,true);
+  st:=jsonb_set(st,'{visits}',visits,true);
+  st:=jsonb_set(st,'{position}',jsonb_build_object('c',p_c,'r',p_r),true);
+  st:=jsonb_set(st,'{score}',score,true);
+  if not goal then
+    for nc in greatest(0,p_c-1)..least(16,p_c+1) loop
+      for nr in greatest(0,p_r-1)..least(10,p_r+1) loop
+        if abs(nc-p_c)+abs(nr-p_r)=1 then
+          from_key:=p_c||','||p_r;to_key:=nc||','||nr;
+          line_key:=least(from_key,to_key)||'|'||greatest(from_key,to_key);
+          if not (lines ? line_key) then can_move:=true; end if;
+        end if;
+      end loop;
+    end loop;
+    if not can_move then
+      score:=jsonb_set(score,array[(1-(st->>'turn')::integer)::text],to_jsonb((score->>(1-(st->>'turn')::integer))::integer+1),false);
+      st:=jsonb_set(st,'{score}',score,true);
+      st:=jsonb_set(st,'{over}','true'::jsonb,true);
+    end if;
+  end if;
+  update public.szs_soccer_rooms set state=st,updated_at=now() where room_code=g.room_code returning * into g;
+  return jsonb_build_object('state',g.state,'guest_joined',g.guest_joined,'updated_at',g.updated_at);
+end; $$;
+
+create or replace function public.szs_soccer_reset_room(p_room_code text,p_player_token text)
+returns jsonb language plpgsql security definer set search_path = ''
+as $$
+declare g public.szs_soccer_rooms; st jsonb;
+begin
+  select * into g from public.szs_soccer_rooms
+   where room_code=upper(p_room_code) and (host_token=p_player_token or (guest_joined and guest_token=p_player_token))
+   for update;
+  if not found then raise exception 'Nie znaleziono pokoju lub token gracza jest nieprawidłowy.'; end if;
+  if not g.guest_joined or not coalesce((g.state->>'over')::boolean,false) then
+    raise exception 'Rewanż można rozpocząć po zakończeniu meczu i dołączeniu obu graczy.';
+  end if;
+  st:=jsonb_build_object('lines','[]'::jsonb,'visits',jsonb_build_object('8,5',1),
+    'position',jsonb_build_object('c',8,'r',5),'turn',0,'started',true,'over',false,
+    'score',g.state->'score','history','[]'::jsonb);
+  update public.szs_soccer_rooms set state=st,updated_at=now() where room_code=g.room_code returning * into g;
+  return jsonb_build_object('state',g.state,'guest_joined',g.guest_joined,'updated_at',g.updated_at);
+end; $$;
+
+revoke all on function public.szs_soccer_create_room(text,text) from public;
+revoke all on function public.szs_soccer_join_room(text,text) from public;
+revoke all on function public.szs_soccer_get_room(text,text) from public;
+revoke all on function public.szs_soccer_move(text,text,integer,integer) from public;
+revoke all on function public.szs_soccer_reset_room(text,text) from public;
+grant execute on function public.szs_soccer_create_room(text,text) to anon,authenticated;
+grant execute on function public.szs_soccer_join_room(text,text) to anon,authenticated;
+grant execute on function public.szs_soccer_get_room(text,text) to anon,authenticated;
+grant execute on function public.szs_soccer_move(text,text,integer,integer) to anon,authenticated;
+grant execute on function public.szs_soccer_reset_room(text,text) to anon,authenticated;
+notify pgrst,'reload schema';
