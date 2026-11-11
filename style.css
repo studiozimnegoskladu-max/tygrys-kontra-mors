@@ -1780,3 +1780,7 @@ body.view-mors-zone #setup .mors-zone-drawer .morscup-league-panel{
 .attraction-card{overflow:hidden}
 @media(max-width:700px){.attraction-art{height:clamp(110px,30vw,160px);min-height:clamp(110px,30vw,160px)}.attraction-mascot{max-width:190px}}
 
+
+
+/* Wybór atrakcji — bez numeracji w narożnikach kafelków */
+.attraction-number{display:none!important}
