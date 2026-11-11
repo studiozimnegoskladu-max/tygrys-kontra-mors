@@ -583,6 +583,28 @@
     remoteCharacter=found;
     updateOnlineCharacters();render();
   }
+  function showAttractionsHome(){
+    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','soccer-fullscreen-open');
+    const cup=$('morsCupMusic'),background=$('backgroundMusic');
+    if(cup){cup.pause();cup.currentTime=0;}
+    if(typeof soccerMusicActive!=='undefined'&&soccerMusicActive){soccerMusicActive=false;if(musicOn&&background)startBackgroundMusic();}
+    $('soccerPlay')?.classList.add('hidden');
+    $('mors-zone-drawer')?.removeAttribute('open');
+    document.querySelector('.mors-zone-drawer')?.removeAttribute('open');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function openAttraction(which){
+    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune');
+    document.body.classList.add('view-'+which);
+    if(which==='soccer'||which==='fortune')document.querySelector('.mors-zone-drawer')?.setAttribute('open','');
+    window.scrollTo({top:0,behavior:'smooth'});
+    if(which==='soccer')document.querySelector('.soccer-game')?.scrollIntoView({behavior:'smooth',block:'start'});
+    if(which==='fortune')$('fortuneHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  $('openTicTacToe')?.addEventListener('click',()=>openAttraction('tictactoe'));
+  $('openSoccer')?.addEventListener('click',()=>openAttraction('soccer'));
+  $('openFortune')?.addEventListener('click',()=>openAttraction('fortune'));
+  $('attractionsBack')?.addEventListener('click',showAttractionsHome);
   function showGame(){resultOverlayDismissed=false;setup.classList.add('hidden');game.classList.remove('hidden');$('roomCode').textContent=room||'LOKALNIE';$('playerName').textContent=nick();if(mode==='online'){updateOnlineCharacters()}else{const ownCard=document.querySelector('.tiger-score');setScoreCharacter(ownCard,selectedCharacter);setScoreCharacter(document.querySelector('.mors-score'),'mors');}renderAchievements();newPrintBrief();}
   const printBriefs=[
     {title:'NA WCZORAJ, ALE TANIO',text:'Klient chce 5000 ulotek, projekt, druk i dostawę. Termin? Najlepiej 10 minut temu.'},
@@ -898,7 +920,7 @@
     }
     function startSoccerMusic(){const cup=$('morsCupMusic'),background=$('backgroundMusic');soccerMusicActive=true;if(background)background.pause();if(cup){cup.volume=.55;cup.loop=true;if(musicOn)cup.play().catch(()=>{});}}
     function stopSoccerMusic(){const cup=$('morsCupMusic'),background=$('backgroundMusic');soccerMusicActive=false;if(cup){cup.pause();cup.currentTime=0;}if(musicOn&&background)startBackgroundMusic();}
-    function exitSoccer(){document.body.classList.remove('soccer-fullscreen-open');stopSoccerMusic();soccerPlay.classList.add('hidden');$('soccerStart')?.classList.remove('hidden');$('soccerTrain')?.classList.remove('hidden');$('soccerTwoPlayers')?.classList.remove('hidden');}
+    function exitSoccer(){document.body.classList.remove('soccer-fullscreen-open');stopSoccerMusic();soccerPlay.classList.add('hidden');$('soccerStart')?.classList.remove('hidden');$('soccerTrain')?.classList.remove('hidden');$('soccerTwoPlayers')?.classList.remove('hidden');showAttractionsHome();}
     function startSoccer(vsMors){
       document.body.classList.add('soccer-fullscreen-open');
       startSoccerMusic();
@@ -1027,5 +1049,5 @@
   $('saveNameBtn').addEventListener('click',()=>{const n=$('nameInput').value.trim().slice(0,18);if(!n){say('Wpisz swój nick.');return}localStorage.setItem('tkm_nick',n);$('playerName').textContent=n;say('Nick zapisany na tym urządzeniu!')});$('nameInput').value=nick();
   if($('cpuDifficulty'))$('cpuDifficulty').value=cpuDifficulty;
   $('cpuDifficulty')?.addEventListener('change',e=>{cpuDifficulty=e.target.value;localStorage.setItem('tkm_cpu_difficulty',cpuDifficulty)});
-  const q=new URLSearchParams(location.search).get('room');if(q){$('roomInput').value=q.toUpperCase();if(configured())joinRoom(q)}if(!configured())say('Tryb online wymaga konfiguracji Supabase. Możesz jednak grać lokalnie lub z komputerem.');
+  const q=new URLSearchParams(location.search).get('room');if(q){document.body.classList.add('view-tictactoe');$('roomInput').value=q.toUpperCase();if(configured())joinRoom(q)}if(!configured())say('Tryb online wymaga konfiguracji Supabase. Możesz jednak grać lokalnie lub z komputerem.');
 })();
