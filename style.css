@@ -1052,6 +1052,7 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
 .soccer-board .paper-dot.available:focus{stroke:#ec268f;stroke-width:5;outline:none}
 .soccer-board .ball{fill:#ec268f;stroke:#211f20;stroke-width:2}
 .soccer-status{display:block;text-align:center;min-height:32px;padding:8px 3px;color:#555;font-weight:800;font-size:11px}
+.soccer-comment{position:relative;max-width:520px;margin:4px auto 12px;padding:10px 13px;border:2px solid var(--ink);border-radius:7px 13px 8px 11px;background:#fff2a8;box-shadow:3px 3px 0 var(--ink);font:900 15px/1.2 "Bangers","Barlow Condensed",cursive;letter-spacing:.35px;text-align:center;transform:rotate(-.5deg);color:var(--ink);min-height:39px;display:grid;place-items:center}.soccer-comment:before{content:"MORSOWY KOMENTARZ";position:absolute;left:8px;top:-9px;padding:2px 6px;background:var(--pink);border:1.5px solid var(--ink);font:900 8px "Barlow Condensed",sans-serif;letter-spacing:1px;transform:rotate(-2deg)}
 .soccer-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
 .soccer-actions .btn{font-size:11px;padding:9px 12px}
 .soccer-game .mini-game-copy{min-height:112px}
