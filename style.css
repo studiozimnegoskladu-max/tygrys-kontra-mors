@@ -1575,3 +1575,153 @@ body.view-mors-zone #setup .mors-zone-drawer>section{
 }
 body.view-mors-zone #setup .mors-zone-drawer>.fortune-panel{display:none!important}
 body.view-mors-zone #setup .mors-zone-drawer>summary{display:none!important}
+
+
+/* MORS CUP — poprawka pełnoekranowego meczu.
+   Karta gry miała transform/overflow, przez co position:fixed było
+   ograniczane do obróconej karty zamiast do całego ekranu. */
+body.soccer-fullscreen-open .soccer-game,
+body.soccer-fullscreen-open .soccer-game:hover{
+  transform:none!important;
+  overflow:visible!important;
+}
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden){
+  position:fixed!important;
+  inset:0!important;
+  z-index:10000!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:auto auto minmax(0,1fr) auto auto!important;
+  align-content:stretch!important;
+  justify-items:stretch!important;
+  align-items:stretch!important;
+  width:100vw!important;
+  width:100dvw!important;
+  height:100vh!important;
+  height:100dvh!important;
+  min-width:0!important;
+  min-height:0!important;
+  max-width:none!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom))!important;
+  gap:clamp(4px,1vh,9px)!important;
+  overflow:hidden!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  background:#fffdf4!important;
+}
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-score,
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-turn,
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-status,
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-actions{
+  width:100%!important;
+  max-width:1100px!important;
+  min-width:0!important;
+  margin:0 auto!important;
+  box-sizing:border-box!important;
+}
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-score{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:6px!important;
+}
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-score span{
+  min-width:0!important;
+  padding:5px 9px!important;
+  gap:5px!important;
+}
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-score b{
+  min-width:0!important;
+  font-size:clamp(11px,2vw,18px)!important;
+  overflow-wrap:anywhere!important;
+}
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-score strong{
+  font-size:clamp(19px,3vw,29px)!important;
+}
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-turn{
+  padding:7px 9px!important;
+  font-size:clamp(12px,1.7vw,19px)!important;
+  line-height:1.15!important;
+}
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-board{
+  display:block!important;
+  justify-self:center!important;
+  align-self:center!important;
+  width:min(100%,calc((100dvh - 205px)*16/9))!important;
+  max-width:100%!important;
+  height:auto!important;
+  max-height:100%!important;
+  min-height:0!important;
+  aspect-ratio:16/9!important;
+  flex:none!important;
+  margin:0 auto!important;
+  box-sizing:border-box!important;
+}
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-status{
+  min-height:0!important;
+  padding:2px 4px!important;
+  font-size:clamp(10px,1.2vw,14px)!important;
+  line-height:1.15!important;
+}
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-comment{
+  display:none!important;
+}
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-actions{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:6px!important;
+}
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-actions .btn{
+  width:100%!important;
+  min-width:0!important;
+  min-height:42px!important;
+  padding:7px 6px!important;
+  font-size:clamp(10px,1.3vw,14px)!important;
+  line-height:1.1!important;
+  white-space:normal!important;
+}
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) #soccerExit{
+  grid-column:1/-1!important;
+}
+@media(max-width:700px) and (orientation:portrait){
+  body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden){
+    padding-left:7px!important;
+    padding-right:7px!important;
+    gap:5px!important;
+  }
+  body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-board{
+    width:100%!important;
+    max-width:min(100%,calc((100dvh - 205px)*16/9))!important;
+  }
+  body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-score span{
+    padding:4px 5px!important;
+  }
+}
+@media(max-width:700px) and (orientation:landscape){
+  body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden){
+    padding:4px 7px!important;
+    gap:3px!important;
+  }
+  body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-board{
+    width:min(100%,calc((100dvh - 135px)*16/9))!important;
+  }
+  body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-turn{
+    padding:3px 6px!important;
+  }
+  body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-actions .btn{
+    min-height:34px!important;
+    padding:4px!important;
+  }
+}
+@media(max-height:480px){
+  body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-status{
+    display:none!important;
+  }
+  body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-board{
+    width:min(100%,calc((100dvh - 120px)*16/9))!important;
+  }
+}
