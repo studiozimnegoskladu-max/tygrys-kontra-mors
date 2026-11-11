@@ -1815,3 +1815,33 @@ body.view-mors-zone #setup .mors-zone-drawer .morscup-league-panel{
 .soccer-board circle.paper-dot.current{r:2.35!important;fill:#FFED00!important;stroke:#171717!important;stroke-width:1.15!important;opacity:1!important}
 .soccer-board circle.paper-dot.available{r:2.7!important;fill:#00AEEF!important;stroke:#171717!important;stroke-width:.9!important;opacity:1!important}
 .soccer-board circle.ball{r:4.6!important;fill:#EC008C!important;stroke:#171717!important;stroke-width:1.5!important}
+
+
+/* KOŁO FORTUNY — bez planszy kółko/krzyżyk, większe koło */
+body.view-fortune .shell>.hero{display:none!important}
+body.view-fortune .shell>#setup{display:block!important}
+body.view-fortune #setup .mors-zone-drawer>.fortune-panel{display:block!important}
+body.view-fortune .fortune-panel{padding:clamp(18px,3vw,32px)}
+body.view-fortune .fortune-wheel-stage{width:min(100%,500px)!important;margin:22px auto 18px!important}
+body.view-fortune .fortune-wheel{width:100%;height:100%}
+body.view-fortune .wheel-label-1{transform:translate(-50%,-50%) translateY(-170px)!important}
+body.view-fortune .wheel-label-2{transform:translate(-50%,-50%) rotate(45deg) translateY(-170px) rotate(-45deg)!important}
+body.view-fortune .wheel-label-3{transform:translate(-50%,-50%) rotate(90deg) translateY(-170px) rotate(-90deg)!important}
+body.view-fortune .wheel-label-4{transform:translate(-50%,-50%) rotate(135deg) translateY(-170px) rotate(-135deg)!important}
+body.view-fortune .wheel-label-5{transform:translate(-50%,-50%) rotate(180deg) translateY(-170px) rotate(-180deg)!important}
+body.view-fortune .wheel-label-6{transform:translate(-50%,-50%) rotate(225deg) translateY(-170px) rotate(-225deg)!important}
+body.view-fortune .wheel-label-7{transform:translate(-50%,-50%) rotate(270deg) translateY(-170px) rotate(-270deg)!important}
+body.view-fortune .wheel-label-8{transform:translate(-50%,-50%) rotate(315deg) translateY(-170px) rotate(-315deg)!important}
+body.view-fortune .fortune-hand{right:-38px;bottom:10px;width:112px}
+@media(max-width:600px){
+ body.view-fortune .fortune-wheel-stage{width:min(100%, min(88vw,390px))!important}
+ body.view-fortune .wheel-label-1{transform:translate(-50%,-50%) translateY(-132px)!important}
+ body.view-fortune .wheel-label-2{transform:translate(-50%,-50%) rotate(45deg) translateY(-132px) rotate(-45deg)!important}
+ body.view-fortune .wheel-label-3{transform:translate(-50%,-50%) rotate(90deg) translateY(-132px) rotate(-90deg)!important}
+ body.view-fortune .wheel-label-4{transform:translate(-50%,-50%) rotate(135deg) translateY(-132px) rotate(-135deg)!important}
+ body.view-fortune .wheel-label-5{transform:translate(-50%,-50%) rotate(180deg) translateY(-132px) rotate(-180deg)!important}
+ body.view-fortune .wheel-label-6{transform:translate(-50%,-50%) rotate(225deg) translateY(-132px) rotate(-225deg)!important}
+ body.view-fortune .wheel-label-7{transform:translate(-50%,-50%) rotate(270deg) translateY(-132px) rotate(-270deg)!important}
+ body.view-fortune .wheel-label-8{transform:translate(-50%,-50%) rotate(315deg) translateY(-132px) rotate(-315deg)!important}
+ body.view-fortune .fortune-hand{right:-16px;bottom:4px;width:82px}
+}
