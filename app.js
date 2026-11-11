@@ -791,6 +791,7 @@
 
     // MORS CUP — papierowe piłkarzyki, lokalny pojedynek dwóch osób na jednym ekranie.
     const soccerPlay=$('soccerPlay'),soccerBoard=$('soccerBoard'),soccerTurn=$('soccerTurn'),soccerStatus=$('soccerStatus');
+    let soccerVsMors=false,soccerAiTimer=null;
     const soccerRows=11,soccerCols=7,soccerX=c=>30+c*50,soccerY=r=>30+r*46;
     const soccerGoals={min:2,max:4};
     let soccer={lines:new Set(),visits:new Map(),position:{c:3,r:5},turn:0,started:false,over:false,score:[0,0],history:[]};
@@ -824,15 +825,38 @@
       const dots=[];for(let r=0;r<soccerRows;r++)for(let c=0;c<soccerCols;c++){const active=available.some(n=>n.c===c&&n.r===r),current=p.c===c&&p.r===r;dots.push('<circle class="paper-dot'+(current?' current':'')+(active?' available':'')+'" cx="'+soccerX(c)+'" cy="'+soccerY(r)+'" r="'+(active?9:current?8:3.2)+'" '+(active?'data-soccer-point="'+c+','+r+'" tabindex="0" role="button" aria-label="Ruch do pola '+(c+1)+', '+(r+1)+'"':'')+'/>')};
       soccerBoard.innerHTML='<rect class="goal-zone" x="80" y="0" width="200" height="30"/><rect class="goal-zone bottom" x="80" y="490" width="200" height="30"/><path class="field-line" d="M30 30H130 M230 30H330 M30 490H130 M230 490H330 M30 30V490H330V30 M30 260H330 M130 30V122H230V30 M130 490V398H230V490"/>'+lineMarkup+dots.join('')+'<circle class="ball" cx="'+soccerX(p.c)+'" cy="'+soccerY(p.r)+'" r="5.5"/>';
       $('soccerScoreOne').textContent=soccer.score[0];$('soccerScoreTwo').textContent=soccer.score[1];
-      $('soccerPlayerOne').textContent=soccerNames[0];$('soccerPlayerTwo').textContent=soccerNames[1];
+      $('soccerPlayerOne').textContent=soccerNames[0];$('soccerPlayerTwo').textContent=soccerVsMors?'TY':'HRABIA';
       soccerTurn.textContent=soccer.over?'KONIEC MECZU':soccer.started?'RUCH: '+soccerNames[soccer.turn]:'GOTOWI? ZACZYNAMY!';
     }
     function soccerNewRound(keepScore=true){
       const score=keepScore?soccer.score:[0,0];
-      soccer={lines:new Set(),visits:new Map([['3,5',1]]),position:{c:3,r:5},turn:Math.random()<.5?0:1,started:true,over:false,score,history:[]};
+      clearTimeout(soccerAiTimer);
+      soccer={lines:new Set(),visits:new Map([['3,5',1]]),position:{c:3,r:5},turn:soccerVsMors?1:Math.random()<.5?0:1,started:true,over:false,score,history:[]};
       soccerStatus.textContent='Start! Kliknij jedną z niebieskich kropek obok piłki.';
       soccerSay(keepScore?'reset':'start');
       soccerDraw();
+      if(soccerVsMors&&soccer.turn===0)soccerScheduleAi();
+    }
+    function soccerScheduleAi(){
+      clearTimeout(soccerAiTimer);
+      if(!soccerVsMors||!soccer.started||soccer.over||soccer.turn!==0)return;
+      soccerStatus.textContent='Mors myśli… podobno ma plan. 🦭';
+      soccerTurn.textContent='RUCH: MORS KOMBINUJE';
+      soccerAiTimer=setTimeout(()=>{
+        if(!soccerVsMors||soccer.over||soccer.turn!==0)return;
+        const moves=soccerNeighbors(soccer.position).filter(soccerCanMove);
+        if(!moves.length)return;
+        const level=$('cpuDifficulty')?.value||'normal';
+        const ranked=moves.map(m=>{
+          const goal=m.r===0&&m.c>=soccerGoals.min&&m.c<=soccerGoals.max;
+          const next=soccerNeighbors(m).filter(n=>!soccer.lines.has(soccerKey(m,n))&&!(n.c===soccer.position.c&&n.r===soccer.position.r)).length;
+          const progress=(soccer.position.r-m.r);
+          const center=3-Math.abs(3-m.c);
+          return {m,score:(goal?10000:0)+progress*(level==='hard'?5:level==='normal'?3:1)+next*(level==='hard'?1.5:1)+center*.2+Math.random()*(level==='easy'?8:level==='normal'?3:.5)};
+        }).sort((a,b)=>b.score-a.score);
+        const chosen=level==='easy'&&Math.random()<.45?moves[Math.floor(Math.random()*moves.length)]:ranked[0].m;
+        soccerMove(chosen);
+      },level==='hard'?420:level==='normal'?650:850);
     }
     function soccerMove(to){
       if(!soccer.started||soccer.over||!soccerCanMove(to))return;
@@ -848,8 +872,20 @@
       const possible=soccerNeighbors(soccer.position).some(n=>!soccer.lines.has(soccerKey(soccer.position,n)));
       if(!possible){soccer.over=true;soccer.score[1-soccer.turn]++;soccerStatus.textContent='ZABLOKOWANY! '+soccerNames[1-soccer.turn]+' wygrywa. Mors zamyka zeszyt.';soccerSay('blocked')}
       soccerDraw();
+      if(soccerVsMors&&soccer.turn===0)soccerScheduleAi();
     }
-    $('soccerStart')?.addEventListener('click',()=>{soccerPlay.classList.remove('hidden');$('soccerStart').classList.add('hidden');soccerNewRound(false)});
+    function startSoccer(vsMors){
+      soccerVsMors=!!vsMors;
+      soccerPlay.classList.remove('hidden');
+      $('soccerStart').classList.add('hidden');
+      $('soccerTrain')?.classList.add('hidden');
+      $('soccerTwoPlayers')?.classList.add('hidden');
+      $('soccerPlayerTwo').textContent=soccerVsMors?'TY':'HRABIA';
+      soccerNewRound(false);
+    }
+    $('soccerStart')?.addEventListener('click',()=>startSoccer(false));
+    $('soccerTrain')?.addEventListener('click',()=>startSoccer(true));
+    $('soccerTwoPlayers')?.addEventListener('click',()=>startSoccer(false));
     $('soccerReset')?.addEventListener('click',()=>soccerNewRound(true));
     $('soccerUndo')?.addEventListener('click',()=>{const last=soccer.history.pop();if(!last||soccer.over)return;soccer.lines.delete(last.line);soccer.position=last.from;soccer.turn=last.turn;const k=last.to.c+','+last.to.r,n=(soccer.visits.get(k)||1)-1;if(n<=0)soccer.visits.delete(k);else soccer.visits.set(k,n);soccerStatus.textContent='Cofnięto ostatnią kreskę. Mors udaje, że nic nie widział.';soccerSay('undo');soccerDraw()});
     soccerBoard?.addEventListener('click',e=>{const dot=e.target.closest('[data-soccer-point]');if(!dot)return;const [c,r]=dot.dataset.soccerPoint.split(',').map(Number);soccerMove({c,r})});
