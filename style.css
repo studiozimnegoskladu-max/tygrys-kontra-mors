@@ -1784,3 +1784,17 @@ body.view-mors-zone #setup .mors-zone-drawer .morscup-league-panel{
 
 /* Wybór atrakcji — bez numeracji w narożnikach kafelków */
 .attraction-number{display:none!important}
+
+
+/* MORS CUP — kreski jak odręczny zapis długopisem, paleta CMYK */
+.soccer-board .field-line{stroke:#242124;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;opacity:.76}
+.soccer-board .move-line{fill:none;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round;opacity:.96;filter:url(#pen-wobble)}
+.soccer-board .move-line.ink-cyan{stroke:#00AEEF}
+.soccer-board .move-line.ink-magenta{stroke:#EC008C}
+.soccer-board .move-line.ink-yellow{stroke:#E6C900}
+.soccer-board .move-line.ink-black{stroke:#171717}
+.soccer-board .paper-dot{r:0.78;fill:#28252a;stroke:none;opacity:.82}
+.soccer-board .paper-dot.current{r:2.15;fill:#fff200;stroke:#171717;stroke-width:1.15;opacity:1}
+.soccer-board .paper-dot.available{r:2.45;fill:#00AEEF;stroke:#171717;stroke-width:.9;opacity:1}
+.soccer-board .paper-dot.available:focus{stroke:#EC008C;stroke-width:1.8;outline:none}
+.soccer-board .ball{r:4.4;fill:#EC008C;stroke:#171717;stroke-width:1.5}
