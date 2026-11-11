@@ -1752,3 +1752,9 @@ body.view-mors-zone #setup .mors-zone-drawer .morscup-league-panel{
   position:relative;
   z-index:1;
 }
+
+
+/* Plansza pojawia się bezpośrednio pod kartami tworzenia/dołączania do pokoju. */
+.setup-panel.playing{padding-top:18px}
+.setup-panel.playing>:not(#game){display:none!important}
+.setup-panel.playing>#game{display:block!important;margin:0 auto 8px;scroll-margin-top:12px}
