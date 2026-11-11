@@ -795,6 +795,25 @@
     const soccerGoals={min:2,max:4};
     let soccer={lines:new Set(),visits:new Map(),position:{c:3,r:5},turn:0,started:false,over:false,score:[0,0],history:[]};
     const soccerNames=['MORS','HRABIA'];
+    const soccerCommentEl=$('soccerComment');
+    let soccerLastComment='';
+    const soccerCommentLines={
+      start:['Rozgrzewka zakończona. Płetwy gotowe, rozsądek zostawiony w szatni.','Proszę nie karmić piłki. Jest przed meczem.','Hrabia twierdzi, że ma taktykę. Mors widział tylko ketchup na planie.'],
+      move:['To nie był przypadek. To była geometria stosowana po morsowemu.','Piłka idzie tam, gdzie prowadzi ją przeznaczenie. Albo krzywa kreska.','Publiczność wstrzymała oddech. Jedna mewa nawet usiadła.','Taktyka jest prosta: kreska, oddech, panika.'],
+      bounce:['ODBICIE! Piłka wróciła. W przeciwieństwie do rozsądku.','Kreska odbita, honor uratowany. Na razie.','Mors nazywa to planem. Sędzia nazywa to bałaganem.'],
+      band:['BANDA! Piłka dostała drugą szansę. Nie zmarnuj jej, płetwo!','O bandę! To był zaplanowany manewr. Tak, oczywiście.','Piłka odbita. Hrabia właśnie udaje, że tak miało być.'],
+      goal:['GOOOL! Siatka drży, Mors świętuje, ryby składają gratulacje!','Trafienie idealne! Hrabia żąda analizy piksel po pikselu.','BRAMKA! Proszę odnotować, że piłka sama tam chciała.'],
+      blocked:['KONIEC! Zablokowany jak drukarka w poniedziałek rano.','Nie ma wyjścia. Mors zamyka zeszyt i otwiera lodówkę.','Blokada totalna! VAR sprawdza, czy winna była kreska czy charakter.'],
+      undo:['Cofamy! Mors twierdzi, że to była próba generalna.','Ruch skasowany. Świadkowie proszeni o milczenie.','Hrabia zgłosił sprzeciw wobec cofania rzeczywistości.'],
+      reset:['Nowy mecz, czysta kartka i te same złe nawyki.','Zaczynamy od zera. Mors już podejrzewa spisek.','Piłka na środku. Ambicje ogromne, kondycja papierowa.']
+    };
+    function soccerSay(kind){
+      const choices=soccerCommentLines[kind]||soccerCommentLines.move;
+      let line=choices[Math.floor(Math.random()*choices.length)];
+      if(choices.length>1)while(line===soccerLastComment)line=choices[Math.floor(Math.random()*choices.length)];
+      soccerLastComment=line;
+      if(soccerCommentEl)soccerCommentEl.textContent=(Math.random()<.5?'🦭 MORS: ':'🐯 HRABIA: ')+line;
+    }
     const soccerKey=(a,b)=>{const p=[a.c+','+a.r,b.c+','+b.r].sort();return p.join('|')};
     const soccerNeighbors=(p)=>{const out=[];for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){if(!dc&&!dr)continue;const c=p.c+dc,r=p.r+dr;if(c>=0&&c<soccerCols&&r>=0&&r<soccerRows)out.push({c,r})}return out};
     function soccerCanMove(to){return soccerNeighbors(soccer.position).some(p=>p.c===to.c&&p.r===to.r)&&!soccer.lines.has(soccerKey(soccer.position,to))}
@@ -812,6 +831,7 @@
       const score=keepScore?soccer.score:[0,0];
       soccer={lines:new Set(),visits:new Map([['3,5',1]]),position:{c:3,r:5},turn:Math.random()<.5?0:1,started:true,over:false,score,history:[]};
       soccerStatus.textContent='Start! Kliknij jedną z niebieskich kropek obok piłki.';
+      soccerSay(keepScore?'reset':'start');
       soccerDraw();
     }
     function soccerMove(to){
@@ -820,18 +840,18 @@
       soccer.history.push({from,to:{...to},turn:soccer.turn,line});
       soccer.lines.add(line);soccer.position={...to};
       const goal=(to.r===0||to.r===soccerRows-1)&&to.c>=soccerGoals.min&&to.c<=soccerGoals.max;
-      if(goal){soccer.score[soccer.turn]++;soccer.over=true;soccerStatus.textContent='GOOOL! '+soccerNames[soccer.turn]+' trafia do bramki! Mors żąda powtórki VAR z kałuży.';soccerDraw();return}
+      if(goal){soccer.score[soccer.turn]++;soccer.over=true;soccerStatus.textContent='GOOOL! '+soccerNames[soccer.turn]+' trafia do bramki! Mors żąda powtórki VAR z kałuży.';soccerSay('goal');soccerDraw();return}
       const edge=to.c===0||to.c===soccerCols-1||to.r===0||to.r===soccerRows-1;
       soccer.visits.set(to.c+','+to.r,prior+1);
-      if(prior>0||edge){soccerStatus.textContent=prior>0?'ODBICIE OD WŁASNEJ KRESKI! Grasz ponownie.':'BANDA! Piłka odbita — ten sam gracz gra dalej.'}
-      else{soccer.turn=1-soccer.turn;soccerStatus.textContent='Ruch przeciwnika. Nie oddawaj pola!'}
+      if(prior>0||edge){soccerStatus.textContent=prior>0?'ODBICIE OD WŁASNEJ KRESKI! Grasz ponownie.':'BANDA! Piłka odbita — ten sam gracz gra dalej.';soccerSay(prior>0?'bounce':'band')}
+      else{soccer.turn=1-soccer.turn;soccerStatus.textContent='Ruch przeciwnika. Nie oddawaj pola!';soccerSay('move')}
       const possible=soccerNeighbors(soccer.position).some(n=>!soccer.lines.has(soccerKey(soccer.position,n)));
-      if(!possible){soccer.over=true;soccer.score[1-soccer.turn]++;soccerStatus.textContent='ZABLOKOWANY! '+soccerNames[1-soccer.turn]+' wygrywa. Mors zamyka zeszyt.'}
+      if(!possible){soccer.over=true;soccer.score[1-soccer.turn]++;soccerStatus.textContent='ZABLOKOWANY! '+soccerNames[1-soccer.turn]+' wygrywa. Mors zamyka zeszyt.';soccerSay('blocked')}
       soccerDraw();
     }
     $('soccerStart')?.addEventListener('click',()=>{soccerPlay.classList.remove('hidden');$('soccerStart').classList.add('hidden');soccerNewRound(false)});
     $('soccerReset')?.addEventListener('click',()=>soccerNewRound(true));
-    $('soccerUndo')?.addEventListener('click',()=>{const last=soccer.history.pop();if(!last||soccer.over)return;soccer.lines.delete(last.line);soccer.position=last.from;soccer.turn=last.turn;const k=last.to.c+','+last.to.r,n=(soccer.visits.get(k)||1)-1;if(n<=0)soccer.visits.delete(k);else soccer.visits.set(k,n);soccerStatus.textContent='Cofnięto ostatnią kreskę. Mors udaje, że nic nie widział.';soccerDraw()});
+    $('soccerUndo')?.addEventListener('click',()=>{const last=soccer.history.pop();if(!last||soccer.over)return;soccer.lines.delete(last.line);soccer.position=last.from;soccer.turn=last.turn;const k=last.to.c+','+last.to.r,n=(soccer.visits.get(k)||1)-1;if(n<=0)soccer.visits.delete(k);else soccer.visits.set(k,n);soccerStatus.textContent='Cofnięto ostatnią kreskę. Mors udaje, że nic nie widział.';soccerSay('undo');soccerDraw()});
     soccerBoard?.addEventListener('click',e=>{const dot=e.target.closest('[data-soccer-point]');if(!dot)return;const [c,r]=dot.dataset.soccerPoint.split(',').map(Number);soccerMove({c,r})});
     soccerBoard?.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const dot=e.target.closest('[data-soccer-point]');if(!dot)return;e.preventDefault();const [c,r]=dot.dataset.soccerPoint.split(',').map(Number);soccerMove({c,r})});
     soccerDraw();
