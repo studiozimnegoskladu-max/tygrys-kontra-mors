@@ -922,7 +922,7 @@
     function soccerCanMove(to){return soccerNeighbors(soccer.position).some(p=>p.c===to.c&&p.r===to.r)&&!soccer.lines.has(soccerKey(soccer.position,to))}
     function soccerDraw(){
       if(!soccerBoard)return;
-      const p=soccer.position,available=soccer.started&&!soccer.over?soccerNeighbors(p).filter(n=>soccerCanMove(n)):[];
+      const p=soccer.position,available=soccer.started&&!soccer.over&&(!soccerOnline||soccerOnlineRole===soccer.turn)&&!soccerOnlineBusy?soccerNeighbors(p).filter(n=>soccerCanMove(n)):[];
       const lineMarkup=[...soccer.lines].map(key=>{const [a,b]=key.split('|'),[ac,ar]=a.split(',').map(Number),[bc,br]=b.split(',').map(Number);return '<line class="field-line" x1="'+soccerX(ac)+'" y1="'+soccerY(ar)+'" x2="'+soccerX(bc)+'" y2="'+soccerY(br)+'"/>'}).join('');
       const dots=[];for(let r=0;r<soccerRows;r++)for(let c=0;c<soccerCols;c++){const active=available.some(n=>n.c===c&&n.r===r),current=p.c===c&&p.r===r;dots.push('<circle class="paper-dot'+(current?' current':'')+(active?' available':'')+'" cx="'+soccerX(c)+'" cy="'+soccerY(r)+'" r="'+(active?3.1:current?2.8:1.25)+'" '+(active?'data-soccer-point="'+c+','+r+'" tabindex="0" role="button" aria-label="Ruch do pola '+(c+1)+', '+(r+1)+'"':'')+'/>')};
       soccerBoard.innerHTML='<rect class="goal-zone" x="145" y="0" width="45" height="8"/><rect class="goal-zone bottom" x="145" y="168" width="45" height="12"/><path class="field-line" d="M40 8H145 M190 8H280 M40 168H145 M190 168H280 M40 8V168H280V8 M40 88H280 M100 8V40H220V8 M100 168V136H220V168"/>'+lineMarkup+dots.join('')+'<circle class="ball" cx="'+soccerX(p.c)+'" cy="'+soccerY(p.r)+'" r="5.5"/>';
@@ -931,6 +931,7 @@
       soccerTurn.textContent=soccer.over?'KONIEC MECZU':soccer.started?'RUCH: '+soccerName(soccer.turn):'GOTOWI? ZACZYNAMY!';
     }
     function soccerNewRound(keepScore=true){
+      if(soccerOnline){soccerOnlineReset();return}
       const score=keepScore?soccer.score:[0,0];
       clearTimeout(soccerAiTimer);
       soccer={lines:new Set(),visits:new Map([['8,5',1]]),position:{c:8,r:5},turn:soccerVsMors?1:Math.random()<.5?0:1,started:true,over:false,score,history:[]};
@@ -961,6 +962,7 @@
       },level==='hard'?420:level==='normal'?650:850);
     }
     function soccerMove(to){
+      if(soccerOnline){soccerOnlineMove(to);return}
       if(!soccer.started||soccer.over||!soccerCanMove(to))return;
       const from={...soccer.position},line=soccerKey(from,to),prior=soccer.visits.get(to.c+','+to.r)||0;
       soccer.history.push({from,to:{...to},turn:soccer.turn,line});
@@ -978,7 +980,7 @@
     }
     function startSoccerMusic(){const cup=$('morsCupMusic'),background=$('backgroundMusic');soccerMusicActive=true;if(background)background.pause();if(cup){cup.volume=.55;cup.loop=true;if(musicOn)cup.play().catch(()=>{});}}
     function stopSoccerMusic(){const cup=$('morsCupMusic'),background=$('backgroundMusic');soccerMusicActive=false;if(cup){cup.pause();cup.currentTime=0;}if(musicOn&&background)startBackgroundMusic();}
-    function exitSoccer(){document.body.classList.remove('soccer-fullscreen-open');stopSoccerMusic();soccerPlay.classList.add('hidden');$('soccerStart')?.classList.remove('hidden');$('soccerTrain')?.classList.remove('hidden');$('soccerTwoPlayers')?.classList.remove('hidden');showAttractionsHome();}
+    function exitSoccer(){if(soccerOnline)soccerLeaveOnline();document.body.classList.remove('soccer-fullscreen-open');stopSoccerMusic();soccerPlay.classList.add('hidden');$('soccerOnlineLobby')?.classList.add('hidden');$('soccerStart')?.classList.remove('hidden');$('soccerTrain')?.classList.remove('hidden');$('soccerTwoPlayers')?.classList.remove('hidden');$('soccerOnlineStart')?.classList.remove('hidden');showAttractionsHome();}
     function startSoccer(vsMors){
       document.body.classList.add('soccer-fullscreen-open');
       startSoccerMusic();
@@ -990,12 +992,132 @@
       $('soccerPlayerTwo').textContent=soccerVsMors?'TY':'HRABIA';
       soccerNewRound(false);
     }
+
+    // Pojedynek online Mors Cup — serwer jest jedynym źródłem prawdy o ruchach.
+    let soccerOnline=false,soccerOnlineRole=null,soccerOnlineRoom=null,soccerOnlineToken=null,soccerOnlinePoll=null,soccerOnlineBusy=false;
+    const soccerOnlineMessage=$('soccerOnlineMessage');
+    const soccerOnlineNote=(message)=>{if(soccerOnlineMessage)soccerOnlineMessage.textContent=message};
+    const soccerOnlineCode=()=>Array.from(crypto.getRandomValues(new Uint8Array(8)),b=>'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'[b%36]).join('');
+    const soccerToken=()=>crypto.randomUUID?crypto.randomUUID():('szs-'+Date.now()+'-'+Math.random().toString(36).slice(2));
+    function soccerApplyOnline(payload){
+      const data=Array.isArray(payload)?payload[0]:payload;
+      const state=data?.state||data;
+      if(!state||!state.position)throw Error('Serwer zwrócił niepełny stan meczu.');
+      soccer.lines=new Set(state.lines||[]);
+      soccer.visits=new Map(Object.entries(state.visits||{}).map(([k,v])=>[k,Number(v)]));
+      soccer.position={c:Number(state.position.c),r:Number(state.position.r)};
+      soccer.turn=Number(state.turn)||0;soccer.started=state.started!==false;soccer.over=!!state.over;
+      soccer.score=Array.isArray(state.score)?state.score.map(Number):[0,0];
+      soccer.history=Array.isArray(state.history)?state.history:[];
+      soccerOnlineNote(data.guest_joined?'Przeciwnik dołączył. Mecz trwa!':'Pokój gotowy — czekamy na drugiego gracza…');
+      $('soccerPlayerOne').textContent='MORS / GRACZ 1';
+      $('soccerPlayerTwo').textContent='HRABIA / GRACZ 2';
+      $('soccerUndo').disabled=true;
+      soccerDraw();
+      if(!data.guest_joined&&!soccerOnlineRole)soccerTurn.textContent='OCZEKIWANIE NA PRZECIWNIKA…';
+      else if(!data.guest_joined&&soccerOnlineRole===0)soccerTurn.textContent='POKÓJ OTWARTY — CZEKA NA GOŚCIA';
+      else if(!soccer.over)soccerTurn.textContent=soccer.turn===soccerOnlineRole?'TWOJA KOLEJ!':'RUCH PRZECIWNIKA…';
+      if(soccer.over)soccerTurn.textContent='KONIEC MECZU — '+(soccer.score[0]>soccer.score[1]?'WYGRYWA GRACZ 1':soccer.score[1]>soccer.score[0]?'WYGRYWA GRACZ 2':'REMIS');
+    }
+    async function soccerOnlineGet(){
+      const {data,error}=await client.rpc('szs_soccer_get_room',{p_room_code:soccerOnlineRoom,p_player_token:soccerOnlineToken});
+      if(error)throw error;soccerApplyOnline(data);
+    }
+    function soccerOnlineStartPolling(){
+      if(soccerOnlinePoll)clearInterval(soccerOnlinePoll);
+      soccerOnlinePoll=setInterval(async()=>{
+        if(!soccerOnline||soccerOnlineBusy||document.hidden)return;
+        try{await soccerOnlineGet()}catch(e){soccerOnlineNote('Problem z synchronizacją: '+(e.message||'sprawdź połączenie'))}
+      },1300);
+    }
+    async function soccerOnlineCreate(){
+      if(!connect())return;
+      const button=$('soccerCreateRoom');button.disabled=true;soccerOnlineNote('Tworzę pokój…');
+      try{
+        soccerOnlineRoom=soccerOnlineCode();soccerOnlineToken=soccerToken();soccerOnlineRole=0;
+        localStorage.setItem('szs_soccer_host_'+soccerOnlineRoom,soccerOnlineToken);
+        const {data,error}=await client.rpc('szs_soccer_create_room',{p_room_code:soccerOnlineRoom,p_host_token:soccerOnlineToken});
+        if(error)throw error;
+        soccerOnline=true;soccerVsMors=false;soccerApplyOnline(data);
+        $('soccerRoomCode').textContent=soccerOnlineRoom;$('soccerRoomCreated').classList.remove('hidden');
+        soccerOnlineNote('Pokój utworzony. Wyślij kod lub link przeciwnikowi.');
+        history.replaceState({},'',location.pathname+'?soccer='+soccerOnlineRoom);
+        soccerShowOnlineGame();soccerOnlineStartPolling();
+      }catch(e){soccerOnlineNote('Nie udało się utworzyć pokoju: '+(e.message||'błąd połączenia'))}
+      finally{button.disabled=false}
+    }
+    async function soccerOnlineJoin(code){
+      if(!connect())return;
+      code=(code||'').trim().toUpperCase();
+      if(!/^[A-Z0-9]{8}$/.test(code)){soccerOnlineNote('Wpisz prawidłowy 8-znakowy kod meczu.');return}
+      const button=$('soccerJoinRoom');if(button)button.disabled=true;soccerOnlineNote('Dołączam do meczu…');
+      try{
+        soccerOnlineRoom=code;
+        soccerOnlineToken=localStorage.getItem('szs_soccer_guest_'+code)||soccerToken();
+        localStorage.setItem('szs_soccer_guest_'+code,soccerOnlineToken);
+        soccerOnlineRole=1;
+        const {data,error}=await client.rpc('szs_soccer_join_room',{p_room_code:code,p_guest_token:soccerOnlineToken});
+        if(error)throw error;
+        soccerOnline=true;soccerVsMors=false;soccerApplyOnline(data);
+        history.replaceState({},'',location.pathname+'?soccer='+code);
+        soccerShowOnlineGame();soccerOnlineStartPolling();
+      }catch(e){soccerOnlineNote('Nie udało się dołączyć: '+(e.message||'sprawdź kod pokoju'))}
+      finally{if(button)button.disabled=false}
+    }
+    function soccerShowOnlineGame(){
+      document.body.classList.add('soccer-fullscreen-open');startSoccerMusic();
+      soccerPlay.classList.remove('hidden');$('soccerOnlineLobby').classList.add('hidden');
+      $('soccerStart')?.classList.add('hidden');$('soccerTrain')?.classList.add('hidden');$('soccerTwoPlayers')?.classList.add('hidden');$('soccerOnlineStart')?.classList.add('hidden');
+      $('soccerExit').textContent='OPUŚĆ MECZ ↩';soccerDraw();
+    }
+    async function soccerOnlineMove(to){
+      if(soccerOnlineBusy||soccer.over||soccerOnlineRole!==soccer.turn)return;
+      soccerOnlineBusy=true;soccerOnlineNote('Zapisuję ruch…');
+      try{
+        const {data,error}=await client.rpc('szs_soccer_move',{p_room_code:soccerOnlineRoom,p_player_token:soccerOnlineToken,p_c:to.c,p_r:to.r});
+        if(error)throw error;soccerApplyOnline(data);soccerOnlineNote('Ruch zapisany — plansza zsynchronizowana.');
+      }catch(e){soccerOnlineNote('Ruch nie został zapisany: '+(e.message||'spróbuj ponownie'));try{await soccerOnlineGet()}catch{}}
+      finally{soccerOnlineBusy=false;soccerDraw()}
+    }
+    async function soccerOnlineReset(){
+      if(soccerOnlineBusy||!soccer.over)return;
+      soccerOnlineBusy=true;soccerOnlineNote('Przygotowuję rewanż…');
+      try{const {data,error}=await client.rpc('szs_soccer_reset_room',{p_room_code:soccerOnlineRoom,p_player_token:soccerOnlineToken});if(error)throw error;soccerApplyOnline(data)}
+      catch(e){soccerOnlineNote('Nie udało się rozpocząć rewanżu: '+(e.message||''))}
+      finally{soccerOnlineBusy=false}
+    }
+    function soccerLeaveOnline(){
+      if(soccerOnlinePoll){clearInterval(soccerOnlinePoll);soccerOnlinePoll=null}
+      soccerOnline=false;soccerOnlineRole=null;soccerOnlineRoom=null;soccerOnlineToken=null;soccerOnlineBusy=false;
+      $('soccerUndo').disabled=false;$('soccerExit').textContent='WRÓĆ DO MENU ↩';
+      $('soccerRoomCreated').classList.add('hidden');$('soccerOnlineStart')?.classList.remove('hidden');
+      history.replaceState({},'',location.pathname);
+    }
+    $('soccerOnlineStart')?.addEventListener('click',()=>{
+      $('soccerTrain')?.classList.add('hidden');$('soccerTwoPlayers')?.classList.add('hidden');$('soccerOnlineStart')?.classList.add('hidden');
+      $('soccerOnlineLobby').classList.remove('hidden');soccerOnlineNote('Utwórz nowy pokój albo dołącz, wpisując kod od przeciwnika.');
+    });
+    $('soccerCreateRoom')?.addEventListener('click',soccerOnlineCreate);
+    $('soccerJoinRoom')?.addEventListener('click',()=>soccerOnlineJoin($('soccerRoomInput').value));
+    $('soccerRoomInput')?.addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));
+    $('soccerRoomInput')?.addEventListener('keydown',e=>{if(e.key==='Enter')soccerOnlineJoin(e.target.value)});
+    $('soccerCopyInvite')?.addEventListener('click',async()=>{
+      const url=location.origin+location.pathname+'?soccer='+soccerOnlineRoom;
+      try{await navigator.clipboard.writeText(url);soccerOnlineNote('Link skopiowany. Wyślij go przeciwnikowi!')}
+      catch{prompt('Skopiuj link do meczu:',url)}
+    });
+    $('soccerLobbyBack')?.addEventListener('click',()=>{
+      $('soccerOnlineLobby').classList.add('hidden');$('soccerTrain')?.classList.remove('hidden');$('soccerTwoPlayers')?.classList.remove('hidden');$('soccerOnlineStart')?.classList.remove('hidden');
+    });
+    const soccerInvite=new URLSearchParams(location.search).get('soccer');
+    if(soccerInvite){$('soccerOnlineLobby').classList.remove('hidden');$('soccerTrain')?.classList.add('hidden');$('soccerTwoPlayers')?.classList.add('hidden');$('soccerOnlineStart')?.classList.add('hidden');$('soccerRoomInput').value=soccerInvite.toUpperCase();soccerOnlineJoin(soccerInvite)}
+
     $('soccerStart')?.addEventListener('click',()=>startSoccer(false));
     $('soccerTrain')?.addEventListener('click',()=>startSoccer(true));
     $('soccerTwoPlayers')?.addEventListener('click',()=>startSoccer(false));
     $('soccerReset')?.addEventListener('click',()=>soccerNewRound(true));
     $('soccerExit')?.addEventListener('click',exitSoccer);
-    $('soccerUndo')?.addEventListener('click',()=>{const last=soccer.history.pop();if(!last||soccer.over)return;soccer.lines.delete(last.line);soccer.position=last.from;soccer.turn=last.turn;const k=last.to.c+','+last.to.r,n=(soccer.visits.get(k)||1)-1;if(n<=0)soccer.visits.delete(k);else soccer.visits.set(k,n);soccerStatus.textContent='Cofnięto ostatnią kreskę. Mors udaje, że nic nie widział.';soccerSay('undo');soccerDraw();if(soccerVsMors&&soccer.turn===0)soccerScheduleAi()});
+    $('soccerUndo')?.addEventListener('click',()=>{if(soccerOnline)return;const last=soccer.history.pop();if(!last||soccer.over)return;soccer.lines.delete(last.line);soccer.position=last.from;soccer.turn=last.turn;const k=last.to.c+','+last.to.r,n=(soccer.visits.get(k)||1)-1;if(n<=0)soccer.visits.delete(k);else soccer.visits.set(k,n);soccerStatus.textContent='Cofnięto ostatnią kreskę. Mors udaje, że nic nie widział.';soccerSay('undo');soccerDraw();if(soccerVsMors&&soccer.turn===0)soccerScheduleAi()});
     soccerBoard?.addEventListener('click',e=>{const dot=e.target.closest('[data-soccer-point]');if(!dot)return;const [c,r]=dot.dataset.soccerPoint.split(',').map(Number);soccerMove({c,r})});
     soccerBoard?.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const dot=e.target.closest('[data-soccer-point]');if(!dot)return;e.preventDefault();const [c,r]=dot.dataset.soccerPoint.split(',').map(Number);soccerMove({c,r})});
     soccerDraw();
