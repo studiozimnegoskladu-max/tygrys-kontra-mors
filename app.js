@@ -1,6 +1,10 @@
 (() => {
   const $ = id => document.getElementById(id);
   const setup=$('setup'), game=$('game'), msg=$('setupMessage');
+  // Krytyczny przycisk pokoju podpinamy od razu, zanim uruchomią się dodatki strony.
+  window.addEventListener('error',e=>{if(msg)msg.textContent='Błąd aplikacji: '+(e.message||'sprawdź konsolę przeglądarki')});
+  window.addEventListener('unhandledrejection',e=>{if(msg)msg.textContent='Błąd aplikacji: '+(e.reason?.message||String(e.reason||'nieznany błąd'))});
+  $('createBtn')?.addEventListener('click',()=>{createRoom().catch(e=>{console.error('Nieobsłużony błąd tworzenia pokoju:',e);if(msg)msg.textContent='Błąd tworzenia pokoju: '+(e?.message||String(e))})});
   const cells=[...document.querySelectorAll('.cell')];
   const TIGER='tiger', MORS='mors';
   const CHARACTER_EMOJI={};
@@ -842,7 +846,7 @@
   document.querySelectorAll('input[name="mySide"]').forEach(r=>r.addEventListener('change',()=>{document.querySelectorAll('.side-option').forEach(el=>el.classList.toggle('selected',el.querySelector('input').checked));}));
   applyCanonicalCharacterAssets();
   renderSelectedCharacterPreview();
-  $('createBtn').addEventListener('click',createRoom);$('joinBtn').addEventListener('click',()=>joinRoom($('roomInput').value));$('roomInput').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom(e.target.value)});$('roomInput').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));cells.forEach(c=>c.addEventListener('click',()=>move(+c.dataset.cell)));$('newRoundBtn').addEventListener('click',newRound);$('newMatchBtn').addEventListener('click',()=>{if(mode==='online'){say('Nowy turniej rozpocznijcie po uzgodnieniu z przeciwnikiem.');return}scores={tiger:0,mors:0};seriesWinner=null;resultOverlayDismissed=false;roundId=makeRoundId();current=fresh();commentary('tiger');render();});
+  $('joinBtn').addEventListener('click',()=>joinRoom($('roomInput').value));$('roomInput').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom(e.target.value)});$('roomInput').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));cells.forEach(c=>c.addEventListener('click',()=>move(+c.dataset.cell)));$('newRoundBtn').addEventListener('click',newRound);$('newMatchBtn').addEventListener('click',()=>{if(mode==='online'){say('Nowy turniej rozpocznijcie po uzgodnieniu z przeciwnikiem.');return}scores={tiger:0,mors:0};seriesWinner=null;resultOverlayDismissed=false;roundId=makeRoundId();current=fresh();commentary('tiger');render();});
   $('shareInviteBtn')?.addEventListener('click',()=>shareOnFacebook('Rzucam Ci wyzwanie! Wybierz swoją maskotkę i spróbuj mnie pokonać w Kółko, Krzyżyk i Dwa Promile Absurdu. 🐯🦭'));
   $('copyLeadBtn')?.addEventListener('click',copyLeadMessage);
   $('morsMessengerBtn')?.addEventListener('click',e=>{e.preventDefault();contactMors()});
