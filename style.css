@@ -1,4 +1,3 @@
-@font-face{font-family:'MsPaintMouse';src:url('assets/MsPaintMouse-Regular.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Bangers&family=Nunito:wght@600;700;800;900&display=swap');
 :root{--yellow:#ffe600;--ink:#211f20;--pink:#e52d83;--blue:#12a8d3;--paper:#fffdf4}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Nunito,Arial,sans-serif;min-height:100vh;overflow-x:hidden}
@@ -1079,8 +1078,3 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
 .soccer-play::after{content:'MORS CUP!  •  HEJ! HEJ! HEJ!';position:absolute;right:12px;bottom:9px;z-index:0;pointer-events:none;font:900 10px 'Barlow Condensed',sans-serif;letter-spacing:2px;color:#211f20;opacity:.13;transform:rotate(-3deg)}
 .soccer-play>*{position:relative;z-index:1}
 
-/* Pismo Morsa — jego własny, odręczny charakter */
-.mors-journal-entry h3,.mors-journal-entry>p,.mors-journal-challenge p,.soccer-play::after{font-family:'MsPaintMouse','Comic Sans MS',cursive;font-weight:400;letter-spacing:0;}
-.mors-journal-entry h3{font-size:clamp(22px,3.2vw,32px);line-height:1.12}
-.mors-journal-entry>p{font-size:clamp(17px,2vw,20px);line-height:1.4}
-.mors-journal-challenge p{font-size:16px;line-height:1.35}
