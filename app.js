@@ -877,8 +877,9 @@
     }
     function startSoccerMusic(){const cup=$('morsCupMusic'),background=$('backgroundMusic');soccerMusicActive=true;if(background)background.pause();if(cup){cup.volume=.55;cup.loop=true;if(musicOn)cup.play().catch(()=>{});}}
     function stopSoccerMusic(){const cup=$('morsCupMusic'),background=$('backgroundMusic');soccerMusicActive=false;if(cup){cup.pause();cup.currentTime=0;}if(musicOn&&background)startBackgroundMusic();}
-    function exitSoccer(){stopSoccerMusic();soccerPlay.classList.add('hidden');$('soccerStart')?.classList.remove('hidden');$('soccerTrain')?.classList.remove('hidden');$('soccerTwoPlayers')?.classList.remove('hidden');}
+    function exitSoccer(){document.body.classList.remove('soccer-fullscreen-open');stopSoccerMusic();soccerPlay.classList.add('hidden');$('soccerStart')?.classList.remove('hidden');$('soccerTrain')?.classList.remove('hidden');$('soccerTwoPlayers')?.classList.remove('hidden');}
     function startSoccer(vsMors){
+      document.body.classList.add('soccer-fullscreen-open');
       startSoccerMusic();
       soccerVsMors=!!vsMors;
       soccerPlay.classList.remove('hidden');
