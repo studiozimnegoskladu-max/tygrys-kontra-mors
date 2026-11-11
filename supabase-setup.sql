@@ -102,21 +102,31 @@ begin
 end;
 $$;
 
+-- Identyfikator drugiego gracza pozwala bezpiecznie ponowić wejście
+-- po utracie połączenia, ale nie wpuszcza trzeciej osoby do zajętego pokoju.
+alter table public.game_sessions add column if not exists guest_token text;
+drop function if exists public.szs_join_room(text);
 create or replace function public.szs_join_room(
-  p_room_code text
+  p_room_code text,
+  p_guest_token text
 ) returns public.game_sessions
 language plpgsql
 security definer
 set search_path = public
-as $$
+as $
 declare
   joined public.game_sessions;
 begin
+  if p_guest_token is null or length(trim(p_guest_token)) < 8 then
+    raise exception 'Brak identyfikatora gracza. Odśwież stronę i spróbuj ponownie.';
+  end if;
+
   update public.game_sessions
-     set guest_joined = true
+     set guest_joined = true,
+         guest_token = p_guest_token
    where room_code = upper(p_room_code)
-     and guest_joined = false
      and status = 'playing'
+     and (guest_joined = false or guest_token = p_guest_token)
   returning * into joined;
 
   if not found then
@@ -124,7 +134,7 @@ begin
   end if;
   return joined;
 end;
-$$;
+$;
 
 create or replace function public.szs_make_move(
   p_room_code text,
@@ -228,11 +238,11 @@ end;
 $$;
 
 revoke all on function public.szs_create_room(text,text) from public;
-revoke all on function public.szs_join_room(text) from public;
+revoke all on function public.szs_join_room(text,text) from public;
 revoke all on function public.szs_make_move(text,text,integer) from public;
 revoke all on function public.szs_restart_room(text,text) from public;
 grant execute on function public.szs_create_room(text,text) to anon, authenticated;
-grant execute on function public.szs_join_room(text) to anon, authenticated;
+grant execute on function public.szs_join_room(text,text) to anon, authenticated;
 grant execute on function public.szs_make_move(text,text,integer) to anon, authenticated;
 grant execute on function public.szs_restart_room(text,text) to anon, authenticated;
 
