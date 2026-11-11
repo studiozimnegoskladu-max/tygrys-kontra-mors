@@ -832,7 +832,7 @@
     function soccerNewRound(keepScore=true){
       const score=keepScore?soccer.score:[0,0];
       clearTimeout(soccerAiTimer);
-      soccer={lines:new Set(),visits:new Map([['3,5',1]]),position:{c:8,r:5},turn:soccerVsMors?1:Math.random()<.5?0:1,started:true,over:false,score,history:[]};
+      soccer={lines:new Set(),visits:new Map([['8,5',1]]),position:{c:8,r:5},turn:soccerVsMors?1:Math.random()<.5?0:1,started:true,over:false,score,history:[]};
       soccerStatus.textContent='Start! Kliknij jedną z niebieskich kropek obok piłki.';
       soccerSay(keepScore?'reset':'start');
       soccerDraw();
