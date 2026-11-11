@@ -83,7 +83,28 @@
     {title:'Mors na urlopie',text:'Ogłaszam urlop od obowiązków. Będę odpoczywać aktywnie, czyli leżeć w innym miejscu niż zwykle. Proszę nie przeszkadzać.',challenge:'Zagraj jedną szybką partię. Urlop od nudy nie obowiązuje.',mood:'DZIAŁ WYPRAWKOWY'}
   ];
   const journalDate=(offset=0)=>{const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-offset);return d};
-  const journalIndex=(date)=>{const utc=Math.floor(Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())/86400000);const start=Math.floor(Date.UTC(2026,0,1)/86400000);return ((utc-start)%morsJournalEntries.length+morsJournalEntries.length)%morsJournalEntries.length};
+  const journalDayNumber=(date)=>Math.floor((Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())-Date.UTC(2026,0,1))/86400000);
+  const journalIndex=(date)=>{const n=journalDayNumber(date);return ((n%morsJournalEntries.length)+morsJournalEntries.length)%morsJournalEntries.length};
+  function generateMorsJournalEntry(date){
+    const day=journalDayNumber(date);
+    let seed=(day+1)*2654435761>>>0;
+    const pick=(items)=>{seed=(seed*1664525+1013904223)>>>0;return items[seed%items.length]};
+    const subjects=['drukarka','ryba','kawa','Hrabia Poprawek','lodówka','projekt','plansza','poniedziałek','płetwa','klient','piksel','spinacz'];
+    const actions=['złożyła wypowiedzenie','zniknęła bez śladu','zażądała urlopu','weszła w tryb artystyczny','ogłosiła stan wyjątkowy','odmówiła współpracy','zaczęła podejrzanie mrugać','przeszła na dietę z tuszu'];
+    const places=['w dziale kreatywnym','na zapleczu drukarni','pod lodem','w Morsowym Parku Absurdu','na samym środku planszy','w kolejce po święty spokój','w archiwum nieudanych pomysłów'];
+    const reactions=['Nie panikowałem. Najpierw zrobiłem minę eksperta, a potem zapytałem, czy ktoś widział moją rybę.','Zwołałem komisję. Byłem ja, moje odbicie i bardzo niezadowolona kanapka.','Hrabia zaproponował trzy poprawki. Wprowadziłem czwartą: zamknąłem notes.','Uznałem, że to znak. Nie wiem czego, ale wyglądał profesjonalnie.','W raporcie wpisałem: sytuacja pod kontrolą. Raport sam uciekł.','Przez chwilę chciałem zareagować rozsądnie, ale nie miałem przy sobie odpowiedniego formularza.','Wszyscy patrzyli na mnie. Ja patrzyłem na rybę. Ryba zachowała się najbardziej dojrzale.'];
+    const endings=['Wniosek? Nie każda katastrofa jest porażką. Niektóre są po prostu bardzo głośne.','Od dziś wprowadzam nową zasadę: najpierw ryba, potem decyzje.','Sprawa pozostaje otwarta, głównie dlatego, że zgubiłem klucz do szuflady.','Zapisałem to w dzienniku. Dziennik poprosił o przeniesienie.','Jutro przeprowadzę dalsze badania. Chyba że będzie drzemka.'];
+    const challenges=['Zagraj dziś jedną rundę i rzuć wyzwanie komuś, kto za bardzo wierzy we własne umiejętności.','Odwiedź Morsowy Park Absurdu i sprawdź, czy masz dziś refleks godny płetwy.','Wykonaj jedną misję dnia. Mors osobiście przybije Ci mentalną pieczątkę.','Zmień maskotkę i rozegraj nią partię. Niech nastąpi płetwiasta odmiana.','Zagraj rewanż. Pamiętaj: plansza nie przyjmuje reklamacji, ale Mors wysłucha.','Wymyśl dziś własną nazwę dla małej wpadki. To pierwszy krok do wielkiej kariery.','Zaproś znajomego do gry. Samotne zwycięstwa są podejrzanie ciche.','Zajrzyj do quizu i udowodnij, że wiesz coś więcej niż to, gdzie trzyma się ryby.'];
+    const moods=['RAPORT Z PŁETW','KOMISJA ABSURDU','NOTATKA SŁUŻBOWA','BADANIA TERENOWE','REFLEKSJA Z LODÓWKI','DZIAŁ KREATYWNY','ALARM MORSA'];
+    const subject=pick(subjects);
+    return {
+      title:subject.charAt(0).toUpperCase()+subject.slice(1)+' '+pick(['i wielka tajemnica','na zakręcie','kontra rzeczywistość','w stanie krytycznym','ma dziś wolne','oraz plan awaryjny']),
+      text:'Dziś '+subject+' '+pick(actions)+' '+pick(places)+'. '+pick(reactions)+' '+pick(endings),
+      challenge:pick(challenges),
+      mood:pick(moods)
+    };
+  }
+  const getMorsJournalEntry=(date)=>{const n=journalDayNumber(date);return n>=0&&n<morsJournalEntries.length?morsJournalEntries[n]:generateMorsJournalEntry(date)};
   const journalDateLabel=(date)=>date.toLocaleDateString('pl-PL',{day:'numeric',month:'long',year:'numeric'});
   function renderMorsJournal(){
     const card=$('morsJournalToday'),archive=$('morsJournalArchive');
@@ -91,7 +112,7 @@
     const today=journalDate();
     const todayBtn=$('morsJournalTodayBtn');
     function showEntry(date){
-      const entry=morsJournalEntries[journalIndex(date)];
+      const entry=getMorsJournalEntry(date);
       $('morsJournalDate').textContent=journalDateLabel(date);
       $('morsJournalMood').textContent=entry.mood;
       $('morsJournalTitle').textContent=entry.title;
@@ -105,7 +126,7 @@
     showEntry(today);
     archive.innerHTML='';
     for(let offset=1;offset<=5;offset++){
-      const date=journalDate(offset),old=morsJournalEntries[journalIndex(date)];
+      const date=journalDate(offset),old=getMorsJournalEntry(date);
       const item=document.createElement('article');item.className='mors-journal-archive-item';
       const day=document.createElement('small');day.textContent=journalDateLabel(date);
       const title=document.createElement('b');title.textContent=old.title;
