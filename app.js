@@ -596,7 +596,7 @@
   function openAttraction(which){
     document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone');
     document.body.classList.add('view-'+which);
-    if(which==='soccer'||which==='fortune'||which==='mors-zone')document.querySelector('.mors-zone-drawer')?.setAttribute('open','');
+    if(which==='soccer'||which==='fortune'||which==='mors-zone'){const drawer=document.querySelector('.mors-zone-drawer');if(drawer)drawer.open=true;}
     window.scrollTo({top:0,behavior:'smooth'});
     if(which==='soccer')document.querySelector('.soccer-game')?.scrollIntoView({behavior:'smooth',block:'start'});
     if(which==='fortune')$('fortuneHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
