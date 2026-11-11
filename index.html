@@ -267,7 +267,16 @@
                <div class="soccer-comment" id="soccerComment" aria-live="polite">🦭 MORS: Piłka jest okrągła. To już dobry początek.</div>
               <div class="soccer-actions"><button type="button" class="btn btn-dark" id="soccerReset">NOWY MECZ ↻</button><button type="button" class="btn btn-outline" id="soccerUndo">COFNIJ RUCH</button><button type="button" class="btn btn-outline" id="soccerExit">WRÓĆ DO MENU ↩</button></div>
             </div>
-            <div class="soccer-start-actions"><button type="button" class="btn btn-yellow mini-start" id="soccerTrain">TRENING Z MORSEM 🦭</button><button type="button" class="btn btn-outline mini-start" id="soccerTwoPlayers">DWÓCH GRACZY 👥</button></div>
+            <div class="soccer-start-actions"><button type="button" class="btn btn-yellow mini-start" id="soccerTrain">TRENING Z MORSEM 🦭</button><button type="button" class="btn btn-outline mini-start" id="soccerTwoPlayers">DWÓCH GRACZY 👥</button><button type="button" class="btn btn-dark mini-start" id="soccerOnlineStart">POJEDYNEK ONLINE 🌐</button></div>
+            <div class="soccer-online-lobby hidden" id="soccerOnlineLobby">
+              <b>⚽ MORS CUP — POJEDYNEK PRZEZ INTERNET</b>
+              <p>Utwórz pokój i wyślij kod przeciwnikowi albo wpisz kod od znajomego.</p>
+              <button type="button" class="btn btn-yellow" id="soccerCreateRoom">UTWÓRZ POKÓJ ↗</button>
+              <div class="soccer-room-created hidden" id="soccerRoomCreated"><span>TWÓJ KOD MECZU</span><strong id="soccerRoomCode"></strong><button type="button" class="btn btn-outline" id="soccerCopyInvite">KOPIUJ LINK DLA PRZECIWNIKA</button></div>
+              <div class="soccer-join-row"><input id="soccerRoomInput" maxlength="8" placeholder="KOD MECZU" aria-label="Kod meczu"><button type="button" class="btn btn-dark" id="soccerJoinRoom">DOŁĄCZ DO GRY</button></div>
+              <small id="soccerOnlineMessage" aria-live="polite">Gra online działa na dwóch urządzeniach.</small>
+              <button type="button" class="btn btn-outline" id="soccerLobbyBack">WRÓĆ DO WYBORU TRYBU</button>
+            </div>
                       </article>
         </div>
                   <div class="morscup-league-divider"></div>
