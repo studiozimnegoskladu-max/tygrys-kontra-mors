@@ -792,9 +792,9 @@
     // MORS CUP — papierowe piłkarzyki, lokalny pojedynek dwóch osób na jednym ekranie.
     const soccerPlay=$('soccerPlay'),soccerBoard=$('soccerBoard'),soccerTurn=$('soccerTurn'),soccerStatus=$('soccerStatus');
     let soccerVsMors=false,soccerAiTimer=null;
-    const soccerRows=11,soccerCols=7,soccerX=c=>30+c*50,soccerY=r=>30+r*46;
-    const soccerGoals={min:2,max:4};
-    let soccer={lines:new Set(),visits:new Map(),position:{c:3,r:5},turn:0,started:false,over:false,score:[0,0],history:[]};
+    const soccerRows=11,soccerCols=17,soccerX=c=>40+c*15,soccerY=r=>8+r*16;
+    const soccerGoals={min:7,max:9};
+    let soccer={lines:new Set(),visits:new Map(),position:{c:8,r:5},turn:0,started:false,over:false,score:[0,0],history:[]};
     const soccerNames=['MORS','HRABIA'];
     const soccerName=i=>i===0?'MORS':(soccerVsMors?'TY':'HRABIA');
     const soccerCommentEl=$('soccerComment');
@@ -824,7 +824,7 @@
       const p=soccer.position,available=soccer.started&&!soccer.over?soccerNeighbors(p).filter(n=>soccerCanMove(n)):[];
       const lineMarkup=[...soccer.lines].map(key=>{const [a,b]=key.split('|'),[ac,ar]=a.split(',').map(Number),[bc,br]=b.split(',').map(Number);return '<line class="field-line" x1="'+soccerX(ac)+'" y1="'+soccerY(ar)+'" x2="'+soccerX(bc)+'" y2="'+soccerY(br)+'"/>'}).join('');
       const dots=[];for(let r=0;r<soccerRows;r++)for(let c=0;c<soccerCols;c++){const active=available.some(n=>n.c===c&&n.r===r),current=p.c===c&&p.r===r;dots.push('<circle class="paper-dot'+(current?' current':'')+(active?' available':'')+'" cx="'+soccerX(c)+'" cy="'+soccerY(r)+'" r="'+(active?9:current?8:3.2)+'" '+(active?'data-soccer-point="'+c+','+r+'" tabindex="0" role="button" aria-label="Ruch do pola '+(c+1)+', '+(r+1)+'"':'')+'/>')};
-      soccerBoard.innerHTML='<rect class="goal-zone" x="80" y="0" width="200" height="30"/><rect class="goal-zone bottom" x="80" y="490" width="200" height="30"/><path class="field-line" d="M30 30H130 M230 30H330 M30 490H130 M230 490H330 M30 30V490H330V30 M30 260H330 M130 30V122H230V30 M130 490V398H230V490"/>'+lineMarkup+dots.join('')+'<circle class="ball" cx="'+soccerX(p.c)+'" cy="'+soccerY(p.r)+'" r="5.5"/>';
+      soccerBoard.innerHTML='<rect class="goal-zone" x="145" y="0" width="45" height="8"/><rect class="goal-zone bottom" x="145" y="168" width="45" height="12"/><path class="field-line" d="M40 8H145 M190 8H280 M40 168H145 M190 168H280 M40 8V168H280V8 M40 88H280 M100 8V40H220V8 M100 168V136H220V168"/>'+lineMarkup+dots.join('')+'<circle class="ball" cx="'+soccerX(p.c)+'" cy="'+soccerY(p.r)+'" r="5.5"/>';
       $('soccerScoreOne').textContent=soccer.score[0];$('soccerScoreTwo').textContent=soccer.score[1];
       $('soccerPlayerOne').textContent=soccerNames[0];$('soccerPlayerTwo').textContent=soccerVsMors?'TY':'HRABIA';
       soccerTurn.textContent=soccer.over?'KONIEC MECZU':soccer.started?'RUCH: '+soccerName(soccer.turn):'GOTOWI? ZACZYNAMY!';
@@ -832,7 +832,7 @@
     function soccerNewRound(keepScore=true){
       const score=keepScore?soccer.score:[0,0];
       clearTimeout(soccerAiTimer);
-      soccer={lines:new Set(),visits:new Map([['3,5',1]]),position:{c:3,r:5},turn:soccerVsMors?1:Math.random()<.5?0:1,started:true,over:false,score,history:[]};
+      soccer={lines:new Set(),visits:new Map([['3,5',1]]),position:{c:8,r:5},turn:soccerVsMors?1:Math.random()<.5?0:1,started:true,over:false,score,history:[]};
       soccerStatus.textContent='Start! Kliknij jedną z niebieskich kropek obok piłki.';
       soccerSay(keepScore?'reset':'start');
       soccerDraw();
