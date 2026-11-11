@@ -1428,3 +1428,64 @@ body.soccer-fullscreen-open{overflow:hidden}
   }
   .soccer-game .soccer-play:not(.hidden) .soccer-status{display:none}
 }
+
+
+/* GŁÓWNY WYBÓR ATRAKCJI — trzy czytelne wejścia zamiast całej gry na jednej stronie */
+.attractions-menu{display:block;max-width:1120px;margin:clamp(24px,5vh,58px) auto 46px;padding:clamp(18px,3vw,36px);position:relative;z-index:2}
+.attractions-intro{text-align:center;margin:0 auto 28px;max-width:760px}
+.attractions-intro>small{font-weight:900;letter-spacing:.16em;color:#61554a}
+.attractions-intro h1{font-family:inherit;font-size:clamp(2rem,5vw,4rem);line-height:.98;margin:10px 0;color:#171717;font-weight:1000}
+.attractions-intro p{font-size:clamp(1rem,2vw,1.2rem);margin:10px 0 0;color:#4d463f}
+.attraction-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,22px)}
+.attraction-card{appearance:none;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:clamp(230px,31vw,360px);padding:24px 18px;border:3px solid #24211f;border-radius:20px;color:#171717;text-align:center;cursor:pointer;box-shadow:7px 7px 0 #24211f;transition:transform .16s ease,box-shadow .16s ease}
+.attraction-card:hover{transform:translateY(-4px);box-shadow:9px 11px 0 #24211f}
+.attraction-card:active{transform:translate(3px,3px);box-shadow:3px 3px 0 #24211f}
+.attraction-tictactoe{background:linear-gradient(145deg,#fff5a0,#ffe600)}
+.attraction-soccer{background:linear-gradient(145deg,#e2f6f3,#8ed6d0)}
+.attraction-fortune{background:linear-gradient(145deg,#ffe0ed,#ff91bd)}
+.attraction-number{position:absolute;top:13px;left:16px;font-size:.78rem;font-weight:1000;opacity:.62}
+.attraction-art{display:flex;align-items:center;justify-content:center;gap:12px;min-height:112px;font-size:clamp(4rem,8vw,6.5rem);line-height:1}
+.attraction-art i{font-style:normal;color:#e83c88}
+.attraction-card>b{font-size:clamp(1.15rem,2vw,1.55rem);font-weight:1000;line-height:1.05;margin:10px 0}
+.attraction-card>small{font-size:.95rem;line-height:1.35;max-width:260px;min-height:2.7em}
+.attraction-cta{display:inline-block;margin-top:20px;padding:10px 14px;border:2px solid #24211f;border-radius:9px;background:#fff;font-weight:1000;font-size:.82rem}
+.attractions-footer{text-align:center;font-size:.75rem;font-weight:900;letter-spacing:.08em;margin:28px 0 0;color:#514941}
+.attractions-back{display:none;margin:0 auto 20px}
+body:not(.view-tictactoe):not(.view-soccer):not(.view-fortune) .shell>.hero,
+body:not(.view-tictactoe):not(.view-soccer):not(.view-fortune) .shell>#setup{display:none!important}
+body.view-tictactoe .attractions-menu,
+body.view-soccer .attractions-menu,
+body.view-fortune .attractions-menu{display:none!important}
+body.view-tictactoe .attractions-back,
+body.view-soccer .attractions-back,
+body.view-fortune .attractions-back{display:block}
+body.view-tictactoe .shell>.hero,
+body.view-tictactoe .shell>#setup{display:block!important}
+body.view-soccer .shell>.hero,
+body.view-soccer .shell>#setup,
+body.view-fortune .shell>.hero,
+body.view-fortune .shell>#setup{display:block!important}
+body.view-soccer #setup>:not(.mors-zone-drawer),
+body.view-fortune #setup>:not(.mors-zone-drawer){display:none!important}
+body.view-soccer #setup .mors-zone-drawer>:not(.mini-arcade),
+body.view-fortune #setup .mors-zone-drawer>:not(.fortune-panel){display:none!important}
+body.view-soccer #setup .mors-zone-drawer,
+body.view-fortune #setup .mors-zone-drawer{display:block!important}
+body.view-soccer #setup .mors-zone-drawer>.mini-arcade{display:block!important}
+body.view-soccer #setup .mini-arcade-heading{display:none!important}
+body.view-soccer #setup .mini-game-grid{display:block!important}
+body.view-soccer #setup .mini-game-grid>.mini-game-card:not(.soccer-game){display:none!important}
+body.view-soccer #setup .soccer-game{display:block!important}
+body.view-fortune #setup .fortune-panel{display:block!important}
+body.view-fortune #setup .fortune-panel[hidden]{display:none!important}
+@media(max-width:720px){
+ .attractions-menu{margin:16px auto 30px;padding:12px}
+ .attraction-grid{grid-template-columns:1fr;gap:16px}
+ .attraction-card{min-height:190px;padding:18px;display:grid;grid-template-columns:100px 1fr;grid-template-rows:auto auto auto;column-gap:14px;text-align:left;justify-items:start}
+ .attraction-number{top:9px;left:12px}
+ .attraction-art{grid-column:1;grid-row:1/4;min-height:100px;font-size:3.6rem;justify-self:center;align-self:center}
+ .attraction-card>b{grid-column:2;margin:0 0 4px;font-size:1.2rem}
+ .attraction-card>small{grid-column:2;min-height:0;font-size:.88rem}
+ .attraction-cta{grid-column:2;margin-top:10px;padding:7px 10px;font-size:.75rem}
+ .attractions-intro{margin-bottom:18px}
+}
