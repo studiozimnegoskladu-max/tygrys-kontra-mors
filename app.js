@@ -10,7 +10,7 @@
   const characterForMark=mark=>mode==='online'?(mark===role?selectedCharacter:(remoteCharacter|| (mark===TIGER?'tiger':'mors'))):(mark===TIGER?selectedCharacter:'mors');
   const sideLabel=mark=>(characterNames[characterForMark(mark)]||'Gracz')+' '+(characterIcons[characterForMark(mark)]||'');
   let client,room=null,role=null,channel=null,current=null,remoteCharacter=null,mode='online',busy=false,cpuDifficulty=localStorage.getItem('tkm_cpu_difficulty')||'normal';
-  let scores={tiger:0,mors:0},seriesWinner=null,commentIndex=0,morsIdleTimer=null,achievementStats=loadStats(),soundOn=localStorage.getItem('tkm_sound')!=='off',musicOn=localStorage.getItem('tkm_music')!=='off',startedAt=0,timer=null,audioContext=null;
+  let scores={tiger:0,mors:0},seriesWinner=null,commentIndex=0,morsIdleTimer=null,achievementStats=loadStats(),soundOn=localStorage.getItem('tkm_sound')!=='off',musicOn=localStorage.getItem('tkm_music')!=='off',soccerMusicActive=false,startedAt=0,timer=null,audioContext=null;
   const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
   const fresh=()=>({board:Array(9).fill(''),turn:TIGER,winner:null,status:'playing',winning:[]});
   const nick=()=>localStorage.getItem('tkm_nick')||'Gracz';
@@ -791,7 +791,7 @@
 
     // MORS CUP — papierowe piłkarzyki, lokalny pojedynek dwóch osób na jednym ekranie.
     const soccerPlay=$('soccerPlay'),soccerBoard=$('soccerBoard'),soccerTurn=$('soccerTurn'),soccerStatus=$('soccerStatus');
-    let soccerVsMors=false,soccerAiTimer=null,soccerMusicActive=false;
+    let soccerVsMors=false,soccerAiTimer=null;
     const soccerRows=11,soccerCols=17,soccerX=c=>40+c*15,soccerY=r=>8+r*16;
     const soccerGoals={min:7,max:9};
     let soccer={lines:new Set(),visits:new Map(),position:{c:8,r:5},turn:0,started:false,over:false,score:[0,0],history:[]};
