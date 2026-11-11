@@ -1300,3 +1300,12 @@ body.soccer-fullscreen-open{overflow:hidden}
   }
   .soccer-game .soccer-play:not(.hidden) .soccer-comment{display:none}
 }
+
+/* DZIENNIK MORSA — główna atrakcja widoczna od razu po wejściu */
+.mors-journal-featured{margin:20px 0 24px;padding:clamp(16px,2.5vw,26px);border-width:4px;box-shadow:7px 8px 0 #171515}
+.mors-journal-featured .mors-journal-heading h2{font-size:clamp(29px,4.4vw,42px)}
+.mors-journal-featured .mors-journal-today{grid-template-columns:minmax(145px,230px) 1fr}
+.mors-journal-featured .mors-journal-art img{max-width:215px;max-height:230px}
+.mors-journal-featured .mors-journal-entry>p{font-size:clamp(15px,1.8vw,18px)}
+.mors-journal-featured .mors-journal-archive-item{background:#fffdf5}
+@media(max-width:520px){.mors-journal-featured .mors-journal-today{grid-template-columns:1fr}.mors-journal-featured .mors-journal-art{min-height:88px}}
