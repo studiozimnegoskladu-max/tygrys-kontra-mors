@@ -1845,3 +1845,18 @@ body.view-fortune .fortune-hand{right:-38px;bottom:10px;width:112px}
  body.view-fortune .wheel-label-8{transform:translate(-50%,-50%) rotate(315deg) translateY(-132px) rotate(-315deg)!important}
  body.view-fortune .fortune-hand{right:-16px;bottom:4px;width:82px}
 }
+
+
+/* Fortune wheel: hide tic-tac-toe intro and enlarge the wheel */
+body.view-fortune .shell>.hero{display:none!important}
+body.view-fortune .fortune-wheel-stage{width:min(100%,500px)!important;margin:22px auto 18px!important}
+body.view-fortune .wheel-label-1{transform:translate(-50%,-50%) translateY(-170px)!important}
+body.view-fortune .wheel-label-2{transform:translate(-50%,-50%) rotate(45deg) translateY(-170px) rotate(-45deg)!important}
+body.view-fortune .wheel-label-3{transform:translate(-50%,-50%) rotate(90deg) translateY(-170px) rotate(-90deg)!important}
+body.view-fortune .wheel-label-4{transform:translate(-50%,-50%) rotate(135deg) translateY(-170px) rotate(-135deg)!important}
+body.view-fortune .wheel-label-5{transform:translate(-50%,-50%) rotate(180deg) translateY(-170px) rotate(-180deg)!important}
+body.view-fortune .wheel-label-6{transform:translate(-50%,-50%) rotate(225deg) translateY(-170px) rotate(-225deg)!important}
+body.view-fortune .wheel-label-7{transform:translate(-50%,-50%) rotate(270deg) translateY(-170px) rotate(-270deg)!important}
+body.view-fortune .wheel-label-8{transform:translate(-50%,-50%) rotate(315deg) translateY(-170px) rotate(-315deg)!important}
+body.view-fortune .fortune-hand{right:-38px;bottom:10px;width:112px}
+@media(max-width:600px){body.view-fortune .fortune-wheel-stage{width:88vw!important;max-width:390px!important}body.view-fortune .wheel-label-1{transform:translate(-50%,-50%) translateY(-132px)!important}body.view-fortune .wheel-label-2{transform:translate(-50%,-50%) rotate(45deg) translateY(-132px) rotate(-45deg)!important}body.view-fortune .wheel-label-3{transform:translate(-50%,-50%) rotate(90deg) translateY(-132px) rotate(-90deg)!important}body.view-fortune .wheel-label-4{transform:translate(-50%,-50%) rotate(135deg) translateY(-132px) rotate(-135deg)!important}body.view-fortune .wheel-label-5{transform:translate(-50%,-50%) rotate(180deg) translateY(-132px) rotate(-180deg)!important}body.view-fortune .wheel-label-6{transform:translate(-50%,-50%) rotate(225deg) translateY(-132px) rotate(-225deg)!important}body.view-fortune .wheel-label-7{transform:translate(-50%,-50%) rotate(270deg) translateY(-132px) rotate(-270deg)!important}body.view-fortune .wheel-label-8{transform:translate(-50%,-50%) rotate(315deg) translateY(-132px) rotate(-315deg)!important}body.view-fortune .fortune-hand{right:-16px;bottom:4px;width:82px}}
