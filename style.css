@@ -1493,3 +1493,46 @@ body.view-fortune #setup .fortune-panel[hidden]{display:none!important}
 
 /* Widok kółka i krzyżyka: zostawiamy samą grę i najważniejsze ustawienia */
 body.view-tictactoe #setup>.mors-journal-featured,body.view-tictactoe #setup>.social-bridge{display:none!important}
+
+
+/* CZWARTA ATRAKCJA — STREFA MORSA (koło pozostaje osobną pozycją menu) */
+.attraction-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.attraction-zone{background:linear-gradient(145deg,#fff4a0 0%,#ffd34d 55%,#ffad63 100%)}
+.attraction-zone .attraction-art{font-size:clamp(4rem,7vw,6rem)}
+body:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone) .shell>.hero,
+body:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone) .shell>#setup{display:none!important}
+body.view-mors-zone .attractions-menu{display:none!important}
+body.view-mors-zone .attractions-back{display:block}
+body.view-mors-zone .shell>.hero,
+body.view-mors-zone .shell>#setup{display:block!important}
+body.view-mors-zone #setup>:not(.mors-zone-drawer){display:none!important}
+body.view-mors-zone #setup .mors-zone-drawer{display:block!important}
+body.view-mors-zone #setup .mors-zone-drawer>.fortune-panel{display:none!important}
+body.view-mors-zone #setup .mors-zone-drawer>.hrabia-institute,
+body.view-mors-zone #setup .mors-zone-drawer>.quiz-panel,
+body.view-mors-zone #setup .mors-zone-drawer>.mini-arcade{display:block!important}
+body.view-mors-zone #setup .mors-zone-drawer>.mini-arcade .mini-game-grid{display:grid!important}
+body.view-mors-zone #setup .mors-zone-drawer>.mini-arcade .mini-game-card{display:flex!important}
+body.view-mors-zone #setup .mors-zone-drawer>.mini-arcade .mini-game-card .mini-game-play{display:none}
+body.view-mors-zone #setup .mors-zone-drawer>.mini-arcade .mini-game-card .mini-start{display:inline-flex}
+body.view-mors-zone #setup .mors-zone-drawer>.mini-arcade .mini-arcade-heading{display:flex!important}
+body.view-mors-zone #setup .mors-zone-drawer>summary{display:none}
+body.view-mors-zone #setup .mors-zone-drawer:not([open])>*:not(summary){display:block!important}
+@media(min-width:721px){
+ .attraction-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .attraction-card{min-height:clamp(220px,25vw,310px);padding:20px 12px}
+ .attraction-card>b{font-size:clamp(1rem,1.45vw,1.3rem)}
+ .attraction-card>small{font-size:clamp(.78rem,1vw,.92rem)}
+}
+@media(max-width:720px){
+ .attraction-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .attraction-card{min-height:190px;padding:18px 10px}
+ .attraction-card .attraction-art{min-height:72px;font-size:3.6rem}
+ .attraction-card>b{font-size:1rem}
+ .attraction-card>small{font-size:.78rem}
+}
+@media(max-width:420px){
+ .attraction-grid{grid-template-columns:1fr}
+ .attraction-card{min-height:155px}
+ .attraction-card .attraction-art{min-height:58px;font-size:3rem}
+}
