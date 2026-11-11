@@ -17,7 +17,7 @@
   <meta name="twitter:image" content="https://raw.githubusercontent.com/studiozimnegoskladu-max/tygrys-kontra-mors/main/assets/plansza%20FB%20zaproszeniowa.jpg">
   <meta property="og:url" content="https://studiozimnegoskladu-max.github.io/tygrys-kontra-mors/">
   <title>Kółko, Krzyżyk i Dwa Promile Absurdu — Studio Zimnego Składu</title>
-  <link rel="stylesheet" href="style.css?v=20261111-jackpot-layer-fix-1">
+  <link rel="stylesheet" href="style.css?v=20261111-mors-cup-1">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -207,6 +207,18 @@
             </div>
             <button type="button" class="btn btn-yellow mini-start" id="iceStart">WCHODZĘ DO WODY ↗</button>
           </article>
+          <article class="mini-game-card soccer-game">
+            <div class="mini-game-art"><span class="comic-burst blue-burst">MORS CUP!</span><img src="assets/mors.png" alt="Mors"></div>
+            <div class="mini-game-copy"><small>GRA 04 · TAKTYKA I KRESKI</small><h3>MORS CUP — PIŁKARZYKI Z ZESZYTU</h3><p>Klasyczna papierowa piłka nożna. Rysuj kreski między kropkami, odbijaj się od band i wpakuj piłkę do bramki!</p></div>
+            <div class="mini-game-play hidden soccer-play" id="soccerPlay">
+              <div class="soccer-score"><span><b id="soccerPlayerOne">MORS</b><strong id="soccerScoreOne">0</strong></span><i>VS</i><span><b id="soccerPlayerTwo">HRABIA</b><strong id="soccerScoreTwo">0</strong></span></div>
+              <div class="soccer-turn" id="soccerTurn" aria-live="polite">Kliknij START MECZU.</div>
+              <svg id="soccerBoard" class="soccer-board" viewBox="0 0 360 520" role="group" aria-label="Boisko do papierowych piłkarzyków"></svg>
+              <small id="soccerStatus" class="soccer-status" aria-live="polite">Wybierz sąsiednią kropkę, aby poprowadzić piłkę.</small>
+              <div class="soccer-actions"><button type="button" class="btn btn-dark" id="soccerReset">NOWY MECZ ↻</button><button type="button" class="btn btn-outline" id="soccerUndo">COFNIJ RUCH</button></div>
+            </div>
+            <button type="button" class="btn btn-yellow mini-start" id="soccerStart">GRAMY W MORS CUP ↗</button>
+          </article>
         </div>
         
       </section></details>
@@ -259,6 +271,6 @@
     <footer>MADE WITH <span>♥</span> AND A LITTLE BIT OF CHAOS · <img class="footer-logo" src="assets/szs-logo.png?v=20261105-2" alt="Studio Zimnego Składu"></footer>
   </main>
   <script src="config.js"></script>
-  <script src="app.js?v=20261110-wheel-pointer-fix-3"></script>
+  <script src="app.js?v=20261111-mors-cup-1"></script>
 </body>
 </html>
