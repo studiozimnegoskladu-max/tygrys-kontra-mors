@@ -796,6 +796,7 @@
     const soccerGoals={min:2,max:4};
     let soccer={lines:new Set(),visits:new Map(),position:{c:3,r:5},turn:0,started:false,over:false,score:[0,0],history:[]};
     const soccerNames=['MORS','HRABIA'];
+    const soccerName=i=>i===0?'MORS':(soccerVsMors?'TY':'HRABIA');
     const soccerCommentEl=$('soccerComment');
     let soccerLastComment='';
     const soccerCommentLines={
@@ -826,7 +827,7 @@
       soccerBoard.innerHTML='<rect class="goal-zone" x="80" y="0" width="200" height="30"/><rect class="goal-zone bottom" x="80" y="490" width="200" height="30"/><path class="field-line" d="M30 30H130 M230 30H330 M30 490H130 M230 490H330 M30 30V490H330V30 M30 260H330 M130 30V122H230V30 M130 490V398H230V490"/>'+lineMarkup+dots.join('')+'<circle class="ball" cx="'+soccerX(p.c)+'" cy="'+soccerY(p.r)+'" r="5.5"/>';
       $('soccerScoreOne').textContent=soccer.score[0];$('soccerScoreTwo').textContent=soccer.score[1];
       $('soccerPlayerOne').textContent=soccerNames[0];$('soccerPlayerTwo').textContent=soccerVsMors?'TY':'HRABIA';
-      soccerTurn.textContent=soccer.over?'KONIEC MECZU':soccer.started?'RUCH: '+soccerNames[soccer.turn]:'GOTOWI? ZACZYNAMY!';
+      soccerTurn.textContent=soccer.over?'KONIEC MECZU':soccer.started?'RUCH: '+soccerName(soccer.turn):'GOTOWI? ZACZYNAMY!';
     }
     function soccerNewRound(keepScore=true){
       const score=keepScore?soccer.score:[0,0];
@@ -864,20 +865,20 @@
       soccer.history.push({from,to:{...to},turn:soccer.turn,line});
       soccer.lines.add(line);soccer.position={...to};
       const goal=(to.r===0||to.r===soccerRows-1)&&to.c>=soccerGoals.min&&to.c<=soccerGoals.max;
-      if(goal){soccer.score[soccer.turn]++;soccer.over=true;soccerStatus.textContent='GOOOL! '+soccerNames[soccer.turn]+' trafia do bramki! Mors żąda powtórki VAR z kałuży.';soccerSay('goal');soccerDraw();return}
+      if(goal){soccer.score[soccer.turn]++;soccer.over=true;soccerStatus.textContent='GOOOL! '+soccerName(soccer.turn)+' trafia do bramki! Mors żąda powtórki VAR z kałuży.';soccerSay('goal');soccerDraw();return}
       const edge=to.c===0||to.c===soccerCols-1||to.r===0||to.r===soccerRows-1;
       soccer.visits.set(to.c+','+to.r,prior+1);
       if(prior>0||edge){soccerStatus.textContent=prior>0?'ODBICIE OD WŁASNEJ KRESKI! Grasz ponownie.':'BANDA! Piłka odbita — ten sam gracz gra dalej.';soccerSay(prior>0?'bounce':'band')}
       else{soccer.turn=1-soccer.turn;soccerStatus.textContent='Ruch przeciwnika. Nie oddawaj pola!';soccerSay('move')}
       const possible=soccerNeighbors(soccer.position).some(n=>!soccer.lines.has(soccerKey(soccer.position,n)));
-      if(!possible){soccer.over=true;soccer.score[1-soccer.turn]++;soccerStatus.textContent='ZABLOKOWANY! '+soccerNames[1-soccer.turn]+' wygrywa. Mors zamyka zeszyt.';soccerSay('blocked')}
+      if(!possible){soccer.over=true;soccer.score[1-soccer.turn]++;soccerStatus.textContent='ZABLOKOWANY! '+soccerName(1-soccer.turn)+' wygrywa. Mors zamyka zeszyt.';soccerSay('blocked')}
       soccerDraw();
       if(soccerVsMors&&soccer.turn===0)soccerScheduleAi();
     }
     function startSoccer(vsMors){
       soccerVsMors=!!vsMors;
       soccerPlay.classList.remove('hidden');
-      $('soccerStart').classList.add('hidden');
+      $('soccerStart')?.classList.add('hidden');
       $('soccerTrain')?.classList.add('hidden');
       $('soccerTwoPlayers')?.classList.add('hidden');
       $('soccerPlayerTwo').textContent=soccerVsMors?'TY':'HRABIA';
@@ -887,7 +888,7 @@
     $('soccerTrain')?.addEventListener('click',()=>startSoccer(true));
     $('soccerTwoPlayers')?.addEventListener('click',()=>startSoccer(false));
     $('soccerReset')?.addEventListener('click',()=>soccerNewRound(true));
-    $('soccerUndo')?.addEventListener('click',()=>{const last=soccer.history.pop();if(!last||soccer.over)return;soccer.lines.delete(last.line);soccer.position=last.from;soccer.turn=last.turn;const k=last.to.c+','+last.to.r,n=(soccer.visits.get(k)||1)-1;if(n<=0)soccer.visits.delete(k);else soccer.visits.set(k,n);soccerStatus.textContent='Cofnięto ostatnią kreskę. Mors udaje, że nic nie widział.';soccerSay('undo');soccerDraw()});
+    $('soccerUndo')?.addEventListener('click',()=>{const last=soccer.history.pop();if(!last||soccer.over)return;soccer.lines.delete(last.line);soccer.position=last.from;soccer.turn=last.turn;const k=last.to.c+','+last.to.r,n=(soccer.visits.get(k)||1)-1;if(n<=0)soccer.visits.delete(k);else soccer.visits.set(k,n);soccerStatus.textContent='Cofnięto ostatnią kreskę. Mors udaje, że nic nie widział.';soccerSay('undo');soccerDraw();if(soccerVsMors&&soccer.turn===0)soccerScheduleAi()});
     soccerBoard?.addEventListener('click',e=>{const dot=e.target.closest('[data-soccer-point]');if(!dot)return;const [c,r]=dot.dataset.soccerPoint.split(',').map(Number);soccerMove({c,r})});
     soccerBoard?.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const dot=e.target.closest('[data-soccer-point]');if(!dot)return;e.preventDefault();const [c,r]=dot.dataset.soccerPoint.split(',').map(Number);soccerMove({c,r})});
     soccerDraw();
