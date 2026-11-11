@@ -788,6 +788,53 @@
     function scheduleIce(){if(iceRound>=10){finishIce();return}icePrompt.textContent='CZEKAJ…';$('iceWater').textContent='🌊  🧊  🌊';iceJump.disabled=true;iceReady=false;iceTimer=setTimeout(()=>{iceReady=true;icePlay.classList.remove('comic-good','comic-bad');icePrompt.textContent='TERAZ! SKACZ!!!';$('iceWater').textContent='💦  🧊  💦';iceJump.disabled=false;iceStatus.textContent='SKOK, PŁETWO!';iceWindow=setTimeout(()=>{if(!iceReady)return;iceReady=false;iceRound++;iceJump.disabled=true;iceStatus.textContent='CHLUP! Przegapiona kra. '+iceRound+'/10';icePlay.classList.remove('comic-good','comic-bad');void icePlay.offsetWidth;icePlay.classList.add('comic-bad');scheduleIce()},1050)},650+Math.random()*1450)}
     $('iceStart')?.addEventListener('click',()=>{clearTimeout(iceTimer);clearTimeout(iceWindow);clearTimeout(iceNextTimer);iceRound=0;iceHits=0;icePlay.classList.remove('hidden');$('iceStart').classList.add('hidden');iceStatus.textContent='10 lodowych przeszkód. Czekaj na sygnał!';scheduleIce()});
     iceJump?.addEventListener('click',()=>{if(!iceReady)return;iceReady=false;clearTimeout(iceWindow);iceRound++;iceHits++;iceJump.disabled=true;iceStatus.textContent='PIĘKNY SKOK! '+iceRound+'/10';icePlay.classList.remove('comic-good','comic-bad');void icePlay.offsetWidth;icePlay.classList.add('comic-good');$('iceWater').textContent='💥  🦭  💥';iceNextTimer=setTimeout(scheduleIce,420)});
+
+    // MORS CUP — papierowe piłkarzyki, lokalny pojedynek dwóch osób na jednym ekranie.
+    const soccerPlay=$('soccerPlay'),soccerBoard=$('soccerBoard'),soccerTurn=$('soccerTurn'),soccerStatus=$('soccerStatus');
+    const soccerRows=11,soccerCols=7,soccerX=c=>30+c*50,soccerY=r=>30+r*46;
+    const soccerGoals={min:2,max:4};
+    let soccer={lines:new Set(),visits:new Map(),position:{c:3,r:5},turn:0,started:false,over:false,score:[0,0],history:[]};
+    const soccerNames=['MORS','HRABIA'];
+    const soccerKey=(a,b)=>{const p=[a.c+','+a.r,b.c+','+b.r].sort();return p.join('|')};
+    const soccerNeighbors=(p)=>{const out=[];for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){if(!dc&&!dr)continue;const c=p.c+dc,r=p.r+dr;if(c>=0&&c<soccerCols&&r>=0&&r<soccerRows)out.push({c,r})}return out};
+    function soccerCanMove(to){return soccerNeighbors(soccer.position).some(p=>p.c===to.c&&p.r===to.r)&&!soccer.lines.has(soccerKey(soccer.position,to))}
+    function soccerDraw(){
+      if(!soccerBoard)return;
+      const p=soccer.position,available=soccer.started&&!soccer.over?soccerNeighbors(p).filter(n=>soccerCanMove(n)):[];
+      const lineMarkup=[...soccer.lines].map(key=>{const [a,b]=key.split('|'),[ac,ar]=a.split(',').map(Number),[bc,br]=b.split(',').map(Number);return '<line class="field-line" x1="'+soccerX(ac)+'" y1="'+soccerY(ar)+'" x2="'+soccerX(bc)+'" y2="'+soccerY(br)+'"/>'}).join('');
+      const dots=[];for(let r=0;r<soccerRows;r++)for(let c=0;c<soccerCols;c++){const active=available.some(n=>n.c===c&&n.r===r),current=p.c===c&&p.r===r;dots.push('<circle class="paper-dot'+(current?' current':'')+(active?' available':'')+'" cx="'+soccerX(c)+'" cy="'+soccerY(r)+'" r="'+(active?9:current?8:3.2)+'" '+(active?'data-soccer-point="'+c+','+r+'" tabindex="0" role="button" aria-label="Ruch do pola '+(c+1)+', '+(r+1)+'"':'')+'/>')};
+      soccerBoard.innerHTML='<rect class="goal-zone" x="80" y="0" width="200" height="30"/><rect class="goal-zone bottom" x="80" y="490" width="200" height="30"/><path class="field-line" d="M30 30H130 M230 30H330 M30 490H130 M230 490H330 M30 30V490H330V30 M30 260H330 M130 30V122H230V30 M130 490V398H230V490"/>'+lineMarkup+dots.join('')+'<circle class="ball" cx="'+soccerX(p.c)+'" cy="'+soccerY(p.r)+'" r="5.5"/>';
+      $('soccerScoreOne').textContent=soccer.score[0];$('soccerScoreTwo').textContent=soccer.score[1];
+      $('soccerPlayerOne').textContent=soccerNames[0];$('soccerPlayerTwo').textContent=soccerNames[1];
+      soccerTurn.textContent=soccer.over?'KONIEC MECZU':soccer.started?'RUCH: '+soccerNames[soccer.turn]:'GOTOWI? ZACZYNAMY!';
+    }
+    function soccerNewRound(keepScore=true){
+      const score=keepScore?soccer.score:[0,0];
+      soccer={lines:new Set(),visits:new Map([['3,5',1]]),position:{c:3,r:5},turn:Math.random()<.5?0:1,started:true,over:false,score,history:[]};
+      soccerStatus.textContent='Start! Kliknij jedną z niebieskich kropek obok piłki.';
+      soccerDraw();
+    }
+    function soccerMove(to){
+      if(!soccer.started||soccer.over||!soccerCanMove(to))return;
+      const from={...soccer.position},line=soccerKey(from,to),prior=soccer.visits.get(to.c+','+to.r)||0;
+      soccer.history.push({from,to:{...to},turn:soccer.turn,line});
+      soccer.lines.add(line);soccer.position={...to};
+      const goal=(to.r===0||to.r===soccerRows-1)&&to.c>=soccerGoals.min&&to.c<=soccerGoals.max;
+      if(goal){soccer.score[soccer.turn]++;soccer.over=true;soccerStatus.textContent='GOOOL! '+soccerNames[soccer.turn]+' trafia do bramki! Mors żąda powtórki VAR z kałuży.';soccerDraw();return}
+      const edge=to.c===0||to.c===soccerCols-1||to.r===0||to.r===soccerRows-1;
+      soccer.visits.set(to.c+','+to.r,prior+1);
+      if(prior>0||edge){soccerStatus.textContent=prior>0?'ODBICIE OD WŁASNEJ KRESKI! Grasz ponownie.':'BANDA! Piłka odbita — ten sam gracz gra dalej.'}
+      else{soccer.turn=1-soccer.turn;soccerStatus.textContent='Ruch przeciwnika. Nie oddawaj pola!'}
+      const possible=soccerNeighbors(soccer.position).some(n=>!soccer.lines.has(soccerKey(soccer.position,n)));
+      if(!possible){soccer.over=true;soccer.score[1-soccer.turn]++;soccerStatus.textContent='ZABLOKOWANY! '+soccerNames[1-soccer.turn]+' wygrywa. Mors zamyka zeszyt.'}
+      soccerDraw();
+    }
+    $('soccerStart')?.addEventListener('click',()=>{soccerPlay.classList.remove('hidden');$('soccerStart').classList.add('hidden');soccerNewRound(false)});
+    $('soccerReset')?.addEventListener('click',()=>soccerNewRound(true));
+    $('soccerUndo')?.addEventListener('click',()=>{const last=soccer.history.pop();if(!last||soccer.over)return;soccer.lines.delete(last.line);soccer.position=last.from;soccer.turn=last.turn;const k=last.to.c+','+last.to.r,n=(soccer.visits.get(k)||1)-1;if(n<=0)soccer.visits.delete(k);else soccer.visits.set(k,n);soccerStatus.textContent='Cofnięto ostatnią kreskę. Mors udaje, że nic nie widział.';soccerDraw()});
+    soccerBoard?.addEventListener('click',e=>{const dot=e.target.closest('[data-soccer-point]');if(!dot)return;const [c,r]=dot.dataset.soccerPoint.split(',').map(Number);soccerMove({c,r})});
+    soccerBoard?.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const dot=e.target.closest('[data-soccer-point]');if(!dot)return;e.preventDefault();const [c,r]=dot.dataset.soccerPoint.split(',').map(Number);soccerMove({c,r})});
+    soccerDraw();
   }
 
 
