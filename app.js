@@ -536,8 +536,8 @@
   }
   function sound(freq=440,duration=.09){if(!soundOn)return;try{const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;audioContext=audioContext||new AudioCtx();if(audioContext.state==='suspended')audioContext.resume();const o=audioContext.createOscillator(),g=audioContext.createGain();o.type='sine';o.frequency.value=freq;o.connect(g);g.connect(audioContext.destination);g.gain.setValueAtTime(.0001,audioContext.currentTime);g.gain.exponentialRampToValueAtTime(.08,audioContext.currentTime+.015);g.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+duration);o.start();o.stop(audioContext.currentTime+duration)}catch(err){console.warn('Nie udało się odtworzyć dźwięku:',err)}}
   function updateSoundButton(){const b=$('soundBtn');if(b){b.textContent=soundOn?'🔊 DŹWIĘK: WŁ.':'🔇 DŹWIĘK: WYŁ.';b.setAttribute('aria-pressed',String(soundOn));}const m=$('musicBtn');if(m){m.textContent=musicOn?'🎵 MUZYKA: WŁ.':'🎵 MUZYKA: WYŁ.';m.setAttribute('aria-pressed',String(musicOn));}}
-  function startBackgroundMusic(){const player=$('backgroundMusic');if(!player||!musicOn)return;if(!player.dataset.trimEndBound){player.loop=false;player.addEventListener('timeupdate',()=>{if(Number.isFinite(player.duration)&&player.duration>2&&player.currentTime>=player.duration-2&&!player.dataset.restarting){player.dataset.restarting='1';player.pause();player.currentTime=0;if(musicOn)player.play().catch(()=>{});window.setTimeout(()=>{delete player.dataset.restarting},120);}});player.addEventListener('ended',()=>{if(musicOn){player.currentTime=0;player.play().catch(()=>{});}});player.dataset.trimEndBound='1';}player.volume=.24;const attempt=player.play();if(attempt&&typeof attempt.catch==='function')attempt.catch(()=>{});}
-  function setMusicEnabled(enabled){musicOn=!!enabled;localStorage.setItem('tkm_music',musicOn?'on':'off');const player=$('backgroundMusic');if(player){if(musicOn)startBackgroundMusic();else player.pause();}updateSoundButton();}
+  function startBackgroundMusic(){const player=$('backgroundMusic');if(!player||!musicOn||soccerMusicActive)return;if(!player.dataset.trimEndBound){player.loop=false;player.addEventListener('timeupdate',()=>{if(Number.isFinite(player.duration)&&player.duration>2&&player.currentTime>=player.duration-2&&!player.dataset.restarting){player.dataset.restarting='1';player.pause();player.currentTime=0;if(musicOn)player.play().catch(()=>{});window.setTimeout(()=>{delete player.dataset.restarting},120);}});player.addEventListener('ended',()=>{if(musicOn){player.currentTime=0;player.play().catch(()=>{});}});player.dataset.trimEndBound='1';}player.volume=.24;const attempt=player.play();if(attempt&&typeof attempt.catch==='function')attempt.catch(()=>{});}
+  function setMusicEnabled(enabled){musicOn=!!enabled;localStorage.setItem('tkm_music',musicOn?'on':'off');const player=$('backgroundMusic'),cup=$('morsCupMusic');if(player){if(musicOn&&!soccerMusicActive)startBackgroundMusic();else player.pause();}if(cup){if(musicOn&&soccerMusicActive)cup.play().catch(()=>{});else cup.pause();}updateSoundButton();}
   function evaluate(board){for(const line of wins)if(board[line[0]]&&board[line[0]]===board[line[1]]&&board[line[1]]===board[line[2]])return{winner:board[line[0]],winning:line};return board.every(Boolean)?{winner:'draw',winning:[]}:{winner:null,winning:[]}}
   function setScoreCharacter(card,character){
     if(!card)return;const name=characterNames[character]||'Gracz';const icon=characterIcons[character]||'🐯';
@@ -791,7 +791,7 @@
 
     // MORS CUP — papierowe piłkarzyki, lokalny pojedynek dwóch osób na jednym ekranie.
     const soccerPlay=$('soccerPlay'),soccerBoard=$('soccerBoard'),soccerTurn=$('soccerTurn'),soccerStatus=$('soccerStatus');
-    let soccerVsMors=false,soccerAiTimer=null;
+    let soccerVsMors=false,soccerAiTimer=null,soccerMusicActive=false;
     const soccerRows=11,soccerCols=17,soccerX=c=>40+c*15,soccerY=r=>8+r*16;
     const soccerGoals={min:7,max:9};
     let soccer={lines:new Set(),visits:new Map(),position:{c:8,r:5},turn:0,started:false,over:false,score:[0,0],history:[]};
@@ -875,7 +875,11 @@
       soccerDraw();
       if(soccerVsMors&&soccer.turn===0)soccerScheduleAi();
     }
+    function startSoccerMusic(){const cup=$('morsCupMusic'),background=$('backgroundMusic');soccerMusicActive=true;if(background)background.pause();if(cup){cup.volume=.55;cup.loop=true;if(musicOn)cup.play().catch(()=>{});}}
+    function stopSoccerMusic(){const cup=$('morsCupMusic'),background=$('backgroundMusic');soccerMusicActive=false;if(cup){cup.pause();cup.currentTime=0;}if(musicOn&&background)startBackgroundMusic();}
+    function exitSoccer(){stopSoccerMusic();soccerPlay.classList.add('hidden');$('soccerStart')?.classList.remove('hidden');$('soccerTrain')?.classList.remove('hidden');$('soccerTwoPlayers')?.classList.remove('hidden');}
     function startSoccer(vsMors){
+      startSoccerMusic();
       soccerVsMors=!!vsMors;
       soccerPlay.classList.remove('hidden');
       $('soccerStart')?.classList.add('hidden');
@@ -888,6 +892,7 @@
     $('soccerTrain')?.addEventListener('click',()=>startSoccer(true));
     $('soccerTwoPlayers')?.addEventListener('click',()=>startSoccer(false));
     $('soccerReset')?.addEventListener('click',()=>soccerNewRound(true));
+    $('soccerExit')?.addEventListener('click',exitSoccer);
     $('soccerUndo')?.addEventListener('click',()=>{const last=soccer.history.pop();if(!last||soccer.over)return;soccer.lines.delete(last.line);soccer.position=last.from;soccer.turn=last.turn;const k=last.to.c+','+last.to.r,n=(soccer.visits.get(k)||1)-1;if(n<=0)soccer.visits.delete(k);else soccer.visits.set(k,n);soccerStatus.textContent='Cofnięto ostatnią kreskę. Mors udaje, że nic nie widział.';soccerSay('undo');soccerDraw();if(soccerVsMors&&soccer.turn===0)soccerScheduleAi()});
     soccerBoard?.addEventListener('click',e=>{const dot=e.target.closest('[data-soccer-point]');if(!dot)return;const [c,r]=dot.dataset.soccerPoint.split(',').map(Number);soccerMove({c,r})});
     soccerBoard?.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const dot=e.target.closest('[data-soccer-point]');if(!dot)return;e.preventDefault();const [c,r]=dot.dataset.soccerPoint.split(',').map(Number);soccerMove({c,r})});
