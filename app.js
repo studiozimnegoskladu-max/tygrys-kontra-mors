@@ -584,7 +584,7 @@
     updateOnlineCharacters();render();
   }
   function showAttractionsHome(){
-    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','soccer-fullscreen-open');
+    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','soccer-fullscreen-open');
     const cup=$('morsCupMusic'),background=$('backgroundMusic');
     if(cup){cup.pause();cup.currentTime=0;}
     if(typeof soccerMusicActive!=='undefined'&&soccerMusicActive){soccerMusicActive=false;if(musicOn&&background)startBackgroundMusic();}
@@ -594,16 +594,18 @@
     window.scrollTo({top:0,behavior:'smooth'});
   }
   function openAttraction(which){
-    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune');
+    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone');
     document.body.classList.add('view-'+which);
-    if(which==='soccer'||which==='fortune')document.querySelector('.mors-zone-drawer')?.setAttribute('open','');
+    if(which==='soccer'||which==='fortune'||which==='mors-zone')document.querySelector('.mors-zone-drawer')?.setAttribute('open','');
     window.scrollTo({top:0,behavior:'smooth'});
     if(which==='soccer')document.querySelector('.soccer-game')?.scrollIntoView({behavior:'smooth',block:'start'});
     if(which==='fortune')$('fortuneHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
+    if(which==='mors-zone')document.querySelector('.mors-zone-drawer')?.scrollIntoView({behavior:'smooth',block:'start'});
   }
   $('openTicTacToe')?.addEventListener('click',()=>openAttraction('tictactoe'));
   $('openSoccer')?.addEventListener('click',()=>openAttraction('soccer'));
   $('openFortune')?.addEventListener('click',()=>openAttraction('fortune'));
+  $('openMorsZone')?.addEventListener('click',()=>openAttraction('mors-zone'));
   $('attractionsBack')?.addEventListener('click',showAttractionsHome);
   function showGame(){resultOverlayDismissed=false;setup.classList.add('hidden');game.classList.remove('hidden');$('roomCode').textContent=room||'LOKALNIE';$('playerName').textContent=nick();if(mode==='online'){updateOnlineCharacters()}else{const ownCard=document.querySelector('.tiger-score');setScoreCharacter(ownCard,selectedCharacter);setScoreCharacter(document.querySelector('.mors-score'),'mors');}renderAchievements();newPrintBrief();}
   const printBriefs=[
