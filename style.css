@@ -1536,3 +1536,24 @@ body.view-mors-zone #setup .mors-zone-drawer:not([open])>*:not(summary){display:
  .attraction-card{min-height:155px}
  .attraction-card .attraction-art{min-height:58px;font-size:3rem}
 }
+
+
+/* MORS CUP — większe boisko na telefonie: proporcje 4:3 zamiast panoramicznych 16:9 */
+@media(max-width:700px) and (orientation:portrait){
+  .soccer-game .soccer-play:not(.hidden){
+    padding:5px;
+    gap:4px;
+  }
+  .soccer-game .soccer-play:not(.hidden) .soccer-board{
+    width:100%;
+    max-width:100%;
+    height:auto;
+    max-height:calc(100dvh - 205px);
+    aspect-ratio:4 / 3;
+    flex:0 0 auto;
+    margin:0 auto;
+  }
+  .soccer-game .soccer-play:not(.hidden) .soccer-score span{padding:3px 6px}
+  .soccer-game .soccer-play:not(.hidden) .soccer-turn{padding:4px 6px}
+  .soccer-game .soccer-play:not(.hidden) .soccer-status{padding:1px 3px}
+}
