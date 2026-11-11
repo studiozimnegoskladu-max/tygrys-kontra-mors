@@ -1028,3 +1028,7 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
  .fighter b{font-size:15px!important}
  .vs{flex-basis:26px;width:26px;height:26px;font-size:19px}
 }
+
+
+/* KOŁO FORTUNY: obsługa dotyku bez przewijania strony podczas przeciągania */
+.fortune-wheel-stage,.fortune-wheel{touch-action:none;user-select:none;-webkit-user-select:none}
