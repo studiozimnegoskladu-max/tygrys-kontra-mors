@@ -603,13 +603,10 @@
     const drawer=document.querySelector('.mors-zone-drawer');
     if(drawer && (which==='soccer'||which==='fortune'||which==='mors-zone')) drawer.open=true;
     if(which==='mors-zone'){
-      document.querySelectorAll('.mors-zone-drawer > section').forEach(section=>{
-        section.hidden = section.classList.contains('fortune-panel');
-      });
       const zone=document.querySelector('.mors-zone-drawer');
-      if(zone){zone.style.display='block';zone.open=true;}
+      if(zone)zone.open=true;
     }
-    window.scrollTo({top:0,behavior:'instant'});
+    window.scrollTo({top:0,behavior:'auto'});
     if(which==='soccer')document.querySelector('.soccer-game')?.scrollIntoView({behavior:'smooth',block:'start'});
     if(which==='fortune')$('fortuneHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
     if(which==='mors-zone')$('hrabiaInstituteHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
