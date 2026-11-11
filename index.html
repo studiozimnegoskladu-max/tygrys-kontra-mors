@@ -17,7 +17,7 @@
   <meta name="twitter:image" content="https://raw.githubusercontent.com/studiozimnegoskladu-max/tygrys-kontra-mors/main/assets/plansza%20FB%20zaproszeniowa.jpg">
   <meta property="og:url" content="https://studiozimnegoskladu-max.github.io/tygrys-kontra-mors/">
   <title>Kółko, Krzyżyk i Dwa Promile Absurdu — Studio Zimnego Składu</title>
-  <link rel="stylesheet" href="style.css?v=20261111-morscup-mobile-fit-1">
+  <link rel="stylesheet" href="style.css?v=20261111-main-attractions-1">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -50,7 +50,23 @@
     <div class="topbar-actions"><button type="button" id="soundBtn" class="btn btn-outline sound-toggle" aria-pressed="true" aria-label="Włącz lub wyłącz efekty dźwiękowe">🔊 DŹWIĘK</button><button type="button" id="musicBtn" class="btn btn-outline sound-toggle music-toggle" aria-pressed="true" aria-label="Włącz lub wyłącz muzykę">🎵 MUZYKA</button><div class="online-tag"><span></span> GRA ONLINE</div></div>
   </header>
 
-  <main class="shell">
+  <main class="shell">\n    <section class="attractions-menu" id="mainAttractions" aria-labelledby="attractionsTitle">
+      <div class="attractions-intro"><small>STUDIO ZIMNEGO SKŁADU ZAPRASZA</small><h1 id="attractionsTitle">WYBIERZ ATRAKCJĘ</h1><p>Trzy drogi do sławy. Każda podejrzana, każda morsowa.</p></div>
+      <div class="attraction-grid">
+        <button type="button" class="attraction-card attraction-tictactoe" id="openTicTacToe">
+          <span class="attraction-number">01</span><span class="attraction-art">⭕ <i>✕</i></span><b>KÓŁKO I KRZYŻYK</b><small>Pojedynek z Hrabią, Morsem albo znajomym.</small><span class="attraction-cta">WEJDŹ DO GRY ↗</span>
+        </button>
+        <button type="button" class="attraction-card attraction-soccer" id="openSoccer">
+          <span class="attraction-number">02</span><span class="attraction-art">⚽</span><b>MORS CUP</b><small>Piłkarzyki z zeszytu. Kreska po kresce do bramki!</small><span class="attraction-cta">WEJDŹ NA BOISKO ↗</span>
+        </button>
+        <button type="button" class="attraction-card attraction-fortune" id="openFortune">
+          <span class="attraction-number">03</span><span class="attraction-art">🎡</span><b>KOŁO FORTUNY</b><small>Zakreć łapką Morsa. Los już coś kombinuje.</small><span class="attraction-cta">ZAKRĘĆ KOŁEM ↗</span>
+        </button>
+      </div>
+      <p class="attractions-footer">WYBIERZ, W CO GRAMY. MORS NIE BIERZE ODPOWIEDZIALNOŚCI ZA WYNIKI.</p>
+    </section>
+    <button type="button" class="attractions-back btn btn-outline" id="attractionsBack">← WRÓĆ DO WYBORU ATRAKCJI</button>
+    
     <section class="hero">
       <div class="eyebrow">⚡ WIELKIE STARcie ⚡</div>
       <h1>KÓŁKO, KRZYŻYK <i>i dwa promile absurdu</i></h1>
@@ -217,7 +233,7 @@
               <svg id="soccerBoard" class="soccer-board" viewBox="0 0 320 180" role="group" aria-label="Boisko do papierowych piłkarzyków"></svg>
               <small id="soccerStatus" class="soccer-status" aria-live="polite">Wybierz sąsiednią kropkę, aby poprowadzić piłkę.</small>
                <div class="soccer-comment" id="soccerComment" aria-live="polite">🦭 MORS: Piłka jest okrągła. To już dobry początek.</div>
-              <div class="soccer-actions"><button type="button" class="btn btn-dark" id="soccerReset">NOWY MECZ ↻</button><button type="button" class="btn btn-outline" id="soccerUndo">COFNIJ RUCH</button><button type="button" class="btn btn-outline" id="soccerExit">WYJDŹ Z MORS CUP ↩</button></div>
+              <div class="soccer-actions"><button type="button" class="btn btn-dark" id="soccerReset">NOWY MECZ ↻</button><button type="button" class="btn btn-outline" id="soccerUndo">COFNIJ RUCH</button><button type="button" class="btn btn-outline" id="soccerExit">WRÓĆ DO MENU ↩</button></div>
             </div>
             <div class="soccer-start-actions"><button type="button" class="btn btn-yellow mini-start" id="soccerTrain">TRENING Z MORSEM 🦭</button><button type="button" class="btn btn-outline mini-start" id="soccerTwoPlayers">DWÓCH GRACZY 👥</button></div>
                       <div class="morscup-league-divider"></div>
@@ -291,6 +307,6 @@
     <footer>MADE WITH <span>♥</span> AND A LITTLE BIT OF CHAOS · <img class="footer-logo" src="assets/szs-logo.png?v=20261105-2" alt="Studio Zimnego Składu"></footer>
   </main>
   <script src="config.js"></script>
-  <script src="app.js?v=20261111-journal-front-page-auto-generation-1"></script>
+  <script src="app.js?v=20261111-main-attractions-1"></script>
 </body>
 </html>
