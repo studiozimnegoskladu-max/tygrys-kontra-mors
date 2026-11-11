@@ -1214,3 +1214,89 @@ body.soccer-fullscreen-open{overflow:hidden}
     max-height:calc(100dvh - 135px);
   }
 }
+
+
+/* MORS CUP — więcej boiska, mniej ramek i drobniejsze punkty sterujące */
+.soccer-game .soccer-play:not(.hidden){
+  padding:5px;
+  gap:4px;
+}
+.soccer-game .soccer-play:not(.hidden) .soccer-score{
+  max-width:1100px;
+  gap:6px;
+  margin:0 auto;
+}
+.soccer-game .soccer-play:not(.hidden) .soccer-score span{
+  padding:3px 9px;
+  gap:6px;
+  border-width:1px;
+  border-radius:7px;
+}
+.soccer-game .soccer-play:not(.hidden) .soccer-score b{
+  font-size:clamp(12px,1.35vw,17px);
+}
+.soccer-game .soccer-play:not(.hidden) .soccer-score strong{
+  font-size:clamp(18px,2vw,26px);
+}
+.soccer-game .soccer-play:not(.hidden) .soccer-turn{
+  max-width:1100px;
+  padding:4px 8px;
+  font-size:clamp(12px,1.35vw,17px);
+  line-height:1.15;
+  border-radius:6px;
+}
+.soccer-game .soccer-play:not(.hidden) .soccer-board{
+  width:min(100%,calc((100dvh - 105px)*16/9));
+  max-width:1800px;
+  max-height:calc(100dvh - 105px);
+  flex:1 1 auto;
+  border-width:1px;
+  box-shadow:0 1px 5px rgba(40,35,25,.08);
+}
+.soccer-game .soccer-play:not(.hidden) .soccer-status{
+  padding:0;
+  font-size:clamp(10px,1vw,13px);
+  line-height:1.1;
+}
+.soccer-game .soccer-play:not(.hidden) .soccer-comment{
+  max-width:760px;
+  margin:0 auto;
+  padding:3px 8px;
+  font-size:clamp(11px,1.15vw,14px);
+  line-height:1.15;
+  border-width:1px;
+  min-height:0;
+}
+.soccer-game .soccer-play:not(.hidden) .soccer-actions{
+  gap:5px;
+}
+.soccer-game .soccer-play:not(.hidden) .soccer-actions .btn{
+  min-height:30px;
+  padding:4px 9px;
+  font-size:clamp(10px,1vw,13px);
+  box-shadow:1px 1px 0 var(--ink);
+}
+.soccer-board .paper-dot{stroke-width:.35}
+.soccer-board .paper-dot.current{stroke-width:.5}
+.soccer-board .paper-dot.available{stroke-width:.42}
+.soccer-board .paper-dot.available:focus{stroke-width:1}
+@media(max-width:700px){
+  .soccer-game .soccer-play:not(.hidden){padding:4px;gap:3px}
+  .soccer-game .soccer-play:not(.hidden) .soccer-board{
+    width:100%;
+    max-width:100%;
+    max-height:calc(100dvh - 112px);
+    flex:1 1 auto;
+  }
+  .soccer-game .soccer-play:not(.hidden) .soccer-score span{padding:3px 5px;gap:4px}
+  .soccer-game .soccer-play:not(.hidden) .soccer-turn{padding:3px 5px}
+  .soccer-game .soccer-play:not(.hidden) .soccer-actions .btn{min-height:28px;padding:4px 5px}
+  .soccer-game .soccer-play:not(.hidden) .soccer-comment{font-size:10px;padding:2px 5px}
+}
+@media(max-height:560px){
+  .soccer-game .soccer-play:not(.hidden) .soccer-board{
+    width:min(100%,calc((100dvh - 88px)*16/9));
+    max-height:calc(100dvh - 88px);
+  }
+  .soccer-game .soccer-play:not(.hidden) .soccer-comment{display:none}
+}
