@@ -1042,7 +1042,7 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
 .soccer-score strong{font:900 22px 'Barlow Condensed'}
 .soccer-score i{font:900 12px 'Barlow Condensed';font-style:normal}
 .soccer-turn{text-align:center;background:var(--ink);color:#fff;padding:9px;border-radius:7px;font:900 14px 'Barlow Condensed';margin:7px 0}
-.soccer-board{display:block;width:100%;max-width:360px;height:auto;margin:0 auto;background-color:#fffdf4;background-image:linear-gradient(rgba(33,31,32,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(33,31,32,.10) 1px,transparent 1px);background-size:25px 25px;border:3px solid var(--ink);border-radius:9px;touch-action:manipulation}
+.soccer-board{display:block;width:100%;max-width:360px;height:auto;margin:0 auto;background:#f5f0df url('assets/mors-cup-notebook.svg') center/100% 100% no-repeat;border:3px solid var(--ink);border-radius:5px;box-shadow:3px 4px 0 rgba(33,31,32,.22);touch-action:manipulation}
 .soccer-board .field-line{stroke:#211f20;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .soccer-board .goal-zone{fill:#ffe600;opacity:.75}
 .soccer-board .goal-zone.bottom{fill:#ec268f}
