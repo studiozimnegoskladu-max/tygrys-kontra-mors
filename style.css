@@ -1758,3 +1758,17 @@ body.view-mors-zone #setup .mors-zone-drawer .morscup-league-panel{
 .setup-panel.playing{padding-top:18px}
 .setup-panel.playing>:not(#game){display:none!important}
 .setup-panel.playing>#game{display:block!important;margin:0 auto 8px;scroll-margin-top:12px}
+
+
+.soccer-online-lobby{grid-column:1/-1;margin-top:12px;padding:14px;background:#fff2a8;border:2px dashed var(--ink);border-radius:10px;text-align:center}
+.soccer-online-lobby>b{display:block;font:900 19px 'Barlow Condensed';margin-bottom:6px}
+.soccer-online-lobby>p{font-size:12px;font-weight:700;margin:5px 0 12px}
+.soccer-room-created{display:grid;gap:6px;justify-items:center;margin:12px auto;padding:10px;background:#fff;border:2px solid var(--ink);border-radius:8px;max-width:340px}
+.soccer-room-created span{font-size:10px;font-weight:900;letter-spacing:1px}
+.soccer-room-created strong{font:1000 30px 'Barlow Condensed';letter-spacing:4px}
+.soccer-join-row{display:flex;gap:7px;max-width:440px;margin:12px auto}
+.soccer-join-row input{min-width:0;flex:1;text-align:center;text-transform:uppercase;font-weight:900;letter-spacing:2px;border:2px solid var(--ink);border-radius:7px;padding:9px}
+#soccerOnlineMessage{display:block;min-height:22px;font-weight:800;margin:8px 0}
+.soccer-online-lobby .btn{font-size:12px}
+@media(max-width:480px){.soccer-join-row{flex-direction:column}.soccer-join-row .btn{width:100%}}
+
