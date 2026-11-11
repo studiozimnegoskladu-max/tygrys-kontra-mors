@@ -11,16 +11,5 @@
 <g fill="none" stroke="#8b8377" opacity=".13" filter="url(#crease)" stroke-width="5"><path d="M-10 70L370 150M-20 300L380 245M30 -10L180 530M340 -10L170 530M-10 455L370 390"/></g>
 <g stroke="#6b9ac8" stroke-width=".68" opacity=".72"><path d="M0 30H360 M0 76H360 M0 122H360 M0 168H360 M0 214H360 M0 260H360 M0 306H360 M0 352H360 M0 398H360 M0 444H360 M0 490H360"/><path d="M30 0V520 M80 0V520 M130 0V520 M180 0V520 M230 0V520 M280 0V520 M330 0V520"/></g>
 <path d="M14 0V520" stroke="#c65f68" stroke-width="1.1" opacity=".82"/>
-<g fill="none" stroke="#173b9a" stroke-linecap="round" stroke-linejoin="round">
- <path d="M-15 12Q25 -15 48 8T90 12M-9 27Q23 2 53 24T91 22M-14 43Q20 20 45 40T79 36M-7 57L36 5M-4 74L43 16" stroke-width="2.2" opacity=".9"/>
- <path d="M-8 446L18 410L5 469L35 428L19 493L50 449M-8 482L27 447L15 516L48 477M0 505L55 462" stroke-width="2.6" opacity=".82"/>
- <path d="M285 -8L307 35L327 2L342 48L367 9M276 18L307 61L328 25L348 68L368 34" stroke-width="2.8" opacity=".85"/>
- <path d="M286 486Q312 451 338 475T376 464M276 505Q307 470 335 495T374 488M299 519Q331 486 358 508" stroke-width="2.4" opacity=".85"/>
- <path d="M-8 245L20 211L10 269L42 222L30 290L57 252" stroke-width="2.7" opacity=".7"/>
- <path d="M340 238Q319 250 336 268T364 262Q347 243 330 274T365 294M330 310Q350 292 366 316" stroke-width="1.8" opacity=".65"/>
- <path d="M2 112Q30 99 42 117M318 405Q342 390 359 405M92 6L103 23M255 495L267 480" stroke-width="1.3" opacity=".45"/>
-</g>
-<g fill="#173b9a" opacity=".86"><circle cx="18" cy="72" r="2.5"/><circle cx="30" cy="88" r="1.5"/><circle cx="345" cy="84" r="2.5"/><circle cx="325" cy="104" r="1.6"/><circle cx="12" cy="399" r="2"/><circle cx="348" cy="407" r="2.2"/><circle cx="67" cy="507" r="1.6"/><circle cx="273" cy="13" r="1.8"/><circle cx="18" cy="178" r="4"/><circle cx="350" cy="355" r="3.6"/></g>
-<g fill="none" stroke="#173b9a" stroke-width="1.2" opacity=".2"><path d="M70 180q45 -10 60 6M210 340q38 -12 62 5M82 420q22 -7 36 3"/></g>
 <rect x="2" y="2" width="356" height="516" fill="none" stroke="#9c9487" stroke-width="2" opacity=".25"/>
 </svg>
