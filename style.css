@@ -1163,3 +1163,54 @@ body.soccer-fullscreen-open{overflow:hidden}
   max-height:calc(100dvh - 165px);
  }
 }
+
+
+/* MORS CUP — większa arena i lekkie znaczniki */
+.soccer-game .soccer-play:not(.hidden) .soccer-board{
+  width:min(100%,calc((100dvh - 150px)*16/9));
+  max-width:1600px;
+  max-height:calc(100dvh - 150px);
+  border:1.5px solid rgba(90,84,72,.28);
+  box-shadow:0 2px 9px rgba(40,35,25,.09);
+}
+.soccer-board .field-line{
+  stroke:#999283;
+  stroke-width:1.05;
+  stroke-opacity:.58;
+}
+.soccer-board .paper-dot{
+  fill:#fffdf4;
+  stroke:#a39b8b;
+  stroke-width:.48;
+}
+.soccer-board .paper-dot.current{
+  fill:#fff0a6;
+  stroke:#a79b79;
+  stroke-width:.72;
+}
+.soccer-board .paper-dot.available{
+  fill:#d9f0f1;
+  stroke:#91b3b7;
+  stroke-width:.62;
+}
+.soccer-board .paper-dot.available:focus{
+  stroke:#d65b91;
+  stroke-width:1.35;
+}
+.soccer-board .ball{
+  stroke:#9a7885;
+  stroke-width:.9;
+}
+@media(max-width:700px){
+  .soccer-game .soccer-play:not(.hidden) .soccer-board{
+    width:100%;
+    max-width:100%;
+    max-height:calc(100dvh - 190px);
+  }
+}
+@media(max-height:560px){
+  .soccer-game .soccer-play:not(.hidden) .soccer-board{
+    width:min(100%,calc((100dvh - 135px)*16/9));
+    max-height:calc(100dvh - 135px);
+  }
+}
