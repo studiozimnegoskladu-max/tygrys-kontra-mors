@@ -1557,3 +1557,21 @@ body.view-mors-zone #setup .mors-zone-drawer:not([open])>*:not(summary){display:
   .soccer-game .soccer-play:not(.hidden) .soccer-turn{padding:4px 6px}
   .soccer-game .soccer-play:not(.hidden) .soccer-status{padding:1px 3px}
 }
+
+
+/* STREFA MORSA — wymuszone odsłonięcie zawartości w dedykowanym widoku */
+body.view-mors-zone #setup .mors-zone-drawer,
+body.view-mors-zone #setup .mors-zone-drawer[open]{
+  display:block!important;
+  visibility:visible!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+body.view-mors-zone #setup .mors-zone-drawer>section{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+body.view-mors-zone #setup .mors-zone-drawer>.fortune-panel{display:none!important}
+body.view-mors-zone #setup .mors-zone-drawer>summary{display:none!important}
