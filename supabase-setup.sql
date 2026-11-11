@@ -341,7 +341,7 @@ begin
   if coalesce((st->>'over')::boolean,true) then raise exception 'Mecz jest zakończony.'; end if;
   if p_c<0 or p_c>16 or p_r<0 or p_r>10 then raise exception 'Ruch poza boiskiem.'; end if;
   pc:=(st#>>'{position,c}')::integer;pr:=(st#>>'{position,r}')::integer;
-  if abs(p_c-pc)+abs(p_r-pr)<>1 then raise exception 'Możesz przesunąć piłkę tylko na sąsiednią kropkę.'; end if;
+  if greatest(abs(p_c-pc),abs(p_r-pr))<>1 then raise exception 'Możesz przesunąć piłkę tylko na sąsiednią kropkę, także po przekątnej.'; end if;
   from_key:=pc||','||pr;to_key:=p_c||','||p_r;
   line_key:=least(from_key,to_key)||'|'||greatest(from_key,to_key);
   lines:=coalesce(st->'lines','[]'::jsonb);
@@ -366,7 +366,7 @@ begin
   if not goal then
     for nc in greatest(0,p_c-1)..least(16,p_c+1) loop
       for nr in greatest(0,p_r-1)..least(10,p_r+1) loop
-        if abs(nc-p_c)+abs(nr-p_r)=1 then
+        if greatest(abs(nc-p_c),abs(nr-p_r))=1 then
           from_key:=p_c||','||p_r;to_key:=nc||','||nr;
           line_key:=least(from_key,to_key)||'|'||greatest(from_key,to_key);
           if not (lines ? line_key) then can_move:=true; end if;
