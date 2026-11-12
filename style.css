@@ -1884,9 +1884,10 @@ body.view-fortune .fortune-hand{right:-38px;bottom:10px;width:112px}
 .soccer-board .move-line.ink-green{stroke:#35A853!important}
 
 
-/* Plansza kółko i krzyżyk: ilustracja Morsa kopiącego piłkę jako tło planszy. */
-.board-wrap{background:#f5f0df url('./assets/mors%20pi%C5%82karzyki.png?v=20261112-tictactoe-bg-1') center/cover no-repeat!important}
-.board{background:transparent!important}
-.board-wrap .cell{background-color:rgba(255,253,242,.72)!important;background-image:radial-gradient(rgba(23,21,21,.12) .8px,transparent .8px)!important;background-size:8px 8px!important}
-/* Mors Cup zachowuje zeszytowe boisko bez ilustracji Morsa. */
-.soccer-board{background:#f5f0df url('./assets/mors-cup-notebook.svg') center/100% 100% no-repeat!important}
+
+
+/* Baner Mors Cup zastępuje nagłówek pojedynku kółko-krzyżyk tylko w sekcji piłkarskiej. */
+.soccer-hero{display:none;width:100%;margin:12px 0 24px;border:3px solid var(--ink);border-radius:14px;overflow:hidden;background:#f5f0df;box-shadow:8px 9px 0 var(--ink)}
+.soccer-hero img{display:block;width:100%;height:auto;max-height:390px;object-fit:contain;margin:0 auto}
+body.view-soccer .shell>.hero{display:none!important}
+body.view-soccer .shell>.soccer-hero{display:block!important}
