@@ -1882,3 +1882,11 @@ body.view-fortune .fortune-hand{right:-38px;bottom:10px;width:112px}
 
 /* Ruch przeciwnika w Mors Cup — wyłącznie zielony tusz. */
 .soccer-board .move-line.ink-green{stroke:#35A853!important}
+
+
+/* Plansza kółko i krzyżyk: ilustracja Morsa kopiącego piłkę jako tło planszy. */
+.board-wrap{background:#f5f0df url('./assets/mors%20pi%C5%82karzyki.png?v=20261112-tictactoe-bg-1') center/cover no-repeat!important}
+.board{background:transparent!important}
+.board-wrap .cell{background-color:rgba(255,253,242,.72)!important;background-image:radial-gradient(rgba(23,21,21,.12) .8px,transparent .8px)!important;background-size:8px 8px!important}
+/* Mors Cup zachowuje zeszytowe boisko bez ilustracji Morsa. */
+.soccer-board{background:#f5f0df url('./assets/mors-cup-notebook.svg') center/100% 100% no-repeat!important}
