@@ -604,6 +604,17 @@
     game?.classList.add('hidden');
     document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','soccer-fullscreen-open');
     document.body.classList.add('view-'+which);
+    // Muzyka Mors Cup ma grać od wejścia do sekcji, nie dopiero po uruchomieniu meczu.
+    const cupTrack=$('morsCupMusic'),mainTrack=$('backgroundMusic');
+    if(which==='soccer'){
+      soccerMusicActive=true;
+      if(mainTrack)mainTrack.pause();
+      if(cupTrack){cupTrack.volume=.55;cupTrack.loop=true;if(musicOn)cupTrack.play().catch(err=>console.warn('Nie udało się uruchomić muzyki Mors Cup:',err));}
+    }else if(soccerMusicActive){
+      soccerMusicActive=false;
+      if(cupTrack){cupTrack.pause();cupTrack.currentTime=0;}
+      if(musicOn&&mainTrack)startBackgroundMusic();
+    }
     const drawer=document.querySelector('.mors-zone-drawer');
     if(drawer && (which==='soccer'||which==='fortune'||which==='mors-zone')) drawer.open=true;
     if(which==='mors-zone'){
