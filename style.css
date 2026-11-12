@@ -1891,3 +1891,7 @@ body.view-fortune .fortune-hand{right:-38px;bottom:10px;width:112px}
 .soccer-hero img{display:block;width:100%;height:auto;max-height:390px;object-fit:contain;margin:0 auto}
 body.view-soccer .shell>.hero{display:none!important}
 body.view-soccer .shell>.soccer-hero{display:block!important}
+
+/* Plansza kółko-krzyżyk: bez grafiki Morsa z piłką (ta należy wyłącznie do banera Mors Cup). */
+.board-wrap,.board-wrap .board{background-image:none!important}
+.board-wrap::before,.board-wrap::after{background-image:none!important;content:none!important}
