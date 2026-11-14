@@ -163,6 +163,8 @@
 
   const PLAYER_ID_KEY='tkm_player_id_v1', RANK_STATS_KEY='tkm_rank_stats_v1';
   function playerId(){let id=localStorage.getItem(PLAYER_ID_KEY);if(!id){id=(crypto.randomUUID?crypto.randomUUID():('tkm-'+Date.now()+'-'+Math.random().toString(36).slice(2)));localStorage.setItem(PLAYER_ID_KEY,id)}return id}
+  const MORS_CUP_TOKEN_KEY='tkm_morscup_player_token_v1';
+  function morsCupPlayerToken(){let token=localStorage.getItem(MORS_CUP_TOKEN_KEY);if(!token){token=makeRoomToken();localStorage.setItem(MORS_CUP_TOKEN_KEY,token)}return token}
   function rankStats(){try{return Object.assign({played:0,wins:0,losses:0,draws:0,seen:[]},JSON.parse(localStorage.getItem(RANK_STATS_KEY)||'{}'))}catch{return{played:0,wins:0,losses:0,draws:0,seen:[]}}}
   const LEADERBOARD_URL='https://script.google.com/macros/s/AKfycbxA24BQOkFe3LVBFwFCR1Q9AattnidtJP1YRxUHELO4nsBWZ63C6qM4U9nwnlG8xlqfcA/exec';
   async function syncLeaderboard(result,gameMode,gameRoom,board){
@@ -1229,7 +1231,7 @@
         else tableRes.data.forEach((p,i)=>{const tr=document.createElement('tr');if(p.player_id===profileId())tr.classList.add('is-you');tr.innerHTML='<td>'+(i+1)+'</td><td><b>'+safe(p.nickname)+'</b><small>'+safe(({mors:'🦭 Mors',tiger:'🐯 Hrabia Poprawek',goat:'🐐 Koza Krzycha',bobr:'🦫 Bóbr',llama:'🦙 Lama Drama',octopus:'🐙 Ośmiornica'}[p.mascot]||'Zawodnik'))+'</small></td><td>'+Number(p.played||0)+'</td><td>'+Number(p.wins||0)+'</td><td>'+Number(p.draws||0)+'</td><td>'+Number(p.losses||0)+'</td><td><b>'+Number(p.points||0)+'</b></td>';body.append(tr)});
         const list=$('morsCupTournamentList');list.innerHTML='';
         if(!tournamentRes.data?.length){list.textContent='Na razie brak otwartych turniejów. Mors podobno szuka pucharu.'}
-        else tournamentRes.data.forEach(t=>{const card=document.createElement('article');card.className='morscup-tournament-card';const title=document.createElement('b');title.textContent=t.name;const detail=document.createElement('small');detail.textContent='Miejsca: do '+t.capacity+' · '+(t.status==='registration'?'Zapisy otwarte':'Turniej w trakcie');card.append(title,detail);if(t.status==='registration'){const join=document.createElement('button');join.type='button';join.className='btn btn-yellow';join.textContent='ZGŁOŚ MNIE';join.addEventListener('click',async()=>{join.disabled=true;const {error}=await client.from('morscup_tournament_entries').insert({tournament_id:t.id,player_id:profileId()});if(error){note(/duplicate|unique/i.test(error.message||'')?'Już jesteś na liście tego turnieju.':('Nie udało się zapisać: '+error.message),true);join.disabled=false}else note('Zgłoszenie przyjęte. Mors dopisał Cię do listy startowej!')});card.append(join)}list.append(card)});
+        else tournamentRes.data.forEach(t=>{const card=document.createElement('article');card.className='morscup-tournament-card';const title=document.createElement('b');title.textContent=t.name;const detail=document.createElement('small');detail.textContent='Miejsca: do '+t.capacity+' · '+(t.status==='registration'?'Zapisy otwarte':'Turniej w trakcie');card.append(title,detail);if(t.status==='registration'){const join=document.createElement('button');join.type='button';join.className='btn btn-yellow';join.textContent='ZGŁOŚ MNIE';join.addEventListener('click',async()=>{join.disabled=true;if(!localStorage.getItem(MORS_CUP_TOKEN_KEY)){note('Najpierw zapisz swój profil zawodnika.',true);join.disabled=false;return}const {data,error}=await client.rpc('szs_morscup_join_tournament',{p_tournament_id:t.id,p_player_id:profileId(),p_player_token:morsCupPlayerToken()});if(error){note(/duplicate|already/i.test(error.message||'')?'Już jesteś na liście tego turnieju.':('Nie udało się zapisać: '+error.message),true);join.disabled=false}else note(data?.already_joined?'Już jesteś na liście startowej tego turnieju.':'Zgłoszenie przyjęte. Mors dopisał Cię do listy startowej!')});card.append(join)}list.append(card)});
       }catch(e){$('morsCupSeasonName').textContent='Nie udało się pobrać ligi';$('morsCupSeasonStatus').textContent=e?.message||'Błąd połączenia.';note('Nie udało się odświeżyć danych ligi: '+(e?.message||'błąd'),true)}
       finally{$('morsCupRefresh').disabled=false}
     }
@@ -1238,7 +1240,7 @@
       if(!connect()){note('Brak połączenia z bazą ligi.',true);return}
       const button=$('morsCupSaveProfile');button.disabled=true;
       try{
-        const {error}=await client.from('morscup_players').upsert({player_id:profileId(),nickname:name,mascot:mascot.value},{onConflict:'player_id'});
+        const {error}=await client.rpc('szs_morscup_save_profile',{p_player_id:profileId(),p_player_token:morsCupPlayerToken(),p_nickname:name,p_mascot:mascot.value});
         if(error)throw error;
         localStorage.setItem('tkm_nick',name);localStorage.setItem('tkm_character',mascot.value);
         note('Profil zapisany! Płetwy na murawę — witamy w Mors Cup.');
