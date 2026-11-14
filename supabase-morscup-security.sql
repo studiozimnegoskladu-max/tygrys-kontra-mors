@@ -92,3 +92,13 @@ grant select on table public.morscup_seasons,public.morscup_matches,
 grant select on public.morscup_league_table to anon,authenticated;
 
 notify pgrst,'reload schema';
+
+-- Indeksy pod klucze obce tabel turniejowych.
+create index if not exists morscup_tournament_matches_player_one_id_idx
+  on public.morscup_tournament_matches(player_one_id);
+create index if not exists morscup_tournament_matches_player_two_id_idx
+  on public.morscup_tournament_matches(player_two_id);
+create index if not exists morscup_tournament_matches_winner_player_id_idx
+  on public.morscup_tournament_matches(winner_player_id);
+create index if not exists morscup_tournaments_season_id_idx
+  on public.morscup_tournaments(season_id);
