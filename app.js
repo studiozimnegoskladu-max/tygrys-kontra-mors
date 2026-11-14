@@ -58,35 +58,35 @@
   const morsJournalEntries=[
     {title:'Płetwa lewa, płetwa prawa',text:'Poniedziałek. Wstałem lewą płetwą. Prawa jeszcze śpi. Przegrałem dziś trzy razy w kółko i krzyżyk, ale przynajmniej mam piękne kły. Nie można mieć wszystkiego.',challenge:'Zagraj dziś jedną partię. Jeśli wygrasz, nie chwal się. Jeśli przegrasz, zwal winę na grawitację.',mood:'REFLEKSJA Z LODÓWKI'},
     {title:'Ekspert od nicnierobienia',text:'Opracowałem dziś nową metodę pracy. Najpierw patrzę na zadanie. Potem patrzę w dal. Po godzinie zadanie samo robi się mniej pilne. Jestem geniuszem.',challenge:'Zrób jedną rzecz, którą odkładasz od tygodnia. Potem odpocznij jak profesjonalista.',mood:'BADANIA WŁASNE'},
-    {title:'Sprawa podejrzanej ryby',text:'Ktoś zostawił rybę bez nadzoru. Oczywiście przeprowadziłem kontrolę jakości. Wynik: ryba zniknęła, kontrola zakończona sukcesem.',challenge:'Wygraj partię z Morsikiem. Nie przyjmujemy reklamacji na poziomie trudności.',mood:'RAPORT ŚLEDCZY'},
+    {title:'Sprawa podejrzanej ryby',text:'Ktoś zostawił rybę bez nadzoru. Oczywiście przeprowadziłem kontrolę jakości. Wynik: ryba zniknęła, kontrola zakończona sukcesem.',challenge:'Wygraj partię z Morścisławem. Nie przyjmujemy reklamacji na poziomie trudności.',mood:'RAPORT ŚLEDCZY'},
     {title:'Nie każda plama to błąd',text:'W drukarni powiedzieli, że zrobiłem plamę. Odpowiedziałem, że to nowoczesna kompozycja. Od tamtej pory każda moja wpadka ma nazwę artystyczną.',challenge:'Odwiedź dziś quiz poligraficzny i zdobądź przynajmniej 7 punktów.',mood:'SZTUKA WSPÓŁCZESNA'},
     {title:'Dzień bez dramatu',text:'Postanowiłem dziś nie robić dramatu. Wytrzymałem jedenaście sekund. Potem ktoś powiedział, że skończyła się kawa. To był koniec mojej cierpliwości.',challenge:'Rozegraj dwie partie. Spróbuj choć raz nie komentować wyniku.',mood:'SPOKÓJ WEWNĘTRZNY'},
     {title:'Kły to nie argument',text:'Hrabia Poprawek twierdzi, że zawsze ma rację. Ja też tak twierdzę. Różnica jest taka, że ja mam kły i nie muszę tego udowadniać.',challenge:'Rzuć wyzwanie komuś znajomemu. Niech rozstrzygnie to plansza.',mood:'POJEDYNEK NA OPINIE'},
     {title:'Wielki plan na jutro',text:'Mam plan. Jutro zrobię wszystko, czego nie zrobiłem dzisiaj. Pojutrze odpocznę po tym wielkim wysiłku. Kalendarz już się boi.',challenge:'Zagraj dziś choć jedną rundę. Nie odkładaj zwycięstwa na jutro.',mood:'STRATEGIA DŁUGOFALOWA'},
-    {title:'Kolor ma znaczenie',text:'Ktoś zapytał, czy widzę różnicę między cyanem a turkusem. Oczywiście. Jeden jest bardziej cyanowy, a drugi bardziej turkusowy. Proszę nie zadawać trudnych pytań przed obiadem.',challenge:'Odwiedź Morsowy Park Absurdu i sprawdź swój refleks.',mood:'KOLOROWA EKSPERTYZA'},
-    {title:'Mors kontra budzik',text:'Budzik zadzwonił o szóstej. Zignorowałem go. Zadzwonił o siódmej. Zignorowałem go bardziej. O ósmej wstałem, żeby go wyłączyć. Technicznie rzecz biorąc, wygrałem.',challenge:'Zrób dziś serię trzech rozgrywek. Zobaczymy, kto ma więcej wytrwałości.',mood:'PORANNY RAPORT'},
-    {title:'Instrukcja obsługi Morsa',text:'Punkt pierwszy: nie poganiać. Punkt drugi: nie zabierać ryby. Punkt trzeci: jeśli punkty pierwszy i drugi zawiodą, udawać, że to był test charakteru.',challenge:'Wybierz inną maskotkę niż zwykle i rozegraj nią partię.',mood:'DOKUMENT WEWNĘTRZNY'},
+    {title:'Kolor ma znaczenie',text:'Ktoś zapytał, czy widzę różnicę między cyanem a turkusem. Oczywiście. Jeden jest bardziej cyanowy, a drugi bardziej turkusowy. Proszę nie zadawać trudnych pytań przed obiadem.',challenge:'Odwiedź Park Absurdu Morścisława i sprawdź swój refleks.',mood:'KOLOROWA EKSPERTYZA'},
+    {title:'Morścisław kontra budzik',text:'Budzik zadzwonił o szóstej. Zignorowałem go. Zadzwonił o siódmej. Zignorowałem go bardziej. O ósmej wstałem, żeby go wyłączyć. Technicznie rzecz biorąc, wygrałem.',challenge:'Zrób dziś serię trzech rozgrywek. Zobaczymy, kto ma więcej wytrwałości.',mood:'PORANNY RAPORT'},
+    {title:'Instrukcja obsługi Morścisława',text:'Punkt pierwszy: nie poganiać. Punkt drugi: nie zabierać ryby. Punkt trzeci: jeśli punkty pierwszy i drugi zawiodą, udawać, że to był test charakteru.',challenge:'Wybierz inną maskotkę niż zwykle i rozegraj nią partię.',mood:'DOKUMENT WEWNĘTRZNY'},
     {title:'Remis też jest wynikiem',text:'Dziś zremisowałem. Niektórzy mówią, że nikt nie wygrał. Ja mówię, że obaj przegrali ze mną, tylko jeszcze o tym nie wiedzą.',challenge:'Spróbuj dziś doprowadzić do remisu. Strategia: kontrolowany chaos.',mood:'MĄDROŚĆ PŁETWIASTA'},
-    {title:'Kreatywność kontrolowana',text:'Narysowałem dziś prostą kreskę. Ktoś zapytał, czy to projekt. Odpowiedziałem: to początek wielkiej koncepcji. Potem dorysowałem drugą kreskę i podniosłem cenę.',challenge:'Zagraj partię i zakończ ją zwycięstwem. Morsowa kapituła patrzy.',mood:'DZIAŁ KREATYWNY'},
+    {title:'Kreatywność kontrolowana',text:'Narysowałem dziś prostą kreskę. Ktoś zapytał, czy to projekt. Odpowiedziałem: to początek wielkiej koncepcji. Potem dorysowałem drugą kreskę i podniosłem cenę.',challenge:'Zagraj partię i zakończ ją zwycięstwem. Kapituła Morścisława patrzy.',mood:'DZIAŁ KREATYWNY'},
     {title:'Nie ufaj cichej drukarce',text:'Drukarka milczy. To nie znaczy, że nie planuje. Znam te urządzenia. Najpierw cisza, potem komunikat: papier zacięty. A papier leży obok.',challenge:'Zagraj dziś z komputerem na trudnym poziomie. Odważ się.',mood:'OSTRZEŻENIE TECHNICZNE'},
     {title:'Wielka teoria płetwy',text:'Uważam, że każda decyzja powinna być podejmowana po krótkiej drzemce. Niestety niektóre decyzje podejmuję w trakcie drzemki. Stąd tyle niespodzianek.',challenge:'Zrób dziś coś inaczej: wybierz nową maskotkę albo przeciwnika.',mood:'FILOZOFIA LODOWA'},
     {title:'Raport z pola bitwy',text:'Plansza była bezlitosna. Przeciwnik sprytny. Ja piękny. Bilans? Nie będziemy psuć dobrego nastroju szczegółami.',challenge:'Zaproś znajomego do pojedynku i sprawdź, czy też ma tyle uroku.',mood:'KRONIKA ZWYCIĘSTW'},
-    {title:'Morsowa motywacja',text:'Pamiętaj: jeśli życie rzuca ci kłody pod płetwy, zbuduj z nich tratwę. Jeśli rzuca fakturę, przekaż ją księgowości.',challenge:'Wykonaj jedną misję dnia. Małe zwycięstwa też pachną rybą.',mood:'MOTYWACYJNY CHLUP'},
+    {title:'Morścisławowa motywacja',text:'Pamiętaj: jeśli życie rzuca ci kłody pod płetwy, zbuduj z nich tratwę. Jeśli rzuca fakturę, przekaż ją księgowości.',challenge:'Wykonaj jedną misję dnia. Małe zwycięstwa też pachną rybą.',mood:'MOTYWACYJNY CHLUP'},
     {title:'Nie jestem uparty',text:'Nie jestem uparty. Po prostu moje zdanie jest tak dobre, że nie widzę powodu, żeby je zmieniać. To zupełnie co innego.',challenge:'Zagraj rewanż z przeciwnikiem, który ostatnio Cię pokonał.',mood:'OFICJALNE STANOWISKO'},
-    {title:'Ostatnie słowo należy do Morsa',text:'Mówili, że nie dam rady. Mówili, że to niemożliwe. Mówili też, że mam przestać mówić. Tego ostatniego nie przyjąłem do wiadomości.',challenge:'Zagraj dziś trzy partie i zostaw po sobie legendę. Albo przynajmniej ślad płetwy.',mood:'MOWA KOŃCOWA'},
+    {title:'Ostatnie słowo należy do Morścisława',text:'Mówili, że nie dam rady. Mówili, że to niemożliwe. Mówili też, że mam przestać mówić. Tego ostatniego nie przyjąłem do wiadomości.',challenge:'Zagraj dziś trzy partie i zostaw po sobie legendę. Albo przynajmniej ślad płetwy.',mood:'MOWA KOŃCOWA'},
     {title:'Instrukcja do kawy',text:'Kawa powinna mieć instrukcję: wlać, wypić, nie zadawać pytań przed pierwszym łykiem. Zgłosiłem ten projekt do działu pilnych potrzeb.',challenge:'Zagraj dziś partię, zanim kawa wystygnie. Albo po drugiej kawie, nie oceniam.',mood:'DZIAŁ NAPOJÓW'},
     {title:'Podejrzanie dobry pomysł',text:'Wpadłem na genialny pomysł. Zapisałem go na kartce. Teraz nie mogę znaleźć kartki, ale jestem pewien, że zmieni świat.',challenge:'Wymyśl własny pseudonim gracza i zapisz go w profilu.',mood:'BURZA MÓZGU'},
     {title:'Płetwiasta elegancja',text:'Założyłem dziś muszkę. Wyglądam jak dyrektor. Nie wiem czego, ale na pewno czegoś bardzo ważnego.',challenge:'Wybierz maskotkę, której dawno nie używałeś, i wygraj nią rundę.',mood:'GARDEROBA MORSa'},
     {title:'Walka z pikselem',text:'Ktoś powiedział, że jeden piksel nic nie zmienia. Powiedziałem mu, że jeden okruszek też nic nie zmienia, dopóki nie wpadnie do klawiatury.',challenge:'Odwiedź quiz i sprawdź, czy pamiętasz podstawy przygotowania do druku.',mood:'DZIAŁ PRECYZJI'},
-    {title:'Morsowa prognoza',text:'Przewiduję dziś 100 procent szans na absurd. Wiatr z północy, humor z południa, a w lodówce pusto. Sytuacja rozwojowa.',challenge:'Zagraj dziś online ze znajomym. Niech pogoda rozstrzygnie pojedynek.',mood:'METEOROLOGIA PŁETW'},
+    {title:'Morścisławowa prognoza',text:'Przewiduję dziś 100 procent szans na absurd. Wiatr z północy, humor z południa, a w lodówce pusto. Sytuacja rozwojowa.',challenge:'Zagraj dziś online ze znajomym. Niech pogoda rozstrzygnie pojedynek.',mood:'METEOROLOGIA PŁETW'},
     {title:'Nie dotykać projektu',text:'Kiedy ktoś mówi „tylko mała poprawka”, chowam się pod biurko. Z doświadczenia wiem, że mała poprawka ma zwykle siedemnaście kuzynów.',challenge:'Pokonaj Hrabiego Poprawek w pojedynku. To sprawa honoru.',mood:'ALARM KOREKTORSKI'},
-    {title:'Dzień wielkich odkryć',text:'Odkryłem, że lodówka świeci się w środku. To znaczy, że ktoś tam zostawił światło. Śledztwo trwa, kanapka zaginęła.',challenge:'Zrób dziś komplet trzech misji dnia. Mors patrzy z uznaniem.',mood:'NAUKA I TECHNIKA'},
+    {title:'Dzień wielkich odkryć',text:'Odkryłem, że lodówka świeci się w środku. To znaczy, że ktoś tam zostawił światło. Śledztwo trwa, kanapka zaginęła.',challenge:'Zrób dziś komplet trzech misji dnia. Morścisław patrzy z uznaniem.',mood:'NAUKA I TECHNIKA'},
     {title:'Sztuka przegrywania',text:'Przegrywanie to też sztuka. Ja na przykład potrafię przegrać z godnością, wdziękiem i bardzo długim milczeniem. Potem mówię, że plansza była krzywa.',challenge:'Jeśli dziś przegrasz, zagraj rewanż. Jeśli wygrasz, też zagraj rewanż.',mood:'AKADEMIA HONORU'},
     {title:'Poważna narada',text:'Zwołałem naradę z samym sobą. Wszyscy byli zgodni, że należy zrobić przerwę. Uchwała przyjęta jednogłośnie.',challenge:'Zaproś drugiego gracza. Narady w pojedynkę są podejrzane.',mood:'POSIEDZENIE ZARZĄDU'},
     {title:'Tajemnica spadu',text:'Spad to nie jest to, co robię z kanapy. Chociaż czasem też potrzebuję dodatkowych trzech milimetrów marginesu bezpieczeństwa.',challenge:'Zdobądź dziś co najmniej 7/10 w teście Mistrza Drukarni.',mood:'POLIGRAFIA DLA PŁETW'},
-    {title:'Wielka płetwa sprawiedliwości',text:'Dziś rozdałem trzy sprawiedliwe werdykty. Dwa były dla mnie. Trzeci był dla ryby. Demokracja działa.',challenge:'Zagraj trzy partie i sprawdź, czy szczęście stoi po Twojej stronie.',mood:'TRYBUNAŁ MORSA'},
-    {title:'Złota zasada',text:'Jeśli nie wiesz, co zrobić, zrób herbatę. Jeśli nadal nie wiesz, zrób drugą. Jeśli nadal nic, zapytaj Morsa. Ale licz się z odpowiedzią.',challenge:'Odwiedź Koło Absurdu i sprawdź, co dziś wylosujesz.',mood:'PORADNIK ŻYCIOWY'},
-    {title:'Mors na urlopie',text:'Ogłaszam urlop od obowiązków. Będę odpoczywać aktywnie, czyli leżeć w innym miejscu niż zwykle. Proszę nie przeszkadzać.',challenge:'Zagraj jedną szybką partię. Urlop od nudy nie obowiązuje.',mood:'DZIAŁ WYPRAWKOWY'}
+    {title:'Wielka płetwa sprawiedliwości',text:'Dziś rozdałem trzy sprawiedliwe werdykty. Dwa były dla mnie. Trzeci był dla ryby. Demokracja działa.',challenge:'Zagraj trzy partie i sprawdź, czy szczęście stoi po Twojej stronie.',mood:'TRYBUNAŁ MORŚCISŁAWA'},
+    {title:'Złota zasada',text:'Jeśli nie wiesz, co zrobić, zrób herbatę. Jeśli nadal nie wiesz, zrób drugą. Jeśli nadal nic, zapytaj Morścisława. Ale licz się z odpowiedzią.',challenge:'Odwiedź Koło Absurdu i sprawdź, co dziś wylosujesz.',mood:'PORADNIK ŻYCIOWY'},
+    {title:'Morścisław na urlopie',text:'Ogłaszam urlop od obowiązków. Będę odpoczywać aktywnie, czyli leżeć w innym miejscu niż zwykle. Proszę nie przeszkadzać.',challenge:'Zagraj jedną szybką partię. Urlop od nudy nie obowiązuje.',mood:'DZIAŁ WYPRAWKOWY'}
   ];
   const journalDate=(offset=0)=>{const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-offset);return d};
   const journalDayNumber=(date)=>Math.floor((Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())-Date.UTC(2026,0,1))/86400000);
@@ -97,11 +97,11 @@
     const pick=(items)=>{seed=(seed*1664525+1013904223)>>>0;return items[seed%items.length]};
     const subjects=['drukarka','ryba','kawa','Hrabia Poprawek','lodówka','projekt','plansza','poniedziałek','płetwa','klient','piksel','spinacz'];
     const actions=['złożyła wypowiedzenie','zniknęła bez śladu','zażądała urlopu','weszła w tryb artystyczny','ogłosiła stan wyjątkowy','odmówiła współpracy','zaczęła podejrzanie mrugać','przeszła na dietę z tuszu'];
-    const places=['w dziale kreatywnym','na zapleczu drukarni','pod lodem','w Morsowym Parku Absurdu','na samym środku planszy','w kolejce po święty spokój','w archiwum nieudanych pomysłów'];
+    const places=['w dziale kreatywnym','na zapleczu drukarni','pod lodem','w Morścisławowym Parku Absurdu','na samym środku planszy','w kolejce po święty spokój','w archiwum nieudanych pomysłów'];
     const reactions=['Nie panikowałem. Najpierw zrobiłem minę eksperta, a potem zapytałem, czy ktoś widział moją rybę.','Zwołałem komisję. Byłem ja, moje odbicie i bardzo niezadowolona kanapka.','Hrabia zaproponował trzy poprawki. Wprowadziłem czwartą: zamknąłem notes.','Uznałem, że to znak. Nie wiem czego, ale wyglądał profesjonalnie.','W raporcie wpisałem: sytuacja pod kontrolą. Raport sam uciekł.','Przez chwilę chciałem zareagować rozsądnie, ale nie miałem przy sobie odpowiedniego formularza.','Wszyscy patrzyli na mnie. Ja patrzyłem na rybę. Ryba zachowała się najbardziej dojrzale.'];
     const endings=['Wniosek? Nie każda katastrofa jest porażką. Niektóre są po prostu bardzo głośne.','Od dziś wprowadzam nową zasadę: najpierw ryba, potem decyzje.','Sprawa pozostaje otwarta, głównie dlatego, że zgubiłem klucz do szuflady.','Zapisałem to w dzienniku. Dziennik poprosił o przeniesienie.','Jutro przeprowadzę dalsze badania. Chyba że będzie drzemka.'];
-    const challenges=['Zagraj dziś jedną rundę i rzuć wyzwanie komuś, kto za bardzo wierzy we własne umiejętności.','Odwiedź Morsowy Park Absurdu i sprawdź, czy masz dziś refleks godny płetwy.','Wykonaj jedną misję dnia. Morścisław Śledziwój osobiście przybije Ci mentalną pieczątkę.','Zmień maskotkę i rozegraj nią partię. Niech nastąpi płetwiasta odmiana.','Zagraj rewanż. Pamiętaj: plansza nie przyjmuje reklamacji, ale Mors wysłucha.','Wymyśl dziś własną nazwę dla małej wpadki. To pierwszy krok do wielkiej kariery.','Zaproś znajomego do gry. Samotne zwycięstwa są podejrzanie ciche.','Zajrzyj do quizu i udowodnij, że wiesz coś więcej niż to, gdzie trzyma się ryby.'];
-    const moods=['RAPORT Z PŁETW','KOMISJA ABSURDU','NOTATKA SŁUŻBOWA','BADANIA TERENOWE','REFLEKSJA Z LODÓWKI','DZIAŁ KREATYWNY','ALARM MORSA'];
+    const challenges=['Zagraj dziś jedną rundę i rzuć wyzwanie komuś, kto za bardzo wierzy we własne umiejętności.','Odwiedź Park Absurdu Morścisława i sprawdź, czy masz dziś refleks godny płetwy.','Wykonaj jedną misję dnia. Morścisław Śledziwój osobiście przybije Ci mentalną pieczątkę.','Zmień maskotkę i rozegraj nią partię. Niech nastąpi płetwiasta odmiana.','Zagraj rewanż. Pamiętaj: plansza nie przyjmuje reklamacji, ale Morścisław wysłucha.','Wymyśl dziś własną nazwę dla małej wpadki. To pierwszy krok do wielkiej kariery.','Zaproś znajomego do gry. Samotne zwycięstwa są podejrzanie ciche.','Zajrzyj do quizu i udowodnij, że wiesz coś więcej niż to, gdzie trzyma się ryby.'];
+    const moods=['RAPORT Z PŁETW','KOMISJA ABSURDU','NOTATKA SŁUŻBOWA','BADANIA TERENOWE','REFLEKSJA Z LODÓWKI','DZIAŁ KREATYWNY','ALARM MORŚCISŁAWA'];
     const subject=pick(subjects);
     return {
       title:subject.charAt(0).toUpperCase()+subject.slice(1)+' '+pick(['i wielka tajemnica','na zakręcie','kontra rzeczywistość','w stanie krytycznym','ma dziś wolne','oraz plan awaryjny']),
@@ -126,7 +126,7 @@
       $('morsJournalChallenge').textContent=entry.challenge;
       if(todayBtn)todayBtn.hidden=date.toDateString()===today.toDateString();
       const share=$('morsJournalShare');
-      if(share)share.onclick=()=>shareOnFacebook('DZIENNIK MORSA · '+journalDateLabel(date)+'\\n'+entry.title+'\\n\\n„'+entry.text+'”\\n\\nWYZWANIE: '+entry.challenge+'\\n\\nWięcej absurdów w grze Kółko, Krzyżyk i Dwa Promile Absurdu — Studio Zimnego Składu 🦭');
+      if(share)share.onclick=()=>shareOnFacebook('DZIENNIK MORŚCISŁAWA · '+journalDateLabel(date)+'\\n'+entry.title+'\\n\\n„'+entry.text+'”\\n\\nWYZWANIE: '+entry.challenge+'\\n\\nWięcej absurdów w grze Kółko, Krzyżyk i Dwa Promile Absurdu — Studio Zimnego Składu 🦭');
     }
     if(todayBtn)todayBtn.onclick=()=>showEntry(today);
     showEntry(today);
@@ -249,21 +249,21 @@
     const el=$('morsClubCount');if(!el)return;
     const p=clubProgress(),fill=$('morsClubFill');
     el.textContent=p.count+' / '+p.total+' odznak';
-    $('morsClubStatus').textContent=p.ready?'NIESPODZIANKA ODBLOKOWANA! Mors jest pod wrażeniem.':'Jeszcze '+Math.max(0,3-p.count)+' do morsowej niespodzianki.';
+    $('morsClubStatus').textContent=p.ready?'NIESPODZIANKA ODBLOKOWANA! Morścisław jest pod wrażeniem.':'Jeszcze '+Math.max(0,3-p.count)+' do niespodzianki Morścisława.';
     if(fill)fill.style.width=Math.min(100,p.count/p.total*100)+'%';
-    $('morsRewardTitle').textContent=p.ready?'🎉 Odblokowano morsową niespodziankę!':'🎁 Morsowa niespodzianka jest jeszcze zamknięta';
-    $('morsRewardText').textContent=p.ready?'Napisz do studia, pokaż swój dyplom i zapytaj o dostępne naklejki Morsa lub bonus do zamówienia. Studio potwierdzi aktualną nagrodę.':'Zdobądź 3 odznaki, a odblokujesz możliwość zapytania studia o naklejki Morsa lub bonus do zamówienia.';
+    $('morsRewardTitle').textContent=p.ready?'🎉 Odblokowano morsową niespodziankę!':'🎁 Niespodzianka Morścisława jest jeszcze zamknięta';
+    $('morsRewardText').textContent=p.ready?'Napisz do studia, pokaż swój dyplom i zapytaj o dostępne naklejki Morścisława lub bonus do zamówienia. Studio potwierdzi aktualną nagrodę.':'Zdobądź 3 odznaki, a odblokujesz możliwość zapytania studia o naklejki Morścisława lub bonus do zamówienia.';
     $('morsRewardPanel').classList.toggle('unlocked',p.ready);
   }
   const diplomaList=[
     {id:'first-game',icon:'🎮',name:'PIERWSZE STARCIE',desc:'Za rozegranie pierwszej partii',detail:'Oficjalnie przekraczasz próg planszowego absurdu.'},
-    {id:'first-win',icon:'🏆',name:'PIERWSZA KREW',desc:'Za pierwsze zwycięstwo',detail:'Pierwszy rywal pokonany. Mors kiwa płetwą z uznaniem.'},
+    {id:'first-win',icon:'🏆',name:'PIERWSZA KREW',desc:'Za pierwsze zwycięstwo',detail:'Pierwszy rywal pokonany. Morścisław kiwa płetwą z uznaniem.'},
     {id:'hat-trick',icon:'🔥',name:'HAT-TRICK',desc:'Za trzy zwycięstwa',detail:'Trzy wygrane na koncie. Przypadek? Hrabia twierdzi, że nie.'},
-    {id:'hot-streak',icon:'⚡',name:'NIE DO ZATRZYMANIA',desc:'Za serię pięciu zwycięstw',detail:'Plansza drży, przeciwnicy się pocą, Mors prosi o autograf.'},
+    {id:'hot-streak',icon:'⚡',name:'NIE DO ZATRZYMANIA',desc:'Za serię pięciu zwycięstw',detail:'Plansza drży, przeciwnicy się pocą, Morścisław prosi o autograf.'},
     {id:'veteran',icon:'🎖️',name:'WETERAN PLANSZY',desc:'Za rozegranie dziesięciu partii',detail:'Dziesięć starć za Tobą. Znasz już każdy kant tej planszy.'},
     {id:'peace',icon:'🤝',name:'DYPLOMATA',desc:'Za zakończenie partii remisem',detail:'Pokój zwyciężył. Hrabia nie jest przekonany, ale podpisuje.'},
     {id:'champion',icon:'👑',name:'LEGENDA POJEDYNKÓW',desc:'Za dziesięć zwycięstw',detail:'Dziesięć zwycięstw. Tytuł legendy przyznany bez prawa odwołania.'},
-    {id:'quiz-master',icon:'🖨️',name:'MISTRZ POLIGRAFII',desc:'Za wynik minimum 7/10 w quizie',detail:'CMYK nie ma przed Tobą tajemnic. Mors zatwierdza jakość.'},
+    {id:'quiz-master',icon:'🖨️',name:'MISTRZ POLIGRAFII',desc:'Za wynik minimum 7/10 w quizie',detail:'CMYK nie ma przed Tobą tajemnic. Morścisław zatwierdza jakość.'},
     {id:'fortune-spin',icon:'🎡',name:'SZCZĘŚLIWY OBRÓT',desc:'Za zakręcenie Kołem Fortuny',detail:'Los się do Ciebie uśmiechnął. Nawet Hrabia nie wnosi poprawek.'}
   ];
   function unlockedDiplomas(){return new Set([...achievementStats.unlocked,...unlockedStickers()])}
@@ -338,8 +338,8 @@
     ctx.font='italic 29px Arial';ctx.fillStyle='#087d91';ctx.fillText(item.detail,W/2,1060);
     ctx.font='800 24px Arial';ctx.fillStyle='#211f20';ctx.fillText('PRZYZNANO ZA: '+item.desc.toUpperCase(),W/2,1112);
     // Pieczęć kapituły w dolnym prawym rogu.
-    ctx.save();ctx.translate(1480,1030);ctx.rotate(-.13);ctx.strokeStyle='#ec268f';ctx.lineWidth=10;ctx.beginPath();ctx.arc(0,0,104,0,Math.PI*2);ctx.stroke();ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,88,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#ec268f';ctx.font='900 22px Arial';ctx.fillText('MORS',0,-8);ctx.font='900 17px Arial';ctx.fillText('ZATWIERDZA',0,22);ctx.font='28px Arial';ctx.fillText('✦',0,57);ctx.restore();
-    ctx.font='900 21px Arial';ctx.fillStyle='#211f20';ctx.fillText('MORS POTWIERDZA. HRABIA MA ZASTRZEŻENIA.',W/2,1190);
+    ctx.save();ctx.translate(1480,1030);ctx.rotate(-.13);ctx.strokeStyle='#ec268f';ctx.lineWidth=10;ctx.beginPath();ctx.arc(0,0,104,0,Math.PI*2);ctx.stroke();ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,88,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#ec268f';ctx.font='900 22px Arial';ctx.fillText('MORŚCISŁAW',0,-8);ctx.font='900 17px Arial';ctx.fillText('ZATWIERDZA',0,22);ctx.font='28px Arial';ctx.fillText('✦',0,57);ctx.restore();
+    ctx.font='900 21px Arial';ctx.fillStyle='#211f20';ctx.fillText('MORŚCISŁAW POTWIERDZA. HRABIA MA ZASTRZEŻENIA.',W/2,1190);
     ctx.font='20px Arial';ctx.fillStyle='#555';ctx.fillText('STUDIO ZIMNEGO SKŁADU  •  '+new Date().toLocaleDateString('pl-PL'),W/2,1220);
     return canvas;
   }
@@ -351,7 +351,7 @@
   }
   function shareDiploma(id){
     const item=diplomaList.find(x=>x.id===id);if(!item||!unlockedDiplomas().has(id))return;
-    shareOnFacebook('Mors oficjalnie nadał mi dyplom: '+item.name+'! Zdobyłem go w grze Kółko, Krzyżyk i Dwa Promile Absurdu. A Ty dasz radę? 🦭🏅');
+    shareOnFacebook('Morścisław oficjalnie nadał mi dyplom: '+item.name+'! Zdobyłem go w grze Kółko, Krzyżyk i Dwa Promile Absurdu. A Ty dasz radę? 🦭🏅');
   }
   $('diplomaGrid')?.addEventListener('click',e=>{
     const download=e.target.closest('[data-diploma-download]'),share=e.target.closest('[data-diploma-share]');
@@ -368,9 +368,9 @@
   }
 
   const fortunePrizes=[
-    {icon:'⭐',name:'Klient: „zrób większe”',desc:'Pokaż palcami, jak duże jest „trochę większe”. Mors i tak poprosi o jeszcze 2 mm.'},
+    {icon:'⭐',name:'Klient: „zrób większe”',desc:'Pokaż palcami, jak duże jest „trochę większe”. Morścisław i tak poprosi o jeszcze 2 mm.'},
     {icon:'🦭',name:'Płetwa grafika',desc:'Wymyśl w 10 sekund hasło reklamowe dla morsiej budki z goframi. Ma się rymować z CMYK.'},
-    {icon:'🎨',name:'CMYKowy zawrót głowy',desc:'Wymień cztery składowe CMYK bez zaglądania do internetu. Mors sprawdza!' },
+    {icon:'🎨',name:'CMYKowy zawrót głowy',desc:'Wymień cztery składowe CMYK bez zaglądania do internetu. Morścisław sprawdza!' },
     {icon:'☕',name:'Kawa operatora',desc:'Zrób minę człowieka, który właśnie usłyszał: „wysłałem plik w Wordzie, może być?”'},
     {icon:'🐯',name:'Hrabia kontruje',desc:'Powiedz z kamienną twarzą: „to już ostatnia poprawka”. Hrabia Poprawek parska śmiechem.'},
     {icon:'🖨️',name:'Spad czy nie spad?',desc:'Pokaż rękami, gdzie kończy się format netto, a zaczyna spad. Bez używania słowa „no”.'},
@@ -385,7 +385,7 @@
     if(wheel&&done&&Number.isFinite(saved.rotation)){wheel.style.transition='none';wheel.style.transform='rotate('+saved.rotation+'deg)'}
     if(hand){hand.setAttribute('aria-disabled',String(done));hand.tabIndex=done?-1:0}
     $('fortuneResult').textContent=done?(saved.prize||'Dziś już zakręcono kołem!'):'Koło czeka na pierwszy obrót…';
-    $('fortuneNote').textContent=done?'Dzisiejsza niespodzianka jest już Twoja.':'Chwyć żółtą łapkę Morsa, przeciągnij ją po okręgu i puść. Jedno losowanie dziennie.';
+    $('fortuneNote').textContent=done?'Dzisiejsza niespodzianka jest już Twoja.':'Chwyć żółtą łapkę Morścisława, przeciągnij ją po okręgu i puść. Jedno losowanie dziennie.';
   }
 
   $('closeCandyJackpot')?.addEventListener('click',()=>{$('candyJackpot').hidden=true;document.body.classList.remove('jackpot-open')});
@@ -430,7 +430,7 @@
       e.preventDefault();dragging=true;activePointer=e.pointerId;
       lastAngle=angleAt(e);lastTime=performance.now();velocity=0;lastDelta=0;
       rotation=Number(wheel.dataset.rotation||0);wheel.style.transition='none';stage.classList.add('dragging');hand.classList.add('dragging');
-      $('fortuneResult').textContent='Mors nabiera rozpędu…';$('fortuneNote').textContent='Przeciągnij palcem lub myszką po obwodzie koła i puść. Możesz złapać za łapkę albo samo koło!';
+      $('fortuneResult').textContent='Morścisław nabiera rozpędu…';$('fortuneNote').textContent='Przeciągnij palcem lub myszką po obwodzie koła i puść. Możesz złapać za łapkę albo samo koło!';
       placeHand(e);
     };
     const move=e=>{
@@ -478,8 +478,8 @@
   let quizIndex=0,quizPoints=0,quizLocked=false;
   function startPrintQuiz(){quizIndex=0;quizPoints=0;quizLocked=false;$('quizStart').classList.add('hidden');$('quizResult').classList.add('hidden');$('quizPlay').classList.remove('hidden');renderPrintQuiz();}
   function renderPrintQuiz(){const item=printQuiz[quizIndex];$('quizProgress').textContent='PYTANIE '+(quizIndex+1)+' / '+printQuiz.length;$('quizScore').textContent='PUNKTY: '+quizPoints;$('quizTrackFill').style.width=((quizIndex+1)/printQuiz.length*100)+'%';$('quizQuestion').textContent=item.q;$('quizFeedback').textContent='';$('quizNextBtn').classList.add('hidden');const wrap=$('quizOptions');wrap.innerHTML='';item.a.forEach((answer,i)=>{const b=document.createElement('button');b.type='button';b.className='quiz-option';b.textContent=String.fromCharCode(65+i)+'. '+answer;b.addEventListener('click',()=>answerPrintQuiz(i));wrap.append(b)});quizLocked=false;}
-  function answerPrintQuiz(choice){if(quizLocked)return;quizLocked=true;const item=printQuiz[quizIndex],buttons=[...$('quizOptions').children];buttons.forEach((b,i)=>{b.disabled=true;if(i===item.c)b.classList.add('correct');if(i===choice&&choice!==item.c)b.classList.add('wrong')});$('quizFeedback').textContent=(choice===item.c?'✓ DOBRZE! ':'✗ OJ, MORS BY TO SPRAWDZIŁ. ')+item.why;if(choice===item.c)quizPoints++;$('quizScore').textContent='PUNKTY: '+quizPoints;$('quizNextBtn').textContent=quizIndex===printQuiz.length-1?'POKAŻ WYNIK →':'NASTĘPNE PYTANIE →';$('quizNextBtn').classList.remove('hidden');}
-  function finishPrintQuiz(){if(quizPoints>=7){todayMissions=dailyStats();todayMissions.quiz=1;saveDaily();unlockSticker('quiz-master')}const levels=quizPoints>=9?['🏆','LEGENDARNY MISTRZ DRUKU','Masz poligrafię w małym palcu. Mors prosi o autograf.']:quizPoints>=7?['🥇','OPERATOR PEŁNĄ GĘBĄ','Bardzo solidna robota. Hrabia Poprawek oddaje Ci próbnik kolorów.']:quizPoints>=5?['🖨️','OGARNIACZ DRUKARNI','Jest potencjał! Jeszcze kilka kaw i będzie perfekcja.']:['🦭','POMOCNIK OD SPINACZY','Spokojnie, praktyka czyni mistrza. Mors też kiedyś mylił spady z kanapkami.'];$('quizPlay').classList.add('hidden');$('quizResult').classList.remove('hidden');$('quizResultIcon').textContent=levels[0];$('quizResultTitle').textContent=levels[1];$('quizResultText').textContent=levels[2];$('quizFinalScore').textContent=quizPoints+' / '+printQuiz.length+' PUNKTÓW';}
+  function answerPrintQuiz(choice){if(quizLocked)return;quizLocked=true;const item=printQuiz[quizIndex],buttons=[...$('quizOptions').children];buttons.forEach((b,i)=>{b.disabled=true;if(i===item.c)b.classList.add('correct');if(i===choice&&choice!==item.c)b.classList.add('wrong')});$('quizFeedback').textContent=(choice===item.c?'✓ DOBRZE! ':'✗ OJ, MORŚCISŁAW BY TO SPRAWDZIŁ. ')+item.why;if(choice===item.c)quizPoints++;$('quizScore').textContent='PUNKTY: '+quizPoints;$('quizNextBtn').textContent=quizIndex===printQuiz.length-1?'POKAŻ WYNIK →':'NASTĘPNE PYTANIE →';$('quizNextBtn').classList.remove('hidden');}
+  function finishPrintQuiz(){if(quizPoints>=7){todayMissions=dailyStats();todayMissions.quiz=1;saveDaily();unlockSticker('quiz-master')}const levels=quizPoints>=9?['🏆','LEGENDARNY MISTRZ DRUKU','Masz poligrafię w małym palcu. Morścisław prosi o autograf.']:quizPoints>=7?['🥇','OPERATOR PEŁNĄ GĘBĄ','Bardzo solidna robota. Hrabia Poprawek oddaje Ci próbnik kolorów.']:quizPoints>=5?['🖨️','OGARNIACZ DRUKARNI','Jest potencjał! Jeszcze kilka kaw i będzie perfekcja.']:['🦭','POMOCNIK OD SPINACZY','Spokojnie, praktyka czyni mistrza. Morścisław też kiedyś mylił spady z kanapkami.'];$('quizPlay').classList.add('hidden');$('quizResult').classList.remove('hidden');$('quizResultIcon').textContent=levels[0];$('quizResultTitle').textContent=levels[1];$('quizResultText').textContent=levels[2];$('quizFinalScore').textContent=quizPoints+' / '+printQuiz.length+' PUNKTÓW';}
   function nextPrintQuiz(){if(quizIndex<printQuiz.length-1){quizIndex++;renderPrintQuiz()}else finishPrintQuiz();}
 
   const GAME_URL='https://studiozimnegoskladu-max.github.io/tygrys-kontra-mors/';
@@ -613,7 +613,7 @@
     if(which==='soccer'){
       soccerMusicActive=true;
       if(mainTrack)mainTrack.pause();
-      if(cupTrack){cupTrack.volume=.55;cupTrack.loop=true;if(musicOn)cupTrack.play().catch(err=>console.warn('Nie udało się uruchomić muzyki Mors Cup:',err));}
+      if(cupTrack){cupTrack.volume=.55;cupTrack.loop=true;if(musicOn)cupTrack.play().catch(err=>console.warn('Nie udało się uruchomić muzyki Morścisław Cup:',err));}
     }else if(soccerMusicActive){
       soccerMusicActive=false;
       if(cupTrack){cupTrack.pause();cupTrack.currentTime=0;}
@@ -638,13 +638,13 @@
   function showGame(){resultOverlayDismissed=false;setup.classList.remove('hidden');setup.classList.add('playing');game.classList.remove('hidden');$('roomCode').textContent=room||'LOKALNIE';$('playerName').textContent=nick();if(mode==='online'){updateOnlineCharacters()}else{const ownCard=document.querySelector('.tiger-score');setScoreCharacter(ownCard,selectedCharacter);setScoreCharacter(document.querySelector('.mors-score'),'mors');}renderAchievements();newPrintBrief();}
   const printBriefs=[
     {title:'NA WCZORAJ, ALE TANIO',text:'Klient chce 5000 ulotek, projekt, druk i dostawę. Termin? Najlepiej 10 minut temu.'},
-    {title:'MORS I WIELKI BANER',text:'Baner 2 × 1 metr. Ma być widoczny z kosmosu, ale plik klient wysłał w rozdzielczości znaczka pocztowego.'},
+    {title:'MORŚCISŁAW I WIELKI BANER',text:'Baner 2 × 1 metr. Ma być widoczny z kosmosu, ale plik klient wysłał w rozdzielczości znaczka pocztowego.'},
     {title:'TAJEMNICZE CMYK',text:'Klient twierdzi, że granat to przecież prawie żółty. Hrabia Poprawek już szuka próbnika kolorów.'},
-    {title:'NAKLEJKI BEZ KOŃCA',text:'Jedna naklejka próbna przerodziła się w zamówienie na dziesięć tysięcy. Mors odpala ploter!'},
+    {title:'NAKLEJKI BEZ KOŃCA',text:'Jedna naklejka próbna przerodziła się w zamówienie na dziesięć tysięcy. Morścisław odpala ploter!'},
     {title:'LOGO W 5 MINUT',text:'„Mam tylko małe poprawki”. Po chwili przychodzi 37 wiadomości i zdjęcie logo zrobione kalkulatorem.'},
     {title:'PAPIEROWA KATASTROFA',text:'Maszyna ruszyła, papier jest, kawa też. Brakuje tylko pliku, który klient obiecał wysłać wczoraj.'},
     {title:'PROJEKT IDEALNY',text:'Klient chce większe, mniejsze, bardziej widoczne i mniej rzucające się w oczy. Powodzenia, graficy!'},
-    {title:'MISTRZ USZLACHETNIEŃ',text:'Złocenie, lakier, tłoczenie i brokat. Mors mówi, że da się zrobić. Hrabia Poprawek pyta: na kiedy?'}
+    {title:'MISTRZ USZLACHETNIEŃ',text:'Złocenie, lakier, tłoczenie i brokat. Morścisław mówi, że da się zrobić. Hrabia Poprawek pyta: na kiedy?'}
   ];
   function newPrintBrief(){
     const brief=printBriefs[Math.floor(Math.random()*printBriefs.length)];
@@ -662,18 +662,18 @@
     llama:{move:['Lama Drama robi wejście. Będzie gorąco!','Uwaga, plucie… znaczy, precyzyjny ruch!','Lama ma dziś dramatycznie dobry plan!'],win:['LAMA DRAMA! Finał godny owacji na stojąco!','Ależ drama! Lama zgarnia zwycięstwo!']}
   };
   const quips={
-    tiger:['Hrabia Poprawek mierzy. Mors niech się boi!','Pazury w gotowości. Strategia w toku.','Hrabia Poprawek mówi: to pole jest moje!'],
-    mors:['Mors kombinuje. I to całkiem sprytnie!','Płetwy pracują na pełnych obrotach!','Mors spokojny… aż do zwycięstwa.'],
+    tiger:['Hrabia Poprawek mierzy. Morścisław niech się boi!','Pazury w gotowości. Strategia w toku.','Hrabia Poprawek mówi: to pole jest moje!'],
+    mors:['Morścisław kombinuje. I to całkiem sprytnie!','Płetwy pracują na pełnych obrotach!','Morścisław spokojny… aż do zwycięstwa.'],
     draw:['REMIS! Rozejm przy rybnym bufecie.','Nikt nie wygrał. Podejrzana sprawa…','Po równo! Dogrywka, zanim ostygną emocje!'],
-    tigerWin:['HRABIA POPRAWEK GÓRĄ! Mors musi zamoczyć brodę.','Ryk zwycięstwa! Hrabia Poprawek rozdaje karty!','Ale poprawka! Hrabia Poprawek bierze tę rundę!'],
-    morsWin:['MORS WYGRYWA! Płetwy same klaszczą!','Co za fikołek! Mors ograł Hrabiego Poprawek!','Zimna krew i gorące zwycięstwo Morsa!']
+    tigerWin:['HRABIA POPRAWEK GÓRĄ! Morścisław musi zamoczyć brodę.','Ryk zwycięstwa! Hrabia Poprawek rozdaje karty!','Ale poprawka! Hrabia Poprawek bierze tę rundę!'],
+    morsWin:['MORŚCISŁAW WYGRYWA! Płetwy same klaszczą!','Co za fikołek! Morścisław ograł Hrabiego Poprawek!','Zimna krew i gorące zwycięstwo Morścisława!']
   };
   const secretEvents=[
-    {title:'MORS PRZEJĄŁ PLANSZĘ!',text:'Przerwa techniczna. Mors sprawdza, czy kratki są wystarczająco mokre.'},
+    {title:'MORŚCISŁAW PRZEJĄŁ PLANSZĘ!',text:'Przerwa techniczna. Morścisław sprawdza, czy kratki są wystarczająco mokre.'},
     {title:'KOZA JOŁANNA WCHODZI DO AKCJI!',text:'BEEE! Komisja kopyt uznała ten ruch za podejrzanie elegancki.'},
     {title:'HRABIA MA FOCHA',text:'Hrabia Poprawek odwrócił się plecami. Prosi o kontakt wyłącznie przez pełnomocnika.'},
     {title:'AWARIA DRUKARNI!',text:'Na planszę spadła pieczątka DO POPRAWY. Prosimy zachować spokój i pliki otwarte.'},
-    {title:'KONTROLA JAKOŚCI',text:'Mors sprawdził planszę. Wynik kontroli: za dużo ambicji, za mało ryb.'},
+    {title:'KONTROLA JAKOŚCI',text:'Morścisław sprawdził planszę. Wynik kontroli: za dużo ambicji, za mało ryb.'},
     {title:'DWA PROMILE ABSURDU!',text:'Wykryto niebezpieczne stężenie głupoty. Rozgrywka może być kontynuowana.'},
     {title:'NIEAUTORYZOWANY KLEKS',text:'Ktoś rozlał CMYK. Hrabia twierdzi, że to nowy trend w projektowaniu.'},
     {title:'KOZA ZGŁASZA REKLAMACJĘ',text:'Powód: plansza nie zawiera wystarczającej ilości siana. Reklamacja odrzucona.'}
@@ -699,7 +699,7 @@
     const poseIndex=poses[value]-1;
     art.dataset.pose=String(poses[value]);
     art.style.backgroundImage="url('assets/mors-"+String(poseIndex).padStart(2,'0')+".png?v=20261108-moods')";
-    const labels={sleep:'Mors zasypia',music:'Mors słucha muzyki',run:'Mors biegnie',panic:'Mors jest zaskoczony',angry:'Mors jest wściekły',shout:'Mors krzyczy',paint:'Mors maluje',clap:'Mors klaszcze',gesture:'Mors pokazuje gest',fierce:'Mors robi groźną minę',sad:'Mors jest smutny',celebrate:'Mors świętuje',wave:'Mors macha na powitanie',sit:'Mors siedzi i czeka',think:'Mors się zastanawia'};
+    const labels={sleep:'Morścisław zasypia',music:'Morścisław słucha muzyki',run:'Morścisław biegnie',panic:'Morścisław jest zaskoczony',angry:'Morścisław jest wściekły',shout:'Morścisław krzyczy',paint:'Morścisław maluje',clap:'Morścisław klaszcze',gesture:'Morścisław pokazuje gest',fierce:'Morścisław robi groźną minę',sad:'Morścisław jest smutny',celebrate:'Morścisław świętuje',wave:'Morścisław macha na powitanie',sit:'Morścisław siedzi i czeka',think:'Morścisław się zastanawia'};
     art.setAttribute('aria-label',labels[value]);
   }
   function scheduleMorsIdle(){if(morsIdleTimer){clearTimeout(morsIdleTimer);morsIdleTimer=null;}}
@@ -710,7 +710,7 @@
     let n=Math.floor(Math.random()*list.length);if(list.length>1&&n===commentIndex)n=(n+1)%list.length;commentIndex=n;
     const copy=$('commentaryText');if(copy)copy.textContent=list[n];else el.textContent=list[n];
     el.dataset.mood=kind;el.dataset.character=character||'classic';
-    const moodLabels={tiger:'HRABIA POPRAWEK W AKCJI',mors:'MORS KOMENTUJE',draw:'REMIS — NIKT NIE PĘKA',tigerWin:'HRABIA ŚWIĘTUJE · MORS MA FOCHA',morsWin:'MORS ŚWIĘTUJE ZWYCIĘSTWO'};
+    const moodLabels={tiger:'HRABIA POPRAWEK W AKCJI',mors:'MORŚCISŁAW KOMENTUJE',draw:'REMIS — NIKT NIE PĘKA',tigerWin:'HRABIA ŚWIĘTUJE · MORŚCISŁAW MA FOCHA',morsWin:'MORŚCISŁAW ŚWIĘTUJE ZWYCIĘSTWO'};
     const mood=$('commentaryMood');if(mood)mood.textContent=moodLabels[kind]||(characterNames[character]||'EKIPA SZS')+' KOMENTUJE';
     let pose='wave';
     if(kind==='draw')pose='think';
@@ -724,8 +724,8 @@
     scheduleMorsIdle();
   }
   function render(){if(!current)return;cells.forEach((cell,i)=>{cell.innerHTML='';cell.classList.toggle('winning',(current.winning||[]).includes(i));const mark=current.board[i];if(mark){const character=characterForMark(mark);if(CHARACTER_EMOJI[character]){const avatar=document.createElement('span');avatar.className='board-character';avatar.textContent=CHARACTER_EMOJI[character];cell.append(avatar)}else{const im=document.createElement('img');im.className='board-avatar board-avatar-'+character;im.src=characterAssetUrl(character)+'?v=20261110-mascots-1';im.alt=characterNames[character]||'Maskotka SZS';cell.append(im)}}const canPlay=mode==='local'||(mode==='cpu'&&current.turn===TIGER)||(mode==='online'&&current.turn===role&&(current.guestJoined||role===current.creatorRole));cell.disabled=!!mark||current.status!=='playing'||!canPlay||busy});
-    const w=current.winner;game.classList.toggle('round-finished',current.status==='finished');game.classList.toggle('round-draw',w==='draw');game.classList.toggle('series-won',!!seriesWinner);$('turnBanner').textContent=seriesWinner?('🏆 '+sideLabel(seriesWinner).toUpperCase()+' ZDOBYWA PUCHAR!'):w==='draw'?'REMIS! NIKT NIE ODPUSZCZA 😎':w?(sideLabel(w).toUpperCase()+' WYGRYWA!'):(mode==='local'?'RUCH: '+sideLabel(current.turn):mode==='cpu'?(current.turn===TIGER?'TWOJA KOLEJ — RUSZAJ!':'MORS MYŚLI…'):current.turn===role&&(!current.guestJoined?role===current.creatorRole:true)?'TWOJA KOLEJ — RUSZAJ!':!current.guestJoined?'PIERWSZY RUCH ZROBIONY — DRUGI GRACZ MOŻE DOŁĄCZYĆ W DOWOLNEJ CHWILI':'RUCH PRZECIWNIKA…');
-    $('seriesLabel').textContent=(mode==='online'?'WYNIK TEJ SESJI':'SERIA DO 3 ZWYCIĘSTW')+' · '+(scores.tiger+scores.mors)+' ROZEGRANYCH RUND';$('roleLabel').textContent=mode==='local'?'DWAJ GRACZE · JEDNO URZĄDZENIE':mode==='cpu'?'TY: '+sideLabel(TIGER)+' · MORS: '+({easy:'ŁATWY',normal:'ŚREDNI',hard:'TRUDNY'}[cpuDifficulty]||'ŚREDNI'):'Grasz jako '+sideLabel(role)+' ('+(role===TIGER?'kółko':'krzyżyk')+')';$('newRoundBtn').disabled=current.status!=='finished'||!!seriesWinner;$('newMatchBtn').textContent=seriesWinner?'NOWY TURNIEJ ↻':'ZERUJ TURNIEJ ↻';$('newMatchBtn').classList.toggle('hidden',mode==='online');$('tigerScore').textContent=scores.tiger;$('morsScore').textContent=scores.mors;const resultOverlay=$('roundResultOverlay');if(resultOverlay){const resultTitle=$('roundResultTitle'),resultText=$('roundResultText'),resultIcon=$('roundResultIcon');if(current.status==='finished'){if(current.winner==='draw'){if(resultTitle)resultTitle.textContent='REMIS!';if(resultText)resultText.textContent='Nikt nie odpuszcza. Plansza potrzebuje dogrywki, a Mors — kawy.';if(resultIcon)resultIcon.textContent='🤝';}else{if(resultTitle)resultTitle.textContent=sideLabel(current.winner).toUpperCase()+' WYGRYWA!';if(resultText)resultText.textContent=seriesWinner?'PUCHAR WĘDRUJE DO ZWYCIĘZCY!':mode==='local'?'Runda rozstrzygnięta. Druga strona już szykuje protest.':(mode==='cpu'&&current.winner===TIGER)||(mode==='online'&&current.winner===role)?'Piękna robota! Hrabia właśnie sprawdza regulamin.':'Tym razem przeciwnik był górą. Rewanż czeka!';if(resultIcon)resultIcon.textContent=seriesWinner?'🏆':'💥';}}resultOverlay.hidden=current.status!=='finished'||resultOverlayDismissed;}updateSoundButton();}
+    const w=current.winner;game.classList.toggle('round-finished',current.status==='finished');game.classList.toggle('round-draw',w==='draw');game.classList.toggle('series-won',!!seriesWinner);$('turnBanner').textContent=seriesWinner?('🏆 '+sideLabel(seriesWinner).toUpperCase()+' ZDOBYWA PUCHAR!'):w==='draw'?'REMIS! NIKT NIE ODPUSZCZA 😎':w?(sideLabel(w).toUpperCase()+' WYGRYWA!'):(mode==='local'?'RUCH: '+sideLabel(current.turn):mode==='cpu'?(current.turn===TIGER?'TWOJA KOLEJ — RUSZAJ!':'MORŚCISŁAW MYŚLI…'):current.turn===role&&(!current.guestJoined?role===current.creatorRole:true)?'TWOJA KOLEJ — RUSZAJ!':!current.guestJoined?'PIERWSZY RUCH ZROBIONY — DRUGI GRACZ MOŻE DOŁĄCZYĆ W DOWOLNEJ CHWILI':'RUCH PRZECIWNIKA…');
+    $('seriesLabel').textContent=(mode==='online'?'WYNIK TEJ SESJI':'SERIA DO 3 ZWYCIĘSTW')+' · '+(scores.tiger+scores.mors)+' ROZEGRANYCH RUND';$('roleLabel').textContent=mode==='local'?'DWAJ GRACZE · JEDNO URZĄDZENIE':mode==='cpu'?'TY: '+sideLabel(TIGER)+' · MORŚCISŁAW: '+({easy:'ŁATWY',normal:'ŚREDNI',hard:'TRUDNY'}[cpuDifficulty]||'ŚREDNI'):'Grasz jako '+sideLabel(role)+' ('+(role===TIGER?'kółko':'krzyżyk')+')';$('newRoundBtn').disabled=current.status!=='finished'||!!seriesWinner;$('newMatchBtn').textContent=seriesWinner?'NOWY TURNIEJ ↻':'ZERUJ TURNIEJ ↻';$('newMatchBtn').classList.toggle('hidden',mode==='online');$('tigerScore').textContent=scores.tiger;$('morsScore').textContent=scores.mors;const resultOverlay=$('roundResultOverlay');if(resultOverlay){const resultTitle=$('roundResultTitle'),resultText=$('roundResultText'),resultIcon=$('roundResultIcon');if(current.status==='finished'){if(current.winner==='draw'){if(resultTitle)resultTitle.textContent='REMIS!';if(resultText)resultText.textContent='Nikt nie odpuszcza. Plansza potrzebuje dogrywki, a Morścisław — kawy.';if(resultIcon)resultIcon.textContent='🤝';}else{if(resultTitle)resultTitle.textContent=sideLabel(current.winner).toUpperCase()+' WYGRYWA!';if(resultText)resultText.textContent=seriesWinner?'PUCHAR WĘDRUJE DO ZWYCIĘZCY!':mode==='local'?'Runda rozstrzygnięta. Druga strona już szykuje protest.':(mode==='cpu'&&current.winner===TIGER)||(mode==='online'&&current.winner===role)?'Piękna robota! Hrabia właśnie sprawdza regulamin.':'Tym razem przeciwnik był górą. Rewanż czeka!';if(resultIcon)resultIcon.textContent=seriesWinner?'🏆':'💥';}}resultOverlay.hidden=current.status!=='finished'||resultOverlayDismissed;}updateSoundButton();}
   function makeRoomToken(){try{const source=window.crypto;if(source?.getRandomValues){const bytes=new Uint8Array(32);source.getRandomValues(bytes);return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('')}if(source?.randomUUID)return source.randomUUID()+source.randomUUID()}catch(e){console.warn('Nie udało się wygenerować silnego tokenu:',e)}throw Error('Ta przeglądarka nie udostępnia bezpiecznego generatora tokenów. Zaktualizuj przeglądarkę i spróbuj ponownie.')}
   function roomPlayerToken(){
     if(!room)throw Error('Brak aktywnego pokoju.');
@@ -838,7 +838,7 @@
       room=null;role=null;current=null;game.classList.add('hidden');setup.classList.remove('playing');setup.classList.remove('hidden');
     }finally{busy=false;$('joinBtn').disabled=false;if(current&&mode==='online')render()}
   }
-  function startLocal(which){roundId=makeRoundId();remoteCharacter=null;mode=which;cpuDifficulty=$('cpuDifficulty')?.value||cpuDifficulty;localStorage.setItem('tkm_cpu_difficulty',cpuDifficulty);room=null;role=which==='cpu'?TIGER:'both';scores={tiger:0,mors:0};seriesWinner=null;current=fresh();showGame();$('roomCode').textContent=which==='cpu'?'VS KOMPUTER':'LOKALNIE';commentary('tiger',selectedCharacter);history.replaceState({},'',location.pathname);render();if(which==='cpu')say('Powodzenia! Mors nie będzie łatwym przeciwnikiem.')}
+  function startLocal(which){roundId=makeRoundId();remoteCharacter=null;mode=which;cpuDifficulty=$('cpuDifficulty')?.value||cpuDifficulty;localStorage.setItem('tkm_cpu_difficulty',cpuDifficulty);room=null;role=which==='cpu'?TIGER:'both';scores={tiger:0,mors:0};seriesWinner=null;current=fresh();showGame();$('roomCode').textContent=which==='cpu'?'VS KOMPUTER':'LOKALNIE';commentary('tiger',selectedCharacter);history.replaceState({},'',location.pathname);render();if(which==='cpu')say('Powodzenia! Morścisław nie będzie łatwym przeciwnikiem.')}
   function minimax(board,player){const r=evaluate(board);if(r.winner===MORS)return{score:10};if(r.winner===TIGER)return{score:-10};if(r.winner==='draw')return{score:0};let best={score:player===MORS?-Infinity:Infinity,index:-1};for(let i=0;i<9;i++)if(!board[i]){board[i]=player;const score=minimax(board,player===MORS?TIGER:MORS).score;board[i]='';if((player===MORS&&score>best.score)||(player===TIGER&&score<best.score))best={score,index:i}}return best}
   async function move(i){
     if(!current||busy||current.status!=='playing'||current.board[i])return;
@@ -929,7 +929,7 @@
   $('shareInviteBtn')?.addEventListener('click',()=>shareOnFacebook('Rzucam Ci wyzwanie! Wybierz swoją maskotkę i spróbuj mnie pokonać w Kółko, Krzyżyk i Dwa Promile Absurdu. 🐯🦭'));
   $('copyLeadBtn')?.addEventListener('click',copyLeadMessage);
   $('morsMessengerBtn')?.addEventListener('click',e=>{e.preventDefault();contactMors()});
-  $('shareResultBtn')?.addEventListener('click',()=>{const result=current?.winner?(current.winner==='draw'?'Remis!':sideLabel(current.winner)+' wygrywa!'):'Dołącz do pojedynku!';shareOnFacebook('Mój pojedynek w Kółko, Krzyżyk i Dwa Promile Absurdu: '+result+' Wynik serii: Hrabia Poprawek '+scores.tiger+' : '+scores.mors+' Mors. Dasz radę lepiej? 🏆')});
+  $('shareResultBtn')?.addEventListener('click',()=>{const result=current?.winner?(current.winner==='draw'?'Remis!':sideLabel(current.winner)+' wygrywa!'):'Dołącz do pojedynku!';shareOnFacebook('Mój pojedynek w Kółko, Krzyżyk i Dwa Promile Absurdu: '+result+' Wynik serii: Hrabia Poprawek '+scores.tiger+' : '+scores.mors+' Morścisław. Dasz radę lepiej? 🏆')});
   $('shareQuizBtn')?.addEventListener('click',()=>shareOnFacebook('Mój wynik w teście Mistrza Drukarni: '+quizPoints+' / '+printQuiz.length+' punktów! Sprawdź, czy znasz się na poligrafii. 🖨️'));
   $('copyBtn').addEventListener('click',async()=>{const url=location.origin+location.pathname+'?room='+room;try{await navigator.clipboard.writeText(url);$('copyBtn').textContent='SKOPIOWANO ✓';setTimeout(()=>$('copyBtn').textContent='KOPIUJ LINK ↗',1800)}catch{prompt('Skopiuj link:',url)}});
   $('leaveBtn').addEventListener('click',()=>{if(pollTimer){clearInterval(pollTimer);pollTimer=null;}if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});$('musicBtn')?.addEventListener('click',e=>{e.preventDefault();setMusicEnabled(!musicOn)});document.addEventListener('pointerdown',()=>{if(musicOn)startBackgroundMusic()},{once:true});$('introEnterBtn')?.addEventListener('click',()=>{if(musicOn)startBackgroundMusic()});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);$('newBriefBtn')?.addEventListener('click',newPrintBrief);
@@ -946,7 +946,7 @@
     }
     $('paintStart')?.addEventListener('click',()=>{
       clearInterval(paintTimer);paintScore=0;paintTime=20;paintPlay.classList.remove('hidden');$('paintStart').classList.add('hidden');paintStatus.textContent='Wynik: 0 · Zostało 20 sekund';nextPaint();
-      paintTimer=setInterval(()=>{paintTime--;paintStatus.textContent='Wynik: '+paintScore+' · Zostało '+paintTime+' sekund';if(paintTime<=0){clearInterval(paintTimer);paintChoices.innerHTML='';paintPrompt.textContent='KONIEC FARBOBRANIA!';paintStatus.textContent='Mors zdobył '+paintScore+' punktów. '+(paintScore>=12?'Ale chlupnęło CMYK-iem!':'Trening czyni drukarza.');$('paintStart').textContent='JESZCZE RAZ ↻';$('paintStart').classList.remove('hidden')}},1000);
+      paintTimer=setInterval(()=>{paintTime--;paintStatus.textContent='Wynik: '+paintScore+' · Zostało '+paintTime+' sekund';if(paintTime<=0){clearInterval(paintTimer);paintChoices.innerHTML='';paintPrompt.textContent='KONIEC FARBOBRANIA!';paintStatus.textContent='Morścisław zdobył '+paintScore+' punktów. '+(paintScore>=12?'Ale chlupnęło CMYK-iem!':'Trening czyni drukarza.');$('paintStart').textContent='JESZCZE RAZ ↻';$('paintStart').classList.remove('hidden')}},1000);
     });
     paintChoices?.addEventListener('click',e=>{const b=e.target.closest('[data-paint]');if(!b||paintTime<=0)return;if(b.dataset.paint===paintTarget){paintScore+=2;paintStatus.textContent='DOBRZE! +2 · Wynik: '+paintScore;paintPlay.classList.remove('comic-good','comic-bad');void paintPlay.offsetWidth;paintPlay.classList.add('comic-good'); }else{paintScore=Math.max(0,paintScore-1);paintStatus.textContent='OJOJ! ZŁY KOLOR · Wynik: '+paintScore;paintPlay.classList.remove('comic-good','comic-bad');void paintPlay.offsetWidth;paintPlay.classList.add('comic-bad')}nextPaint()});
     // Fontowy Bałagan: 3 znaki mają tę samą kreskę, jeden jest typograficznym intruzem.
@@ -960,11 +960,11 @@
       fontStatus.textContent='Runda '+(fontRound+1)+' z 8 · Punkty: '+fontScore;
     }
     $('fontStart')?.addEventListener('click',()=>{clearTimeout(fontNextTimer);fontLocked=false;fontRound=0;fontScore=0;fontPlay.classList.remove('hidden','comic-good','comic-bad');$('fontStart').classList.add('hidden');$('fontPrompt').textContent='ZNAJDŹ TYPOGRAFICZNEGO INTRUZA!';nextFont()});
-    fontChoices?.addEventListener('click',e=>{const b=e.target.closest('[data-font]');if(!b||fontLocked)return;fontLocked=true;fontPlay.classList.remove('comic-good','comic-bad');void fontPlay.offsetWidth;if(Number(b.dataset.font)===fontOdd){fontScore++;b.classList.add('font-right');fontPlay.classList.add('comic-good')}else{b.classList.add('font-wrong');fontPlay.classList.add('comic-bad')}fontRound++;if(fontRound>=8){fontChoices.innerHTML='';$('fontPrompt').textContent=fontScore>=6?'OKO TYPOGRAFA!':'MORS WIDZIAŁ GORSZE PROJEKTY…';fontStatus.textContent='Wynik: '+fontScore+' / 8. '+(fontScore===8?'Ani jednej literowej wtopy!':'Jeszcze kilka rund i będziesz fontowym ninja.');$('fontStart').textContent='GRAM PONOWNIE ↻';$('fontStart').classList.remove('hidden')}else{fontNextTimer=setTimeout(()=>{fontLocked=false;nextFont()},260)}});
+    fontChoices?.addEventListener('click',e=>{const b=e.target.closest('[data-font]');if(!b||fontLocked)return;fontLocked=true;fontPlay.classList.remove('comic-good','comic-bad');void fontPlay.offsetWidth;if(Number(b.dataset.font)===fontOdd){fontScore++;b.classList.add('font-right');fontPlay.classList.add('comic-good')}else{b.classList.add('font-wrong');fontPlay.classList.add('comic-bad')}fontRound++;if(fontRound>=8){fontChoices.innerHTML='';$('fontPrompt').textContent=fontScore>=6?'OKO TYPOGRAFA!':'MORŚCISŁAW WIDZIAŁ GORSZE PROJEKTY…';fontStatus.textContent='Wynik: '+fontScore+' / 8. '+(fontScore===8?'Ani jednej literowej wtopy!':'Jeszcze kilka rund i będziesz fontowym ninja.');$('fontStart').textContent='GRAM PONOWNIE ↻';$('fontStart').classList.remove('hidden')}else{fontNextTimer=setTimeout(()=>{fontLocked=false;nextFont()},260)}});
     // Morsowanie: seria 10 sygnałów do skoku, bez odruchowego klikania na ślepo.
     let iceRound=0,iceHits=0,iceReady=false,iceTimer=null,iceWindow=null,iceNextTimer=null;
     const icePlay=$('icePlay'),iceJump=$('iceJump'),icePrompt=$('icePrompt'),iceStatus=$('iceStatus');
-    function finishIce(){clearTimeout(iceTimer);clearTimeout(iceWindow);clearTimeout(iceNextTimer);iceReady=false;iceJump.disabled=true;icePrompt.textContent='KONIEC MORSOWANIA!';$('iceWater').textContent='🏆 ❄️ 🏆';iceStatus.textContent='Udane skoki: '+iceHits+' / 10. '+(iceHits>=8?'Lodowy kozak!':'Mors zaleca rozgrzewkę.');$('iceStart').textContent='JESZCZE JEDNA KĄPIEL ↻';$('iceStart').classList.remove('hidden')}
+    function finishIce(){clearTimeout(iceTimer);clearTimeout(iceWindow);clearTimeout(iceNextTimer);iceReady=false;iceJump.disabled=true;icePrompt.textContent='KONIEC MORSOWANIA!';$('iceWater').textContent='🏆 ❄️ 🏆';iceStatus.textContent='Udane skoki: '+iceHits+' / 10. '+(iceHits>=8?'Lodowy kozak!':'Morścisław zaleca rozgrzewkę.');$('iceStart').textContent='JESZCZE JEDNA KĄPIEL ↻';$('iceStart').classList.remove('hidden')}
     function scheduleIce(){if(iceRound>=10){finishIce();return}icePrompt.textContent='CZEKAJ…';$('iceWater').textContent='🌊  🧊  🌊';iceJump.disabled=true;iceReady=false;iceTimer=setTimeout(()=>{iceReady=true;icePlay.classList.remove('comic-good','comic-bad');icePrompt.textContent='TERAZ! SKACZ!!!';$('iceWater').textContent='💦  🧊  💦';iceJump.disabled=false;iceStatus.textContent='SKOK, PŁETWO!';iceWindow=setTimeout(()=>{if(!iceReady)return;iceReady=false;iceRound++;iceJump.disabled=true;iceStatus.textContent='CHLUP! Przegapiona kra. '+iceRound+'/10';icePlay.classList.remove('comic-good','comic-bad');void icePlay.offsetWidth;icePlay.classList.add('comic-bad');scheduleIce()},1050)},650+Math.random()*1450)}
     $('iceStart')?.addEventListener('click',()=>{clearTimeout(iceTimer);clearTimeout(iceWindow);clearTimeout(iceNextTimer);iceRound=0;iceHits=0;icePlay.classList.remove('hidden');$('iceStart').classList.add('hidden');iceStatus.textContent='10 lodowych przeszkód. Czekaj na sygnał!';scheduleIce()});
     iceJump?.addEventListener('click',()=>{if(!iceReady)return;iceReady=false;clearTimeout(iceWindow);iceRound++;iceHits++;iceJump.disabled=true;iceStatus.textContent='PIĘKNY SKOK! '+iceRound+'/10';icePlay.classList.remove('comic-good','comic-bad');void icePlay.offsetWidth;icePlay.classList.add('comic-good');$('iceWater').textContent='💥  🦭  💥';iceNextTimer=setTimeout(scheduleIce,420)});
@@ -975,26 +975,26 @@
     const soccerRows=17,soccerCols=11,soccerX=c=>10+c*16,soccerY=r=>8+r*16;
     const soccerGoals={min:4,max:6};
     let soccer={lines:new Set(),visits:new Map(),position:{c:5,r:8},turn:0,started:false,over:false,score:[0,0],history:[]};
-    const soccerNames=['MORS','HRABIA'];
-    const soccerName=i=>i===0?'MORS':(soccerVsMors?'TY':'HRABIA');
+    const soccerNames=['MORŚCISŁAW','HRABIA'];
+    const soccerName=i=>i===0?'MORŚCISŁAW':(soccerVsMors?'TY':'HRABIA');
     const soccerCommentEl=$('soccerComment');
     let soccerLastComment='';
     const soccerCommentLines={
-      start:['Rozgrzewka zakończona. Płetwy gotowe, rozsądek zostawiony w szatni.','Proszę nie karmić piłki. Jest przed meczem.','Hrabia twierdzi, że ma taktykę. Mors widział tylko ketchup na planie.'],
+      start:['Rozgrzewka zakończona. Płetwy gotowe, rozsądek zostawiony w szatni.','Proszę nie karmić piłki. Jest przed meczem.','Hrabia twierdzi, że ma taktykę. Morścisław widział tylko ketchup na planie.'],
       move:['To nie był przypadek. To była geometria stosowana po morsowemu.','Piłka idzie tam, gdzie prowadzi ją przeznaczenie. Albo krzywa kreska.','Publiczność wstrzymała oddech. Jedna mewa nawet usiadła.','Taktyka jest prosta: kreska, oddech, panika.'],
-      bounce:['ODBICIE! Piłka wróciła. W przeciwieństwie do rozsądku.','Kreska odbita, honor uratowany. Na razie.','Mors nazywa to planem. Sędzia nazywa to bałaganem.'],
+      bounce:['ODBICIE! Piłka wróciła. W przeciwieństwie do rozsądku.','Kreska odbita, honor uratowany. Na razie.','Morścisław nazywa to planem. Sędzia nazywa to bałaganem.'],
       band:['BANDA! Piłka dostała drugą szansę. Nie zmarnuj jej, płetwo!','O bandę! To był zaplanowany manewr. Tak, oczywiście.','Piłka odbita. Hrabia właśnie udaje, że tak miało być.'],
-      goal:['GOOOL! Siatka drży, Mors świętuje, ryby składają gratulacje!','Trafienie idealne! Hrabia żąda analizy piksel po pikselu.','BRAMKA! Proszę odnotować, że piłka sama tam chciała.'],
-      blocked:['KONIEC! Zablokowany jak drukarka w poniedziałek rano.','Nie ma wyjścia. Mors zamyka zeszyt i otwiera lodówkę.','Blokada totalna! VAR sprawdza, czy winna była kreska czy charakter.'],
-      undo:['Cofamy! Mors twierdzi, że to była próba generalna.','Ruch skasowany. Świadkowie proszeni o milczenie.','Hrabia zgłosił sprzeciw wobec cofania rzeczywistości.'],
-      reset:['Nowy mecz, czysta kartka i te same złe nawyki.','Zaczynamy od zera. Mors już podejrzewa spisek.','Piłka na środku. Ambicje ogromne, kondycja papierowa.']
+      goal:['GOOOL! Siatka drży, Morścisław świętuje, ryby składają gratulacje!','Trafienie idealne! Hrabia żąda analizy piksel po pikselu.','BRAMKA! Proszę odnotować, że piłka sama tam chciała.'],
+      blocked:['KONIEC! Zablokowany jak drukarka w poniedziałek rano.','Nie ma wyjścia. Morścisław zamyka zeszyt i otwiera lodówkę.','Blokada totalna! VAR sprawdza, czy winna była kreska czy charakter.'],
+      undo:['Cofamy! Morścisław twierdzi, że to była próba generalna.','Ruch skasowany. Świadkowie proszeni o milczenie.','Hrabia zgłosił sprzeciw wobec cofania rzeczywistości.'],
+      reset:['Nowy mecz, czysta kartka i te same złe nawyki.','Zaczynamy od zera. Morścisław już podejrzewa spisek.','Piłka na środku. Ambicje ogromne, kondycja papierowa.']
     };
     function soccerSay(kind){
       const choices=soccerCommentLines[kind]||soccerCommentLines.move;
       let line=choices[Math.floor(Math.random()*choices.length)];
       if(choices.length>1)while(line===soccerLastComment)line=choices[Math.floor(Math.random()*choices.length)];
       soccerLastComment=line;
-      if(soccerCommentEl)soccerCommentEl.textContent=(Math.random()<.5?'🦭 MORS: ':'🐯 HRABIA: ')+line;
+      if(soccerCommentEl)soccerCommentEl.textContent=(Math.random()<.5?'🦭 MORŚCISŁAW: ':'🐯 HRABIA: ')+line;
     }
     const soccerKey=(a,b)=>{const p=[a.c+','+a.r,b.c+','+b.r].sort();return p.join('|')};
     const soccerNeighbors=(p)=>{const out=[];for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){if(dc===0&&dr===0)continue;const c=p.c+dc,r=p.r+dr;if(c>=0&&c<soccerCols&&r>=0&&r<soccerRows)out.push({c,r})}return out};
@@ -1024,8 +1024,8 @@
     function soccerScheduleAi(){
       clearTimeout(soccerAiTimer);
       if(!soccerVsMors||!soccer.started||soccer.over||soccer.turn!==0)return;
-      soccerStatus.textContent='Mors myśli… podobno ma plan. 🦭';
-      soccerTurn.textContent='RUCH: MORS KOMBINUJE';
+      soccerStatus.textContent='Morścisław myśli… podobno ma plan. 🦭';
+      soccerTurn.textContent='RUCH: MORŚCISŁAW KOMBINUJE';
       soccerAiTimer=setTimeout(()=>{
         if(!soccerVsMors||soccer.over||soccer.turn!==0)return;
         const moves=soccerNeighbors(soccer.position).filter(soccerCanMove);
@@ -1049,13 +1049,13 @@
       soccer.history.push({from,to:{...to},turn:soccer.turn,line});
       soccer.lines.add(line);soccer.position={...to};
       const goal=(to.r===0||to.r===soccerRows-1)&&to.c>=soccerGoals.min&&to.c<=soccerGoals.max;
-      if(goal){soccer.score[soccer.turn]++;soccer.over=true;soccerStatus.textContent='GOOOL! '+soccerName(soccer.turn)+' trafia do bramki! Mors żąda powtórki VAR z kałuży.';soccerSay('goal');soccerDraw();return}
+      if(goal){soccer.score[soccer.turn]++;soccer.over=true;soccerStatus.textContent='GOOOL! '+soccerName(soccer.turn)+' trafia do bramki! Morścisław żąda powtórki VAR z kałuży.';soccerSay('goal');soccerDraw();return}
       const edge=to.c===0||to.c===soccerCols-1||to.r===0||to.r===soccerRows-1;
       soccer.visits.set(to.c+','+to.r,prior+1);
       if(prior>0||edge){soccerStatus.textContent=prior>0?'ODBICIE OD WŁASNEJ KRESKI! Grasz ponownie.':'BANDA! Piłka odbita — ten sam gracz gra dalej.';soccerSay(prior>0?'bounce':'band')}
       else{soccer.turn=1-soccer.turn;soccerStatus.textContent='Ruch przeciwnika. Nie oddawaj pola!';soccerSay('move')}
       const possible=soccerNeighbors(soccer.position).some(n=>!soccer.lines.has(soccerKey(soccer.position,n)));
-      if(!possible){soccer.over=true;soccer.score[1-soccer.turn]++;soccerStatus.textContent='ZABLOKOWANY! '+soccerName(1-soccer.turn)+' wygrywa. Mors zamyka zeszyt.';soccerSay('blocked')}
+      if(!possible){soccer.over=true;soccer.score[1-soccer.turn]++;soccerStatus.textContent='ZABLOKOWANY! '+soccerName(1-soccer.turn)+' wygrywa. Morścisław zamyka zeszyt.';soccerSay('blocked')}
       soccerDraw();
       if(soccerVsMors&&soccer.turn===0)soccerScheduleAi();
     }
@@ -1091,7 +1091,7 @@
       soccer.score=Array.isArray(state.score)?state.score.map(Number):[0,0];
       soccer.history=Array.isArray(state.history)?state.history:[];
       soccerOnlineGuestJoined=!!data.guest_joined;soccerOnlineNote(soccerOnlineGuestJoined?'Przeciwnik dołączył. Mecz trwa!':'Pokój gotowy — czekamy na drugiego gracza…');
-      $('soccerPlayerOne').textContent='MORS / GRACZ 1';
+      $('soccerPlayerOne').textContent='MORŚCISŁAW / GRACZ 1';
       $('soccerPlayerTwo').textContent='HRABIA / GRACZ 2';
       $('soccerUndo').disabled=true;
       soccerDraw();
@@ -1198,7 +1198,7 @@
     $('soccerTwoPlayers')?.addEventListener('click',()=>startSoccer(false));
     $('soccerReset')?.addEventListener('click',()=>soccerNewRound(true));
     $('soccerExit')?.addEventListener('click',exitSoccer);
-    $('soccerUndo')?.addEventListener('click',()=>{if(soccerOnline)return;const last=soccer.history.pop();if(!last||soccer.over)return;soccer.lines.delete(last.line);soccer.position=last.from;soccer.turn=last.turn;const k=last.to.c+','+last.to.r,n=(soccer.visits.get(k)||1)-1;if(n<=0)soccer.visits.delete(k);else soccer.visits.set(k,n);soccerStatus.textContent='Cofnięto ostatnią kreskę. Mors udaje, że nic nie widział.';soccerSay('undo');soccerDraw();if(soccerVsMors&&soccer.turn===0)soccerScheduleAi()});
+    $('soccerUndo')?.addEventListener('click',()=>{if(soccerOnline)return;const last=soccer.history.pop();if(!last||soccer.over)return;soccer.lines.delete(last.line);soccer.position=last.from;soccer.turn=last.turn;const k=last.to.c+','+last.to.r,n=(soccer.visits.get(k)||1)-1;if(n<=0)soccer.visits.delete(k);else soccer.visits.set(k,n);soccerStatus.textContent='Cofnięto ostatnią kreskę. Morścisław udaje, że nic nie widział.';soccerSay('undo');soccerDraw();if(soccerVsMors&&soccer.turn===0)soccerScheduleAi()});
     soccerBoard?.addEventListener('click',e=>{const dot=e.target.closest('[data-soccer-point]');if(!dot)return;const [c,r]=dot.dataset.soccerPoint.split(',').map(Number);soccerMove({c,r})});
     soccerBoard?.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const dot=e.target.closest('[data-soccer-point]');if(!dot)return;e.preventDefault();const [c,r]=dot.dataset.soccerPoint.split(',').map(Number);soccerMove({c,r})});
     soccerDraw();
@@ -1226,13 +1226,13 @@
         if(seasonRes.error)throw seasonRes.error;if(tableRes.error)throw tableRes.error;if(tournamentRes.error)throw tournamentRes.error;
         const season=seasonRes.data?.[0];
         $('morsCupSeasonName').textContent=season?.name||'Brak aktywnego sezonu';
-        $('morsCupSeasonStatus').textContent=season?'Sezon trwa. Zbieramy zgłoszenia i wyniki.':'Mors musi najpierw ogłosić nowy sezon.';
+        $('morsCupSeasonStatus').textContent=season?'Sezon trwa. Zbieramy zgłoszenia i wyniki.':'Morścisław musi najpierw ogłosić nowy sezon.';
         const body=$('morsCupStandings');body.innerHTML='';
         if(!tableRes.data?.length){const tr=document.createElement('tr');tr.innerHTML='<td colspan="7">Brak zawodników. Zapisz profil jako pierwszy!</td>';body.append(tr)}
         else tableRes.data.forEach((p,i)=>{const tr=document.createElement('tr');if(p.player_id===profileId())tr.classList.add('is-you');tr.innerHTML='<td>'+(i+1)+'</td><td><b>'+safe(p.nickname)+'</b><small>'+safe(({mors:'🦭 Morścisław',tiger:'🐯 Hrabia Poprawek',goat:'🐐 Koza Jołanna',bobr:'🦫 Bóbr',llama:'🦙 Lama Drama',octopus:'🐙 Ośmiornica'}[p.mascot]||'Zawodnik'))+'</small></td><td>'+Number(p.played||0)+'</td><td>'+Number(p.wins||0)+'</td><td>'+Number(p.draws||0)+'</td><td>'+Number(p.losses||0)+'</td><td><b>'+Number(p.points||0)+'</b></td>';body.append(tr)});
         const list=$('morsCupTournamentList');list.innerHTML='';
-        if(!tournamentRes.data?.length){list.textContent='Na razie brak otwartych turniejów. Mors podobno szuka pucharu.'}
-        else tournamentRes.data.forEach(t=>{const card=document.createElement('article');card.className='morscup-tournament-card';const title=document.createElement('b');title.textContent=t.name;const detail=document.createElement('small');detail.textContent='Miejsca: do '+t.capacity+' · '+(t.status==='registration'?'Zapisy otwarte':'Turniej w trakcie');card.append(title,detail);if(t.status==='registration'){const join=document.createElement('button');join.type='button';join.className='btn btn-yellow';join.textContent='ZGŁOŚ MNIE';join.addEventListener('click',async()=>{join.disabled=true;if(!localStorage.getItem(MORS_CUP_TOKEN_KEY)){note('Najpierw zapisz swój profil zawodnika.',true);join.disabled=false;return}const {data,error}=await client.rpc('szs_morscup_join_tournament',{p_tournament_id:t.id,p_player_id:profileId(),p_player_token:morsCupPlayerToken()});if(error){note(/duplicate|already/i.test(error.message||'')?'Już jesteś na liście tego turnieju.':('Nie udało się zapisać: '+error.message),true);join.disabled=false}else note(data?.already_joined?'Już jesteś na liście startowej tego turnieju.':'Zgłoszenie przyjęte. Mors dopisał Cię do listy startowej!')});card.append(join)}list.append(card)});
+        if(!tournamentRes.data?.length){list.textContent='Na razie brak otwartych turniejów. Morścisław podobno szuka pucharu.'}
+        else tournamentRes.data.forEach(t=>{const card=document.createElement('article');card.className='morscup-tournament-card';const title=document.createElement('b');title.textContent=t.name;const detail=document.createElement('small');detail.textContent='Miejsca: do '+t.capacity+' · '+(t.status==='registration'?'Zapisy otwarte':'Turniej w trakcie');card.append(title,detail);if(t.status==='registration'){const join=document.createElement('button');join.type='button';join.className='btn btn-yellow';join.textContent='ZGŁOŚ MNIE';join.addEventListener('click',async()=>{join.disabled=true;if(!localStorage.getItem(MORS_CUP_TOKEN_KEY)){note('Najpierw zapisz swój profil zawodnika.',true);join.disabled=false;return}const {data,error}=await client.rpc('szs_morscup_join_tournament',{p_tournament_id:t.id,p_player_id:profileId(),p_player_token:morsCupPlayerToken()});if(error){note(/duplicate|already/i.test(error.message||'')?'Już jesteś na liście tego turnieju.':('Nie udało się zapisać: '+error.message),true);join.disabled=false}else note(data?.already_joined?'Już jesteś na liście startowej tego turnieju.':'Zgłoszenie przyjęte. Morścisław dopisał Cię do listy startowej!')});card.append(join)}list.append(card)});
       }catch(e){$('morsCupSeasonName').textContent='Nie udało się pobrać ligi';$('morsCupSeasonStatus').textContent=e?.message||'Błąd połączenia.';note('Nie udało się odświeżyć danych ligi: '+(e?.message||'błąd'),true)}
       finally{$('morsCupRefresh').disabled=false}
     }
@@ -1244,7 +1244,7 @@
         const {error}=await client.rpc('szs_morscup_save_profile',{p_player_id:profileId(),p_player_token:morsCupPlayerToken(),p_nickname:name,p_mascot:mascot.value});
         if(error)throw error;
         localStorage.setItem('tkm_nick',name);localStorage.setItem('tkm_character',mascot.value);
-        note('Profil zapisany! Płetwy na murawę — witamy w Mors Cup.');
+        note('Profil zapisany! Płetwy na murawę — witamy w Morścisław Cup.');
         await loadLeague();
       }catch(e){note('Nie udało się zapisać profilu: '+(e?.message||'błąd'),true)}
       finally{button.disabled=false}
@@ -1254,19 +1254,19 @@
     loadLeague();
   }
 
-  // Morsowy Instytut Badań nad Hrabią Poprawek.
+  // Instytut Badań Morścisława nad Hrabią Poprawek.
   function initHrabiaInstitute(){
     const reports=[
-      'Hrabia zaakceptował projekt. Po chwili poprosił o zmianę. Po zmianie zapytał, dlaczego zmieniliśmy. Mors zalecił terapię plikiem PDF.',
+      'Hrabia zaakceptował projekt. Po chwili poprosił o zmianę. Po zmianie zapytał, dlaczego zmieniliśmy. Morścisław zalecił terapię plikiem PDF.',
       'Hrabia chce, żeby logo było większe, ale nie zajmowało więcej miejsca. Instytut rozważa zgłoszenie tego zjawiska do fizyki kwantowej.',
-      'Przysłano inspirację. Nie pasuje do projektu, branży ani planety. Hrabia lubi w niej „to coś”. Mors nadal szuka.',
+      'Przysłano inspirację. Nie pasuje do projektu, branży ani planety. Hrabia lubi w niej „to coś”. Morścisław nadal szuka.',
       'Plik FINAL doczekał się wersji 2, 3, OSTATECZNEJ i OSTATECZNEJ_poprawionej. Hrabia pyta, czy mamy tę pierwszą.',
-      'Hrabia poprosił o przesunięcie elementu o dwa piksele w lewo. Po wykonaniu polecił przesunąć go odrobinę w prawo. Mors wyszedł na spacer.',
+      'Hrabia poprosił o przesunięcie elementu o dwa piksele w lewo. Po wykonaniu polecił przesunąć go odrobinę w prawo. Morścisław wyszedł na spacer.',
       'Kolor jest prawie idealny, ale powinien być cieplejszy, chłodniejszy i bardziej zdecydowany. Instytut zamówił termometr do palety CMYK.',
-      'Hrabia napisał: „Mam drobną uwagę”. Mors natychmiast wyłączył telefon, zamknął drzwi i udawał fokę.',
-      'Po siedemnastej korekcie Hrabia stwierdził, że pierwsza wersja miała potencjał. Mors przyznał projektowi status zabytku.',
-      'Hrabia chce nowocześnie, ale klasycznie; prosto, ale bogato; spokojnie, ale z energią. Mors zapytał, czy może po prostu narysować rybę.',
-      'Dziś Hrabia przesłał poprawki w trzech plikach, z których każdy zawierał inne poprawki. Mors powołał komisję śledczą.'
+      'Hrabia napisał: „Mam drobną uwagę”. Morścisław natychmiast wyłączył telefon, zamknął drzwi i udawał fokę.',
+      'Po siedemnastej korekcie Hrabia stwierdził, że pierwsza wersja miała potencjał. Morścisław przyznał projektowi status zabytku.',
+      'Hrabia chce nowocześnie, ale klasycznie; prosto, ale bogato; spokojnie, ale z energią. Morścisław zapytał, czy może po prostu narysować rybę.',
+      'Dziś Hrabia przesłał poprawki w trzech plikach, z których każdy zawierał inne poprawki. Morścisław powołał komisję śledczą.'
     ];
     const corrections=[
       '„Proszę powiększyć, ale żeby było subtelniej i nie rzucało się w oczy”.',
@@ -1282,8 +1282,8 @@
       '„Zróbmy wersję odważną, tylko żeby nikogo nie zaskoczyła”.',
       '„To już ostatnia poprawka. Tym razem naprawdę, prawie na pewno”.'
     ];
-    const levels=['Spokojny klient','Mam jedną uwagę','A może spróbujmy inaczej','Proszę o nową wersję','Wróćmy do początku','To nie jest ten odcień','Czy można jeszcze dziś?','Plik FINAL_FINAL','Mors zamawia urlop','ALARM: HRABIA ZOBACZYŁ PIXEL'];
-    const comments=['Mors jeszcze wierzy w ludzi. To się zmieni.','Pojawiły się pierwsze objawy drżenia płetwy.','Hrabia otworzył plik. Instytut wstrzymał oddech.','Korekta zaczyna mieć własną korektę.','Mors rozważa przejście na rybołówstwo.','Wersja projektu numeruje się już sama.','Zespół komunikuje się wyłącznie westchnieniami.','W drukarni zgasło światło. To tylko Hrabia szukał suwaka jasności.','Mors założył kask ochronny.','Instytut ogłasza stan pełnej katastrofy typograficznej.'];
+    const levels=['Spokojny klient','Mam jedną uwagę','A może spróbujmy inaczej','Proszę o nową wersję','Wróćmy do początku','To nie jest ten odcień','Czy można jeszcze dziś?','Plik FINAL_FINAL','Morścisław zamawia urlop','ALARM: HRABIA ZOBACZYŁ PIXEL'];
+    const comments=['Morścisław jeszcze wierzy w ludzi. To się zmieni.','Pojawiły się pierwsze objawy drżenia płetwy.','Hrabia otworzył plik. Instytut wstrzymał oddech.','Korekta zaczyna mieć własną korektę.','Morścisław rozważa przejście na rybołówstwo.','Wersja projektu numeruje się już sama.','Zespół komunikuje się wyłącznie westchnieniami.','W drukarni zgasło światło. To tylko Hrabia szukał suwaka jasności.','Morścisław założył kask ochronny.','Instytut ogłasza stan pełnej katastrofy typograficznej.'];
     let count=Number(localStorage.getItem('szs_hrabia_actions')||0);
     let level=Number(localStorage.getItem('szs_hrabia_level')||3);
     const report=$('hrabiaReportText'),correction=$('hrabiaCorrectionText'),fill=$('hrabiaLevelFill'),label=$('hrabiaLevelLabel'),comment=$('hrabiaLevelComment'),progress=$('hrabiaBadgeProgress'),badges=$('hrabiaBadgeList');
