@@ -974,7 +974,7 @@
     let soccerVsMors=false,soccerAiTimer=null;
     const soccerRows=17,soccerCols=11,soccerX=c=>10+c*16,soccerY=r=>8+r*16;
     const soccerGoals={min:4,max:6};
-    let soccer={lines:new Set(),visits:new Map(),position:{c:8,r:5},turn:0,started:false,over:false,score:[0,0],history:[]};
+    let soccer={lines:new Set(),visits:new Map(),position:{c:5,r:8},turn:0,started:false,over:false,score:[0,0],history:[]};
     const soccerNames=['MORS','HRABIA'];
     const soccerName=i=>i===0?'MORS':(soccerVsMors?'TY':'HRABIA');
     const soccerCommentEl=$('soccerComment');
@@ -1015,7 +1015,7 @@
       if(soccerOnline){soccerOnlineReset();return}
       const score=keepScore?soccer.score:[0,0];
       clearTimeout(soccerAiTimer);
-      soccer={lines:new Set(),visits:new Map([['8,5',1]]),position:{c:8,r:5},turn:soccerVsMors?1:Math.random()<.5?0:1,started:true,over:false,score,history:[]};
+      soccer={lines:new Set(),visits:new Map([['5,8',1]]),position:{c:5,r:8},turn:soccerVsMors?1:Math.random()<.5?0:1,started:true,over:false,score,history:[]};
       soccerStatus.textContent='Start! Kliknij jedną z niebieskich kropek obok piłki.';
       soccerSay(keepScore?'reset':'start');
       soccerDraw();
