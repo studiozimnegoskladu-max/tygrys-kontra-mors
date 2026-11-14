@@ -2080,3 +2080,50 @@ body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-comme
 .hangman-footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:16px;font-size:11px;font-weight:850}
 .hangman-footer span{font-style:italic;color:#795b2b}
 @media(max-width:520px){.hangman-stamp{font-size:9px;padding:6px}.hangman-keyboard{grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.hangman-keyboard button{min-height:37px;font-size:14px}.hangman-intro img{width:58px;height:58px}}
+
+
+/* Morsislaw Cup — existing banner artwork paired with the original on-pitch illustration */
+.soccer-hero-combo{
+  display:grid;
+  grid-template-columns:minmax(0, .82fr) minmax(0, 1.18fr);
+  align-items:center;
+  gap:clamp(8px,1.6vw,22px);
+  width:100%;
+  min-height:250px;
+  padding:clamp(10px,2vw,24px);
+  box-sizing:border-box;
+  background:#f5f0df;
+}
+.soccer-hero-combo .soccer-cup-banner{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:330px;
+  object-fit:contain;
+  margin:auto;
+}
+.soccer-hero-combo .soccer-field-art{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:360px;
+  object-fit:contain;
+  object-position:center;
+  margin:auto;
+}
+@media(max-width:600px){
+  .soccer-hero-combo{
+    grid-template-columns:1fr;
+    gap:2px;
+    min-height:0;
+    padding:10px;
+  }
+  .soccer-hero-combo .soccer-cup-banner{
+    width:min(78%,360px);
+    max-height:160px;
+  }
+  .soccer-hero-combo .soccer-field-art{
+    width:100%;
+    max-height:240px;
+  }
+}
