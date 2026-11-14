@@ -60,6 +60,9 @@
         <button type="button" class="attraction-card attraction-soccer" id="openSoccer">
           <span class="attraction-number">02</span><span class="attraction-art"><img class="attraction-mascot" src="assets/mors bramkarz.png" alt="Mors — bramkarz w Mors Cup"></span><b>MORŚCISŁAW CUP</b><small>Piłkarzyki z zeszytu. Kreska po kresce do bramki!</small><span class="attraction-cta">WEJDŹ NA BOISKO ↗</span>
         </button>
+        <button type="button" class="attraction-card attraction-hangman" id="openHangman">
+          <span class="attraction-number">05</span><span class="attraction-art"><img class="attraction-mascot" src="assets/mors pisarz.png" alt="Morścisław — urzędnik od liter"></span><b>URZĄD OSTATECZNEJ LITERY</b><small>Odgaduj hasła. Ratuj dokumenty. Nie pytaj o procedury.</small><span class="attraction-cta">WEJDŹ DO URZĘDU ↗</span>
+        </button>
         <button type="button" class="attraction-card attraction-zone" id="openMorsZone">
           <span class="attraction-number">04</span><span class="attraction-art"><img class="attraction-mascot" src="assets/mors pisarz.png" alt="Mors — strefa Morsa"></span><b>STREFA MORŚCISŁAWA</b><small>Instytut absurdu, quiz, park gier i wyzwania Morścisława.</small><span class="attraction-cta">WEJDŹ DO STREFY ↗</span>
         </button>
@@ -176,6 +179,20 @@
       </section></details>
 
       <details id="mors-zone-drawer" class="extra-drawer mors-zone-drawer"><summary><span class="drawer-icon">🦭</span><span><b>STREFA MORŚCISŁAWA</b><small>Instytut absurdu, quiz, park gier i wyzwania Morścisława</small></span><span class="drawer-arrow">＋</span></summary>
+      <section class="hangman-panel" id="hangmanPanel" aria-labelledby="hangmanHeading">
+        <div class="hangman-heading"><div><small>JEDNOSTKA DO SPRAW ZAGINIONYCH SAMOGŁOSEK</small><h2 id="hangmanHeading">🏛️ URZĄD OSTATECZNEJ LITERY</h2><p>Ktoś pomieszał litery, dokumenty i prawdopodobnie herbatę z atramentem. Ocal urząd, odgadując hasło.</p></div><div class="hangman-stamp">ATEST<br>ABSURDU<br>★</div></div>
+        <div class="hangman-intro"><img src="assets/mors pisarz.png" alt="Morścisław, inspektor literackiego bałaganu"><div><b>INSPEKTOR MORŚCISŁAW MELDUJE:</b><p id="hangmanComment" aria-live="polite">Spokojnie. To tylko siedem pomyłek dzieli nas od kompletnego bałaganu. W urzędzie nazywamy to poniedziałkiem.</p></div></div>
+        <div class="hangman-game">
+          <div class="hangman-topline"><span id="hangmanCategory">KATEGORIA: DRUKARNIA I RZECZY PODEJRZANE</span><strong id="hangmanMistakes">AWARIE: 0 / 7</strong></div>
+          <div class="hangman-chaos" id="hangmanChaos" aria-label="Postępująca awaria urzędu"><span class="chaos-item">🗃️</span><span class="chaos-item">📋</span><span class="chaos-item">🐐</span><span class="chaos-item">👑</span><span class="chaos-item">🖨️</span><span class="chaos-item">💥</span><span class="chaos-item">🦭</span></div>
+          <div class="hangman-word" id="hangmanWord" aria-label="Hasło do odgadnięcia"></div>
+          <div class="hangman-used" id="hangmanUsed">UŻYTE LITERY: —</div>
+          <div class="hangman-keyboard" id="hangmanKeyboard" aria-label="Klawiatura liter"></div>
+          <p class="hangman-feedback" id="hangmanFeedback" aria-live="polite">Wybierz literę. Urząd wierzy w Ciebie bardziej niż w swój system archiwizacji.</p>
+          <div class="hangman-actions"><button type="button" class="btn btn-yellow" id="hangmanNew">NOWE HASŁO ↻</button><button type="button" class="btn btn-facebook" id="hangmanShare">POCHWAL SIĘ WYNIKIEM</button></div>
+        </div>
+        <div class="hangman-footer"><b id="hangmanRecord">TWÓJ REJESTR: 0 ROZWIĄZANYCH HASEŁ</b><span>Wszystko jest pod kontrolą. Oprócz tego, co nie jest.</span></div>
+      </section>
       <section class="hrabia-institute" aria-labelledby="hrabiaInstituteHeading">
         <div class="hrabia-institute-head">
           <div><small>JEDNOSTKA BADAWCZA DO SPRAW NIEKOŃCZĄCYCH SIĘ KOREKT</small><h2 id="hrabiaInstituteHeading">🧪 MORSOWY INSTYTUT BADAŃ NAD HRABIĄ POPRAWEK</h2><p>Morścisław prowadzi obserwacje. Hrabia twierdzi, że raport wymaga jeszcze kilku drobnych zmian.</p></div>
@@ -326,5 +343,6 @@
   </main>
   <script src="config.js"></script>
   <script src="app.js?v=20261114-morscis-law-copy-1"></script>
+  <script src="hangman.js?v=20261114-1"></script>
 </body>
 </html>
