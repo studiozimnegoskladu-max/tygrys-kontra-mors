@@ -1801,7 +1801,7 @@ body.view-mors-zone #setup .mors-zone-drawer .morscup-league-panel{
 
 
 /* Główne hasło wyboru atrakcji — krój MsPaintMouse z assets */
-@font-face{font-family:'MsPaintMouse';src:url('assets/MsPaintMouse-Regular.woff2') format('woff2'),url('assets/MsPaintMouse-Regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'MsPaintMouse';src:url('assets/MsPaintMouse-Regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
 #attractionsTitle{font-family:'MsPaintMouse','Comic Sans MS',cursive!important;font-weight:400!important;letter-spacing:0!important;line-height:1.12;text-transform:uppercase;transform:rotate(-1deg);}
 
 
