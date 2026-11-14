@@ -1039,12 +1039,12 @@
           return {m,score:(goal?10000:0)+progress*(level==='hard'?5:level==='normal'?3:1)+next*(level==='hard'?1.5:1)+center*.2+Math.random()*(level==='easy'?8:level==='normal'?3:.5)};
         }).sort((a,b)=>b.score-a.score);
         const chosen=level==='easy'&&Math.random()<.45?moves[Math.floor(Math.random()*moves.length)]:ranked[0].m;
-        soccerMove(chosen);
+        soccerMove(chosen,true);
       },level==='hard'?420:level==='normal'?650:850);
     }
-    function soccerMove(to){
+    function soccerMove(to,byAI=false){
       if(soccerOnline){soccerOnlineMove(to);return}
-      if(!soccer.started||soccer.over||(soccerVsMors&&soccer.turn!==1)||!soccerCanMove(to))return;
+      if(!soccer.started||soccer.over||(soccerVsMors&&soccer.turn!==1&&!byAI)||!soccerCanMove(to))return;
       const from={...soccer.position},line=soccerKey(from,to),prior=soccer.visits.get(to.c+','+to.r)||0;
       soccer.history.push({from,to:{...to},turn:soccer.turn,line});
       soccer.lines.add(line);soccer.position={...to};
