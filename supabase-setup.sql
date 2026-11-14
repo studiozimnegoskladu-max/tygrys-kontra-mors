@@ -23,14 +23,7 @@ drop policy if exists "Public can update game rooms" on public.game_sessions;
 create policy "Public can update game rooms"
 on public.game_sessions for update to anon using (true) with check (true);
 
--- Włącz aktualizacje realtime dla tabeli.
-do $$
-begin
-  alter publication supabase_realtime add table public.game_sessions;
-exception when duplicate_object then
-  null;
-end $$;
-
+-- Stan planszy jest synchronizowany przez bezpieczne RPC, nie przez publiczne zdarzenia tabeli.
 
 -- Migracja wyboru postaci: osoba tworząca pokój zapisuje wybraną postać.
 alter table public.game_sessions add column if not exists creator_role text not null default 'tiger';
@@ -90,10 +83,10 @@ declare joined public.game_sessions;
 begin
   if p_guest_token is null or length(p_guest_token)<32 then raise exception 'Nieprawidłowy token gracza.'; end if;
   update public.game_sessions set guest_joined=true,guest_token=p_guest_token
-   where room_code=upper(p_room_code) and status='playing'
+   where room_code=upper(p_room_code) and host_token is not null and status='playing'
      and (guest_joined=false or guest_token=p_guest_token)
   returning * into joined;
-  if not found then raise exception 'Pokój nie istnieje albo ma już dwóch graczy.'; end if;
+  if not found then raise exception 'Pokój nie istnieje, pochodzi ze starszej wersji albo ma już dwóch graczy.'; end if;
   return jsonb_build_object('room_code',joined.room_code,'board',joined.board,'turn',joined.turn,'winner',joined.winner,'status',joined.status,'guest_joined',joined.guest_joined,'creator_role',joined.creator_role);
 end; $$;
 
