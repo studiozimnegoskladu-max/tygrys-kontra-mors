@@ -413,7 +413,7 @@
     if(hand){hand.classList.remove('dragging');hand.style.left='';hand.style.top='';hand.style.right='';hand.style.bottom='';hand.style.transform=''}
     const claim=$('fortuneClaimLink'),jackpot=$('candyJackpot');if(claim)claim.hidden=index!==7;
     if(index===7&&jackpot){jackpot.hidden=false;document.body.classList.add('jackpot-open');window.setTimeout(()=>{jackpot.hidden=true;document.body.classList.remove('jackpot-open')},7500)}
-    $('fortuneNote').textContent='Wylosowano! Mors zatwierdza tę decyzję, Koza Krzycha nie zgłasza reklamacji.';
+    $('fortuneNote').textContent='Wylosowano! Mors zatwierdza tę decyzję, Jołanna nie zgłasza reklamacji.';
     unlockSticker('fortune-spin');
   }
   function setupFortuneDrag(){
@@ -446,7 +446,7 @@
       const target=rotation+direction*(360*extraTurns);
       stage.classList.remove('dragging');stage.classList.add('spinning');
       $('fortuneResult').textContent='Koło nabiera obrotów! Mors zaleca nie mrugać.';
-      $('fortuneNote').textContent='Koza Krzycha pilnuje, żeby nikt nie próbował zatrzymać losu.';
+      $('fortuneNote').textContent='Jołanna pilnuje, żeby nikt nie próbował zatrzymać losu.';
       fortuneTickSequence();wheel.style.transition='transform 4.8s cubic-bezier(.12,.72,.12,1)';void wheel.offsetWidth;wheel.style.transform='rotate('+target+'deg)';
       wheel.dataset.rotation=String(target);
       let finished=false;
@@ -652,11 +652,11 @@
     if(title)title.textContent=brief.title;
     if(body)body.textContent=brief.text;
   }
-  const characterNames={tiger:'Hrabia Poprawek',mors:'Mors',goat:'Koza Krzycha',octopus:'Ośmiornica Drukarka',bobr:'Bóbr',llama:'Lama Drama'};
+  const characterNames={tiger:'Hrabia Poprawek',mors:'Mors',goat:'Jołanna',octopus:'Ośmiornica Drukarka',bobr:'Bóbr',llama:'Lama Drama'};
   function applyCanonicalCharacterAssets(){document.querySelectorAll('img[data-character]').forEach(img=>{const character=img.dataset.character;if(characterAssets[character]){img.src=characterAssetUrl(character)+'?v=20261110-mascots-1';img.alt=characterNames[character]||img.alt;}});}
   const characterIcons={tiger:'🐯',mors:'🦭',goat:'🐐',octopus:'🐙',bobr:'🦫',llama:'🦙'};
   const characterQuips={
-    goat:{move:['Koza Krzycha melduje: kopyto postawione, proszę nie regulować odbiorników.','Mee-e-eega ruch! Nawet Hrabia musi poprawić koronę.','Krzychu, to było Twoje kopyto czy pieczątka?','Koza Krzycha skacze po planszy. Kontrola jakości uciekła.','Beee-zdyskusyjny ruch. Komisja kopyt zatwierdza.','Koza Krzycha mówi: ja tu tylko przyszłam skubać zwycięstwo.','Uwaga na rogi! Strategia weszła na pełnej.','Kopytko w pole, rozum na urlopie.'],win:['KOZA KRZYCHA WYGRYWA! Reszta może iść skubać trawę.','BEEE-zapelacyjna wygrana! Krzychu, odbierz puchar!','Koza Krzycha rozniosła planszę. Dosłownie prawie ją zjadła.','Kopyta górą! Hrabia składa oficjalny protest.']},
+    goat:{move:['Jołanna melduje: kopyto postawione, proszę nie regulować odbiorników.','Mee-e-eega ruch! Nawet Hrabia musi poprawić koronę.','Krzychu, to było Twoje kopyto czy pieczątka?','Jołanna skacze po planszy. Kontrola jakości uciekła.','Beee-zdyskusyjny ruch. Komisja kopyt zatwierdza.','Jołanna mówi: ja tu tylko przyszłam skubać zwycięstwo.','Uwaga na rogi! Strategia weszła na pełnej.','Kopytko w pole, rozum na urlopie.'],win:['JOŁANNA WYGRYWA! Reszta może iść skubać trawę.','BEEE-zapelacyjna wygrana! Jołanno, odbierz puchar!','Jołanna rozniosła planszę. Dosłownie prawie ją zjadła.','Kopyta górą! Hrabia składa oficjalny protest.']},
     octopus:{move:['Ośmiornica Drukarka ma osiem pomysłów naraz!','Macka w ruch! Kolejny kolor na planszy!','Osiem rąk, zero wymówek. Drukujemy zwycięstwo!'],win:['OSIEM MACEK I PEŁNA KONTROLA!','Drukarka wypluła zwycięstwo w najwyższej jakości!']},
     bobr:{move:['Bóbr melduje: tama zbudowana, pole zajęte!','Zęby naostrzone, strategia dopięta.','Bóbr nie gryzie się w język. Ani w planszę!'],win:['BÓBR WYGRYWA! Tama zwycięstwa stoi!','To nie przypadek — to bobrza robota!']},
     llama:{move:['Lama Drama robi wejście. Będzie gorąco!','Uwaga, plucie… znaczy, precyzyjny ruch!','Lama ma dziś dramatycznie dobry plan!'],win:['LAMA DRAMA! Finał godny owacji na stojąco!','Ależ drama! Lama zgarnia zwycięstwo!']}
@@ -670,7 +670,7 @@
   };
   const secretEvents=[
     {title:'MORS PRZEJĄŁ PLANSZĘ!',text:'Przerwa techniczna. Mors sprawdza, czy kratki są wystarczająco mokre.'},
-    {title:'KOZA KRZYCHA WCHODZI DO AKCJI!',text:'BEEE! Komisja kopyt uznała ten ruch za podejrzanie elegancki.'},
+    {title:'JOŁANNA WCHODZI DO AKCJI!',text:'BEEE! Komisja kopyt uznała ten ruch za podejrzanie elegancki.'},
     {title:'HRABIA MA FOCHA',text:'Hrabia Poprawek odwrócił się plecami. Prosi o kontakt wyłącznie przez pełnomocnika.'},
     {title:'AWARIA DRUKARNI!',text:'Na planszę spadła pieczątka DO POPRAWY. Prosimy zachować spokój i pliki otwarte.'},
     {title:'KONTROLA JAKOŚCI',text:'Mors sprawdził planszę. Wynik kontroli: za dużo ambicji, za mało ryb.'},
@@ -1229,7 +1229,7 @@
         $('morsCupSeasonStatus').textContent=season?'Sezon trwa. Zbieramy zgłoszenia i wyniki.':'Mors musi najpierw ogłosić nowy sezon.';
         const body=$('morsCupStandings');body.innerHTML='';
         if(!tableRes.data?.length){const tr=document.createElement('tr');tr.innerHTML='<td colspan="7">Brak zawodników. Zapisz profil jako pierwszy!</td>';body.append(tr)}
-        else tableRes.data.forEach((p,i)=>{const tr=document.createElement('tr');if(p.player_id===profileId())tr.classList.add('is-you');tr.innerHTML='<td>'+(i+1)+'</td><td><b>'+safe(p.nickname)+'</b><small>'+safe(({mors:'🦭 Mors',tiger:'🐯 Hrabia Poprawek',goat:'🐐 Koza Krzycha',bobr:'🦫 Bóbr',llama:'🦙 Lama Drama',octopus:'🐙 Ośmiornica'}[p.mascot]||'Zawodnik'))+'</small></td><td>'+Number(p.played||0)+'</td><td>'+Number(p.wins||0)+'</td><td>'+Number(p.draws||0)+'</td><td>'+Number(p.losses||0)+'</td><td><b>'+Number(p.points||0)+'</b></td>';body.append(tr)});
+        else tableRes.data.forEach((p,i)=>{const tr=document.createElement('tr');if(p.player_id===profileId())tr.classList.add('is-you');tr.innerHTML='<td>'+(i+1)+'</td><td><b>'+safe(p.nickname)+'</b><small>'+safe(({mors:'🦭 Mors',tiger:'🐯 Hrabia Poprawek',goat:'🐐 Jołanna',bobr:'🦫 Bóbr',llama:'🦙 Lama Drama',octopus:'🐙 Ośmiornica'}[p.mascot]||'Zawodnik'))+'</small></td><td>'+Number(p.played||0)+'</td><td>'+Number(p.wins||0)+'</td><td>'+Number(p.draws||0)+'</td><td>'+Number(p.losses||0)+'</td><td><b>'+Number(p.points||0)+'</b></td>';body.append(tr)});
         const list=$('morsCupTournamentList');list.innerHTML='';
         if(!tournamentRes.data?.length){list.textContent='Na razie brak otwartych turniejów. Mors podobno szuka pucharu.'}
         else tournamentRes.data.forEach(t=>{const card=document.createElement('article');card.className='morscup-tournament-card';const title=document.createElement('b');title.textContent=t.name;const detail=document.createElement('small');detail.textContent='Miejsca: do '+t.capacity+' · '+(t.status==='registration'?'Zapisy otwarte':'Turniej w trakcie');card.append(title,detail);if(t.status==='registration'){const join=document.createElement('button');join.type='button';join.className='btn btn-yellow';join.textContent='ZGŁOŚ MNIE';join.addEventListener('click',async()=>{join.disabled=true;if(!localStorage.getItem(MORS_CUP_TOKEN_KEY)){note('Najpierw zapisz swój profil zawodnika.',true);join.disabled=false;return}const {data,error}=await client.rpc('szs_morscup_join_tournament',{p_tournament_id:t.id,p_player_id:profileId(),p_player_token:morsCupPlayerToken()});if(error){note(/duplicate|already/i.test(error.message||'')?'Już jesteś na liście tego turnieju.':('Nie udało się zapisać: '+error.message),true);join.disabled=false}else note(data?.already_joined?'Już jesteś na liście startowej tego turnieju.':'Zgłoszenie przyjęte. Mors dopisał Cię do listy startowej!')});card.append(join)}list.append(card)});
