@@ -634,6 +634,7 @@
   $('openSoccer')?.addEventListener('click',()=>openAttraction('soccer'));
   $('openFortune')?.addEventListener('click',()=>openAttraction('fortune'));
   $('openMorsZone')?.addEventListener('click',()=>openAttraction('mors-zone'));
+  $('openHangman')?.addEventListener('click',()=>{openAttraction('mors-zone');document.querySelector('.mors-zone-drawer')?.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>$('hangmanHeading')?.scrollIntoView({behavior:'smooth',block:'start'}),180);});
   $('attractionsBack')?.addEventListener('click',showAttractionsHome);
   function showGame(){resultOverlayDismissed=false;setup.classList.remove('hidden');setup.classList.add('playing');game.classList.remove('hidden');$('roomCode').textContent=room||'LOKALNIE';$('playerName').textContent=nick();if(mode==='online'){updateOnlineCharacters()}else{const ownCard=document.querySelector('.tiger-score');setScoreCharacter(ownCard,selectedCharacter);setScoreCharacter(document.querySelector('.mors-score'),'mors');}renderAchievements();newPrintBrief();}
   const printBriefs=[
