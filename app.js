@@ -1001,7 +1001,7 @@
     function soccerCanMove(to){return soccerNeighbors(soccer.position).some(p=>p.c===to.c&&p.r===to.r)&&!soccer.lines.has(soccerKey(soccer.position,to))}
     function soccerDraw(){
       if(!soccerBoard)return;
-      const p=soccer.position,available=soccer.started&&!soccer.over&&(!soccerOnline||(soccerOnlineGuestJoined&&soccerOnlineRole===soccer.turn))&&!soccerOnlineBusy?soccerNeighbors(p).filter(n=>soccerCanMove(n)):[];
+      const p=soccer.position,available=soccer.started&&!soccer.over&&(!soccerOnline||(soccerOnlineGuestJoined&&soccerOnlineRole===soccer.turn))&&(!soccerVsMors||soccer.turn===1)&&!soccerOnlineBusy?soccerNeighbors(p).filter(n=>soccerCanMove(n)):[];
       const ink=['ink-cyan','ink-magenta','ink-yellow','ink-black'];
       const lineMarkup=[...soccer.lines].map((key,i)=>{const [a,b]=key.split('|'),[ac,ar]=a.split(',').map(Number),[bc,br]=b.split(',').map(Number);const x1=soccerX(ac),y1=soccerY(ar),x2=soccerX(bc),y2=soccerY(br),dx=x2-x1,dy=y2-y1,len=Math.hypot(dx,dy)||1;const wobble=(((ac*17+ar*11+bc*7+br*13)%7)-3)*1.15;const mx=(x1+x2)/2-(dy/len)*wobble,my=(y1+y2)/2+(dx/len)*wobble;const move=soccer.history.find(h=>h.line===key);const opponentMove=!!move&&(soccerVsMors?move.turn===0:soccerOnline?move.turn!==soccerOnlineRole:false);return '<path class="move-line '+(opponentMove?'ink-green':ink[i%ink.length])+'" d="M '+x1.toFixed(2)+' '+y1.toFixed(2)+' Q '+mx.toFixed(2)+' '+my.toFixed(2)+' '+x2.toFixed(2)+' '+y2.toFixed(2)+'"/>'}).join('');
       const dots=[];for(let r=0;r<soccerRows;r++)for(let c=0;c<soccerCols;c++){const active=available.some(n=>n.c===c&&n.r===r),current=p.c===c&&p.r===r;dots.push('<circle class="paper-dot'+(current?' current':'')+(active?' available':'')+'" cx="'+soccerX(c)+'" cy="'+soccerY(r)+'" r="'+(active?3.1:current?2.8:1.25)+'" '+(active?'data-soccer-point="'+c+','+r+'" tabindex="0" role="button" aria-label="Ruch do pola '+(c+1)+', '+(r+1)+'"':'')+'/>')};
@@ -1044,7 +1044,7 @@
     }
     function soccerMove(to){
       if(soccerOnline){soccerOnlineMove(to);return}
-      if(!soccer.started||soccer.over||!soccerCanMove(to))return;
+      if(!soccer.started||soccer.over||(soccerVsMors&&soccer.turn!==1)||!soccerCanMove(to))return;
       const from={...soccer.position},line=soccerKey(from,to),prior=soccer.visits.get(to.c+','+to.r)||0;
       soccer.history.push({from,to:{...to},turn:soccer.turn,line});
       soccer.lines.add(line);soccer.position={...to};
