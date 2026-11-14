@@ -2127,3 +2127,51 @@ body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-comme
     max-height:240px;
   }
 }
+
+
+/* FIX: make both existing Cup artworks visibly render in the soccer header */
+body.view-soccer .shell .soccer-hero,
+body.view-soccer .soccer-hero{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  height:auto!important;
+  min-height:0!important;
+  overflow:visible!important;
+}
+body.view-soccer .soccer-hero-combo{
+  display:grid!important;
+  grid-template-columns:minmax(0, .9fr) minmax(0, 1.1fr)!important;
+  align-items:center!important;
+  gap:18px!important;
+  width:100%!important;
+  min-height:250px!important;
+  padding:16px!important;
+  background:#f5f0df!important;
+  box-sizing:border-box!important;
+}
+body.view-soccer .soccer-hero-combo img.soccer-cup-banner{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%!important;
+  height:auto!important;
+  max-height:340px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
+body.view-soccer .soccer-hero-combo img.soccer-field-art{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%!important;
+  height:auto!important;
+  max-height:360px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
+@media(max-width:600px){
+ body.view-soccer .soccer-hero-combo{grid-template-columns:1fr!important;gap:4px!important}
+ body.view-soccer .soccer-hero-combo img.soccer-cup-banner{width:min(88%,380px)!important;max-height:190px!important}
+ body.view-soccer .soccer-hero-combo img.soccer-field-art{max-height:250px!important}
+}
