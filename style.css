@@ -2026,3 +2026,30 @@ body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-comme
   body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-status{font-size:9px!important;padding:0!important}
   body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-actions .btn{min-height:30px!important;padding:3px!important}
 }
+
+/* URZĄD OSTATECZNEJ LITERY — minigra słowna */
+.hangman-panel{margin:22px 0;padding:clamp(16px,3vw,28px);border:3px solid #242424;border-radius:22px;background:linear-gradient(135deg,#fff8d6,#fff);box-shadow:7px 7px 0 #242424;color:#242424}
+.hangman-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.hangman-heading small{font-weight:900;letter-spacing:.12em;color:#9b4c28}
+.hangman-heading h2{margin:6px 0;font-size:clamp(23px,4vw,36px);line-height:1.05}
+.hangman-heading p{margin:8px 0 16px;max-width:680px}
+.hangman-stamp{flex:none;border:3px double #b94b36;color:#b94b36;padding:9px 12px;text-align:center;font-weight:1000;transform:rotate(7deg);font-size:12px}
+.hangman-intro{display:flex;align-items:center;gap:14px;background:#ffe66b;border:2px solid #242424;border-radius:15px;padding:10px 14px;margin:14px 0}
+.hangman-intro img{width:76px;height:76px;object-fit:contain}
+.hangman-intro b{font-size:12px;letter-spacing:.06em}.hangman-intro p{margin:4px 0;font-weight:650}
+.hangman-game{border:2px solid #242424;border-radius:17px;padding:clamp(12px,2.5vw,22px);background:#fff}
+.hangman-topline{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11px;font-weight:900;letter-spacing:.06em}
+.hangman-chaos{display:flex;justify-content:center;align-items:center;gap:clamp(5px,2vw,14px);min-height:72px;margin:12px 0;padding:8px;background:#f2f0e9;border-radius:13px}
+.hangman-chaos .chaos-item{display:grid;place-items:center;width:clamp(31px,6vw,48px);height:clamp(31px,6vw,48px);font-size:clamp(21px,4vw,31px);border:2px dashed #b9b3a5;border-radius:10px;filter:grayscale(1);opacity:.18;transform:scale(.85);transition:.2s}
+.hangman-chaos .chaos-item.active{filter:none;opacity:1;transform:scale(1);background:#fff0a8;border:2px solid #242424}
+.hangman-word{display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(5px,1.5vw,11px);min-height:52px;margin:20px 0 12px}
+.hangman-letter{width:clamp(24px,5vw,39px);height:44px;display:grid;place-items:center;border-bottom:4px solid #242424;font-size:clamp(19px,4vw,28px);font-weight:1000;text-transform:uppercase}
+.hangman-used{text-align:center;font-size:11px;font-weight:800;color:#666;min-height:18px}
+.hangman-keyboard{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;max-width:590px;margin:14px auto}
+.hangman-keyboard button{min-width:0;min-height:40px;border:2px solid #242424;border-radius:9px;background:#ffe66b;color:#242424;font-weight:950;font-size:15px;cursor:pointer;box-shadow:2px 2px 0 #242424}
+.hangman-keyboard button:disabled{opacity:.35;cursor:default;box-shadow:none;transform:translate(2px,2px)}
+.hangman-feedback{text-align:center;min-height:42px;font-weight:750;margin:10px 0}
+.hangman-actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}
+.hangman-footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:16px;font-size:11px;font-weight:850}
+.hangman-footer span{font-style:italic;color:#795b2b}
+@media(max-width:520px){.hangman-stamp{font-size:9px;padding:6px}.hangman-keyboard{grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.hangman-keyboard button{min-height:37px;font-size:14px}.hangman-intro img{width:58px;height:58px}}
