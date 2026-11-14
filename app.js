@@ -1027,11 +1027,11 @@
       if(!soccerVsMors||!soccer.started||soccer.over||soccer.turn!==0)return;
       soccerStatus.textContent='Morścisław myśli… podobno ma plan. 🦭';
       soccerTurn.textContent='RUCH: MORŚCISŁAW KOMBINUJE';
+      const level=$('cpuDifficulty')?.value||'normal';
       soccerAiTimer=setTimeout(()=>{
         if(!soccerVsMors||soccer.over||soccer.turn!==0)return;
         const moves=soccerNeighbors(soccer.position).filter(soccerCanMove);
         if(!moves.length)return;
-        const level=$('cpuDifficulty')?.value||'normal';
         const ranked=moves.map(m=>{
           const goal=m.r===0&&m.c>=soccerGoals.min&&m.c<=soccerGoals.max;
           const next=soccerNeighbors(m).filter(n=>!soccer.lines.has(soccerKey(m,n))&&!(n.c===soccer.position.c&&n.r===soccer.position.r)).length;
