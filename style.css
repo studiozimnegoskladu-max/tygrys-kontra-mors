@@ -2027,6 +2027,20 @@ body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-comme
   body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-actions .btn{min-height:30px!important;padding:3px!important}
 }
 
+
+/* Instrukcja Urzędu — ta sama papierowa, żółto-czarna konwencja co minigra. */
+.hangman-help{margin:0 0 14px;border:2px solid #242424;border-radius:13px;background:#fff0a8;color:#242424;overflow:hidden}
+.hangman-help>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;cursor:pointer;list-style:none;font-size:12px;font-weight:1000;letter-spacing:.045em}
+.hangman-help>summary::-webkit-details-marker{display:none}
+.hangman-help>summary b{font-size:19px;line-height:1;transition:transform .2s}
+.hangman-help[open]>summary b{transform:rotate(45deg)}
+.hangman-help-content{padding:0 16px 14px;border-top:1px dashed #8b7b43}
+.hangman-help-content ol{padding-left:22px;margin:12px 0;display:grid;gap:7px}
+.hangman-help-content li{padding-left:2px;line-height:1.4}
+.hangman-help-content p{font-size:12px;margin:12px 0;font-weight:700}
+.hangman-help-content blockquote{margin:12px 0 0;padding:9px 12px;background:#fff;border-left:4px solid #242424;border-radius:0 8px 8px 0;font-weight:800}
+.hangman-help-content blockquote span{display:block;margin-top:4px;font-size:11px;font-weight:700;color:#795b2b}
+
 /* URZĄD OSTATECZNEJ LITERY — minigra słowna */
 .hangman-panel{margin:22px 0;padding:clamp(16px,3vw,28px);border:3px solid #242424;border-radius:22px;background:linear-gradient(135deg,#fff8d6,#fff);box-shadow:7px 7px 0 #242424;color:#242424}
 .hangman-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
