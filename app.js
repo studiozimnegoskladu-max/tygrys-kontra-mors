@@ -8,7 +8,7 @@
   const cells=[...document.querySelectorAll('.cell')];
   const TIGER='tiger', MORS='mors';
   const CHARACTER_EMOJI={};
-  const characterAssets={tiger:'assets/hrabia-poprawek-transparent.svg',mors:'assets/mascot-mors.png',goat:'assets/koza-krzycha.jpg',bobr:'assets/mascot-bobr.png',llama:'assets/mascot-lama.png',octopus:'assets/mascot-osmiornica.png'};
+  const characterAssets={tiger:'assets/hrabia-poprawek-transparent.svg',mors:'assets/mascot-mors.png',goat:'assets/koza-krzycha.jpg',bobr:'assets/mascot-bobr.png',llama:'assets/mascot-lama.png',octopus:'assets/honda-drukara.svg'};
   const characterAssetUrl=character=>characterAssets[character]||characterAssets.mors;
   let selectedCharacter=localStorage.getItem('tkm_character')||'tiger';if(selectedCharacter==='mole'){selectedCharacter='bobr';localStorage.setItem('tkm_character','bobr');}
   const characterForMark=mark=>mode==='online'?(mark===role?selectedCharacter:(remoteCharacter|| (mark===TIGER?'tiger':'mors'))):(mark===TIGER?selectedCharacter:'mors');
@@ -653,12 +653,12 @@
     if(title)title.textContent=brief.title;
     if(body)body.textContent=brief.text;
   }
-  const characterNames={tiger:'Hrabia Poprawek',mors:'Morścisław',goat:'Koza Jołanna',octopus:'Ośmiornica Drukarka',bobr:'Bóbr',llama:'Lama Drama'};
+  const characterNames={tiger:'Hrabia Poprawek',mors:'Morścisław',goat:'Koza Jołanna',octopus:'Honda Drukara',bobr:'Bóbr',llama:'Lama Drama'};
   function applyCanonicalCharacterAssets(){document.querySelectorAll('img[data-character]').forEach(img=>{const character=img.dataset.character;if(characterAssets[character]){img.src=characterAssetUrl(character)+'?v=20261110-mascots-1';img.alt=characterNames[character]||img.alt;}});}
-  const characterIcons={tiger:'🐯',mors:'🦭',goat:'🐐',octopus:'🐙',bobr:'🦫',llama:'🦙'};
+  const characterIcons={tiger:'🐯',mors:'🦭',goat:'🐐',octopus:'🚗',bobr:'🦫',llama:'🦙'};
   const characterQuips={
     goat:{move:['Koza Jołanna melduje: kopyto postawione, proszę nie regulować odbiorników.','Mee-e-eega ruch! Nawet Hrabia musi poprawić koronę.','Kozo Jołanno, to było Twoje kopyto czy pieczątka?','Koza Jołanna skacze po planszy. Kontrola jakości uciekła.','Beee-zdyskusyjny ruch. Komisja kopyt zatwierdza.','Koza Jołanna mówi: ja tu tylko przyszłam skubać zwycięstwo.','Uwaga na rogi! Strategia weszła na pełnej.','Kopytko w pole, rozum na urlopie.'],win:['KOZA JOŁANNA WYGRYWA! Reszta może iść skubać trawę.','BEEE-zapelacyjna wygrana! Kozo Jołanno, odbierz puchar!','Koza Jołanna rozniosła planszę. Dosłownie prawie ją zjadła.','Kopyta górą! Hrabia składa oficjalny protest.']},
-    octopus:{move:['Ośmiornica Drukarka ma osiem pomysłów naraz!','Macka w ruch! Kolejny kolor na planszy!','Osiem rąk, zero wymówek. Drukujemy zwycięstwo!'],win:['OSIEM MACEK I PEŁNA KONTROLA!','Drukarka wypluła zwycięstwo w najwyższej jakości!']},
+    octopus:{move:['Honda Drukara wjeżdża z nowym pomysłem!','Honda Drukara wrzuca wyższy bieg!','Silnik odpala, zwycięstwo drukuje się samo!'],win:['HONDA DRUKARA I PEŁNA KONTROLA!','Honda Drukara dowiozła zwycięstwo w najwyższej jakości!']},
     bobr:{move:['Bóbr melduje: tama zbudowana, pole zajęte!','Zęby naostrzone, strategia dopięta.','Bóbr nie gryzie się w język. Ani w planszę!'],win:['BÓBR WYGRYWA! Tama zwycięstwa stoi!','To nie przypadek — to bobrza robota!']},
     llama:{move:['Lama Drama robi wejście. Będzie gorąco!','Uwaga, plucie… znaczy, precyzyjny ruch!','Lama ma dziś dramatycznie dobry plan!'],win:['LAMA DRAMA! Finał godny owacji na stojąco!','Ależ drama! Lama zgarnia zwycięstwo!']}
   };
@@ -1230,7 +1230,7 @@
         $('morsCupSeasonStatus').textContent=season?'Sezon trwa. Zbieramy zgłoszenia i wyniki.':'Morścisław musi najpierw ogłosić nowy sezon.';
         const body=$('morsCupStandings');body.innerHTML='';
         if(!tableRes.data?.length){const tr=document.createElement('tr');tr.innerHTML='<td colspan="7">Brak zawodników. Zapisz profil jako pierwszy!</td>';body.append(tr)}
-        else tableRes.data.forEach((p,i)=>{const tr=document.createElement('tr');if(p.player_id===profileId())tr.classList.add('is-you');tr.innerHTML='<td>'+(i+1)+'</td><td><b>'+safe(p.nickname)+'</b><small>'+safe(({mors:'🦭 Morścisław',tiger:'🐯 Hrabia Poprawek',goat:'🐐 Koza Jołanna',bobr:'🦫 Bóbr',llama:'🦙 Lama Drama',octopus:'🐙 Ośmiornica'}[p.mascot]||'Zawodnik'))+'</small></td><td>'+Number(p.played||0)+'</td><td>'+Number(p.wins||0)+'</td><td>'+Number(p.draws||0)+'</td><td>'+Number(p.losses||0)+'</td><td><b>'+Number(p.points||0)+'</b></td>';body.append(tr)});
+        else tableRes.data.forEach((p,i)=>{const tr=document.createElement('tr');if(p.player_id===profileId())tr.classList.add('is-you');tr.innerHTML='<td>'+(i+1)+'</td><td><b>'+safe(p.nickname)+'</b><small>'+safe(({mors:'🦭 Morścisław',tiger:'🐯 Hrabia Poprawek',goat:'🐐 Koza Jołanna',bobr:'🦫 Bóbr',llama:'🦙 Lama Drama',octopus:'🚗 Honda Drukara'}[p.mascot]||'Zawodnik'))+'</small></td><td>'+Number(p.played||0)+'</td><td>'+Number(p.wins||0)+'</td><td>'+Number(p.draws||0)+'</td><td>'+Number(p.losses||0)+'</td><td><b>'+Number(p.points||0)+'</b></td>';body.append(tr)});
         const list=$('morsCupTournamentList');list.innerHTML='';
         if(!tournamentRes.data?.length){list.textContent='Na razie brak otwartych turniejów. Morścisław podobno szuka pucharu.'}
         else tournamentRes.data.forEach(t=>{const card=document.createElement('article');card.className='morscup-tournament-card';const title=document.createElement('b');title.textContent=t.name;const detail=document.createElement('small');detail.textContent='Miejsca: do '+t.capacity+' · '+(t.status==='registration'?'Zapisy otwarte':'Turniej w trakcie');card.append(title,detail);if(t.status==='registration'){const join=document.createElement('button');join.type='button';join.className='btn btn-yellow';join.textContent='ZGŁOŚ MNIE';join.addEventListener('click',async()=>{join.disabled=true;if(!localStorage.getItem(MORS_CUP_TOKEN_KEY)){note('Najpierw zapisz swój profil zawodnika.',true);join.disabled=false;return}const {data,error}=await client.rpc('szs_morscup_join_tournament',{p_tournament_id:t.id,p_player_id:profileId(),p_player_token:morsCupPlayerToken()});if(error){note(/duplicate|already/i.test(error.message||'')?'Już jesteś na liście tego turnieju.':('Nie udało się zapisać: '+error.message),true);join.disabled=false}else note(data?.already_joined?'Już jesteś na liście startowej tego turnieju.':'Zgłoszenie przyjęte. Morścisław dopisał Cię do listy startowej!')});card.append(join)}list.append(card)});
