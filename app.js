@@ -972,8 +972,8 @@
     // MORS CUP — papierowe piłkarzyki, lokalny pojedynek dwóch osób na jednym ekranie.
     const soccerPlay=$('soccerPlay'),soccerBoard=$('soccerBoard'),soccerTurn=$('soccerTurn'),soccerStatus=$('soccerStatus');
     let soccerVsMors=false,soccerAiTimer=null;
-    const soccerRows=11,soccerCols=17,soccerX=c=>40+c*15,soccerY=r=>8+r*16;
-    const soccerGoals={min:7,max:9};
+    const soccerRows=17,soccerCols=11,soccerX=c=>10+c*16,soccerY=r=>8+r*16;
+    const soccerGoals={min:4,max:6};
     let soccer={lines:new Set(),visits:new Map(),position:{c:8,r:5},turn:0,started:false,over:false,score:[0,0],history:[]};
     const soccerNames=['MORS','HRABIA'];
     const soccerName=i=>i===0?'MORS':(soccerVsMors?'TY':'HRABIA');
@@ -1005,7 +1005,7 @@
       const ink=['ink-cyan','ink-magenta','ink-yellow','ink-black'];
       const lineMarkup=[...soccer.lines].map((key,i)=>{const [a,b]=key.split('|'),[ac,ar]=a.split(',').map(Number),[bc,br]=b.split(',').map(Number);const x1=soccerX(ac),y1=soccerY(ar),x2=soccerX(bc),y2=soccerY(br),dx=x2-x1,dy=y2-y1,len=Math.hypot(dx,dy)||1;const wobble=(((ac*17+ar*11+bc*7+br*13)%7)-3)*1.15;const mx=(x1+x2)/2-(dy/len)*wobble,my=(y1+y2)/2+(dx/len)*wobble;const move=soccer.history.find(h=>h.line===key);const opponentMove=!!move&&(soccerVsMors?move.turn===0:soccerOnline?move.turn!==soccerOnlineRole:false);return '<path class="move-line '+(opponentMove?'ink-green':ink[i%ink.length])+'" d="M '+x1.toFixed(2)+' '+y1.toFixed(2)+' Q '+mx.toFixed(2)+' '+my.toFixed(2)+' '+x2.toFixed(2)+' '+y2.toFixed(2)+'"/>'}).join('');
       const dots=[];for(let r=0;r<soccerRows;r++)for(let c=0;c<soccerCols;c++){const active=available.some(n=>n.c===c&&n.r===r),current=p.c===c&&p.r===r;dots.push('<circle class="paper-dot'+(current?' current':'')+(active?' available':'')+'" cx="'+soccerX(c)+'" cy="'+soccerY(r)+'" r="'+(active?3.1:current?2.8:1.25)+'" '+(active?'data-soccer-point="'+c+','+r+'" tabindex="0" role="button" aria-label="Ruch do pola '+(c+1)+', '+(r+1)+'"':'')+'/>')};
-      soccerBoard.innerHTML='<rect class="goal-zone" x="145" y="0" width="45" height="8"/><rect class="goal-zone bottom" x="145" y="168" width="45" height="12"/><path class="field-line" d="M40 8H145 M190 8H280 M40 168H145 M190 168H280 M40 8V168H280V8 M40 88H280 M100 8V40H220V8 M100 168V136H220V168"/>'+lineMarkup+dots.join('')+'<circle class="ball" cx="'+soccerX(p.c)+'" cy="'+soccerY(p.r)+'" r="5.5"/>';
+      soccerBoard.innerHTML='<rect class="goal-zone" x="74" y="0" width="32" height="8"/><rect class="goal-zone bottom" x="74" y="264" width="32" height="16"/><path class="field-line" d="M10 8H74 M106 8H170 M10 264H74 M106 264H170 M10 8V264H170V8 M10 136H170 M42 8V40H138V8 M42 264V232H138V264"/>'+lineMarkup+dots.join('')+'<circle class="ball" cx="'+soccerX(p.c)+'" cy="'+soccerY(p.r)+'" r="5.5"/>';
       $('soccerScoreOne').textContent=soccer.score[0];$('soccerScoreTwo').textContent=soccer.score[1];
       $('soccerPlayerOne').textContent=soccerNames[0];$('soccerPlayerTwo').textContent=soccerVsMors?'TY':'HRABIA';
       soccerTurn.textContent=soccer.over?'KONIEC MECZU':soccer.started?'RUCH: '+soccerName(soccer.turn):'GOTOWI? ZACZYNAMY!';
