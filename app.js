@@ -724,7 +724,21 @@
   function render(){if(!current)return;cells.forEach((cell,i)=>{cell.innerHTML='';cell.classList.toggle('winning',(current.winning||[]).includes(i));const mark=current.board[i];if(mark){const character=characterForMark(mark);if(CHARACTER_EMOJI[character]){const avatar=document.createElement('span');avatar.className='board-character';avatar.textContent=CHARACTER_EMOJI[character];cell.append(avatar)}else{const im=document.createElement('img');im.className='board-avatar board-avatar-'+character;im.src=characterAssetUrl(character)+'?v=20261110-mascots-1';im.alt=characterNames[character]||'Maskotka SZS';cell.append(im)}}const canPlay=mode==='local'||(mode==='cpu'&&current.turn===TIGER)||(mode==='online'&&current.turn===role&&(current.guestJoined||role===current.creatorRole));cell.disabled=!!mark||current.status!=='playing'||!canPlay||busy});
     const w=current.winner;game.classList.toggle('round-finished',current.status==='finished');game.classList.toggle('round-draw',w==='draw');game.classList.toggle('series-won',!!seriesWinner);$('turnBanner').textContent=seriesWinner?('🏆 '+sideLabel(seriesWinner).toUpperCase()+' ZDOBYWA PUCHAR!'):w==='draw'?'REMIS! NIKT NIE ODPUSZCZA 😎':w?(sideLabel(w).toUpperCase()+' WYGRYWA!'):(mode==='local'?'RUCH: '+sideLabel(current.turn):mode==='cpu'?(current.turn===TIGER?'TWOJA KOLEJ — RUSZAJ!':'MORS MYŚLI…'):current.turn===role&&(!current.guestJoined?role===current.creatorRole:true)?'TWOJA KOLEJ — RUSZAJ!':!current.guestJoined?'PIERWSZY RUCH ZROBIONY — DRUGI GRACZ MOŻE DOŁĄCZYĆ W DOWOLNEJ CHWILI':'RUCH PRZECIWNIKA…');
     $('seriesLabel').textContent=(mode==='online'?'WYNIK TEJ SESJI':'SERIA DO 3 ZWYCIĘSTW')+' · '+(scores.tiger+scores.mors)+' ROZEGRANYCH RUND';$('roleLabel').textContent=mode==='local'?'DWAJ GRACZE · JEDNO URZĄDZENIE':mode==='cpu'?'TY: '+sideLabel(TIGER)+' · MORS: '+({easy:'ŁATWY',normal:'ŚREDNI',hard:'TRUDNY'}[cpuDifficulty]||'ŚREDNI'):'Grasz jako '+sideLabel(role)+' ('+(role===TIGER?'kółko':'krzyżyk')+')';$('newRoundBtn').disabled=current.status!=='finished'||!!seriesWinner;$('newMatchBtn').textContent=seriesWinner?'NOWY TURNIEJ ↻':'ZERUJ TURNIEJ ↻';$('newMatchBtn').classList.toggle('hidden',mode==='online');$('tigerScore').textContent=scores.tiger;$('morsScore').textContent=scores.mors;const resultOverlay=$('roundResultOverlay');if(resultOverlay){const resultTitle=$('roundResultTitle'),resultText=$('roundResultText'),resultIcon=$('roundResultIcon');if(current.status==='finished'){if(current.winner==='draw'){if(resultTitle)resultTitle.textContent='REMIS!';if(resultText)resultText.textContent='Nikt nie odpuszcza. Plansza potrzebuje dogrywki, a Mors — kawy.';if(resultIcon)resultIcon.textContent='🤝';}else{if(resultTitle)resultTitle.textContent=sideLabel(current.winner).toUpperCase()+' WYGRYWA!';if(resultText)resultText.textContent=seriesWinner?'PUCHAR WĘDRUJE DO ZWYCIĘZCY!':mode==='local'?'Runda rozstrzygnięta. Druga strona już szykuje protest.':(mode==='cpu'&&current.winner===TIGER)||(mode==='online'&&current.winner===role)?'Piękna robota! Hrabia właśnie sprawdza regulamin.':'Tym razem przeciwnik był górą. Rewanż czeka!';if(resultIcon)resultIcon.textContent=seriesWinner?'🏆':'💥';}}resultOverlay.hidden=current.status!=='finished'||resultOverlayDismissed;}updateSoundButton();}
-  async function fetchGame(){const{data,error}=await client.from('game_sessions').select('*').eq('room_code',room).maybeSingle();if(error||!data)throw Error('Nie znaleziono pokoju. Sprawdź kod.');return data}
+  function makeRoomToken(){try{return crypto.randomUUID()+crypto.randomUUID()}catch{return 'szs-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2)+'-'+Math.random().toString(36).slice(2)}}
+  function roomPlayerToken(){
+    if(!room)throw Error('Brak aktywnego pokoju.');
+    const hostToken=localStorage.getItem('tkm_host_'+room);
+    const guestToken=localStorage.getItem('tkm_guest_'+room);
+    if(hostToken&&current&&role===current.creatorRole)return hostToken;
+    if(guestToken)return guestToken;
+    if(hostToken)return hostToken;
+    throw Error('Brak tokenu tego gracza. Otwórz ponownie zaproszenie na tym urządzeniu.');
+  }
+  async function fetchGame(){
+    const{data,error}=await client.rpc('szs_secure_get_room',{p_room_code:room,p_player_token:roomPlayerToken()});
+    if(error||!data)throw Error(error?.message||'Nie znaleziono pokoju lub token gracza jest nieprawidłowy.');
+    return Array.isArray(data)?data[0]:data;
+  }
   function fromRow(row){if(Array.isArray(row))row=row[0];if(!row)throw Error('Serwer nie zwrócił stanu planszy.');let board=row.board;if(typeof board==='string'){try{board=JSON.parse(board)}catch{board=null}}if(!Array.isArray(board)||board.length!==9)throw Error('Nieprawidłowy stan planszy otrzymany z serwera.');return{board,turn:row.turn||TIGER,winner:row.winner||null,status:row.status||'playing',guestJoined:row.guest_joined===true||row.guest_joined==='true',creatorRole:row.creator_role||TIGER,winning:evaluate(board).winning}}
   async function subscribe(){
     if(pollTimer){clearInterval(pollTimer);pollTimer=null;}
@@ -747,7 +761,6 @@
       }
       current=incoming;render();
     };
-    channel.on('postgres_changes',{event:'UPDATE',schema:'public',table:'game_sessions',filter:'room_code=eq.'+room},p=>{if(p.new)applyIncoming(p.new)});
     const st=await new Promise(resolve=>{
       channel.subscribe(s=>{if(s==='SUBSCRIBED'||s==='CHANNEL_ERROR'||s==='TIMED_OUT')resolve(s)});
       setTimeout(()=>resolve('TIMED_OUT'),7000);
@@ -758,20 +771,71 @@
         if(presenceResult==='error')console.warn('Nie udało się udostępnić maskotki w pokoju.');
       }catch(e){console.warn('Nie udało się udostępnić maskotki w pokoju:',e)}
     }else{
-      console.warn('Realtime niedostępny — uruchamiam synchronizację awaryjną.');
-      say('Pokój otwarty. Włączam awaryjną synchronizację planszy…');
-      pollTimer=setInterval(async()=>{
-        if(!room||mode!=='online'||document.hidden)return;
-        try{const row=await fetchGame();if(!current||JSON.stringify(row.board)!==JSON.stringify(current.board)||row.turn!==current.turn||row.status!==current.status)applyIncoming(row)}
-        catch(e){console.warn('Awaryjna synchronizacja pokoju:',e)}
-      },1800);
+      console.warn('Realtime Presence niedostępny — synchronizuję planszę przez bezpieczny kanał RPC.');
     }
     current=fromRow(await fetchGame());
+    // Stan planszy pobieramy przez RPC sprawdzające token gracza.
+    pollTimer=setInterval(async()=>{
+      if(!room||mode!=='online'||document.hidden)return;
+      try{
+        const row=await fetchGame();
+        if(!current||JSON.stringify(row.board)!==JSON.stringify(current.board)||row.turn!==current.turn||row.status!==current.status||row.guest_joined!==current.guestJoined)applyIncoming(row);
+      }catch(e){console.warn('Synchronizacja pokoju:',e)}
+    },1300);
     if(st==='SUBSCRIBED'){syncPresenceCharacters();say('');}
     render();
   }
-  async function createRoom(){if(!connect()||busy)return;roundId=makeRoundId();busy=true;$('createBtn').disabled=true;say('Tworzę pokój…');try{mode='online';remoteCharacter=null;room=roomCode();role=document.querySelector('input[name="mySide"]:checked')?.value||TIGER;const{error}=await client.rpc('szs_create_room',{p_room_code:room,p_creator_role:role});if(error)throw error;current=fresh();scores={tiger:0,mors:0};seriesWinner=null;showGame();await subscribe();history.replaceState({},'',location.pathname+'?room='+room)}catch(e){const m=[e?.message,e?.details,e?.hint].filter(Boolean).join(' · ');if(e?.code==='PGRST202'||/szs_create_room|schema cache|Could not find the function/i.test(m))say('Supabase nie ma jeszcze funkcji tworzenia pokoju. Otwórz plik supabase-setup.sql w repozytorium, skopiuj CAŁĄ zawartość do Supabase → SQL Editor → New query i kliknij Run. Potem odśwież grę.');else if(e?.code==='42501'||/permission denied/i.test(m))say('Supabase odrzucił uprawnienia. Uruchom ponownie cały aktualny plik supabase-setup.sql w SQL Editor.');else say('Nie udało się utworzyć pokoju: '+(m||'nieznany błąd połączenia.'));}finally{busy=false;$('createBtn').disabled=false;if(current&&mode==='online')render()}}
-  async function joinRoom(code){if(!connect()||busy)return;roundId=makeRoundId();code=(code||'').trim().toUpperCase();if(!/^[A-Z0-9]{6,12}$/.test(code)){say('Wpisz prawidłowy kod z zaproszenia.');return}busy=true;$('joinBtn').disabled=true;say('Szukam pokoju…');try{mode='online';remoteCharacter=null;room=code;let guestToken=localStorage.getItem('tkm_guest_'+room);if(!guestToken){guestToken=crypto.randomUUID?crypto.randomUUID():room+'-'+Date.now()+'-'+Math.random().toString(36).slice(2);localStorage.setItem('tkm_guest_'+room,guestToken)}const{data,error}=await client.rpc('szs_join_room',{p_room_code:room,p_guest_token:guestToken});if(error)throw error;const joinedRow=Array.isArray(data)?data[0]:data;const creatorRole=joinedRow?.creator_role||TIGER;role=creatorRole===TIGER?MORS:TIGER;current=fromRow(joinedRow||await fetchGame());scores={tiger:0,mors:0};seriesWinner=null;showGame();await subscribe();history.replaceState({},'',location.pathname+'?room='+room)}catch(e){const m=[e?.message,e?.details,e?.hint].filter(Boolean).join(' · ')||'Nie udało się dołączyć.';say(/Pokój nie istnieje albo ma już dwóch graczy/i.test(m)?'Ten pokój jest już zajęty albo kod jest nieprawidłowy. Poproś o nowy link.':m);room=null;role=null;current=null;game.classList.add('hidden');setup.classList.remove('playing');setup.classList.remove('hidden')}finally{busy=false;$('joinBtn').disabled=false;if(current&&mode==='online')render()}}
+  async function createRoom(){
+    if(!connect()||busy)return;
+    roundId=makeRoundId();busy=true;$('createBtn').disabled=true;say('Tworzę pokój…');
+    try{
+      mode='online';remoteCharacter=null;room=roomCode();
+      role=document.querySelector('input[name="mySide"]:checked')?.value||TIGER;
+      const hostToken=makeRoomToken();
+      localStorage.setItem('tkm_host_'+room,hostToken);
+      const{data,error}=await client.rpc('szs_secure_create_room',{p_room_code:room,p_creator_role:role,p_host_token:hostToken});
+      if(error)throw error;
+      current=fromRow(data);scores={tiger:0,mors:0};seriesWinner=null;
+      showGame();await subscribe();history.replaceState({},'',location.pathname+'?room='+room);
+    }catch(e){
+      if(room)localStorage.removeItem('tkm_host_'+room);
+      const m=[e?.message,e?.details,e?.hint].filter(Boolean).join(' · ');
+      if(e?.code==='PGRST202'||/szs_secure_create_room|schema cache|Could not find the function/i.test(m))say('Brakuje bezpiecznej funkcji pokoju w Supabase. Odśwież aplikację za chwilę i spróbuj ponownie.');
+      else say('Nie udało się utworzyć pokoju: '+(m||'nieznany błąd połączenia.'));
+    }finally{busy=false;$('createBtn').disabled=false;if(current&&mode==='online')render()}
+  }
+  async function joinRoom(code){
+    if(!connect()||busy)return;
+    roundId=makeRoundId();code=(code||'').trim().toUpperCase();
+    if(!/^[A-Z0-9]{6,12}$/.test(code)){say('Wpisz prawidłowy kod z zaproszenia.');return}
+    busy=true;$('joinBtn').disabled=true;say('Szukam pokoju…');
+    try{
+      mode='online';remoteCharacter=null;room=code;
+      const savedHostToken=localStorage.getItem('tkm_host_'+room);
+      if(savedHostToken){
+        const{data,error}=await client.rpc('szs_secure_get_room',{p_room_code:room,p_player_token:savedHostToken});
+        if(error)throw error;
+        const hostRow=Array.isArray(data)?data[0]:data;
+        role=hostRow?.creator_role||TIGER;
+        current=fromRow(hostRow);
+      }else{
+        let guestToken=localStorage.getItem('tkm_guest_'+room);
+        if(!guestToken){guestToken=makeRoomToken();localStorage.setItem('tkm_guest_'+room,guestToken)}
+        const{data,error}=await client.rpc('szs_secure_join_room',{p_room_code:room,p_guest_token:guestToken});
+        if(error)throw error;
+        const joinedRow=Array.isArray(data)?data[0]:data;
+        const creatorRole=joinedRow?.creator_role||TIGER;
+        role=creatorRole===TIGER?MORS:TIGER;
+        current=fromRow(joinedRow);
+      }
+      scores={tiger:0,mors:0};seriesWinner=null;showGame();await subscribe();
+      history.replaceState({},'',location.pathname+'?room='+room);
+    }catch(e){
+      const m=[e?.message,e?.details,e?.hint].filter(Boolean).join(' · ')||'Nie udało się dołączyć.';
+      say(/Pokój nie istnieje|token gracza jest nieprawidłowy|token tego gracza/i.test(m)?'Ten pokój nie istnieje, jest zajęty albo to urządzenie nie ma właściwego zaproszenia. Poproś o nowy link.':m);
+      room=null;role=null;current=null;game.classList.add('hidden');setup.classList.remove('playing');setup.classList.remove('hidden');
+    }finally{busy=false;$('joinBtn').disabled=false;if(current&&mode==='online')render()}
+  }
   function startLocal(which){roundId=makeRoundId();remoteCharacter=null;mode=which;cpuDifficulty=$('cpuDifficulty')?.value||cpuDifficulty;localStorage.setItem('tkm_cpu_difficulty',cpuDifficulty);room=null;role=which==='cpu'?TIGER:'both';scores={tiger:0,mors:0};seriesWinner=null;current=fresh();showGame();$('roomCode').textContent=which==='cpu'?'VS KOMPUTER':'LOKALNIE';commentary('tiger',selectedCharacter);history.replaceState({},'',location.pathname);render();if(which==='cpu')say('Powodzenia! Mors nie będzie łatwym przeciwnikiem.')}
   function minimax(board,player){const r=evaluate(board);if(r.winner===MORS)return{score:10};if(r.winner===TIGER)return{score:-10};if(r.winner==='draw')return{score:0};let best={score:player===MORS?-Infinity:Infinity,index:-1};for(let i=0;i<9;i++)if(!board[i]){board[i]=player;const score=minimax(board,player===MORS?TIGER:MORS).score;board[i]='';if((player===MORS&&score>best.score)||(player===TIGER&&score<best.score))best={score,index:i}}return best}
   async function move(i){
@@ -792,7 +856,7 @@
         current.status=optimisticResult.winner?'finished':'playing';
         current.turn=optimisticResult.winner?current.turn:(role===TIGER?MORS:TIGER);
         render();
-        const{data,error}=await client.rpc('szs_make_move',{p_room_code:room,p_role:role,p_cell:i});
+        const{data,error}=await client.rpc('szs_secure_make_move',{p_room_code:room,p_player_token:roomPlayerToken(),p_cell:i});
         if(error)throw error;
         current=fromRow(data);
         if(current.board[i]!==role)current=fromRow(await fetchGame());
@@ -839,7 +903,7 @@
   function cpuMove(){if(!current||current.status!=='playing'||mode!=='cpu')return;const empty=current.board.map((v,i)=>v?null:i).filter(v=>v!==null);let choice;if(cpuDifficulty==='easy'){choice=empty[Math.floor(Math.random()*empty.length)]}else if(cpuDifficulty==='normal'&&Math.random()<.35){choice=empty[Math.floor(Math.random()*empty.length)]}else{choice=minimax([...current.board],MORS).index}if(choice>=0)moveCpu(choice)}
   function moveCpu(i){if(busy||current.board[i])return;busy=true;current.board[i]=MORS;const r=evaluate(current.board);current.winner=r.winner;current.winning=r.winning;current.status=r.winner?'finished':'playing';current.turn=r.winner?MORS:TIGER;soundAnimal(MORS);if(current.winner){recordFinishedGame(current.winner,current.board,mode,room);if(current.winner!=='draw'){scores[current.winner]++;if(scores[current.winner]>=3)seriesWinner=current.winner;}commentary(current.winner==='draw'?'draw':current.winner==='tiger'?'tigerWin':'morsWin');celebrate();maybeSecretEvent(current.board,true)}else{commentary(MORS,'mors');maybeSecretEvent(current.board,false)}busy=false;render()}
   function celebrate(){document.body.classList.remove('celebrate');void document.body.offsetWidth;document.body.classList.add('celebrate');setTimeout(()=>document.body.classList.remove('celebrate'),1200)}
-  async function newRound(){if(!current||current.status!=='finished'||busy||seriesWinner)return;resultOverlayDismissed=false;busy=true;try{if(mode==='online'){const{data,error}=await client.rpc('szs_restart_room',{p_room_code:room,p_role:role});if(error)throw error;if(!data)throw Error('Serwer nie zwrócił nowej planszy.');current=fromRow(data);roundId=makeRoundId()}else{roundId=makeRoundId();current=fresh()}commentary('tiger')}catch(error){console.warn('Nie udało się rozpocząć rewanżu:',error);const message='Nie udało się rozpocząć rewanżu. Sprawdź połączenie i spróbuj ponownie.';const banner=$('turnBanner');if(banner)banner.textContent=message;say(message)}finally{busy=false;render()}}
+  async function newRound(){if(!current||current.status!=='finished'||busy||seriesWinner)return;resultOverlayDismissed=false;busy=true;try{if(mode==='online'){const{data,error}=await client.rpc('szs_secure_restart_room',{p_room_code:room,p_player_token:roomPlayerToken()});if(error)throw error;if(!data)throw Error('Serwer nie zwrócił nowej planszy.');current=fromRow(data);roundId=makeRoundId()}else{roundId=makeRoundId();current=fresh()}commentary('tiger')}catch(error){console.warn('Nie udało się rozpocząć rewanżu:',error);const message='Nie udało się rozpocząć rewanżu. Sprawdź połączenie i spróbuj ponownie.';const banner=$('turnBanner');if(banner)banner.textContent=message;say(message)}finally{busy=false;render()}}
   $('introEnterBtn')?.addEventListener('click',()=>{$('introScreen').classList.add('intro-dismissed');});
   $('roundResultClose')?.addEventListener('click',()=>{resultOverlayDismissed=true;$('roundResultOverlay').hidden=true;});
   // Delikatny odgłos papierowego stempla dla kliknięć interfejsu; respektuje przełącznik dźwięku.
