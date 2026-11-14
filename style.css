@@ -1895,3 +1895,23 @@ body.view-soccer .shell>.soccer-hero{display:block!important}
 /* Plansza kółko-krzyżyk: bez grafiki Morsa z piłką (ta należy wyłącznie do banera Mors Cup). */
 .board-wrap,.board-wrap .board{background-image:none!important}
 .board-wrap::before,.board-wrap::after{background-image:none!important;content:none!important}
+
+/* Koza Krzycha — czytelna, okrągła odznaka także na planszy */
+.board-avatar-goat{
+  width:88%!important;
+  height:88%!important;
+  max-width:88%!important;
+  max-height:88%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  border-radius:50%!important;
+  background:#ffe600;
+  outline:2px solid var(--ink);
+  outline-offset:-2px;
+  filter:drop-shadow(2px 3px 0 rgba(0,0,0,.18));
+}
+.character-option>.character-avatar[data-character="goat"]{
+  border:2px solid var(--ink);
+  background:#ffe600;
+  object-fit:cover;
+}
