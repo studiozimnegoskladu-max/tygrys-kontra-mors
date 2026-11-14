@@ -1,15 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1040" viewBox="0 0 360 520">
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
 <defs>
- <filter id="paperNoise"><feTurbulence type="fractalNoise" baseFrequency=".018 .045" numOctaves="3" seed="18"/><feColorMatrix values="0 0 0 0 .62 0 0 0 0 .59 0 0 0 0 .50 0 0 0 .22 0"/></filter>
- <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".72" numOctaves="2" seed="8"/><feColorMatrix values="0 0 0 0 .35 0 0 0 0 .32 0 0 0 0 .25 0 0 0 .12 0"/></filter>
- <filter id="crease"><feGaussianBlur stdDeviation="2.1"/></filter>
+  <filter id="paperNoise">
+    <feTurbulence type="fractalNoise" baseFrequency=".012 .028" numOctaves="3" seed="18"/>
+    <feColorMatrix values="0 0 0 0 .62 0 0 0 0 .59 0 0 0 0 .50 0 0 0 .20 0"/>
+  </filter>
+  <filter id="grain">
+    <feTurbulence type="fractalNoise" baseFrequency=".68" numOctaves="2" seed="8"/>
+    <feColorMatrix values="0 0 0 0 .35 0 0 0 0 .32 0 0 0 0 .25 0 0 0 .10 0"/>
+  </filter>
+  <filter id="crease"><feGaussianBlur stdDeviation="3.2"/></filter>
 </defs>
-<rect width="360" height="520" fill="#eee8dc"/>
-<rect width="360" height="520" fill="#faf7ef" opacity=".75"/>
-<rect width="360" height="520" filter="url(#paperNoise)" opacity=".32"/>
-<rect width="360" height="520" filter="url(#grain)" opacity=".16"/>
-<g fill="none" stroke="#8b8377" opacity=".13" filter="url(#crease)" stroke-width="5"><path d="M-10 70L370 150M-20 300L380 245M30 -10L180 530M340 -10L170 530M-10 455L370 390"/></g>
-<g stroke="#6b9ac8" stroke-width=".68" opacity=".72"><path d="M0 30H360 M0 76H360 M0 122H360 M0 168H360 M0 214H360 M0 260H360 M0 306H360 M0 352H360 M0 398H360 M0 444H360 M0 490H360"/><path d="M30 0V520 M80 0V520 M130 0V520 M180 0V520 M230 0V520 M280 0V520 M330 0V520"/></g>
-<path d="M14 0V520" stroke="#c65f68" stroke-width="1.1" opacity=".82"/>
-<rect x="2" y="2" width="356" height="516" fill="none" stroke="#9c9487" stroke-width="2" opacity=".25"/>
+<rect width="1600" height="900" fill="#eee8dc"/>
+<rect width="1600" height="900" fill="#faf7ef" opacity=".78"/>
+<rect width="1600" height="900" filter="url(#paperNoise)" opacity=".30"/>
+<rect width="1600" height="900" filter="url(#grain)" opacity=".15"/>
+<g fill="none" stroke="#8b8377" opacity=".10" filter="url(#crease)" stroke-width="8">
+  <path d="M-30 135L1630 260M-40 610L1640 510M120 -30L710 930M1480 -20L860 930M-20 820L1640 690"/>
+</g>
+<g stroke="#6b9ac8" stroke-width="2.1" opacity=".62">
+  <path d="M0 42H1600 M0 92H1600 M0 142H1600 M0 192H1600 M0 242H1600 M0 292H1600 M0 342H1600 M0 392H1600 M0 442H1600 M0 492H1600 M0 542H1600 M0 592H1600 M0 642H1600 M0 692H1600 M0 742H1600 M0 792H1600 M0 842H1600"/>
+  <path d="M80 0V900 M160 0V900 M240 0V900 M320 0V900 M400 0V900 M480 0V900 M560 0V900 M640 0V900 M720 0V900 M800 0V900 M880 0V900 M960 0V900 M1040 0V900 M1120 0V900 M1200 0V900 M1280 0V900 M1360 0V900 M1440 0V900 M1520 0V900"/>
+</g>
+<path d="M58 0V900" stroke="#c65f68" stroke-width="3" opacity=".78"/>
+<rect x="5" y="5" width="1590" height="890" fill="none" stroke="#9c9487" stroke-width="4" opacity=".22"/>
 </svg>
