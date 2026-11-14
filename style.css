@@ -1915,3 +1915,44 @@ body.view-soccer .shell>.soccer-hero{display:block!important}
   background:#ffe600;
   object-fit:cover;
 }
+
+
+/* MORS CUP — pionowe boisko, maksymalnie duże na ekranie telefonu */
+.soccer-game .soccer-play:not(.hidden) .soccer-board{
+  width:min(100%,calc((100dvh - 250px)*9/16))!important;
+  max-width:100%!important;
+  height:auto!important;
+  max-height:calc(100dvh - 250px)!important;
+  aspect-ratio:9/16!important;
+}
+body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-board{
+  width:auto!important;
+  height:min(100%,calc(100dvh - 205px))!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  aspect-ratio:9/16!important;
+}
+@media(max-width:700px) and (orientation:portrait){
+  .soccer-game .soccer-play:not(.hidden) .soccer-board{
+    width:auto!important;
+    height:min(100%,calc(100dvh - 260px))!important;
+    max-height:calc(100dvh - 260px)!important;
+    aspect-ratio:9/16!important;
+  }
+  body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-board{
+    height:min(100%,calc(100dvh - 205px))!important;
+    width:auto!important;
+  }
+}
+@media(max-width:700px) and (orientation:landscape){
+  .soccer-game .soccer-play:not(.hidden) .soccer-board{
+    height:min(100%,calc(100dvh - 155px))!important;
+    width:auto!important;
+    max-height:calc(100dvh - 155px)!important;
+    aspect-ratio:9/16!important;
+  }
+  body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-board{
+    height:min(100%,calc(100dvh - 135px))!important;
+    width:auto!important;
+  }
+}
