@@ -40,6 +40,7 @@ async function runProfile(name, contextOptions) {
     if (await paintOptions.count() !== 4) failures.push(`[${name}] Gra Morścisław kontra Plama nie pokazuje czterech kolorów.`);
     await page.locator('#openFortune').click();
     await page.waitForFunction(() => document.body.classList.contains('view-fortune'));
+    await page.locator('#attractionsBack').click();
     await page.locator('#openMorsZone').click();
     await page.locator('#fontStart').click();
     await page.waitForFunction(() => !document.querySelector('#fontPlay').classList.contains('hidden'));
