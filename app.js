@@ -1,5 +1,13 @@
 (() => {
   const $ = id => document.getElementById(id);
+  // Bezpieczny magazyn lokalny: Safari/tryb prywatny może blokować storage.
+  const storage=(()=>{let nativeStore=null;const memory=new Map();try{nativeStore=window.localStorage}catch{}return{
+    getItem(key){try{return nativeStore?nativeStore.getItem(key):(memory.has(key)?memory.get(key):null)}catch{return memory.has(key)?memory.get(key):null}},
+    setItem(key,value){const text=String(value);memory.set(key,text);try{nativeStore?.setItem(key,text)}catch{}},
+    removeItem(key){memory.delete(key);try{nativeStore?.removeItem(key)}catch{}}
+  }})();
+  // Ekran powitalny zamyka się niezależnie od późniejszych modułów.
+  $('introEnterBtn')?.addEventListener('click',()=>{$('introScreen')?.classList.add('intro-dismissed')},{once:true});
   const setup=$('setup'), game=$('game'), msg=$('setupMessage');
   // Krytyczny przycisk pokoju podpinamy od razu, zanim uruchomią się dodatki strony.
   window.addEventListener('error',e=>{if(msg)msg.textContent='Błąd aplikacji: '+(e.message||'sprawdź konsolę przeglądarki')});
@@ -10,22 +18,22 @@
   const CHARACTER_EMOJI={};
   const characterAssets={tiger:'assets/hrabia-poprawek-transparent.svg',mors:'assets/mascot-mors.png',goat:'assets/koza-krzycha.jpg',bobr:'assets/mascot-bobr.png',llama:'assets/mascot-lama.png',octopus:'assets/honda-drukara.png'};
   const characterAssetUrl=character=>characterAssets[character]||characterAssets.mors;
-  let selectedCharacter=localStorage.getItem('tkm_character')||'tiger';if(selectedCharacter==='mole'){selectedCharacter='bobr';localStorage.setItem('tkm_character','bobr');}
+  let selectedCharacter=storage.getItem('tkm_character')||'tiger';if(selectedCharacter==='mole'){selectedCharacter='bobr';storage.setItem('tkm_character','bobr');}
   const characterForMark=mark=>mode==='online'?(mark===role?selectedCharacter:(remoteCharacter|| (mark===TIGER?'tiger':'mors'))):(mark===TIGER?selectedCharacter:'mors');
   const sideLabel=mark=>(characterNames[characterForMark(mark)]||'Gracz')+' '+(characterIcons[characterForMark(mark)]||'');
-  let client,room=null,role=null,channel=null,pollTimer=null,current=null,remoteCharacter=null,mode='online',busy=false,cpuDifficulty=localStorage.getItem('tkm_cpu_difficulty')||'normal';
-  let scores={tiger:0,mors:0},seriesWinner=null,commentIndex=0,morsIdleTimer=null,achievementStats=loadStats(),soundOn=localStorage.getItem('tkm_sound')!=='off',musicOn=true,soccerMusicActive=false,startedAt=0,timer=null,audioContext=null;
+  let client,room=null,role=null,channel=null,pollTimer=null,current=null,remoteCharacter=null,mode='online',busy=false,cpuDifficulty=storage.getItem('tkm_cpu_difficulty')||'normal';
+  let scores={tiger:0,mors:0},seriesWinner=null,commentIndex=0,morsIdleTimer=null,achievementStats=loadStats(),soundOn=storage.getItem('tkm_sound')!=='off',musicOn=true,soccerMusicActive=false,startedAt=0,timer=null,audioContext=null;
   // Muzyka startuje domyślnie WŁĄCZONA przy każdym nowym wejściu do aplikacji.
-  localStorage.setItem('tkm_music','on');
+  storage.setItem('tkm_music','on');
   const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
   const fresh=()=>({board:Array(9).fill(''),turn:TIGER,winner:null,status:'playing',winning:[]});
-  const nick=()=>localStorage.getItem('tkm_nick')||'Gracz';
+  const nick=()=>storage.getItem('tkm_nick')||'Gracz';
   const makeRoundId=()=> (crypto.randomUUID?crypto.randomUUID():('round-'+Date.now()+'-'+Math.random().toString(36).slice(2)));
   let roundId=makeRoundId(),resultOverlayDismissed=false;
   const onlineScoredResults=new Set();
   function countOnlineWinnerOnce(winner,board){if(!winner||winner==='draw')return;const key=[room,roundId,winner,(board||[]).join('')].join('|');if(onlineScoredResults.has(key))return;onlineScoredResults.add(key);scores[winner]++;}
   const STATS_KEY='tkm_achievements_v1';
-  function loadStats(){try{return Object.assign({played:0,wins:0,losses:0,draws:0,streak:0,bestStreak:0,unlocked:[],seen:[]},JSON.parse(localStorage.getItem(STATS_KEY)||'{}'))}catch{return{played:0,wins:0,losses:0,draws:0,streak:0,bestStreak:0,unlocked:[],seen:[]}}}
+  function loadStats(){try{return Object.assign({played:0,wins:0,losses:0,draws:0,streak:0,bestStreak:0,unlocked:[],seen:[]},JSON.parse(storage.getItem(STATS_KEY)||'{}'))}catch{return{played:0,wins:0,losses:0,draws:0,streak:0,bestStreak:0,unlocked:[],seen:[]}}}
   const achievementList=[
     {id:'first-game',icon:'🎮',name:'Pierwsze starcie',desc:'Rozegraj pierwszą partię',test:s=>s.played>=1},
     {id:'first-win',icon:'🏆',name:'Pierwsza krew',desc:'Wygraj pierwszą partię',test:s=>s.wins>=1},
@@ -35,12 +43,12 @@
     {id:'peace',icon:'🤝',name:'Zgoda buduje',desc:'Zakończ partię remisem',test:s=>s.draws>=1},
     {id:'champion',icon:'👑',name:'Legenda pojedynków',desc:'Zdobądź 10 zwycięstw',test:s=>s.wins>=10}
   ];
-  function saveStats(){localStorage.setItem(STATS_KEY,JSON.stringify(achievementStats));}
+  function saveStats(){storage.setItem(STATS_KEY,JSON.stringify(achievementStats));}
   const DAILY_KEY='tkm_daily_missions_v1';
   const todayKey=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
-  function dailyStats(){try{const saved=JSON.parse(localStorage.getItem(DAILY_KEY)||'{}');return saved.date===todayKey()?saved:{date:todayKey(),games:0,wins:0,quiz:0}}catch{return{date:todayKey(),games:0,wins:0,quiz:0}}}
+  function dailyStats(){try{const saved=JSON.parse(storage.getItem(DAILY_KEY)||'{}');return saved.date===todayKey()?saved:{date:todayKey(),games:0,wins:0,quiz:0}}catch{return{date:todayKey(),games:0,wins:0,quiz:0}}}
   let todayMissions=dailyStats();
-  function saveDaily(){localStorage.setItem(DAILY_KEY,JSON.stringify(todayMissions));renderDailyMissions()}
+  function saveDaily(){storage.setItem(DAILY_KEY,JSON.stringify(todayMissions));renderDailyMissions()}
   function renderDailyMissions(){
     const list=$('dailyMissionList');if(!list)return;
     const missions=[
@@ -162,10 +170,10 @@
   }
 
   const PLAYER_ID_KEY='tkm_player_id_v1', RANK_STATS_KEY='tkm_rank_stats_v1';
-  function playerId(){let id=localStorage.getItem(PLAYER_ID_KEY);if(!id){id=(crypto.randomUUID?crypto.randomUUID():('tkm-'+Date.now()+'-'+Math.random().toString(36).slice(2)));localStorage.setItem(PLAYER_ID_KEY,id)}return id}
+  function playerId(){let id=storage.getItem(PLAYER_ID_KEY);if(!id){id=(crypto.randomUUID?crypto.randomUUID():('tkm-'+Date.now()+'-'+Math.random().toString(36).slice(2)));storage.setItem(PLAYER_ID_KEY,id)}return id}
   const MORS_CUP_TOKEN_KEY='tkm_morscup_player_token_v1';
-  function morsCupPlayerToken(){let token=localStorage.getItem(MORS_CUP_TOKEN_KEY);if(!token){token=makeRoomToken();localStorage.setItem(MORS_CUP_TOKEN_KEY,token)}return token}
-  function rankStats(){try{return Object.assign({played:0,wins:0,losses:0,draws:0,seen:[]},JSON.parse(localStorage.getItem(RANK_STATS_KEY)||'{}'))}catch{return{played:0,wins:0,losses:0,draws:0,seen:[]}}}
+  function morsCupPlayerToken(){let token=storage.getItem(MORS_CUP_TOKEN_KEY);if(!token){token=makeRoomToken();storage.setItem(MORS_CUP_TOKEN_KEY,token)}return token}
+  function rankStats(){try{return Object.assign({played:0,wins:0,losses:0,draws:0,seen:[]},JSON.parse(storage.getItem(RANK_STATS_KEY)||'{}'))}catch{return{played:0,wins:0,losses:0,draws:0,seen:[]}}}
   const LEADERBOARD_URL='https://script.google.com/macros/s/AKfycbxA24BQOkFe3LVBFwFCR1Q9AattnidtJP1YRxUHELO4nsBWZ63C6qM4U9nwnlG8xlqfcA/exec';
   async function syncLeaderboard(result,gameMode,gameRoom,board){
     if(!['online','cpu'].includes(gameMode))return;
@@ -175,7 +183,7 @@
     if(stats.seen.includes(key))return;
     stats.seen.push(key);if(stats.seen.length>100)stats.seen=stats.seen.slice(-100);
     stats.played++;if(result==='draw')stats.draws++;else if(won)stats.wins++;else if(lost)stats.losses++;
-    localStorage.setItem(RANK_STATS_KEY,JSON.stringify(stats));
+    storage.setItem(RANK_STATS_KEY,JSON.stringify(stats));
     const row={player_id:playerId(),nickname:nick(),played:stats.played,wins:stats.wins,losses:stats.losses,draws:stats.draws};
     try{
       await fetch(LEADERBOARD_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(row)});
@@ -232,15 +240,15 @@
     {id:'quiz-master',icon:'🖨️',name:'Mistrz poligrafii',desc:'Minimum 7/10 w quizie'},
     {id:'fortune-spin',icon:'🎡',name:'Szczęśliwy obrót',desc:'Zakreć Kołem Fortuny'}
   ];
-  function unlockedStickers(){try{return JSON.parse(localStorage.getItem(STICKER_KEY)||'[]')}catch{return[]}}
+  function unlockedStickers(){try{return JSON.parse(storage.getItem(STICKER_KEY)||'[]')}catch{return[]}}
   function renderStickers(){
     const grid=$('stickerGrid');if(!grid)return;const got=new Set([...unlockedStickers(),...achievementStats.unlocked]);
     const cards=stickerList.map(s=>({...s,unlocked:got.has(s.id)}));
-    if(cards.some(s=>s.unlocked&& !unlockedStickers().includes(s.id)))localStorage.setItem(STICKER_KEY,JSON.stringify(cards.filter(s=>s.unlocked).map(s=>s.id)));
+    if(cards.some(s=>s.unlocked&& !unlockedStickers().includes(s.id)))storage.setItem(STICKER_KEY,JSON.stringify(cards.filter(s=>s.unlocked).map(s=>s.id)));
     grid.innerHTML='';cards.forEach(s=>{const el=document.createElement('div');el.className='sticker'+(s.unlocked?' earned':'');const icon=document.createElement('span');icon.textContent=s.unlocked?s.icon:'🔒';const name=document.createElement('b');name.textContent=s.unlocked?s.name:'Nieodkryta';const desc=document.createElement('small');desc.textContent=s.unlocked?s.desc:'Zagraj, aby ją zdobyć';el.append(icon,name,desc);grid.append(el)});
     $('stickerCount').textContent=cards.filter(s=>s.unlocked).length+' / '+cards.length;
   }
-  function unlockSticker(id){const got=new Set(unlockedStickers());got.add(id);localStorage.setItem(STICKER_KEY,JSON.stringify([...got]));renderStickers();renderDiplomas();renderMorsClub()}
+  function unlockSticker(id){const got=new Set(unlockedStickers());got.add(id);storage.setItem(STICKER_KEY,JSON.stringify([...got]));renderStickers();renderDiplomas();renderMorsClub()}
   function clubProgress(){
     const ids=new Set([...achievementStats.unlocked,...unlockedStickers()]);
     return {count:ids.size,total:stickerList.length,ready:ids.size>=3};
@@ -379,7 +387,7 @@
   ];
   function fortuneDate(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
   function renderFortune(){
-    let saved={};try{saved=JSON.parse(localStorage.getItem(FORTUNE_KEY)||'{}')||{}}catch{}
+    let saved={};try{saved=JSON.parse(storage.getItem(FORTUNE_KEY)||'{}')||{}}catch{}
     const done=saved.date===fortuneDate(),wheel=$('fortuneWheel'),hand=$('fortuneHand'),claim=$('fortuneClaimLink');
     if(claim)claim.hidden=!(done&&saved.prizeIndex===7);
     if(wheel&&done&&Number.isFinite(saved.rotation)){wheel.style.transition='none';wheel.style.transform='rotate('+saved.rotation+'deg)'}
@@ -408,7 +416,7 @@
     const normalized=((360-(rotation%360))%360+360)%360;
     const index=Math.min(fortunePrizes.length-1,Math.floor(normalized/45));
     const p=fortunePrizes[index],prize=p.icon+' '+p.name+' — '+p.desc;
-    localStorage.setItem(FORTUNE_KEY,JSON.stringify({date:fortuneDate(),prize,prizeIndex:index,rotation}));
+    storage.setItem(FORTUNE_KEY,JSON.stringify({date:fortuneDate(),prize,prizeIndex:index,rotation}));
     $('fortuneResult').textContent=prize;fortuneFinishSound();stage?.classList.remove('spinning','dragging');
     if(hand){hand.classList.remove('dragging');hand.style.left='';hand.style.top='';hand.style.right='';hand.style.bottom='';hand.style.transform=''}
     const claim=$('fortuneClaimLink'),jackpot=$('candyJackpot');if(claim)claim.hidden=index!==7;
@@ -424,7 +432,7 @@
     const angleDelta=(next,prev)=>{let d=next-prev;while(d>180)d-=360;while(d<-180)d+=360;return d};
     const placeHand=e=>{const r=stage.getBoundingClientRect();hand.style.right='auto';hand.style.bottom='auto';hand.style.left=(e.clientX-r.left)+'px';hand.style.top=(e.clientY-r.top)+'px';hand.style.transform='translate(-50%,-50%) rotate('+(angleAt(e)+90)+'deg)'};
     const start=e=>{
-      let saved={};try{saved=JSON.parse(localStorage.getItem(FORTUNE_KEY)||'{}')||{}}catch{}
+      let saved={};try{saved=JSON.parse(storage.getItem(FORTUNE_KEY)||'{}')||{}}catch{}
       if(dragging||saved.date===fortuneDate()||stage.classList.contains('spinning'))return;
       if(e.button!==undefined&&e.button!==0)return;
       e.preventDefault();dragging=true;activePointer=e.pointerId;
@@ -566,7 +574,7 @@
   function sound(freq=440,duration=.09){if(!soundOn)return;try{const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;audioContext=audioContext||new AudioCtx();if(audioContext.state==='suspended')audioContext.resume();const o=audioContext.createOscillator(),g=audioContext.createGain();o.type='sine';o.frequency.value=freq;o.connect(g);g.connect(audioContext.destination);g.gain.setValueAtTime(.0001,audioContext.currentTime);g.gain.exponentialRampToValueAtTime(.08,audioContext.currentTime+.015);g.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+duration);o.start();o.stop(audioContext.currentTime+duration)}catch(err){console.warn('Nie udało się odtworzyć dźwięku:',err)}}
   function updateSoundButton(){const b=$('soundBtn');if(b){b.textContent=soundOn?'🔊 DŹWIĘK: WŁ.':'🔇 DŹWIĘK: WYŁ.';b.setAttribute('aria-pressed',String(soundOn));}const m=$('musicBtn');if(m){m.textContent=musicOn?'🎵 MUZYKA: WŁ.':'🎵 MUZYKA: WYŁ.';m.setAttribute('aria-pressed',String(musicOn));}}
   function startBackgroundMusic(){const player=$('backgroundMusic');if(!player||!musicOn||soccerMusicActive)return;if(!player.dataset.trimEndBound){player.loop=false;let trimWatch=null;const cutAndRestart=()=>{if(!musicOn||soccerMusicActive||!Number.isFinite(player.duration)||player.duration<=2)return;if(player.currentTime>=player.duration-2.15&&!player.dataset.restarting){player.dataset.restarting='1';if(trimWatch){window.clearInterval(trimWatch);trimWatch=null;}player.pause();player.currentTime=0;player.play().catch(()=>{});window.setTimeout(()=>{delete player.dataset.restarting},250);}};player.addEventListener('play',()=>{if(!trimWatch)trimWatch=window.setInterval(cutAndRestart,40);});player.addEventListener('pause',()=>{if(trimWatch){window.clearInterval(trimWatch);trimWatch=null;}});player.addEventListener('timeupdate',cutAndRestart);player.addEventListener('ended',()=>{if(musicOn&&!soccerMusicActive){player.currentTime=0;player.play().catch(()=>{});}});player.dataset.trimEndBound='1';}player.volume=.24;const attempt=player.play();if(attempt&&typeof attempt.catch==='function')attempt.catch(()=>{});}
-  function setMusicEnabled(enabled){musicOn=!!enabled;localStorage.setItem('tkm_music',musicOn?'on':'off');const player=$('backgroundMusic'),cup=$('morsCupMusic');if(player){if(musicOn&&!soccerMusicActive)startBackgroundMusic();else player.pause();}if(cup){if(musicOn&&soccerMusicActive)cup.play().catch(()=>{});else cup.pause();}updateSoundButton();}
+  function setMusicEnabled(enabled){musicOn=!!enabled;storage.setItem('tkm_music',musicOn?'on':'off');const player=$('backgroundMusic'),cup=$('morsCupMusic');if(player){if(musicOn&&!soccerMusicActive)startBackgroundMusic();else player.pause();}if(cup){if(musicOn&&soccerMusicActive)cup.play().catch(()=>{});else cup.pause();}updateSoundButton();}
   function evaluate(board){for(const line of wins)if(board[line[0]]&&board[line[0]]===board[line[1]]&&board[line[1]]===board[line[2]])return{winner:board[line[0]],winning:line};return board.every(Boolean)?{winner:'draw',winning:[]}:{winner:null,winning:[]}}
   function setScoreCharacter(card,character){
     if(!card)return;const name=characterNames[character]||'Gracz';const icon=characterIcons[character]||'🐯';
@@ -730,8 +738,8 @@
   function makeRoomToken(){try{const source=window.crypto;if(source?.getRandomValues){const bytes=new Uint8Array(32);source.getRandomValues(bytes);return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('')}if(source?.randomUUID)return source.randomUUID()+source.randomUUID()}catch(e){console.warn('Nie udało się wygenerować silnego tokenu:',e)}throw Error('Ta przeglądarka nie udostępnia bezpiecznego generatora tokenów. Zaktualizuj przeglądarkę i spróbuj ponownie.')}
   function roomPlayerToken(){
     if(!room)throw Error('Brak aktywnego pokoju.');
-    const hostToken=localStorage.getItem('tkm_host_'+room);
-    const guestToken=localStorage.getItem('tkm_guest_'+room);
+    const hostToken=storage.getItem('tkm_host_'+room);
+    const guestToken=storage.getItem('tkm_guest_'+room);
     if(hostToken&&current&&role===current.creatorRole)return hostToken;
     if(guestToken)return guestToken;
     if(hostToken)return hostToken;
@@ -795,13 +803,13 @@
       mode='online';remoteCharacter=null;room=roomCode();
       role=document.querySelector('input[name="mySide"]:checked')?.value||TIGER;
       const hostToken=makeRoomToken();
-      localStorage.setItem('tkm_host_'+room,hostToken);
+      storage.setItem('tkm_host_'+room,hostToken);
       const{data,error}=await client.rpc('szs_secure_create_room',{p_room_code:room,p_creator_role:role,p_host_token:hostToken});
       if(error)throw error;
       current=fromRow(data);scores={tiger:0,mors:0};seriesWinner=null;
       showGame();await subscribe();history.replaceState({},'',location.pathname+'?room='+room);
     }catch(e){
-      if(room)localStorage.removeItem('tkm_host_'+room);
+      if(room)storage.removeItem('tkm_host_'+room);
       const m=[e?.message,e?.details,e?.hint].filter(Boolean).join(' · ');
       if(e?.code==='PGRST202'||/szs_secure_create_room|schema cache|Could not find the function/i.test(m))say('Brakuje bezpiecznej funkcji pokoju w Supabase. Odśwież aplikację za chwilę i spróbuj ponownie.');
       else say('Nie udało się utworzyć pokoju: '+(m||'nieznany błąd połączenia.'));
@@ -814,7 +822,7 @@
     busy=true;$('joinBtn').disabled=true;say('Szukam pokoju…');
     try{
       mode='online';remoteCharacter=null;room=code;
-      const savedHostToken=localStorage.getItem('tkm_host_'+room);
+      const savedHostToken=storage.getItem('tkm_host_'+room);
       if(savedHostToken){
         const{data,error}=await client.rpc('szs_secure_get_room',{p_room_code:room,p_player_token:savedHostToken});
         if(error)throw error;
@@ -822,8 +830,8 @@
         role=hostRow?.creator_role||TIGER;
         current=fromRow(hostRow);
       }else{
-        let guestToken=localStorage.getItem('tkm_guest_'+room);
-        if(!guestToken){guestToken=makeRoomToken();localStorage.setItem('tkm_guest_'+room,guestToken)}
+        let guestToken=storage.getItem('tkm_guest_'+room);
+        if(!guestToken){guestToken=makeRoomToken();storage.setItem('tkm_guest_'+room,guestToken)}
         const{data,error}=await client.rpc('szs_secure_join_room',{p_room_code:room,p_guest_token:guestToken});
         if(error)throw error;
         const joinedRow=Array.isArray(data)?data[0]:data;
@@ -839,7 +847,7 @@
       room=null;role=null;current=null;game.classList.add('hidden');setup.classList.remove('playing');setup.classList.remove('hidden');
     }finally{busy=false;$('joinBtn').disabled=false;if(current&&mode==='online')render()}
   }
-  function startLocal(which){roundId=makeRoundId();remoteCharacter=null;mode=which;cpuDifficulty=$('cpuDifficulty')?.value||cpuDifficulty;localStorage.setItem('tkm_cpu_difficulty',cpuDifficulty);room=null;role=which==='cpu'?TIGER:'both';scores={tiger:0,mors:0};seriesWinner=null;current=fresh();showGame();$('roomCode').textContent=which==='cpu'?'VS KOMPUTER':'LOKALNIE';commentary('tiger',selectedCharacter);history.replaceState({},'',location.pathname);render();if(which==='cpu')say('Powodzenia! Morścisław nie będzie łatwym przeciwnikiem.')}
+  function startLocal(which){roundId=makeRoundId();remoteCharacter=null;mode=which;cpuDifficulty=$('cpuDifficulty')?.value||cpuDifficulty;storage.setItem('tkm_cpu_difficulty',cpuDifficulty);room=null;role=which==='cpu'?TIGER:'both';scores={tiger:0,mors:0};seriesWinner=null;current=fresh();showGame();$('roomCode').textContent=which==='cpu'?'VS KOMPUTER':'LOKALNIE';commentary('tiger',selectedCharacter);history.replaceState({},'',location.pathname);render();if(which==='cpu')say('Powodzenia! Morścisław nie będzie łatwym przeciwnikiem.')}
   function minimax(board,player){const r=evaluate(board);if(r.winner===MORS)return{score:10};if(r.winner===TIGER)return{score:-10};if(r.winner==='draw')return{score:0};let best={score:player===MORS?-Infinity:Infinity,index:-1};for(let i=0;i<9;i++)if(!board[i]){board[i]=player;const score=minimax(board,player===MORS?TIGER:MORS).score;board[i]='';if((player===MORS&&score>best.score)||(player===TIGER&&score<best.score))best={score,index:i}}return best}
   async function move(i){
     if(!current||busy||current.status!=='playing'||current.board[i])return;
@@ -907,7 +915,6 @@
   function moveCpu(i){if(busy||current.board[i])return;busy=true;current.board[i]=MORS;const r=evaluate(current.board);current.winner=r.winner;current.winning=r.winning;current.status=r.winner?'finished':'playing';current.turn=r.winner?MORS:TIGER;soundAnimal(MORS);if(current.winner){recordFinishedGame(current.winner,current.board,mode,room);if(current.winner!=='draw'){scores[current.winner]++;if(scores[current.winner]>=3)seriesWinner=current.winner;}commentary(current.winner==='draw'?'draw':current.winner==='tiger'?'tigerWin':'morsWin');celebrate();maybeSecretEvent(current.board,true)}else{commentary(MORS,'mors');maybeSecretEvent(current.board,false)}busy=false;render()}
   function celebrate(){document.body.classList.remove('celebrate');void document.body.offsetWidth;document.body.classList.add('celebrate');setTimeout(()=>document.body.classList.remove('celebrate'),1200)}
   async function newRound(){if(!current||current.status!=='finished'||busy||seriesWinner)return;resultOverlayDismissed=false;busy=true;try{if(mode==='online'){const{data,error}=await client.rpc('szs_secure_restart_room',{p_room_code:room,p_player_token:roomPlayerToken()});if(error)throw error;if(!data)throw Error('Serwer nie zwrócił nowej planszy.');current=fromRow(data);roundId=makeRoundId()}else{roundId=makeRoundId();current=fresh()}commentary('tiger')}catch(error){console.warn('Nie udało się rozpocząć rewanżu:',error);const message='Nie udało się rozpocząć rewanżu. Sprawdź połączenie i spróbuj ponownie.';const banner=$('turnBanner');if(banner)banner.textContent=message;say(message)}finally{busy=false;render()}}
-  $('introEnterBtn')?.addEventListener('click',()=>{$('introScreen').classList.add('intro-dismissed');});
   $('roundResultClose')?.addEventListener('click',()=>{resultOverlayDismissed=true;$('roundResultOverlay').hidden=true;});
   // Delikatny odgłos papierowego stempla dla kliknięć interfejsu; respektuje przełącznik dźwięku.
   document.addEventListener('click',event=>{const control=event.target.closest('button.btn, a.btn');if(!control||control.id==='soundBtn'||control.classList.contains('cell')||control.disabled)return;sound(260,.045);window.setTimeout(()=>sound(390,.035),38);});
@@ -922,7 +929,7 @@
     const copy=document.createElement('span');copy.className='room-character-name';copy.textContent='Do pokoju wchodzisz jako: '+name;
     box.replaceChildren(visual,copy);
   }
-  document.querySelectorAll('input[name="character"]').forEach(r=>{r.checked=r.value===selectedCharacter;r.addEventListener('change',()=>{selectedCharacter=r.value;localStorage.setItem('tkm_character',selectedCharacter);document.querySelectorAll('.character-option').forEach(el=>el.classList.toggle('selected',el.querySelector('input').checked));renderSelectedCharacterPreview();});});
+  document.querySelectorAll('input[name="character"]').forEach(r=>{r.checked=r.value===selectedCharacter;r.addEventListener('change',()=>{selectedCharacter=r.value;storage.setItem('tkm_character',selectedCharacter);document.querySelectorAll('.character-option').forEach(el=>el.classList.toggle('selected',el.querySelector('input').checked));renderSelectedCharacterPreview();});});
   document.querySelectorAll('input[name="mySide"]').forEach(r=>r.addEventListener('change',()=>{document.querySelectorAll('.side-option').forEach(el=>el.classList.toggle('selected',el.querySelector('input').checked));}));
   applyCanonicalCharacterAssets();
   renderSelectedCharacterPreview();
@@ -933,7 +940,7 @@
   $('shareResultBtn')?.addEventListener('click',()=>{const result=current?.winner?(current.winner==='draw'?'Remis!':sideLabel(current.winner)+' wygrywa!'):'Dołącz do pojedynku!';shareOnFacebook('Mój pojedynek w Kółko, Krzyżyk i Dwa Promile Absurdu: '+result+' Wynik serii: Hrabia Poprawek '+scores.tiger+' : '+scores.mors+' Morścisław. Dasz radę lepiej? 🏆')});
   $('shareQuizBtn')?.addEventListener('click',()=>shareOnFacebook('Mój wynik w teście Mistrza Drukarni: '+quizPoints+' / '+printQuiz.length+' punktów! Sprawdź, czy znasz się na poligrafii. 🖨️'));
   $('copyBtn').addEventListener('click',async()=>{const url=location.origin+location.pathname+'?room='+room;try{await navigator.clipboard.writeText(url);$('copyBtn').textContent='SKOPIOWANO ✓';setTimeout(()=>$('copyBtn').textContent='KOPIUJ LINK ↗',1800)}catch{prompt('Skopiuj link:',url)}});
-  $('leaveBtn').addEventListener('click',()=>{if(pollTimer){clearInterval(pollTimer);pollTimer=null;}if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});$('musicBtn')?.addEventListener('click',e=>{e.preventDefault();setMusicEnabled(!musicOn)});document.addEventListener('pointerdown',()=>{if(musicOn)startBackgroundMusic()},{once:true});$('introEnterBtn')?.addEventListener('click',()=>{if(musicOn)startBackgroundMusic()});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);$('newBriefBtn')?.addEventListener('click',newPrintBrief);
+  $('leaveBtn').addEventListener('click',()=>{if(pollTimer){clearInterval(pollTimer);pollTimer=null;}if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;storage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});$('musicBtn')?.addEventListener('click',e=>{e.preventDefault();setMusicEnabled(!musicOn)});document.addEventListener('pointerdown',()=>{if(musicOn)startBackgroundMusic()},{once:true});$('introEnterBtn')?.addEventListener('click',()=>{if(musicOn)startBackgroundMusic()});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);$('newBriefBtn')?.addEventListener('click',newPrintBrief);
   // Morsowy Park Absurdu — minigry używają wyłącznie oryginalnego assets/mors.png.
   function initMiniArcade(){
     // Cała karta gry jest klikalna, nie tylko mały przycisk na dole.
@@ -1135,7 +1142,7 @@
       const button=$('soccerCreateRoom');button.disabled=true;soccerOnlineNote('Tworzę pokój…');
       try{
         soccerOnlineRoom=soccerOnlineCode();soccerOnlineToken=soccerToken();soccerOnlineRole=0;
-        localStorage.setItem('szs_soccer_host_'+soccerOnlineRoom,soccerOnlineToken);
+        storage.setItem('szs_soccer_host_'+soccerOnlineRoom,soccerOnlineToken);
         const {data,error}=await client.rpc('szs_soccer_create_room',{p_room_code:soccerOnlineRoom,p_host_token:soccerOnlineToken});
         if(error)throw error;
         soccerOnline=true;soccerVsMors=false;soccerApplyOnline(data);
@@ -1153,8 +1160,8 @@
       const button=$('soccerJoinRoom');if(button)button.disabled=true;soccerOnlineNote('Dołączam do meczu…');
       try{
         soccerOnlineRoom=code;
-        soccerOnlineToken=localStorage.getItem('szs_soccer_guest_'+code)||soccerToken();
-        localStorage.setItem('szs_soccer_guest_'+code,soccerOnlineToken);
+        soccerOnlineToken=storage.getItem('szs_soccer_guest_'+code)||soccerToken();
+        storage.setItem('szs_soccer_guest_'+code,soccerOnlineToken);
         soccerOnlineRole=1;
         const {data,error}=await client.rpc('szs_soccer_join_room',{p_room_code:code,p_guest_token:soccerOnlineToken});
         if(error)throw error;
@@ -1251,7 +1258,7 @@
         else tableRes.data.forEach((p,i)=>{const tr=document.createElement('tr');if(p.player_id===profileId())tr.classList.add('is-you');tr.innerHTML='<td>'+(i+1)+'</td><td><b>'+safe(p.nickname)+'</b><small>'+safe(({mors:'🦭 Morścisław',tiger:'🐯 Hrabia Poprawek',goat:'🐐 Koza Jołanna',bobr:'🦫 Bóbr',llama:'🦙 Lama Drama',octopus:'🚗 Honda Drukara'}[p.mascot]||'Zawodnik'))+'</small></td><td>'+Number(p.played||0)+'</td><td>'+Number(p.wins||0)+'</td><td>'+Number(p.draws||0)+'</td><td>'+Number(p.losses||0)+'</td><td><b>'+Number(p.points||0)+'</b></td>';body.append(tr)});
         const list=$('morsCupTournamentList');list.innerHTML='';
         if(!tournamentRes.data?.length){list.textContent='Na razie brak otwartych turniejów. Morścisław podobno szuka pucharu.'}
-        else tournamentRes.data.forEach(t=>{const card=document.createElement('article');card.className='morscup-tournament-card';const title=document.createElement('b');title.textContent=t.name;const detail=document.createElement('small');detail.textContent='Miejsca: do '+t.capacity+' · '+(t.status==='registration'?'Zapisy otwarte':'Turniej w trakcie');card.append(title,detail);if(t.status==='registration'){const join=document.createElement('button');join.type='button';join.className='btn btn-yellow';join.textContent='ZGŁOŚ MNIE';join.addEventListener('click',async()=>{join.disabled=true;if(!localStorage.getItem(MORS_CUP_TOKEN_KEY)){note('Najpierw zapisz swój profil zawodnika.',true);join.disabled=false;return}const {data,error}=await client.rpc('szs_morscup_join_tournament',{p_tournament_id:t.id,p_player_id:profileId(),p_player_token:morsCupPlayerToken()});if(error){note(/duplicate|already/i.test(error.message||'')?'Już jesteś na liście tego turnieju.':('Nie udało się zapisać: '+error.message),true);join.disabled=false}else note(data?.already_joined?'Już jesteś na liście startowej tego turnieju.':'Zgłoszenie przyjęte. Morścisław dopisał Cię do listy startowej!')});card.append(join)}list.append(card)});
+        else tournamentRes.data.forEach(t=>{const card=document.createElement('article');card.className='morscup-tournament-card';const title=document.createElement('b');title.textContent=t.name;const detail=document.createElement('small');detail.textContent='Miejsca: do '+t.capacity+' · '+(t.status==='registration'?'Zapisy otwarte':'Turniej w trakcie');card.append(title,detail);if(t.status==='registration'){const join=document.createElement('button');join.type='button';join.className='btn btn-yellow';join.textContent='ZGŁOŚ MNIE';join.addEventListener('click',async()=>{join.disabled=true;if(!storage.getItem(MORS_CUP_TOKEN_KEY)){note('Najpierw zapisz swój profil zawodnika.',true);join.disabled=false;return}const {data,error}=await client.rpc('szs_morscup_join_tournament',{p_tournament_id:t.id,p_player_id:profileId(),p_player_token:morsCupPlayerToken()});if(error){note(/duplicate|already/i.test(error.message||'')?'Już jesteś na liście tego turnieju.':('Nie udało się zapisać: '+error.message),true);join.disabled=false}else note(data?.already_joined?'Już jesteś na liście startowej tego turnieju.':'Zgłoszenie przyjęte. Morścisław dopisał Cię do listy startowej!')});card.append(join)}list.append(card)});
       }catch(e){$('morsCupSeasonName').textContent='Nie udało się pobrać ligi';$('morsCupSeasonStatus').textContent=e?.message||'Błąd połączenia.';note('Nie udało się odświeżyć danych ligi: '+(e?.message||'błąd'),true)}
       finally{$('morsCupRefresh').disabled=false}
     }
@@ -1262,7 +1269,7 @@
       try{
         const {error}=await client.rpc('szs_morscup_save_profile',{p_player_id:profileId(),p_player_token:morsCupPlayerToken(),p_nickname:name,p_mascot:mascot.value});
         if(error)throw error;
-        localStorage.setItem('tkm_nick',name);localStorage.setItem('tkm_character',mascot.value);
+        storage.setItem('tkm_nick',name);storage.setItem('tkm_character',mascot.value);
         note('Profil zapisany! Płetwy na murawę — witamy w Morścisław Cup.');
         await loadLeague();
       }catch(e){note('Nie udało się zapisać profilu: '+(e?.message||'błąd'),true)}
@@ -1303,8 +1310,8 @@
     ];
     const levels=['Spokojny klient','Mam jedną uwagę','A może spróbujmy inaczej','Proszę o nową wersję','Wróćmy do początku','To nie jest ten odcień','Czy można jeszcze dziś?','Plik FINAL_FINAL','Morścisław zamawia urlop','ALARM: HRABIA ZOBACZYŁ PIXEL'];
     const comments=['Morścisław jeszcze wierzy w ludzi. To się zmieni.','Pojawiły się pierwsze objawy drżenia płetwy.','Hrabia otworzył plik. Instytut wstrzymał oddech.','Korekta zaczyna mieć własną korektę.','Morścisław rozważa przejście na rybołówstwo.','Wersja projektu numeruje się już sama.','Zespół komunikuje się wyłącznie westchnieniami.','W drukarni zgasło światło. To tylko Hrabia szukał suwaka jasności.','Morścisław założył kask ochronny.','Instytut ogłasza stan pełnej katastrofy typograficznej.'];
-    let count=Number(localStorage.getItem('szs_hrabia_actions')||0);
-    let level=Number(localStorage.getItem('szs_hrabia_level')||3);
+    let count=Number(storage.getItem('szs_hrabia_actions')||0);
+    let level=Number(storage.getItem('szs_hrabia_level')||3);
     const report=$('hrabiaReportText'),correction=$('hrabiaCorrectionText'),fill=$('hrabiaLevelFill'),label=$('hrabiaLevelLabel'),comment=$('hrabiaLevelComment'),progress=$('hrabiaBadgeProgress'),badges=$('hrabiaBadgeList');
     const pick=a=>a[Math.floor(Math.random()*a.length)];
     function update(){
@@ -1315,10 +1322,10 @@
       if(progress)progress.textContent='Wygenerowane materiały: '+count+' · Zdobyte odznaki: '+unlocked.filter(Boolean).length+'/3';
       if(badges)badges.innerHTML=['🗂️ Stażysta od poprawek','🧯 Strażak plików FINAL','🧘 Mistrz zen po 17 rundach'].map((x,i)=>'<span class="'+(unlocked[i]?'earned':'locked')+'">'+(unlocked[i]?'🏅 ':'🔒 ')+x+'</span>').join('');
     }
-    function action(){count++;localStorage.setItem('szs_hrabia_actions',String(count));update()}
+    function action(){count++;storage.setItem('szs_hrabia_actions',String(count));update()}
     $('hrabiaReportBtn')?.addEventListener('click',()=>{if(report)report.textContent=pick(reports);action()});
     $('hrabiaCorrectionBtn')?.addEventListener('click',()=>{if(correction)correction.textContent=pick(corrections);action()});
-    $('hrabiaLevelBtn')?.addEventListener('click',()=>{level=Math.min(10,level+1);localStorage.setItem('szs_hrabia_level',String(level));if(level===10&&comment)comment.textContent='Mors opuścił instytut. Zostawił tylko karteczkę: „Nie dzwońcie”.';update();action()});
+    $('hrabiaLevelBtn')?.addEventListener('click',()=>{level=Math.min(10,level+1);storage.setItem('szs_hrabia_level',String(level));if(level===10&&comment)comment.textContent='Mors opuścił instytut. Zostawił tylko karteczkę: „Nie dzwońcie”.';update();action()});
     update();
   }
 
@@ -1328,8 +1335,8 @@
   safeInit('Mors Cup',initMorsCupLeague);
   safeInit('Instytut Hrabiego',initHrabiaInstitute);
   safeInit('misje i dodatki',()=>{renderDailyMissions();renderMorsJournal();renderStickers();renderDiplomas();renderMorsClub();renderFortune();loadLeaderboard()});
-  $('saveNameBtn').addEventListener('click',()=>{const n=$('nameInput').value.trim().slice(0,18);if(!n){say('Wpisz swój nick.');return}localStorage.setItem('tkm_nick',n);$('playerName').textContent=n;say('Nick zapisany na tym urządzeniu!')});$('nameInput').value=nick();
+  $('saveNameBtn').addEventListener('click',()=>{const n=$('nameInput').value.trim().slice(0,18);if(!n){say('Wpisz swój nick.');return}storage.setItem('tkm_nick',n);$('playerName').textContent=n;say('Nick zapisany na tym urządzeniu!')});$('nameInput').value=nick();
   if($('cpuDifficulty'))$('cpuDifficulty').value=cpuDifficulty;
-  $('cpuDifficulty')?.addEventListener('change',e=>{cpuDifficulty=e.target.value;localStorage.setItem('tkm_cpu_difficulty',cpuDifficulty)});
+  $('cpuDifficulty')?.addEventListener('change',e=>{cpuDifficulty=e.target.value;storage.setItem('tkm_cpu_difficulty',cpuDifficulty)});
   const q=new URLSearchParams(location.search).get('room');if(q){document.body.classList.add('view-tictactoe');$('roomInput').value=q.toUpperCase();if(configured())joinRoom(q)}if(!configured())say('Tryb online wymaga konfiguracji Supabase. Możesz jednak grać lokalnie lub z komputerem.');
 })();
