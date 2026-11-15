@@ -16,6 +16,17 @@ async function runProfile(name, contextOptions) {
   try {
     await page.goto(base, { waitUntil: 'domcontentloaded' });
     await page.locator('#introEnterBtn').waitFor({ state: 'visible' });
+    await page.waitForFunction(() => window.supabase?.createClient, { timeout: 15000 });
+    const onlineCheck = await page.evaluate(async () => {
+      const client = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+      const seasons = await client.from('morscup_seasons').select('id,status').eq('status','active').limit(1);
+      const ttt = await client.rpc('szs_secure_get_room', { p_room_code: 'ZZZZZZZZZZZZ', p_player_token: 'smoke-test-invalid-token' });
+      const soccer = await client.rpc('szs_soccer_get_room', { p_room_code: 'ZZZZZZZZ', p_player_token: 'smoke-test-invalid-token' });
+      return { seasonError: seasons.error?.message || null, activeSeasons: seasons.data?.length || 0, tttError: ttt.error?.message || null, soccerError: soccer.error?.message || null };
+    });
+    if (onlineCheck.seasonError || onlineCheck.activeSeasons < 1) failures.push(`[${name}] Supabase nie udostępnia aktywnego sezonu ligi: ${onlineCheck.seasonError || 'brak aktywnego sezonu'}`);
+    if (!onlineCheck.tttError || /Could not find the function|schema cache/i.test(onlineCheck.tttError)) failures.push(`[${name}] RPC pokoju kółko i krzyżyk nie odpowiada prawidłowo.`);
+    if (!onlineCheck.soccerError || /Could not find the function|schema cache/i.test(onlineCheck.soccerError)) failures.push(`[${name}] RPC pokoju Mors Cup nie odpowiada prawidłowo.`);
     await page.locator('#introEnterBtn').click();
     await page.waitForFunction(() => document.querySelector('#introScreen')?.classList.contains('intro-dismissed'));
     await page.locator('#openTicTacToe').click();
