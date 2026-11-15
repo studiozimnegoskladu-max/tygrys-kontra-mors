@@ -1,5 +1,6 @@
 (() => {
   const $ = id => document.getElementById(id);
+  const storage=(()=>{let nativeStore=null;const memory=new Map();try{nativeStore=window.localStorage}catch{}return{getItem(key){try{return nativeStore?nativeStore.getItem(key):(memory.has(key)?memory.get(key):null)}catch{return memory.has(key)?memory.get(key):null}},setItem(key,value){const text=String(value);memory.set(key,text);try{nativeStore?.setItem(key,text)}catch{}},removeItem(key){memory.delete(key);try{nativeStore?.removeItem(key)}catch{}}}})();
   const words = [
     ['Drukarnia','LAMINATOR'],['Drukarnia','KALIBRACJA'],['Drukarnia','PAPIER'],['Drukarnia','NAKLEJKA'],['Drukarnia','PROJEKT'],['Drukarnia','KOLOR'],['Drukarnia','BIGOWANIE'],['Drukarnia','GILOTYNA'],
     ['Klienci i poprawki','OSTATECZNA WERSJA'],['Klienci i poprawki','MAŁA POPRAWKA'],['Klienci i poprawki','NA WCZORAJ'],['Klienci i poprawki','BRIEF'],['Klienci i poprawki','AKCEPTACJA'],
@@ -18,7 +19,7 @@
   };
   const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
   let answer='',category='',used=new Set(),mistakes=0,finished=false,solved=0;
-  try{solved=Number(localStorage.getItem('szs_hangman_solved')||0)}catch{}
+  try{solved=Number(storage.getItem('szs_hangman_solved')||0)}catch{}
   const pick=(arr)=>arr[Math.floor(Math.random()*arr.length)];
   function setComment(text){$('hangmanComment').textContent=text}
   function render(){
@@ -51,7 +52,7 @@
     }else{
       $('hangmanFeedback').textContent=pick(remarks.good);
       if([...answer].every(ch=>ch===' '||used.has(ch))){
-        finished=true;solved++;try{localStorage.setItem('szs_hangman_solved',String(solved))}catch{}
+        finished=true;solved++;try{storage.setItem('szs_hangman_solved',String(solved))}catch{}
         $('hangmanFeedback').textContent=pick(remarks.win);
         setComment('Wiedziałem, że dasz radę. W końcu ktoś tu czyta instrukcje. Ja ich nie czytam, ale mam pieczątkę.');
       }
