@@ -8,7 +8,7 @@
   const cells=[...document.querySelectorAll('.cell')];
   const TIGER='tiger', MORS='mors';
   const CHARACTER_EMOJI={};
-  const characterAssets={tiger:'assets/hrabia-poprawek-transparent.svg',mors:'assets/mascot-mors.png',goat:'assets/koza-krzycha.jpg',bobr:'assets/mascot-bobr.png',llama:'assets/mascot-lama.png',octopus:'assets/honda-drukara.svg'};
+  const characterAssets={tiger:'assets/hrabia-poprawek-transparent.svg',mors:'assets/mascot-mors.png',goat:'assets/koza-krzycha.jpg',bobr:'assets/mascot-bobr.png',llama:'assets/mascot-lama.png',octopus:'assets/honda-drukara.png'};
   const characterAssetUrl=character=>characterAssets[character]||characterAssets.mors;
   let selectedCharacter=localStorage.getItem('tkm_character')||'tiger';if(selectedCharacter==='mole'){selectedCharacter='bobr';localStorage.setItem('tkm_character','bobr');}
   const characterForMark=mark=>mode==='online'?(mark===role?selectedCharacter:(remoteCharacter|| (mark===TIGER?'tiger':'mors'))):(mark===TIGER?selectedCharacter:'mors');
@@ -572,7 +572,7 @@
     if(!card)return;const name=characterNames[character]||'Gracz';const icon=characterIcons[character]||'🐯';
     card.dataset.character=character;
     card.querySelector('b').textContent=name.toUpperCase();
-    const img=card.querySelector('img');if(img){img.style.display=CHARACTER_EMOJI[character]?'none':'';if(!CHARACTER_EMOJI[character]){img.src=characterAssetUrl(character)+'?v=20261110-mascots-1';img.alt=name;}}
+    const img=card.querySelector('img');if(img){img.style.display=CHARACTER_EMOJI[character]?'none':'';if(!CHARACTER_EMOJI[character]){img.src=characterAssetUrl(character)+'?v=20261115-honda-png-fix-2';img.alt=name;}}
     let badge=card.querySelector('.score-custom-icon');
     if(CHARACTER_EMOJI[character]){if(!badge){badge=document.createElement('span');badge.className='score-custom-icon';card.insertBefore(badge,card.querySelector('div'));}badge.textContent=icon;}else if(badge)badge.remove();
   }
