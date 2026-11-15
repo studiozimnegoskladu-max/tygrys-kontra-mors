@@ -1526,8 +1526,7 @@ body.view-mors-zone #setup .mors-zone-drawer>.quiz-panel,
 body.view-mors-zone #setup .mors-zone-drawer>.mini-arcade{display:block!important}
 body.view-mors-zone #setup .mors-zone-drawer>.mini-arcade .mini-game-grid{display:grid!important}
 body.view-mors-zone #setup .mors-zone-drawer>.mini-arcade .mini-game-card{display:flex!important}
-body.view-mors-zone #setup .mors-zone-drawer>.mini-arcade .mini-game-card .mini-game-play{display:none}
-body.view-mors-zone #setup .mors-zone-drawer>.mini-arcade .mini-game-card .mini-start{display:inline-flex}
+/* Stan gry kontroluje klasa .hidden — aktywne minigry muszą być widoczne także w widoku Mors Zone. */
 body.view-mors-zone #setup .mors-zone-drawer>.mini-arcade .mini-arcade-heading{display:flex!important}
 body.view-mors-zone #setup .mors-zone-drawer>summary{display:none}
 body.view-mors-zone #setup .mors-zone-drawer:not([open])>*:not(summary){display:block!important}
