@@ -936,6 +936,23 @@
   $('leaveBtn').addEventListener('click',()=>{if(pollTimer){clearInterval(pollTimer);pollTimer=null;}if(channel)client.removeChannel(channel);location.href=location.pathname});$('cpuBtn').addEventListener('click',()=>startLocal('cpu'));$('localBtn').addEventListener('click',()=>startLocal('local'));$('soundBtn').addEventListener('click',e=>{e.preventDefault();soundOn=!soundOn;localStorage.setItem('tkm_sound',soundOn?'on':'off');updateSoundButton();if(soundOn)soundAnimal(TIGER,true)});$('musicBtn')?.addEventListener('click',e=>{e.preventDefault();setMusicEnabled(!musicOn)});document.addEventListener('pointerdown',()=>{if(musicOn)startBackgroundMusic()},{once:true});$('introEnterBtn')?.addEventListener('click',()=>{if(musicOn)startBackgroundMusic()});updateSoundButton();$('refreshLeaderboardBtn')?.addEventListener('click',loadLeaderboard);$('newBriefBtn')?.addEventListener('click',newPrintBrief);
   // Morsowy Park Absurdu — minigry używają wyłącznie oryginalnego assets/mors.png.
   function initMiniArcade(){
+    // Cała karta gry jest klikalna, nie tylko mały przycisk na dole.
+    document.querySelectorAll('.mini-game-card').forEach(card=>{
+      card.style.cursor='pointer';
+      card.addEventListener('click',event=>{
+        if(event.target.closest('button,a,input,select,textarea,summary'))return;
+        const start=card.querySelector('.mini-start');
+        if(start&&!start.classList.contains('hidden'))start.click();
+      });
+      card.addEventListener('keydown',event=>{
+        if(event.key!=='Enter'&&event.key!==' ')return;
+        if(event.target!==card)return;
+        const start=card.querySelector('.mini-start');
+        if(start&&!start.classList.contains('hidden')){event.preventDefault();start.click()}
+      });
+      card.tabIndex=0;
+      card.setAttribute('role','group');
+    });
     const colors=[{id:'cyan',name:'CYAN',hex:'#00a9ce'},{id:'magenta',name:'MAGENTA',hex:'#ec268f'},{id:'yellow',name:'ŻÓŁTY',hex:'#ffe600'},{id:'black',name:'CZARNY',hex:'#211f24'}];
     let paintTimer=null,paintTime=20,paintScore=0,paintTarget='cyan';
     const paintPlay=$('paintPlay'),paintChoices=$('paintChoices'),paintPrompt=$('paintPrompt'),paintStatus=$('paintStatus');
@@ -1305,10 +1322,12 @@
     update();
   }
 
-  initMorsCupLeague();
-  initHrabiaInstitute();
-  initMiniArcade();
-  renderDailyMissions();renderMorsJournal();renderStickers();renderDiplomas();renderMorsClub();renderFortune();loadLeaderboard();
+  // Każdy moduł uruchamiamy niezależnie — błąd ligi lub dodatku nie może blokować gier.
+  const safeInit=(name,fn)=>{try{fn()}catch(error){console.error('Błąd modułu '+name+':',error);const status=$('setupMessage');if(status)status.textContent='Część dodatków nie załadowała się ('+name+'). Gry lokalne pozostają dostępne.'}};
+  safeInit('mini-arcade',initMiniArcade);
+  safeInit('Mors Cup',initMorsCupLeague);
+  safeInit('Instytut Hrabiego',initHrabiaInstitute);
+  safeInit('misje i dodatki',()=>{renderDailyMissions();renderMorsJournal();renderStickers();renderDiplomas();renderMorsClub();renderFortune();loadLeaderboard()});
   $('saveNameBtn').addEventListener('click',()=>{const n=$('nameInput').value.trim().slice(0,18);if(!n){say('Wpisz swój nick.');return}localStorage.setItem('tkm_nick',n);$('playerName').textContent=n;say('Nick zapisany na tym urządzeniu!')});$('nameInput').value=nick();
   if($('cpuDifficulty'))$('cpuDifficulty').value=cpuDifficulty;
   $('cpuDifficulty')?.addEventListener('change',e=>{cpuDifficulty=e.target.value;localStorage.setItem('tkm_cpu_difficulty',cpuDifficulty)});
