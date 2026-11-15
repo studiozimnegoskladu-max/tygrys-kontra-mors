@@ -2243,3 +2243,13 @@ body.view-soccer .soccer-hero-combo > img.soccer-field-art{
 /* Full supplied MORŚCISŁAW CUP artwork; interactive pitch below remains untouched */
 body.view-soccer .soccer-hero-combo{display:block!important;min-height:0!important;padding:12px!important;box-sizing:border-box!important}
 body.view-soccer .soccer-hero-combo .soccer-cup-full{display:block!important;width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;margin:0 auto!important}
+
+/* Honda — mniejsza sylwetka, żeby wygodnie mieściła się w polu planszy */
+.cell img.board-avatar-octopus{
+  width:58%!important;
+  height:58%!important;
+  max-width:58%!important;
+  max-height:58%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+}
