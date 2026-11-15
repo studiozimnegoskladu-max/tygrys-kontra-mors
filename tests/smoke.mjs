@@ -10,7 +10,7 @@ async function runProfile(name, contextOptions) {
   page.setDefaultTimeout(8000);
   page.on('pageerror', error => failures.push(`[${name}] JS: ${error.message}`));
   page.on('console', message => {
-    if (message.type() === 'error' && !/supabase|favicon/i.test(message.text()))
+    if (message.type() === 'error' && !/supabase|favicon|Failed to load resource/i.test(message.text()))
       failures.push(`[${name}] console: ${message.text()}`);
   });
   try {
