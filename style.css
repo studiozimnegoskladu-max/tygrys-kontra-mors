@@ -2240,3 +2240,7 @@ body.view-soccer .soccer-hero-combo > img.soccer-field-art{
 .herring-finish span{font:900 14px 'Barlow Condensed';}
 .herring-finish small{font-size:11px;font-weight:800}
 @media(max-width:420px){.herring-arena{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:7px}.herring-target{min-height:48px;font-size:27px}}
+
+/* Full supplied MORŚCISŁAW CUP artwork; interactive pitch below remains untouched */
+body.view-soccer .soccer-hero-combo{display:block!important;min-height:0!important;padding:12px!important;box-sizing:border-box!important}
+body.view-soccer .soccer-hero-combo .soccer-cup-full{display:block!important;width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;margin:0 auto!important}
