@@ -1,0 +1,31 @@
+name: Testy gier SZS
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-smoke-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Sprawdź składnię JavaScript
+        run: |
+          node --check app.js
+          node --check hangman.js
+      - name: Zainstaluj Playwright
+        run: |
+          npm init -y
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Uruchom stronę
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/szs-http.log 2>&1 &
+          echo $! >/tmp/szs-http.pid
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break; sleep 1; done
+      - name: Testy przeglądarkowe desktop i mobile
+        run: node tests/smoke.mjs
