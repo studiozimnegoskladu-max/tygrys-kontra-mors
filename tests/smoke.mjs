@@ -33,18 +33,16 @@ async function runProfile(name, contextOptions) {
     const letters = page.locator('#hangmanKeyboard button:not(:disabled)');
     if (await letters.count() < 10) failures.push(`[${name}] Klawiatura Urzędu Ostatecznej Litery nie działa.`);
     else await letters.first().click();
-    await page.locator('#openMorsZone').click();
     await page.locator('#paintStart').click();
     await page.waitForFunction(() => !document.querySelector('#paintPlay').classList.contains('hidden'));
     const paintOptions = page.locator('#paintChoices button');
     if (await paintOptions.count() !== 4) failures.push(`[${name}] Gra Morścisław kontra Plama nie pokazuje czterech kolorów.`);
-    await page.locator('#openFortune').click();
-    await page.waitForFunction(() => document.body.classList.contains('view-fortune'));
-    await page.locator('#attractionsBack').click();
-    await page.locator('#openMorsZone').click();
     await page.locator('#fontStart').click();
     await page.waitForFunction(() => !document.querySelector('#fontPlay').classList.contains('hidden'));
     if (await page.locator('#fontChoices button').count() < 4) failures.push(`[${name}] Fontowy Bałagan nie generuje odpowiedzi.`);
+    await page.locator('#attractionsBack').click();
+    await page.locator('#openFortune').click();
+    await page.waitForFunction(() => document.body.classList.contains('view-fortune'));
   } catch (error) {
     failures.push(`[${name}] TEST: ${error.message}`);
   } finally {
