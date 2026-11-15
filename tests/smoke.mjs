@@ -20,13 +20,19 @@ async function runProfile(name, contextOptions) {
     await page.waitForFunction(() => document.querySelector('#introScreen')?.classList.contains('intro-dismissed'));
     await page.locator('#openTicTacToe').click();
     await page.waitForFunction(() => document.body.classList.contains('view-tictactoe'));
+    await page.locator('#cpuBtn').click();
+    await page.locator('#board .cell').first().click();
+    await page.waitForTimeout(350);
+    const cpuMarks = await page.locator('#board .cell').evaluateAll(cells => cells.filter(c => c.textContent.trim() || c.querySelector('img,svg,span')).length);
+    if (cpuMarks < 1) failures.push(`[${name}] Ruch w kółko i krzyżyk nie został narysowany.`);
     await page.locator('#attractionsBack').click();
     await page.locator('#openSoccer').click();
     await page.waitForFunction(() => document.body.classList.contains('view-soccer'));
     await page.locator('#soccerTrain').click();
     await page.waitForFunction(() => !document.querySelector('#soccerPlay').classList.contains('hidden'));
-    const soccerDots = await page.locator('#soccerBoard [data-soccer-point]').count();
-    if (soccerDots < 2) failures.push(`[${name}] Boisko nie wygenerowało punktów do gry.`);
+    const soccerDots = page.locator('#soccerBoard [data-soccer-point]');
+    if (await soccerDots.count() < 2) failures.push(`[${name}] Boisko nie wygenerowało punktów do gry.`);
+    else { await soccerDots.first().click(); await page.waitForTimeout(120); if (await page.locator('#soccerBoard [data-soccer-point]').count() < 2) failures.push(`[${name}] Ruch na boisku nie odświeżył planszy.`); }
     await page.locator('#soccerExit').click();
     await page.locator('#openHangman').click();
     await page.waitForFunction(() => document.body.classList.contains('view-mors-zone'));
@@ -37,6 +43,10 @@ async function runProfile(name, contextOptions) {
     await page.waitForFunction(() => !document.querySelector('#paintPlay').classList.contains('hidden'));
     const paintOptions = page.locator('#paintChoices button');
     if (await paintOptions.count() !== 4) failures.push(`[${name}] Gra Morścisław kontra Plama nie pokazuje czterech kolorów.`);
+    else await paintOptions.first().click();
+    await page.locator('#herringStart').click();
+    await page.waitForFunction(() => !document.querySelector('#herringPlay').classList.contains('hidden'));
+    if (await page.locator('#herringChoices').locator('button').count() < 1) failures.push(`[${name}] Gra w uciekające śledzie nie wygenerowała celów.`);
     await page.locator('#fontStart').click();
     await page.waitForFunction(() => !document.querySelector('#fontPlay').classList.contains('hidden'));
     if (await page.locator('#fontChoices button').count() < 4) failures.push(`[${name}] Fontowy Bałagan nie generuje odpowiedzi.`);
@@ -57,4 +67,4 @@ if (failures.length) {
   console.error(failures.join('\n'));
   process.exit(1);
 }
-console.log('OK: ekran startowy, menu, kółko i krzyżyk, Mors Cup, Urząd Litery, Park Absurdu, Fontowy Bałagan — desktop + mobile.');
+console.log('OK: ekran startowy, menu, ruch w kółko i krzyżyk, Mors Cup, Urząd Litery, trzy minigry Parku Absurdu, Fontowy Bałagan i Koło Fortuny — desktop + mobile.');
