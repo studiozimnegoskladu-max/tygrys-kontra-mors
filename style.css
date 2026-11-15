@@ -2175,3 +2175,53 @@ body.view-soccer .soccer-hero-combo img.soccer-field-art{
  body.view-soccer .soccer-hero-combo img.soccer-cup-banner{width:min(88%,380px)!important;max-height:190px!important}
  body.view-soccer .soccer-hero-combo img.soccer-field-art{max-height:250px!important}
 }
+
+
+/* Final fit: show each complete source image without cropping or height caps */
+body.view-soccer .shell > section.soccer-hero{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+  box-sizing:border-box!important;
+}
+body.view-soccer .soccer-hero-combo{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  align-items:center!important;
+  justify-items:center!important;
+  gap:12px!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:14px!important;
+  box-sizing:border-box!important;
+  overflow:visible!important;
+}
+body.view-soccer .soccer-hero-combo > img.soccer-cup-banner,
+body.view-soccer .soccer-hero-combo > img.soccer-field-art{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-height:none!important;
+  min-width:0!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:0!important;
+}
+@media(max-width:600px){
+  body.view-soccer .soccer-hero-combo{
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:8px!important;
+    padding:10px!important;
+  }
+  body.view-soccer .soccer-hero-combo > img.soccer-cup-banner{
+    width:100%!important;
+    max-width:100%!important;
+  }
+  body.view-soccer .soccer-hero-combo > img.soccer-field-art{
+    width:100%!important;
+    max-width:100%!important;
+  }
+}
