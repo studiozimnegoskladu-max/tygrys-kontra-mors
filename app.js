@@ -1054,18 +1054,34 @@
       soccerTurn.textContent='RUCH: MORŚCISŁAW KOMBINUJE';
       const level=$('cpuDifficulty')?.value||'normal';
       soccerAiTimer=setTimeout(()=>{
-        if(!soccerVsMors||soccer.over||soccer.turn!==0)return;
+        // Re-check the live game state when the timer fires. Never leave the
+        // match waiting if a stale timer or an unavailable move interrupts AI.
+        if(!soccerVsMors||!soccer.started||soccer.over||soccer.turn!==0)return;
         const moves=soccerNeighbors(soccer.position).filter(soccerCanMove);
-        if(!moves.length)return;
+        if(!moves.length){
+          soccer.over=true;
+          soccer.score[1]++;
+          soccerStatus.textContent='MORŚCISŁAW ZABLOKOWANY! Drugi zawodnik zdobywa punkt.';
+          soccerSay('blocked');
+          soccerDraw();
+          return;
+        }
         const ranked=moves.map(m=>{
-          const goal=m.r===0&&m.c>=soccerGoals.min&&m.c<=soccerGoals.max;
+          const goal=(m.r===0||m.r===soccerRows-1)&&m.c>=soccerGoals.min&&m.c<=soccerGoals.max;
           const next=soccerNeighbors(m).filter(n=>!soccer.lines.has(soccerKey(m,n))&&!(n.c===soccer.position.c&&n.r===soccer.position.r)).length;
-          const progress=(soccer.position.r-m.r);
-          const center=3-Math.abs(3-m.c);
+          const progress=soccer.position.r-m.r;
+          const center=3-Math.abs(5-m.c);
           return {m,score:(goal?10000:0)+progress*(level==='hard'?5:level==='normal'?3:1)+next*(level==='hard'?1.5:1)+center*.2+Math.random()*(level==='easy'?8:level==='normal'?3:.5)};
         }).sort((a,b)=>b.score-a.score);
         const chosen=level==='easy'&&Math.random()<.45?moves[Math.floor(Math.random()*moves.length)]:ranked[0].m;
+        const historyBefore=soccer.history.length;
         soccerMove(chosen,true);
+        // Safety net: if the move was rejected unexpectedly, retry with a
+        // freshly calculated legal move rather than freezing the opponent.
+        if(soccerVsMors&&soccer.started&&!soccer.over&&soccer.turn===0&&soccer.history.length===historyBefore){
+          const retry=soccerNeighbors(soccer.position).filter(soccerCanMove);
+          if(retry.length)soccerMove(retry[Math.floor(Math.random()*retry.length)],true);
+        }
       },level==='hard'?420:level==='normal'?650:850);
     }
     function soccerMove(to,byAI=false){
