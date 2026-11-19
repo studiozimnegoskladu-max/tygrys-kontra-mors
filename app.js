@@ -997,7 +997,7 @@
 
     // MORS CUP — papierowe piłkarzyki, lokalny pojedynek dwóch osób na jednym ekranie.
     const soccerPlay=$('soccerPlay'),soccerBoard=$('soccerBoard'),soccerTurn=$('soccerTurn'),soccerStatus=$('soccerStatus');
-    let soccerVsMors=false,soccerAiTimer=null;
+    let soccerVsMors=false,soccerAiTimer=null,soccerAiGeneration=0;
     const soccerRows=17,soccerCols=11,soccerX=c=>10+c*16,soccerY=r=>8+r*16;
     const soccerGoals={min:4,max:6};
     let soccer={lines:new Set(),visits:new Map(),position:{c:5,r:8},turn:0,started:false,over:false,score:[0,0],history:[]};
@@ -1036,11 +1036,13 @@
       $('soccerScoreOne').textContent=soccer.score[0];$('soccerScoreTwo').textContent=soccer.score[1];
       $('soccerPlayerOne').textContent=soccerNames[0];$('soccerPlayerTwo').textContent=soccerVsMors?'TY':'HRABIA';
       soccerTurn.textContent=soccer.over?'KONIEC MECZU':soccer.started?'RUCH: '+soccerName(soccer.turn):'GOTOWI? ZACZYNAMY!';
+      // AI is scheduled from the rendered live state, so no turn change can leave the match waiting.
+      if(soccerVsMors&&soccer.started&&!soccer.over&&soccer.turn===0&&soccerAiTimer===null)soccerScheduleAi();
     }
     function soccerNewRound(keepScore=true){
       if(soccerOnline){soccerOnlineReset();return}
       const score=keepScore?soccer.score:[0,0];
-      clearTimeout(soccerAiTimer);
+      clearTimeout(soccerAiTimer);soccerAiTimer=null;soccerAiGeneration++;
       soccer={lines:new Set(),visits:new Map([['5,8',1]]),position:{c:5,r:8},turn:soccerVsMors?1:Math.random()<.5?0:1,started:true,over:false,score,history:[]};
       soccerStatus.textContent='Start! Kliknij jedną z niebieskich kropek obok piłki.';
       soccerSay(keepScore?'reset':'start');
@@ -1048,12 +1050,14 @@
       if(soccerVsMors&&soccer.turn===0)soccerScheduleAi();
     }
     function soccerScheduleAi(){
-      clearTimeout(soccerAiTimer);
-      if(!soccerVsMors||!soccer.started||soccer.over||soccer.turn!==0)return;
+      if(!soccerVsMors||!soccer.started||soccer.over||soccer.turn!==0||soccerAiTimer!==null)return;
+      const generation=++soccerAiGeneration;
       soccerStatus.textContent='Morścisław myśli… podobno ma plan. 🦭';
       soccerTurn.textContent='RUCH: MORŚCISŁAW KOMBINUJE';
       const level=$('cpuDifficulty')?.value||'normal';
       soccerAiTimer=setTimeout(()=>{
+        if(generation!==soccerAiGeneration)return;
+        soccerAiTimer=null;
         // Re-check the live game state when the timer fires. Never leave the
         // match waiting if a stale timer or an unavailable move interrupts AI.
         if(!soccerVsMors||!soccer.started||soccer.over||soccer.turn!==0)return;
