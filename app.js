@@ -1240,7 +1240,7 @@
     const soccerInvite=new URLSearchParams(location.search).get('soccer');
     if(soccerInvite){$('soccerOnlineLobby').classList.remove('hidden');$('soccerTrain')?.classList.add('hidden');$('soccerTwoPlayers')?.classList.add('hidden');$('soccerOnlineStart')?.classList.add('hidden');$('soccerRoomInput').value=soccerInvite.toUpperCase();soccerOnlineJoin(soccerInvite)}
 
-    $('soccerStart')?.addEventListener('click',()=>startSoccer(false));
+    // soccerStart jest kontenerem przycisków; nie może przechwytywać kliknięć dzieci i nadpisywać wybranego trybu.
     $('soccerTrain')?.addEventListener('click',()=>startSoccer(true));
     $('soccerTwoPlayers')?.addEventListener('click',()=>startSoccer(false));
     $('soccerReset')?.addEventListener('click',()=>soccerNewRound(true));
