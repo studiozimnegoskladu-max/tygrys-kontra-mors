@@ -1352,7 +1352,7 @@
 
 
   function initPacman(){
-    const canvas=$('pacmanBoard'),start=$('pacmanStart');if(!canvas||!start)return;
+    const canvas=$('pacmanBoard'),start=$('pacmanStart'),play=$('pacmanBoard')?.closest('.pacman-play'),fullscreenBtn=$('pacmanFullscreen');if(!canvas||!start)return;
     const ctx=canvas.getContext('2d'),status=$('pacmanStatus'),scoreEl=$('pacmanScore'),livesEl=$('pacmanLives');
     const source=["###############","#.............#","#.###.###.###.#","#o#...#...#...#","#.#.#.#.#.#.#.#","#...#...#...#.#","###.###.###.#.#","#...#.....#...#","#.#.#####.#.###","#.#...#...#...#","#.###.#.###.#.#","#.....#.....#.#","#.###.###.###.#","#o............#","###############"];
     const size=40,images={mors:new Image(),hrabia:new Image(),koza:new Image(),honda:new Image()};
@@ -1398,6 +1398,19 @@
     function step(){if(!active)return;tick++;movePlayer();if(tick%2===0)moveEnemies();collision();draw();}
     function finish(message){active=false;clearInterval(timer);timer=null;status.textContent=message;start.textContent='ZAGRAJ PONOWNIE ↻';}
     function begin(){clearInterval(timer);score=0;lives=3;scoreEl.textContent='WYNIK: 0';livesEl.textContent='ŻYCIA: 3';status.textContent='Zbieraj śledzie! Unikaj Hrabiego, KOZY i Hondy!';start.textContent='RESTART ↻';reset();active=true;draw();timer=setInterval(step,190);}
+    async function toggleFullscreen(){
+      if(!play)return;
+      try{
+        if(document.fullscreenElement){await document.exitFullscreen();}
+        else if(play.requestFullscreen){await play.requestFullscreen();}
+        else{status.textContent='Pełny ekran nie jest obsługiwany w tej przeglądarce.';}
+      }catch(error){status.textContent='Nie udało się włączyć pełnego ekranu. Spróbuj ponownie.';}
+    }
+    function syncFullscreenButton(){
+      if(fullscreenBtn)fullscreenBtn.textContent=document.fullscreenElement===play?'⤢ WYJDŹ Z PEŁNEGO EKRANU':'⛶ PEŁNY EKRAN';
+    }
+    fullscreenBtn?.addEventListener('click',toggleFullscreen);
+    document.addEventListener('fullscreenchange',syncFullscreenButton);
     function setDir(name){desired=({up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}})[name]||desired;}
     start.addEventListener('click',begin);
     document.addEventListener('keydown',e=>{const key={ArrowUp:'up',w:'up',ArrowDown:'down',s:'down',ArrowLeft:'left',a:'left',ArrowRight:'right',d:'right'}[e.key];if(key&&active&&document.body.contains(canvas)){e.preventDefault();setDir(key);}});
