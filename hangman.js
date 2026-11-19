@@ -27,7 +27,14 @@
     $('hangmanMistakes').textContent='AWARIE: '+mistakes+' / 7';
     $('hangmanWord').innerHTML=[...answer].map(ch=>'<span class="hangman-letter">'+(ch===' '?' ':(used.has(ch)?ch:' '))+'</span>').join('');
     $('hangmanUsed').textContent='UŻYTE LITERY: '+([...used].sort().join(' · ')||'—');
-    $('hangmanChaos').querySelectorAll('.chaos-item').forEach((el,i)=>el.classList.toggle('active',i<mistakes));
+    const scene=$('hangmanScene');
+    if(scene){
+      scene.dataset.mistakes=String(mistakes);
+      const reveal=Math.max(0,Math.min(100,(mistakes-3)*25));
+      $('hangmanWalrus').style.setProperty('--walrus-reveal',reveal+'%');
+      const captions=['MORŚCISŁAW JESZCZE SPOKOJNY','POJAWIA SIĘ PODSTAWA','URZĄD BUDUJE KONSTRUKCJĘ','BELKA JUŻ JEST. NIEDOBRZE.','LINA WISI. MORS ZACZYNA SIĘ POCIĆ','MORŚCISŁAW POJAWIA SIĘ NA PLANSZY','CAŁY MORŚCISŁAW! OSTATNIA SZANSA','MORŚCISŁAW WISI NA WŁOSKU!'];
+      $('hangmanSceneCaption').textContent=captions[mistakes]||captions[0];
+    }
     $('hangmanKeyboard').querySelectorAll('button').forEach(btn=>{btn.disabled=finished||used.has(btn.dataset.letter)});
     $('hangmanRecord').textContent='TWÓJ REJESTR: '+solved+' ROZWIĄZANYCH HASEŁ';
   }
