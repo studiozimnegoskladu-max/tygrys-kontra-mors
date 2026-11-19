@@ -291,6 +291,20 @@
             </div>
             <button type="button" class="btn btn-yellow mini-start" id="herringStart">ŁAPIĘ ŚLEDZIE ↗</button>
           </article>
+          <article class="mini-game-card pacman-game">
+            <div class="mini-game-art"><span class="comic-burst blue-burst">ŚLEDZIO-MANIA!</span><img src="assets/mors.png" alt="Morścisław"></div>
+            <div class="mini-game-copy"><small>GRA 05 · ARCADE</small><h3>MORŚCISŁAW: ŚLEDZIO-MANIA</h3><p>Zbieraj śledzie w labiryncie, uciekaj przed Hrabią, KOZĄ i Hondą. Klasyczny klimat arcade w kresce Studia!</p></div>
+            <div class="pacman-play">
+              <div class="pacman-hud"><b id="pacmanScore">WYNIK: 0</b><b id="pacmanLives">ŻYCIA: 3</b></div>
+              <canvas id="pacmanBoard" width="450" height="450" aria-label="Labirynt Morścisława"></canvas>
+              <p id="pacmanStatus" aria-live="polite">Naciśnij START. Sterowanie: strzałki lub przyciski.</p>
+              <div class="pacman-controls">
+                <button type="button" data-pacdir="up" aria-label="Góra">▲</button>
+                <div><button type="button" data-pacdir="left" aria-label="Lewo">◀</button><button type="button" data-pacdir="down" aria-label="Dół">▼</button><button type="button" data-pacdir="right" aria-label="Prawo">▶</button></div>
+              </div>
+              <button type="button" class="btn btn-yellow mini-start" id="pacmanStart">START — ŁAPIĘ ŚLEDZIE!</button>
+            </div>
+          </article>
           <article class="mini-game-card soccer-game">
             
             <div class="mini-game-copy"><small>GRA 04 · TAKTYKA I KRESKI</small><h3>MORŚCISŁAW CUP — PIŁKARZYKI Z ZESZYTU</h3><p>Klasyczna papierowa piłka nożna. Rysuj kreski między kropkami, odbijaj się od band i wpakuj piłkę do bramki!</p></div>
