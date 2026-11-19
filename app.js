@@ -1049,8 +1049,9 @@
       soccerDraw();
       if(soccerVsMors&&soccer.turn===0)soccerScheduleAi();
     }
-    function soccerScheduleAi(){
-      if(!soccerVsMors||!soccer.started||soccer.over||soccer.turn!==0||soccerAiTimer!==null)return;
+    function soccerScheduleAi(force=false){
+      if(!soccerVsMors||!soccer.started||soccer.over||soccer.turn!==0)return;
+      if(soccerAiTimer!==null){if(!force)return;clearTimeout(soccerAiTimer);soccerAiTimer=null;}
       const generation=++soccerAiGeneration;
       soccerStatus.textContent='Morścisław myśli… podobno ma plan. 🦭';
       soccerTurn.textContent='RUCH: MORŚCISŁAW KOMBINUJE';
@@ -1099,11 +1100,11 @@
       const edge=to.c===0||to.c===soccerCols-1||to.r===0||to.r===soccerRows-1;
       soccer.visits.set(to.c+','+to.r,prior+1);
       if(prior>0||edge){soccerStatus.textContent=prior>0?'ODBICIE OD WŁASNEJ KRESKI! Grasz ponownie.':'BANDA! Piłka odbita — ten sam gracz gra dalej.';soccerSay(prior>0?'bounce':'band')}
-      else{soccer.turn=1-soccer.turn;soccerStatus.textContent='Ruch przeciwnika. Nie oddawaj pola!';soccerSay('move')}
+      else{soccer.turn=(soccerVsMors&&!byAI)?0:1-soccer.turn;soccerStatus.textContent=(soccerVsMors&&!byAI)?'Morścisław przygotowuje ruch…':'Ruch przeciwnika. Nie oddawaj pola!';soccerSay('move')}
       const possible=soccerNeighbors(soccer.position).some(n=>!soccer.lines.has(soccerKey(soccer.position,n)));
       if(!possible){soccer.over=true;soccer.score[1-soccer.turn]++;soccerStatus.textContent='ZABLOKOWANY! '+soccerName(1-soccer.turn)+' wygrywa. Morścisław zamyka zeszyt.';soccerSay('blocked')}
+      if(soccerVsMors&&soccer.turn===0)soccerScheduleAi(true);
       soccerDraw();
-      if(soccerVsMors&&soccer.turn===0)soccerScheduleAi();
     }
     function startSoccerMusic(){const cup=$('morsCupMusic'),background=$('backgroundMusic');soccerMusicActive=true;if(background)background.pause();if(cup){cup.volume=.55;cup.loop=true;if(musicOn)cup.play().catch(()=>{});}}
     function stopSoccerMusic(){const cup=$('morsCupMusic'),background=$('backgroundMusic');soccerMusicActive=false;if(cup){cup.pause();cup.currentTime=0;}if(musicOn&&background)startBackgroundMusic();}
