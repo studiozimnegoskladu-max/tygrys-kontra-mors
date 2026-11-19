@@ -17,7 +17,7 @@
   <meta name="twitter:image" content="https://raw.githubusercontent.com/studiozimnegoskladu-max/tygrys-kontra-mors/main/assets/plansza%20FB%20zaproszeniowa.jpg">
   <meta property="og:url" content="https://studiozimnegoskladu-max.github.io/tygrys-kontra-mors/">
   <title>Kółko, Krzyżyk i Dwa Promile Absurdu — Studio Zimnego Składu</title>
-  <link rel="stylesheet" href="style.css?v=20261119-mors-pacman-fullscreen-visible">
+  <link rel="stylesheet" href="style.css?v=20261119-mors-pacman-fullscreen-visible-hangman">
   <script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0"></script>
 </head>
 <body>
@@ -198,7 +198,19 @@
         </details>
         <div class="hangman-game">
           <div class="hangman-topline"><span id="hangmanCategory">KATEGORIA: DRUKARNIA I RZECZY PODEJRZANE</span><strong id="hangmanMistakes">AWARIE: 0 / 7</strong></div>
-          <div class="hangman-chaos" id="hangmanChaos" aria-label="Postępująca awaria urzędu"><span class="chaos-item">🗃️</span><span class="chaos-item">📋</span><span class="chaos-item">🐐</span><span class="chaos-item">👑</span><span class="chaos-item">🖨️</span><span class="chaos-item">💥</span><span class="chaos-item">🦭</span></div>
+          <div class="hangman-chaos" id="hangmanChaos" aria-label="Etapy powstawania wisielca Morścisława">
+            <div class="hangman-scene" id="hangmanScene" data-mistakes="0">
+              <svg class="hangman-gallows" viewBox="0 0 320 210" role="img" aria-label="Konstrukcja wisielca budowana przy kolejnych pomyłkach">
+                <path class="gallows-piece gallows-base" d="M25 190 H275"/>
+                <path class="gallows-piece gallows-post" d="M75 190 V18"/>
+                <path class="gallows-piece gallows-beam" d="M75 18 H205"/>
+                <path class="gallows-piece gallows-rope" d="M205 18 V52"/>
+                <path class="gallows-piece gallows-loop" d="M205 52 C205 61 193 65 193 76 C193 86 217 86 217 76 C217 66 205 61 205 52"/>
+              </svg>
+              <img class="hangman-walrus" id="hangmanWalrus" src="assets/mors.png" alt="Morścisław stopniowo pojawia się na planszy wisielca">
+              <span class="hangman-scene-caption" id="hangmanSceneCaption">MORŚCISŁAW NADAL MA NADZIEJĘ</span>
+            </div>
+          </div>
           <div class="hangman-word" id="hangmanWord" aria-label="Hasło do odgadnięcia"></div>
           <div class="hangman-used" id="hangmanUsed">UŻYTE LITERY: —</div>
           <div class="hangman-keyboard" id="hangmanKeyboard" aria-label="Klawiatura liter"></div>
@@ -387,6 +399,6 @@
   </main>
   <script src="config.js"></script>
   <script src="app.js?v=20261119-mors-pacman-fullscreen-visible"></script>
-  <script src="hangman.js?v=20261115-mobile-storage-2"></script>
+  <script src="hangman.js?v=20261119-wisielec-mors"></script>
 </body>
 </html>
