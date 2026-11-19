@@ -2304,3 +2304,8 @@ body.view-soccer .soccer-hero-combo .soccer-cup-full{
  .pacman-play:fullscreen #pacmanBoard{max-width:96vw;max-height:calc(100dvh - 205px)}
  .pacman-play:fullscreen .pacman-controls button{width:54px;height:42px}
 }
+
+/* Widoczny przycisk powiększenia — osobny wiersz nad planszą */
+.pacman-play > #pacmanFullscreen{display:block!important;visibility:visible!important;opacity:1!important;position:relative!important;z-index:5!important;width:100%;max-width:600px;min-height:48px;margin:2px auto 6px;padding:10px 14px;background:#00b9d8;color:#171515;border:3px solid #171515;border-radius:8px;box-shadow:4px 4px 0 #171515;font-size:15px;font-weight:1000;cursor:pointer}
+.pacman-play:fullscreen > #pacmanFullscreen{width:min(94vw,900px);max-width:none}
+.pacman-play > #pacmanFullscreen:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #171515}
