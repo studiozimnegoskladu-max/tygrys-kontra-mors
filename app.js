@@ -1350,9 +1350,66 @@
     update();
   }
 
+
+  function initPacman(){
+    const canvas=$('pacmanBoard'),start=$('pacmanStart');if(!canvas||!start)return;
+    const ctx=canvas.getContext('2d'),status=$('pacmanStatus'),scoreEl=$('pacmanScore'),livesEl=$('pacmanLives');
+    const source=["###############","#.............#","#.###.###.###.#","#o#...#...#...#","#.#.#.#.#.#.#.#","#...#...#...#.#","###.###.###.#.#","#...#.....#...#","#.#.#####.#.###","#.#...#...#...#","#.###.#.###.#.#","#.....#.....#.#","#.###.###.###.#","#o............#","###############"];
+    const size=30,images={mors:new Image(),hrabia:new Image(),koza:new Image(),honda:new Image()};
+    images.mors.src='assets/mors.png';images.hrabia.src='assets/hrabia poprawek.png';images.koza.src='assets/koza-krzycha.jpg';images.honda.src='assets/honda-drukara.png';
+    let map=[],pellets=[],player,enemies,score=0,lives=3,timer=null,active=false,desired={x:0,y:0},tick=0;
+    const dirs=[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}];
+    function reset(){
+      map=source.map(row=>row.split(''));pellets=[];
+      map.forEach((row,y)=>row.forEach((v,x)=>{if(v==='.'||v==='o'){pellets.push({x,y,power:v==='o'});map[y][x]=' ';}}));
+      player={x:1,y:1};enemies=[{x:13,y:1,img:images.hrabia},{x:13,y:13,img:images.koza},{x:1,y:13,img:images.honda}];
+      desired={x:0,y:0};tick=0;
+    }
+    function wall(x,y){return !map[y]||map[y][x]==='#';}
+    function drawSprite(img,x,y,scale=.86){
+      const d=size*scale,px=x*size+(size-d)/2,py=y*size+(size-d)/2;
+      if(img?.complete&&img.naturalWidth)ctx.drawImage(img,px,py,d,d);
+      else{ctx.fillStyle='#ffe600';ctx.beginPath();ctx.arc(x*size+15,y*size+15,11,0,Math.PI*2);ctx.fill();}
+    }
+    function draw(){
+      ctx.clearRect(0,0,450,450);ctx.fillStyle='#171515';ctx.fillRect(0,0,450,450);
+      map.forEach((row,y)=>row.forEach((v,x)=>{if(v==='#'){ctx.fillStyle='#00b9d8';ctx.fillRect(x*size+2,y*size+2,size-4,size-4);ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.strokeRect(x*size+5,y*size+5,size-10,size-10);}}));
+      pellets.forEach(p=>{ctx.fillStyle=p.power?'#ffea00':'#fff4c7';ctx.beginPath();ctx.arc(p.x*size+15,p.y*size+15,p.power?7:3.5,0,Math.PI*2);ctx.fill();});
+      enemies.forEach(e=>drawSprite(e.img,e.x,e.y,.82));drawSprite(images.mors,player.x,player.y,.9);
+    }
+    function movePlayer(){
+      if(!wall(player.x+desired.x,player.y+desired.y)){player.x+=desired.x;player.y+=desired.y;}
+      const i=pellets.findIndex(p=>p.x===player.x&&p.y===player.y);
+      if(i>=0){score+=pellets[i].power?10:1;pellets.splice(i,1);scoreEl.textContent='WYNIK: '+score;if(pellets.length===0){finish('LABIRYNT WYCZYSZCZONY! MORŚCISŁAW ZDOBYWA ŚLEDZIOWY PUCHAR!');return;}}
+    }
+    function moveEnemies(){
+      enemies.forEach((e,index)=>{
+        const options=dirs.filter(d=>!wall(e.x+d.x,e.y+d.y));
+        options.sort((a,b)=>(Math.abs(e.x+a.x-player.x)+Math.abs(e.y+a.y-player.y))-(Math.abs(e.x+b.x-player.x)+Math.abs(e.y+b.y-player.y)));
+        const pick=(tick%4===index%4&&options.length>1)?options[1]:options[0];if(pick){e.x+=pick.x;e.y+=pick.y;}
+      });
+    }
+    function collision(){
+      if(!enemies.some(e=>e.x===player.x&&e.y===player.y))return;
+      lives--;livesEl.textContent='ŻYCIA: '+lives;
+      if(lives<=0){finish('KONIEC GRY! Hrabia dopadł Morścisława. Wynik: '+score);return;}
+      player={x:1,y:1};enemies=[{x:13,y:1,img:images.hrabia},{x:13,y:13,img:images.koza},{x:1,y:13,img:images.honda}];status.textContent='OJOJ! Morścisław stracił życie. Zostały: '+lives;
+    }
+    function step(){if(!active)return;tick++;movePlayer();if(tick%2===0)moveEnemies();collision();draw();}
+    function finish(message){active=false;clearInterval(timer);timer=null;status.textContent=message;start.textContent='ZAGRAJ PONOWNIE ↻';}
+    function begin(){clearInterval(timer);score=0;lives=3;scoreEl.textContent='WYNIK: 0';livesEl.textContent='ŻYCIA: 3';status.textContent='Zbieraj śledzie! Unikaj Hrabiego, KOZY i Hondy!';start.textContent='RESTART ↻';reset();active=true;draw();timer=setInterval(step,190);}
+    function setDir(name){desired=({up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}})[name]||desired;}
+    start.addEventListener('click',begin);
+    document.addEventListener('keydown',e=>{const key={ArrowUp:'up',w:'up',ArrowDown:'down',s:'down',ArrowLeft:'left',a:'left',ArrowRight:'right',d:'right'}[e.key];if(key&&document.body.contains(canvas)){e.preventDefault();setDir(key);}});
+    document.querySelectorAll('[data-pacdir]').forEach(b=>{b.addEventListener('pointerdown',e=>{e.preventDefault();setDir(b.dataset.pacdir);});});
+    Object.values(images).forEach(img=>img.addEventListener('load',draw));
+    reset();draw();
+  }
+
   // Każdy moduł uruchamiamy niezależnie — błąd ligi lub dodatku nie może blokować gier.
   const safeInit=(name,fn)=>{try{fn()}catch(error){console.error('Błąd modułu '+name+':',error);const status=$('setupMessage');if(status)status.textContent='Część dodatków nie załadowała się ('+name+'). Gry lokalne pozostają dostępne.'}};
   safeInit('mini-arcade',initMiniArcade);
+  safeInit('Morścisław arcade',initPacman);
   safeInit('Mors Cup',initMorsCupLeague);
   safeInit('Instytut Hrabiego',initHrabiaInstitute);
   safeInit('misje i dodatki',()=>{renderDailyMissions();renderMorsJournal();renderStickers();renderDiplomas();renderMorsClub();renderFortune();loadLeaderboard()});
