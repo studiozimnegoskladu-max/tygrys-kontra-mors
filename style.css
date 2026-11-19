@@ -2344,3 +2344,7 @@ body.view-soccer .soccer-hero-combo .soccer-cup-full{
 .hangman-walrus{position:absolute;left:52%;bottom:28px;width:clamp(112px,28%,160px);height:clamp(125px,58%,175px);object-fit:contain;object-position:center;clip-path:inset(0 0 calc(100% - var(--walrus-reveal,0%)) 0);transition:clip-path .35s ease;filter:drop-shadow(2px 2px 0 #242424)}
 .hangman-scene-caption{position:absolute;left:8px;right:8px;bottom:5px;text-align:center;font-size:10px;font-weight:1000;letter-spacing:.07em;color:#795b2b}
 @media(max-width:520px){.hangman-chaos{min-height:220px;padding:6px}.hangman-scene{height:220px}.hangman-walrus{left:48%;width:38%;height:62%}.hangman-scene-caption{font-size:9px}}
+
+/* Oryginalna, pełna plansza wisielca przesłana przez użytkownika */
+.hangman-gallows{display:none!important}
+.hangman-walrus{left:0!important;bottom:0!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;filter:none!important}
