@@ -2290,3 +2290,17 @@ body.view-soccer .soccer-hero-combo .soccer-cup-full{
 .pacman-controls button{width:48px;height:42px;border:2px solid #171515;border-radius:7px;background:#ffe600;box-shadow:3px 3px 0 #171515;font-size:20px;font-weight:1000;touch-action:manipulation}
 .pacman-controls button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #171515}
 @media(min-width:700px){.pacman-play{max-width:660px;margin:0 auto}}
+
+
+.pacman-fullscreen-btn{margin-left:auto;border:2px solid #171515;border-radius:6px;background:#00b9d8;color:#171515;padding:5px 10px;font-weight:1000;cursor:pointer;box-shadow:2px 2px 0 #171515}
+.pacman-play:fullscreen{width:100vw;height:100vh;height:100dvh;max-width:none!important;margin:0;padding:12px 16px;box-sizing:border-box;border:0;border-radius:0;box-shadow:none;display:flex;align-items:center;justify-content:center;gap:clamp(6px,1.2vh,14px);background:#fff8df;overflow:auto}
+.pacman-play:fullscreen #pacmanBoard{width:auto;height:auto;max-width:min(94vw,calc(100vh - 190px));max-width:min(94vw,calc(100dvh - 190px));max-height:calc(100vh - 190px);max-height:calc(100dvh - 190px);object-fit:contain}
+.pacman-play:fullscreen .pacman-hud{width:min(94vw,900px);font-size:clamp(16px,2.2vh,24px)}
+.pacman-play:fullscreen #pacmanStatus{max-width:94vw;font-size:clamp(13px,1.8vh,18px)}
+.pacman-play:fullscreen .pacman-controls button{width:clamp(48px,6vh,66px);height:clamp(42px,5.5vh,58px)}
+.pacman-play:fullscreen #pacmanStart{min-height:42px}
+@media(max-width:600px){
+ .pacman-play:fullscreen{padding:8px 6px;gap:6px}
+ .pacman-play:fullscreen #pacmanBoard{max-width:96vw;max-height:calc(100dvh - 205px)}
+ .pacman-play:fullscreen .pacman-controls button{width:54px;height:42px}
+}
