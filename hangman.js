@@ -30,7 +30,7 @@
     const scene=$('hangmanScene');
     if(scene){
       scene.dataset.mistakes=String(mistakes);
-      const reveal=Math.max(0,Math.min(100,(mistakes-3)*25));
+      const reveal=Math.max(0,Math.min(100,mistakes/7*100));
       $('hangmanWalrus').style.setProperty('--walrus-reveal',reveal+'%');
       const captions=['MORŚCISŁAW JESZCZE SPOKOJNY','POJAWIA SIĘ PODSTAWA','URZĄD BUDUJE KONSTRUKCJĘ','BELKA JUŻ JEST. NIEDOBRZE.','LINA WISI. MORS ZACZYNA SIĘ POCIĆ','MORŚCISŁAW POJAWIA SIĘ NA PLANSZY','CAŁY MORŚCISŁAW! OSTATNIA SZANSA','MORŚCISŁAW WISI NA WŁOSKU!'];
       $('hangmanSceneCaption').textContent=captions[mistakes]||captions[0];
