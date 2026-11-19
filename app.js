@@ -1355,7 +1355,7 @@
     const canvas=$('pacmanBoard'),start=$('pacmanStart');if(!canvas||!start)return;
     const ctx=canvas.getContext('2d'),status=$('pacmanStatus'),scoreEl=$('pacmanScore'),livesEl=$('pacmanLives');
     const source=["###############","#.............#","#.###.###.###.#","#o#...#...#...#","#.#.#.#.#.#.#.#","#...#...#...#.#","###.###.###.#.#","#...#.....#...#","#.#.#####.#.###","#.#...#...#...#","#.###.#.###.#.#","#.....#.....#.#","#.###.###.###.#","#o............#","###############"];
-    const size=30,images={mors:new Image(),hrabia:new Image(),koza:new Image(),honda:new Image()};
+    const size=40,images={mors:new Image(),hrabia:new Image(),koza:new Image(),honda:new Image()};
     images.mors.src='assets/mors.png';images.hrabia.src='assets/hrabia poprawek.png';images.koza.src='assets/koza-krzycha.jpg';images.honda.src='assets/honda-drukara.png';
     let map=[],pellets=[],player,enemies,score=0,lives=3,timer=null,active=false,desired={x:0,y:0},tick=0;
     const dirs=[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}];
@@ -1369,12 +1369,12 @@
     function drawSprite(img,x,y,scale=.86){
       const d=size*scale,px=x*size+(size-d)/2,py=y*size+(size-d)/2;
       if(img?.complete&&img.naturalWidth)ctx.drawImage(img,px,py,d,d);
-      else{ctx.fillStyle='#ffe600';ctx.beginPath();ctx.arc(x*size+15,y*size+15,11,0,Math.PI*2);ctx.fill();}
+      else{ctx.fillStyle='#ffe600';ctx.beginPath();ctx.arc(x*size+size/2,y*size+size/2,11,0,Math.PI*2);ctx.fill();}
     }
     function draw(){
-      ctx.clearRect(0,0,450,450);ctx.fillStyle='#171515';ctx.fillRect(0,0,450,450);
+      ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#171515';ctx.fillRect(0,0,canvas.width,canvas.height);
       map.forEach((row,y)=>row.forEach((v,x)=>{if(v==='#'){ctx.fillStyle='#00b9d8';ctx.fillRect(x*size+2,y*size+2,size-4,size-4);ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.strokeRect(x*size+5,y*size+5,size-10,size-10);}}));
-      pellets.forEach(p=>{ctx.fillStyle=p.power?'#ffea00':'#fff4c7';ctx.beginPath();ctx.arc(p.x*size+15,p.y*size+15,p.power?7:3.5,0,Math.PI*2);ctx.fill();});
+      pellets.forEach(p=>{ctx.fillStyle=p.power?'#ffea00':'#fff4c7';ctx.beginPath();ctx.arc(p.x*size+size/2,p.y*size+size/2,p.power?7:3.5,0,Math.PI*2);ctx.fill();});
       enemies.forEach(e=>drawSprite(e.img,e.x,e.y,.82));drawSprite(images.mors,player.x,player.y,.9);
     }
     function movePlayer(){
