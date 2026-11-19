@@ -2253,3 +2253,27 @@ body.view-soccer .soccer-hero-combo .soccer-cup-full{display:block!important;wid
   object-fit:contain!important;
   object-position:center center!important;
 }
+
+
+/* MORŚCISŁAW CUP — transparentna oprawa grafiki PNG, bez czarnego prostokąta */
+body.view-soccer .shell > section.soccer-hero{
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+body.view-soccer .soccer-hero-combo{
+  display:block!important;
+  min-height:0!important;
+  padding:0!important;
+  background:transparent!important;
+}
+body.view-soccer .soccer-hero-combo .soccer-cup-full{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  background:transparent!important;
+  margin:0 auto!important;
+}
