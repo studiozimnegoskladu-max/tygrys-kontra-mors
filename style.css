@@ -2309,3 +2309,38 @@ body.view-soccer .soccer-hero-combo .soccer-cup-full{
 .pacman-play > #pacmanFullscreen{display:block!important;visibility:visible!important;opacity:1!important;position:relative!important;z-index:5!important;width:100%;max-width:600px;min-height:48px;margin:2px auto 6px;padding:10px 14px;background:#00b9d8;color:#171515;border:3px solid #171515;border-radius:8px;box-shadow:4px 4px 0 #171515;font-size:15px;font-weight:1000;cursor:pointer}
 .pacman-play:fullscreen > #pacmanFullscreen{width:min(94vw,900px);max-width:none}
 .pacman-play > #pacmanFullscreen:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #171515}
+
+
+/* Wisielec Morścisława — scenka składana etapami z oryginalnej grafiki maskotki */
+.hangman-chaos{display:block;min-height:250px;padding:10px;background:#f2f0e9;border:2px solid #242424;overflow:hidden}
+.hangman-scene{position:relative;width:min(100%,520px);height:250px;margin:0 auto;overflow:hidden;background:#fff8d6;border:2px solid #242424;border-radius:12px}
+.hangman-gallows{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.gallows-piece{fill:none;stroke:#242424;stroke-width:9;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .25s}
+.hangman-scene[data-mistakes="1"] .gallows-base,
+.hangman-scene[data-mistakes="2"] .gallows-base,
+.hangman-scene[data-mistakes="3"] .gallows-base,
+.hangman-scene[data-mistakes="4"] .gallows-base,
+.hangman-scene[data-mistakes="5"] .gallows-base,
+.hangman-scene[data-mistakes="6"] .gallows-base,
+.hangman-scene[data-mistakes="7"] .gallows-base{opacity:1}
+.hangman-scene[data-mistakes="2"] .gallows-post,
+.hangman-scene[data-mistakes="3"] .gallows-post,
+.hangman-scene[data-mistakes="4"] .gallows-post,
+.hangman-scene[data-mistakes="5"] .gallows-post,
+.hangman-scene[data-mistakes="6"] .gallows-post,
+.hangman-scene[data-mistakes="7"] .gallows-post{opacity:1}
+.hangman-scene[data-mistakes="3"] .gallows-beam,
+.hangman-scene[data-mistakes="4"] .gallows-beam,
+.hangman-scene[data-mistakes="5"] .gallows-beam,
+.hangman-scene[data-mistakes="6"] .gallows-beam,
+.hangman-scene[data-mistakes="7"] .gallows-beam{opacity:1}
+.hangman-scene[data-mistakes="4"] .gallows-rope,
+.hangman-scene[data-mistakes="5"] .gallows-rope,
+.hangman-scene[data-mistakes="6"] .gallows-rope,
+.hangman-scene[data-mistakes="7"] .gallows-rope{opacity:1}
+.hangman-scene[data-mistakes="5"] .gallows-loop,
+.hangman-scene[data-mistakes="6"] .gallows-loop,
+.hangman-scene[data-mistakes="7"] .gallows-loop{opacity:1}
+.hangman-walrus{position:absolute;left:52%;bottom:28px;width:clamp(112px,28%,160px);height:clamp(125px,58%,175px);object-fit:contain;object-position:center;clip-path:inset(0 0 calc(100% - var(--walrus-reveal,0%)) 0);transition:clip-path .35s ease;filter:drop-shadow(2px 2px 0 #242424)}
+.hangman-scene-caption{position:absolute;left:8px;right:8px;bottom:5px;text-align:center;font-size:10px;font-weight:1000;letter-spacing:.07em;color:#795b2b}
+@media(max-width:520px){.hangman-chaos{min-height:220px;padding:6px}.hangman-scene{height:220px}.hangman-walrus{left:48%;width:38%;height:62%}.hangman-scene-caption{font-size:9px}}
