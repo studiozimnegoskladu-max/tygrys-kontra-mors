@@ -2283,10 +2283,10 @@ body.view-soccer .soccer-hero-combo .soccer-cup-full{
 .pacman-play{display:flex;flex-direction:column;gap:9px;padding:12px;background:#fff8df;border:3px solid #171515;border-radius:10px;box-shadow:5px 5px 0 #171515}
 .pacman-hud{display:flex;justify-content:space-between;gap:8px;font:1000 14px 'Barlow Condensed';}
 .pacman-hud b{background:#ffe600;border:2px solid #171515;padding:5px 8px;box-shadow:2px 2px 0 #171515}
-#pacmanBoard{display:block;width:min(100%,450px);height:auto;aspect-ratio:1;margin:0 auto;background:#171515;border:3px solid #171515;border-radius:5px;touch-action: none}
+#pacmanBoard{display:block;width:min(100%,600px);height:auto;aspect-ratio:1;margin:0 auto;background:#171515;border:3px solid #171515;border-radius:5px;touch-action: none}
 #pacmanStatus{text-align:center;font-weight:900;margin:0;min-height:22px}
 .pacman-controls{display:flex;flex-direction:column;align-items:center;gap:5px}
 .pacman-controls>div{display:flex;gap:8px}
 .pacman-controls button{width:48px;height:42px;border:2px solid #171515;border-radius:7px;background:#ffe600;box-shadow:3px 3px 0 #171515;font-size:20px;font-weight:1000;touch-action:manipulation}
 .pacman-controls button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #171515}
-@media(min-width:700px){.pacman-play{max-width:520px;margin:0 auto}}
+@media(min-width:700px){.pacman-play{max-width:660px;margin:0 auto}}
