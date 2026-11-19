@@ -1400,7 +1400,7 @@
     function begin(){clearInterval(timer);score=0;lives=3;scoreEl.textContent='WYNIK: 0';livesEl.textContent='ŻYCIA: 3';status.textContent='Zbieraj śledzie! Unikaj Hrabiego, KOZY i Hondy!';start.textContent='RESTART ↻';reset();active=true;draw();timer=setInterval(step,190);}
     function setDir(name){desired=({up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}})[name]||desired;}
     start.addEventListener('click',begin);
-    document.addEventListener('keydown',e=>{const key={ArrowUp:'up',w:'up',ArrowDown:'down',s:'down',ArrowLeft:'left',a:'left',ArrowRight:'right',d:'right'}[e.key];if(key&&document.body.contains(canvas)){e.preventDefault();setDir(key);}});
+    document.addEventListener('keydown',e=>{const key={ArrowUp:'up',w:'up',ArrowDown:'down',s:'down',ArrowLeft:'left',a:'left',ArrowRight:'right',d:'right'}[e.key];if(key&&active&&document.body.contains(canvas)){e.preventDefault();setDir(key);}});
     document.querySelectorAll('[data-pacdir]').forEach(b=>{b.addEventListener('pointerdown',e=>{e.preventDefault();setDir(b.dataset.pacdir);});});
     Object.values(images).forEach(img=>img.addEventListener('load',draw));
     reset();draw();
