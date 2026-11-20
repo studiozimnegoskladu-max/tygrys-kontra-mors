@@ -2777,3 +2777,52 @@ body:before{
   display:none!important;
   background:none!important;
 }
+
+
+/* MENU GŁÓWNE — pięć czytelnych działów zamiast wielu osobnych atrakcji */
+.category-grid{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:18px!important}
+.category-card{grid-column:span 2;min-height:265px!important;justify-content:center!important;gap:10px!important}
+.category-card:nth-child(4){grid-column:2/span 2}
+.category-card:nth-child(5){grid-column:4/span 2}
+.category-card .category-icon{display:grid;place-items:center;align-self:flex-start;width:64px;height:64px;background:var(--yellow);border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font-size:34px;transform:rotate(-4deg);margin:4px 0 8px}
+.category-card:nth-child(2) .category-icon{background:#bdeeff}
+.category-card:nth-child(3) .category-icon{background:#ffd0e9}
+.category-card:nth-child(4) .category-icon{background:#e8f6c9}
+.category-card:nth-child(5) .category-icon{background:#ffe2b8}
+.category-card>b{font-size:clamp(24px,2.5vw,34px)!important}
+.category-card>small{font-size:13px!important;min-height:38px}
+.category-card .attraction-cta{margin-top:8px}
+body.view-library .attractions-menu{display:none!important}
+body.view-library .attractions-back{display:block!important}
+body.view-library .shell>.hero,body.view-library .shell>#setup{display:block!important}
+body.view-library .shell>#setup{margin-top:18px}
+body.view-library #setup>.mors-zone-drawer{display:block!important}
+body.view-library #setup>.mors-journal-featured{display:block!important}
+body.view-library #setup>.daily-drawer,
+body.view-library #setup>.ranking-drawer,
+body.view-library #setup>.collection-drawer{display:block!important}
+body.view-library #setup>.social-bridge{display:block!important}
+body.view-library.category-games #setup>.mors-journal-featured,
+body.view-library.category-games #setup>.daily-drawer,
+body.view-library.category-games #setup>.ranking-drawer,
+body.view-library.category-games #setup>.collection-drawer{display:none!important}
+body.view-library.category-missions #setup>.mors-journal-featured,
+body.view-library.category-missions #setup>.ranking-drawer,
+body.view-library.category-missions #setup>.collection-drawer{display:none!important}
+body.view-library.category-chronicles #setup>.daily-drawer,
+body.view-library.category-chronicles #setup>.ranking-drawer,
+body.view-library.category-chronicles #setup>.collection-drawer{display:none!important}
+body.view-library.category-my-world #setup>.mors-journal-featured,
+body.view-library.category-my-world #setup>.daily-drawer,
+body.view-library.category-my-world #setup>.mors-zone-drawer{display:none!important}
+@media(max-width:760px){
+ .category-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .category-card,.category-card:nth-child(n){grid-column:auto;min-height:235px!important}
+ .category-card .category-icon{width:54px;height:54px;font-size:29px}
+ .category-card>b{font-size:23px!important}
+ .category-card>small{font-size:12px!important}
+}
+@media(max-width:430px){
+ .category-grid{grid-template-columns:1fr!important}
+ .category-card,.category-card:nth-child(n){min-height:190px!important}
+}
