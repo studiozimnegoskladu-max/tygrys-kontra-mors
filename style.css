@@ -2763,3 +2763,17 @@ footer{font:400 16px Bangers,cursive;letter-spacing:1.5px;color:var(--ink)}
  .intro-thought p{font-size:clamp(15px,4.5vw,20px);line-height:1.02}
  .intro-thought small{font-size:7px;margin-top:4px}
 }
+
+
+/* TŁO POD PLANSZĄ — spokojny, jednolity żółty bez rastra i kropek */
+html,body{
+  background:#f2cf35!important;
+  background-color:#f2cf35!important;
+  background-image:none!important;
+  background-attachment:initial!important;
+}
+body:before{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+}
