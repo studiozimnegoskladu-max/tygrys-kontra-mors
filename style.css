@@ -2227,18 +2227,7 @@ body.view-soccer .soccer-hero-combo > img.soccer-field-art{
 
 
 /* MORŚCISŁAW KONTRA UCIEKAJĄCE ŚLEDZIE — komiksowa łapanka */
-.herring-scoreline{display:flex;align-items:center;justify-content:space-between;gap:6px;font:900 13px 'Barlow Condensed';}
-.herring-scoreline span,.herring-scoreline strong{background:#ffe600;border:2px solid #171515;border-radius:5px;padding:4px 7px;box-shadow:2px 2px 0 #171515;white-space:nowrap}
-.herring-arena{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:10px;margin:8px 0;border:3px solid #171515;border-radius:9px;background:repeating-linear-gradient(-8deg,#d9f7ff 0 14px,#fff 14px 24px);box-shadow:4px 4px 0 #171515;min-height:120px}
-.herring-target{min-width:0;min-height:52px;border:2px solid #171515;border-radius:9px;background:#fff;font-size:30px;line-height:1;box-shadow:3px 3px 0 #171515;cursor:pointer;transition:transform .08s}
-.herring-target:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #171515}
-.herring-target:disabled{opacity:.25;transform:scale(.8)}
-.herring-target.can-target{background:#ffe6a3}
-.herring-finish{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;font-size:22px}
-.herring-finish b{font:1000 21px 'Barlow Condensed';}
-.herring-finish span{font:900 14px 'Barlow Condensed';}
-.herring-finish small{font-size:11px;font-weight:800}
-@media(max-width:420px){.herring-arena{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:7px}.herring-target{min-height:48px;font-size:27px}}
+
 
 /* Full supplied MORŚCISŁAW CUP artwork; interactive pitch below remains untouched */
 body.view-soccer .soccer-hero-combo{display:block!important;min-height:0!important;padding:12px!important;box-sizing:border-box!important}
