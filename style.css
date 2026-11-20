@@ -2862,3 +2862,9 @@ body.view-library.category-my-world #setup>.collection-drawer{display:block!impo
 body.view-library.category-my-world #setup .ranking-drawer .leaderboard-panel,
 body.view-library.category-my-world #setup .collection-drawer .sticker-panel,
 body.view-library.category-my-world #setup .collection-drawer .mors-club-panel{display:block!important}
+
+
+/* Widoki pięciu działów muszą nadpisywać starsze reguły pojedynczych atrakcji */
+body.view-library:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone) .shell>.hero,
+body.view-library:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone) .shell>#setup{display:block!important}
+body.view-library .shell>.soccer-hero{display:none!important}
