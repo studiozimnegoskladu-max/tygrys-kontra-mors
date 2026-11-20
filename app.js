@@ -1088,10 +1088,20 @@
       soccer.lines.add(line);soccer.position={...to};
       const goal=(to.r===0||to.r===soccerRows-1)&&to.c>=soccerGoals.min&&to.c<=soccerGoals.max;
       if(goal){soccer.score[soccer.turn]++;soccer.over=true;soccerStatus.textContent='GOOOL! '+soccerName(soccer.turn)+' trafia do bramki! Morścisław żąda powtórki VAR z kałuży.';soccerSay('goal');soccerDraw();return}
-      const edge=to.c===0||to.c===soccerCols-1||to.r===0||to.r===soccerRows-1;
+      const sideLine=to.c===0||to.c===soccerCols-1;
       soccer.visits.set(to.c+','+to.r,prior+1);
-      if(prior>0||edge){soccerStatus.textContent=prior>0?'ODBICIE OD WŁASNEJ KRESKI! Grasz ponownie.':'BANDA! Piłka odbita — ten sam gracz gra dalej.';soccerSay(prior>0?'bounce':'band')}
-      else{soccer.turn=(soccerVsMors&&!byAI)?0:1-soccer.turn;soccerStatus.textContent=(soccerVsMors&&!byAI)?'Morścisław przygotowuje ruch…':'Ruch przeciwnika. Nie oddawaj pola!';soccerSay('move')}
+      if(sideLine){
+        soccer.turn=(soccerVsMors&&!byAI)?0:1-soccer.turn;
+        soccerStatus.textContent='AUT! Piłka dotknęła linii bocznej — kolejka przechodzi na przeciwnika.';
+        soccerSay('move');
+      }else if(prior>0){
+        soccerStatus.textContent='ODBICIE OD WŁASNEJ KRESKI! Grasz ponownie.';
+        soccerSay('bounce');
+      }else{
+        soccer.turn=(soccerVsMors&&!byAI)?0:1-soccer.turn;
+        soccerStatus.textContent=(soccerVsMors&&!byAI)?'Morścisław przygotowuje ruch…':'Ruch przeciwnika. Nie oddawaj pola!';
+        soccerSay('move');
+      }
       const possible=soccerNeighbors(soccer.position).some(n=>!soccer.lines.has(soccerKey(soccer.position,n)));
       if(!possible){soccer.over=true;soccer.score[1-soccer.turn]++;soccerStatus.textContent='ZABLOKOWANY! '+soccerName(1-soccer.turn)+' wygrywa. Morścisław zamyka zeszyt.';soccerSay('blocked')}
       if(soccerVsMors&&soccer.turn===0)soccerScheduleAi(true);
@@ -1153,16 +1163,25 @@
       if(!connect())return;
       const button=$('soccerCreateRoom');button.disabled=true;soccerOnlineNote('Tworzę pokój…');
       try{
-        soccerOnlineRoom=soccerOnlineCode();soccerOnlineToken=soccerToken();soccerOnlineRole=0;
-        storage.setItem('szs_soccer_host_'+soccerOnlineRoom,soccerOnlineToken);
-        const {data,error}=await client.rpc('szs_soccer_create_room',{p_room_code:soccerOnlineRoom,p_host_token:soccerOnlineToken});
-        if(error)throw error;
-        soccerOnline=true;soccerVsMors=false;soccerApplyOnline(data);
-        $('soccerRoomCode').textContent=soccerOnlineRoom;$('soccerRoomCreated').classList.remove('hidden');
-        soccerOnlineNote('Pokój utworzony. Wyślij kod lub link przeciwnikowi.');
+        let created=null,lastError=null;
+        for(let attempt=0;attempt<4&&!created;attempt++){
+          soccerOnlineRoom=soccerOnlineCode();soccerOnlineToken=soccerToken();soccerOnlineRole=0;
+          const response=await client.rpc('szs_soccer_create_room',{p_room_code:soccerOnlineRoom,p_host_token:soccerOnlineToken});
+          if(!response.error)created=response.data;
+          else{
+            lastError=response.error;
+            if(!/duplicate|unique|already exists/i.test(response.error.message||''))throw response.error;
+          }
+        }
+        if(!created)throw lastError||new Error('Nie udało się przydzielić wolnego kodu.');
+        try{storage.setItem('szs_soccer_host_'+soccerOnlineRoom,soccerOnlineToken)}catch(storageError){console.warn('Nie udało się zapisać tokenu pokoju:',storageError)}
+        $('soccerRoomCode').textContent=soccerOnlineRoom;
+        $('soccerRoomCreated').classList.remove('hidden');
+        soccerOnline=true;soccerVsMors=false;soccerApplyOnline(created);
+        soccerOnlineNote('Pokój utworzony. Kod jest gotowy — wyślij go przeciwnikowi.');
         history.replaceState({},'',location.pathname+'?soccer='+soccerOnlineRoom);
         soccerShowOnlineGame();soccerOnlineStartPolling();
-      }catch(e){soccerOnlineNote('Nie udało się utworzyć pokoju: '+(e.message||'błąd połączenia'))}
+      }catch(e){soccerOnlineNote('Nie udało się utworzyć pokoju: '+(e.message||'błąd połączenia'));console.error('Tworzenie pokoju online:',e)}
       finally{button.disabled=false}
     }
     async function soccerOnlineJoin(code){
