@@ -8,6 +8,39 @@
   }})();
   // Ekran powitalny zamyka się niezależnie od późniejszych modułów.
   $('introEnterBtn')?.addEventListener('click',()=>{$('introScreen')?.classList.add('intro-dismissed')},{once:true});
+
+  // Losowa myśl Morścisława — mieszanka życiowej filozofii i kontrolowanego absurdu.
+  const morsThoughts=[
+    'Nie odkładaj marzeń na jutro. Jutro może być dostawa papieru.',
+    'Czasem trzeba odpłynąć, żeby złapać właściwy kierunek.',
+    'Jeśli życie daje ci cytryny, sprawdź najpierw, czy są w CMYK-u.',
+    'Spokój jest ważny. Chyba że ktoś mówi: „mam tylko jedną małą poprawkę”.',
+    'Nie każdy, kto milczy, nie ma nic do powiedzenia. Niektórzy po prostu jedzą śledzia.',
+    'Najdłuższa droga zaczyna się od pierwszego kroku. Najkrótsza do drukarni — od dobrego pliku.',
+    'Bądź jak kra. Trzymaj się swoich zasad, nawet gdy wszystko wokół topnieje.',
+    'Człowiek uczy się całe życie. Mors też, ale głównie tego, gdzie schowano ryby.',
+    'Nie porównuj swojego tempa z innymi. Pingwin ma inne nogi, a Hrabia inne poprawki.',
+    'Wielkie rzeczy zaczynają się od małych pomysłów. I czasem od bardzo dużej kawy.',
+    'Jeśli nie wiesz, co robić, zrób przerwę. Jeśli nadal nie wiesz — zrób drugą.',
+    'Nie ma rzeczy niemożliwych. Są tylko pliki wysłane w złym formacie.',
+    'Życie jest jak druk: czasem trzeba puścić jeszcze jeden nakład.',
+    'Pamiętaj: nawet najgrubszy lód zaczyna się od jednej zimnej kropli.',
+    'Nie trać głowy. Ja swoją trzymam przykręconą do futra.',
+    'Sukces to suma małych kroków. I jednego wielkiego ślizgu na brzuchu.',
+    'Kiedy los rzuca ci kłody pod płetwy, zrób z nich tratwę.',
+    'Nie jestem leniwy. Ja po prostu oszczędzam energię na ważne sprawy. Na przykład obiad.',
+    'Czasem odpowiedź jest tuż przed nosem. U mnie to zwykle ryba.',
+    'Nie każda burza jest zła. Niektóre przynoszą świeży śnieg i wolne od poprawek.',
+    'Dystans do siebie jest ważny. Zwłaszcza gdy masz metr długości i zero poczucia powagi.',
+    'Gdy życie mówi „koniec”, Morścisław pyta: „a może dodruk?”'
+  ];
+  const morsThoughtText=$('morsThoughtText');
+  if(morsThoughtText){
+    const thought=morsThoughts[Math.floor(Math.random()*morsThoughts.length)];
+    morsThoughtText.textContent=thought;
+    morsThoughtText.style.fontSize=thought.length>105?'clamp(13px,1.8vw,19px)':thought.length>78?'clamp(15px,2vw,21px)':'';
+  }
+
   const setup=$('setup'), game=$('game'), msg=$('setupMessage');
   // Krytyczny przycisk pokoju podpinamy od razu, zanim uruchomią się dodatki strony.
   window.addEventListener('error',e=>{if(msg)msg.textContent='Błąd aplikacji: '+(e.message||'sprawdź konsolę przeglądarki')});
