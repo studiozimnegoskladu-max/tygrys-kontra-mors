@@ -2735,3 +2735,7 @@ footer{font:400 16px Bangers,cursive;letter-spacing:1.5px;color:var(--ink)}
 .intro-copy{max-width:760px;margin:0 auto;padding:28px 0!important}
 .intro-mascot-wrap{display:none!important}
 @media(max-width:650px){.intro-copy{padding:18px 0 8px!important}}
+
+
+/* INTRO — czyste białe tło z pliku assets */
+.intro-card{background:#fff url('assets/intro-white-background.svg?v=20261120-white-bg') center/cover no-repeat!important}
