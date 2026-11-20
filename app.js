@@ -1193,18 +1193,33 @@
       if(!connect())return;
       code=(code||'').trim().toUpperCase();
       if(!/^[A-Z0-9]{8}$/.test(code)){soccerOnlineNote('Wpisz prawidłowy 8-znakowy kod meczu.');return}
-      const button=$('soccerJoinRoom');if(button)button.disabled=true;soccerOnlineNote('Dołączam do meczu…');
+      const button=$('soccerJoinRoom');if(button)button.disabled=true;
+      soccerOnlineNote('Dołączam do meczu…');
       try{
         soccerOnlineRoom=code;
-        soccerOnlineToken=storage.getItem('szs_soccer_guest_'+code)||soccerToken();
-        storage.setItem('szs_soccer_guest_'+code,soccerOnlineToken);
-        soccerOnlineRole=1;
-        const {data,error}=await client.rpc('szs_soccer_join_room',{p_room_code:code,p_guest_token:soccerOnlineToken});
-        if(error)throw error;
-        soccerOnline=true;soccerVsMors=false;soccerApplyOnline(data);
+        // Po odświeżeniu linku właściciel musi odzyskać swój token,
+        // a nie zająć miejsce gościa w swoim własnym pokoju.
+        const savedHostToken=storage.getItem('szs_soccer_host_'+code);
+        if(savedHostToken){
+          soccerOnlineToken=savedHostToken;
+          soccerOnlineRole=0;
+          const {data,error}=await client.rpc('szs_soccer_get_room',{p_room_code:code,p_player_token:soccerOnlineToken});
+          if(error)throw error;
+          soccerOnline=true;soccerVsMors=false;soccerApplyOnline(data);
+        }else{
+          soccerOnlineToken=storage.getItem('szs_soccer_guest_'+code)||soccerToken();
+          storage.setItem('szs_soccer_guest_'+code,soccerOnlineToken);
+          soccerOnlineRole=1;
+          const {data,error}=await client.rpc('szs_soccer_join_room',{p_room_code:code,p_guest_token:soccerOnlineToken});
+          if(error)throw error;
+          soccerOnline=true;soccerVsMors=false;soccerApplyOnline(data);
+        }
         history.replaceState({},'',location.pathname+'?soccer='+code);
         soccerShowOnlineGame();soccerOnlineStartPolling();
-      }catch(e){soccerOnlineNote('Nie udało się dołączyć: '+(e.message||'sprawdź kod pokoju'))}
+      }catch(e){
+        soccerOnline=false;soccerOnlineRole=null;soccerOnlineToken=null;
+        soccerOnlineNote('Nie udało się dołączyć: '+(e.message||'sprawdź kod pokoju'));
+      }
       finally{if(button)button.disabled=false}
     }
     function soccerShowOnlineGame(){
