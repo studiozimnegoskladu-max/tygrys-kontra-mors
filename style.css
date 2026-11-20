@@ -2337,3 +2337,245 @@ body.view-soccer .soccer-hero-combo .soccer-cup-full{
 /* Oryginalna, pełna plansza wisielca przesłana przez użytkownika */
 .hangman-gallows{display:none!important}
 .hangman-walrus{left:0!important;bottom:0!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;filter:none!important}
+
+
+/* =========================================================
+   ZWARIOWANY KOMIKS SZS — warstwa wizualna, bez zmian logiki
+   Najpierw plansza komiksu, potem interfejs.
+   ========================================================= */
+:root{
+  --yellow:#ffe600;--ink:#171515;--pink:#ec008c;--blue:#00aeef;
+  --cyan:#00aeef;--magenta:#ec008c;--paper:#fff9df;
+}
+html,body{background:#ffe600!important}
+body{
+  color:var(--ink)!important;
+  background-color:#ffe600!important;
+  background-image:
+    radial-gradient(circle at 12% 18%,rgba(0,174,239,.20) 0 2px,transparent 2.8px),
+    radial-gradient(circle at 82% 72%,rgba(236,0,140,.17) 0 2px,transparent 2.8px),
+    repeating-linear-gradient(135deg,rgba(23,21,21,.035) 0 2px,transparent 2px 8px),
+    linear-gradient(135deg,#ffe600 0%,#fff06a 48%,#ffe600 100%)!important;
+  background-size:13px 13px,15px 15px,auto,auto!important;
+  background-attachment:fixed!important;
+}
+body:before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  opacity:.17;filter:none;mix-blend-mode:multiply;
+  background-image:radial-gradient(#171515 .8px,transparent .9px);
+  background-size:7px 7px;
+}
+body:after{
+  content:"";position:fixed;z-index:0;pointer-events:none;inset:12px;
+  border:2px solid rgba(23,21,21,.16);outline:1px dashed rgba(23,21,21,.22);
+  outline-offset:5px;
+}
+body>*{position:relative;z-index:1}
+.topbar{
+  max-width:1180px;margin:14px auto 10px;padding:13px 18px;
+  background:#fff9df;border:4px solid var(--ink);
+  border-radius:4px 18px 5px 14px;box-shadow:7px 7px 0 var(--ink);
+  transform:rotate(-.35deg);
+}
+.topbar:after{
+  content:"STUDIO ZIMNEGO SKŁADU • WYDANIE SPECJALNE";
+  position:absolute;right:18px;bottom:-13px;padding:3px 9px;
+  background:var(--pink);border:2px solid var(--ink);
+  font:400 12px Bangers,cursive;letter-spacing:1px;color:#fff;
+  transform:rotate(2deg);
+}
+.topbar-logo{max-width:155px;max-height:58px;object-fit:contain}
+.brand-sub{font:400 17px Bangers,cursive;letter-spacing:1.5px}
+.topbar-actions{gap:9px}
+.online-tag{border:3px solid var(--ink)!important;border-radius:2px!important;
+  box-shadow:3px 3px 0 var(--ink);font:400 14px Bangers,cursive!important;
+  background:var(--yellow)!important}
+.shell{max-width:1160px;padding:18px 24px 48px}
+.attractions-menu{position:relative;padding:clamp(20px,4vw,42px) 0 30px}
+.attractions-menu:before{
+  content:"";position:absolute;z-index:-1;inset:10px -8px 20px;
+  background:#fff9df;border:4px solid var(--ink);
+  box-shadow:10px 10px 0 var(--ink);
+  clip-path:polygon(1% 0,99% 1%,100% 98%,2% 100%,0 55%);
+}
+.attractions-intro{position:relative;text-align:center;padding:8px 12px 22px}
+.attractions-intro:before{
+  content:"NOWY NUMER!";display:inline-block;padding:5px 13px;
+  background:var(--magenta);color:white;border:3px solid var(--ink);
+  box-shadow:3px 3px 0 var(--ink);font:400 18px Bangers,cursive;
+  letter-spacing:1.5px;transform:rotate(-4deg);margin-bottom:10px;
+}
+.attractions-intro>small{display:block;font:900 11px Nunito,sans-serif;letter-spacing:2px}
+#attractionsTitle{
+  font:400 clamp(48px,8vw,88px)/.95 Bangers,cursive!important;
+  letter-spacing:1px!important;text-shadow:3px 3px 0 #fff,6px 6px 0 var(--ink);
+  transform:rotate(-1deg);margin:10px 0 12px;
+}
+#attractionsTitle .cmyk-cyan{color:var(--cyan);-webkit-text-stroke:1.5px var(--ink)}
+#attractionsTitle .cmyk-magenta{color:var(--magenta);-webkit-text-stroke:1.5px var(--ink)}
+.attractions-intro p{
+  display:inline-block;max-width:650px;margin:0;padding:8px 16px;
+  background:var(--yellow);border:3px solid var(--ink);
+  box-shadow:4px 4px 0 var(--ink);font-weight:950;
+  transform:rotate(1deg);
+}
+.attraction-grid{
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:20px;padding:18px 14px 22px;
+}
+.attraction-card{
+  position:relative;grid-column:span 2;min-height:330px;
+  display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;
+  padding:14px 14px 17px!important;overflow:visible!important;
+  color:var(--ink)!important;background:#fff!important;
+  border:4px solid var(--ink)!important;border-radius:3px 14px 4px 12px!important;
+  box-shadow:7px 7px 0 var(--ink)!important;
+  text-align:left;isolation:isolate;
+  transition:transform .16s ease,box-shadow .16s ease;
+}
+.attraction-card:nth-child(1){transform:rotate(-1.4deg);background:#fff8d2!important}
+.attraction-card:nth-child(2){transform:rotate(1.1deg);background:#eafaff!important}
+.attraction-card:nth-child(3){transform:rotate(-.7deg);background:#fff0f7!important}
+.attraction-card:nth-child(4){grid-column:2/span 2;transform:rotate(1.2deg);background:#f1f9ff!important}
+.attraction-card:nth-child(5){grid-column:4/span 2;transform:rotate(-1.1deg);background:#fff8d2!important}
+.attraction-card:before{
+  content:"";position:absolute;z-index:-1;inset:0;opacity:.24;
+  background-image:radial-gradient(var(--ink) .8px,transparent .95px);
+  background-size:7px 7px;pointer-events:none;
+}
+.attraction-card:after{
+  content:"";position:absolute;top:-13px;right:15px;width:64px;height:24px;
+  background:var(--yellow);border:2px solid var(--ink);
+  transform:rotate(5deg);box-shadow:2px 2px 0 var(--ink);
+}
+.attraction-card:hover{transform:translate(-3px,-5px) rotate(0)!important;box-shadow:11px 12px 0 var(--ink)!important}
+.attraction-art{
+  height:175px!important;min-height:175px!important;margin:0 -3px 10px;
+  display:grid;place-items:center;position:relative;
+  border:3px solid var(--ink);background:var(--yellow);
+  clip-path:polygon(3% 0,97% 2%,100% 94%,4% 100%,0 8%);
+}
+.attraction-card:nth-child(2) .attraction-art{background:var(--cyan)}
+.attraction-card:nth-child(3) .attraction-art{background:var(--magenta)}
+.attraction-card:nth-child(4) .attraction-art{background:#fff}
+.attraction-card:nth-child(5) .attraction-art{background:#ffcf00}
+.attraction-mascot{max-height:165px!important;filter:drop-shadow(3px 4px 0 rgba(0,0,0,.25))!important}
+.attraction-card>b{
+  display:block;font:400 clamp(23px,2.3vw,31px)/.98 Bangers,cursive!important;
+  letter-spacing:.8px;margin:5px 0 7px;text-shadow:1px 1px 0 #fff;
+}
+.attraction-card>small{font-size:12px!important;line-height:1.4;font-weight:800;min-height:34px}
+.attraction-cta{
+  display:inline-block;align-self:flex-start;margin-top:auto;padding:7px 10px;
+  background:var(--yellow);border:3px solid var(--ink);
+  box-shadow:3px 3px 0 var(--ink);font:400 17px Bangers,cursive!important;
+  letter-spacing:1px;transform:rotate(-1deg)
+}
+.attraction-card:nth-child(2) .attraction-cta{background:var(--cyan)}
+.attraction-card:nth-child(3) .attraction-cta{background:#ff9bcf}
+.attractions-footer{
+  display:table;margin:8px auto 0;padding:9px 14px;
+  background:var(--ink);color:var(--yellow);border:3px solid var(--ink);
+  box-shadow:4px 4px 0 var(--magenta);font:400 16px Bangers,cursive;
+  letter-spacing:1px;transform:rotate(-1deg);text-align:center
+}
+.hero{
+  position:relative;margin:24px 0 26px;padding:clamp(24px,4vw,48px);
+  background:#fff9df;border:4px solid var(--ink);border-radius:3px 18px 5px 14px;
+  box-shadow:9px 9px 0 var(--ink);overflow:hidden;
+}
+.hero:before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.16;
+  background:radial-gradient(var(--ink) .8px,transparent 1px);background-size:8px 8px;
+}
+.hero .eyebrow{
+  background:var(--magenta);color:#fff;border:3px solid var(--ink);
+  box-shadow:3px 3px 0 var(--ink);font:400 19px Bangers,cursive;
+  letter-spacing:1.4px;padding:7px 15px;
+}
+.hero h1{font:400 clamp(46px,8vw,86px)/.92 Bangers,cursive;letter-spacing:1px;text-shadow:3px 3px 0 #fff,6px 6px 0 var(--ink)}
+.hero h1 i{font:400 .48em Bangers,cursive;color:var(--magenta);text-shadow:2px 2px 0 var(--ink)}
+.hero .lead{font-weight:900;color:var(--ink);font-size:15px}
+.fighter{background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);transform:rotate(-1deg)}
+.mors-fighter{transform:rotate(1deg)}
+.vs{background:var(--magenta);border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);color:#fff}
+.panel,.setup-panel,.game-panel{
+  background:#fff9df!important;border:4px solid var(--ink)!important;
+  border-radius:4px 18px 5px 14px!important;
+  box-shadow:8px 8px 0 var(--ink)!important;
+}
+.panel-title h2,.setup-card h3,.character-heading b,.side-choice h3{
+  font-family:Bangers,'Barlow Condensed',cursive!important;font-weight:400!important;
+  letter-spacing:1px!important;
+}
+.character-picker,.side-choice,.setup-card,.achievement-panel,.extra-drawer>summary,
+.mors-journal-today,.daily-panel,.hangman-game,.hrabia-tool-card{
+  border:3px solid var(--ink)!important;border-radius:3px 13px 4px 10px!important;
+  box-shadow:4px 4px 0 var(--ink)!important;
+}
+.setup-card{background:#fff8d2!important}
+.join-card{background:#eafaff!important}
+.btn{
+  border:3px solid var(--ink)!important;border-radius:3px 8px 3px 6px!important;
+  box-shadow:4px 4px 0 var(--ink)!important;
+  font:400 19px Bangers,cursive!important;letter-spacing:1px!important;
+}
+.btn:hover{box-shadow:6px 6px 0 var(--ink)!important}
+.btn-dark{background:var(--ink)!important;color:var(--yellow)!important}
+.btn-yellow{background:var(--yellow)!important;color:var(--ink)!important}
+.btn-outline{background:#fff!important}
+.extra-drawer>summary{
+  background:var(--yellow)!important;box-shadow:5px 5px 0 var(--ink)!important;
+}
+.extra-drawer>summary b{font:400 22px Bangers,cursive!important;letter-spacing:1px}
+footer{font:400 16px Bangers,cursive;letter-spacing:1.5px;color:var(--ink)}
+/* Komiksowy dymek — istniejący komentarz Morsa */
+.commentary{
+  position:relative!important;border:3px solid var(--ink)!important;
+  border-radius:18px 18px 18px 4px!important;background:#fff!important;
+  box-shadow:4px 4px 0 var(--ink)!important;
+  font:400 20px Bangers,cursive!important;letter-spacing:.4px;
+}
+.commentary:after{
+  content:"";position:absolute;left:28px;bottom:-17px;width:23px;height:23px;
+  background:inherit;border-left:3px solid var(--ink);border-bottom:3px solid var(--ink);
+  transform:skew(-25deg) rotate(-35deg);
+}
+.turn-banner{
+  background:var(--magenta)!important;border:3px solid var(--ink);
+  box-shadow:4px 4px 0 var(--ink);font:400 22px Bangers,cursive!important;
+}
+.board{gap:11px!important}
+.cell{
+  border:3px solid var(--ink)!important;border-radius:3px!important;
+  background:#fff!important;box-shadow:4px 4px 0 var(--ink)!important;
+}
+.cell:nth-child(3n+2){background:#fff9df!important}
+.cell.winning{background:var(--yellow)!important;outline:3px solid var(--ink)!important}
+.soccer-hero{
+  border:4px solid var(--ink)!important;border-radius:4px 16px!important;
+  box-shadow:8px 8px 0 var(--ink)!important;background:#fff9df!important;
+  padding:10px;
+}
+@media(max-width:760px){
+ .attraction-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;padding:12px 9px}
+ .attraction-card,.attraction-card:nth-child(n){grid-column:auto;min-height:290px;padding:10px!important}
+ .attraction-art{height:145px!important;min-height:145px!important}
+ .attraction-mascot{max-height:136px!important}
+ .attraction-card>b{font-size:24px!important}
+ .attraction-card>small{font-size:11px!important}
+ .topbar:after{display:none}
+ .shell{padding:12px 15px 38px}
+}
+@media(max-width:430px){
+ .attraction-grid{gap:12px;padding:10px 6px}
+ .attraction-card,.attraction-card:nth-child(n){min-height:270px;padding:8px!important}
+ .attraction-art{height:125px!important;min-height:125px!important}
+ .attraction-mascot{max-height:116px!important}
+ .attraction-card>b{font-size:21px!important}
+ .attraction-cta{font-size:15px!important;padding:6px 7px}
+ .attractions-intro p{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){
+ .attraction-card,.btn{transition:none!important}
+}
