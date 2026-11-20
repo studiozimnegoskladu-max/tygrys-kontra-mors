@@ -711,7 +711,7 @@
     updateOnlineCharacters();render();
   }
   function showAttractionsHome(){
-    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','soccer-fullscreen-open');
+    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','view-library','category-games','category-missions','category-chronicles','category-my-world','soccer-fullscreen-open');
     const cup=$('morsCupMusic'),background=$('backgroundMusic');
     if(cup){cup.pause();cup.currentTime=0;}
     if(typeof soccerMusicActive!=='undefined'&&soccerMusicActive){soccerMusicActive=false;if(musicOn&&background)startBackgroundMusic();}
@@ -754,11 +754,26 @@
     if(which==='fortune')$('fortuneHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
     if(which==='mors-zone')$('hrabiaInstituteHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
   }
-  $('openTicTacToe')?.addEventListener('click',()=>openAttraction('tictactoe'));
-  $('openSoccer')?.addEventListener('click',()=>openAttraction('soccer'));
-  $('openFortune')?.addEventListener('click',()=>openAttraction('fortune'));
-  $('openMorsZone')?.addEventListener('click',()=>openAttraction('mors-zone'));
-  $('openHangman')?.addEventListener('click',()=>{openAttraction('mors-zone');document.querySelector('.mors-zone-drawer')?.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>$('hangmanHeading')?.scrollIntoView({behavior:'smooth',block:'start'}),180);});
+  function openLibraryCategory(category){
+    setup?.classList.remove('hidden');
+    game?.classList.add('hidden');
+    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','soccer-fullscreen-open');
+    document.body.classList.add('view-library','category-'+category);
+    const zone=document.querySelector('.mors-zone-drawer');
+    const daily=document.querySelector('.daily-drawer');
+    const ranking=document.querySelector('.ranking-drawer');
+    const collection=document.querySelector('.collection-drawer');
+    [zone,daily,ranking,collection].forEach(item=>item?.removeAttribute('open'));
+    if(category==='games'){zone?.setAttribute('open','');$('setup')?.scrollIntoView({behavior:'smooth',block:'start'});}
+    if(category==='missions'){daily?.setAttribute('open','');zone?.setAttribute('open','');$('dailyHeading')?.scrollIntoView({behavior:'smooth',block:'start'});}
+    if(category==='chronicles'){zone?.setAttribute('open','');$('morsJournalHeading')?.scrollIntoView({behavior:'smooth',block:'start'});}
+    if(category==='my-world'){ranking?.setAttribute('open','');collection?.setAttribute('open','');$('leaderboardList')?.scrollIntoView({behavior:'smooth',block:'start'});}
+  }
+  $('openWorld')?.addEventListener('click',showAttractionsHome);
+  $('openGames')?.addEventListener('click',()=>openLibraryCategory('games'));
+  $('openMissions')?.addEventListener('click',()=>openLibraryCategory('missions'));
+  $('openChronicles')?.addEventListener('click',()=>openLibraryCategory('chronicles'));
+  $('openMyWorld')?.addEventListener('click',()=>openLibraryCategory('my-world'));
   $('attractionsBack')?.addEventListener('click',showAttractionsHome);
   function showGame(){resultOverlayDismissed=false;setup.classList.remove('hidden');setup.classList.add('playing');game.classList.remove('hidden');$('roomCode').textContent=room||'LOKALNIE';$('playerName').textContent=nick();if(mode==='online'){updateOnlineCharacters()}else{const ownCard=document.querySelector('.tiger-score');setScoreCharacter(ownCard,selectedCharacter);setScoreCharacter(document.querySelector('.mors-score'),'mors');}renderAchievements();newPrintBrief();}
   const printBriefs=[
