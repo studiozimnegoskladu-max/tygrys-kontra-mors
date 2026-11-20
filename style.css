@@ -2739,3 +2739,11 @@ footer{font:400 16px Bangers,cursive;letter-spacing:1.5px;color:var(--ink)}
 
 /* INTRO — czyste białe tło z pliku assets */
 .intro-card{background:#fff url('assets/intro-white-background.svg?v=20261120-white-bg') center/cover no-repeat!important}
+
+
+/* INTRO — oryginalna grafika Morścisława z cytatem */
+.intro-content{grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr)!important;align-items:center;gap:clamp(18px,3vw,42px)!important;min-height:0!important}
+.intro-copy{max-width:none!important;margin:0!important}
+.intro-art{display:flex;align-items:center;justify-content:center;min-width:0;padding:8px}
+.intro-art img{display:block;width:min(100%,480px);height:auto;max-height:70vh;object-fit:contain;filter:drop-shadow(5px 6px 0 rgba(33,31,32,.12))}
+@media(max-width:650px){.intro-content{grid-template-columns:1fr!important;gap:10px!important}.intro-copy{padding:18px 0 4px!important}.intro-art{padding:0 4px 8px}.intro-art img{width:min(82%,340px);max-height:42vh}}
