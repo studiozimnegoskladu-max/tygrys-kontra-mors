@@ -1040,7 +1040,7 @@
       const score=keepScore?soccer.score:[0,0];
       clearTimeout(soccerAiTimer);soccerAiTimer=null;soccerAiGeneration++;
       soccer={lines:new Set(),visits:new Map([['5,8',1]]),position:{c:5,r:8},turn:soccerVsMors?1:Math.random()<.5?0:1,started:true,over:false,score,history:[],topPlayer:Math.random()<.5?0:1};
-      soccerStatus.textContent='Start! Kliknij jedną z niebieskich kropek obok piłki.';
+      soccerStatus.textContent='RZUT MONETĄ! Górna bramka: '+soccerName(soccer.topPlayer)+'. Dolna bramka: '+soccerName(1-soccer.topPlayer)+'. Każdy atakuje bramkę przeciwnika!';
       soccerSay(keepScore?'reset':'start');
       soccerDraw();
       if(soccerVsMors&&soccer.turn===0)soccerScheduleAi();
@@ -1143,7 +1143,7 @@
       soccer.turn=Number(state.turn)||0;soccer.topPlayer=Number(state.top_player??0);soccer.started=state.started!==false;soccer.over=!!state.over;
       soccer.score=Array.isArray(state.score)?state.score.map(Number):[0,0];
       soccer.history=Array.isArray(state.history)?state.history:[];
-      soccerOnlineGuestJoined=!!data.guest_joined;soccerOnlineNote(soccerOnlineGuestJoined?'Przeciwnik dołączył. Mecz trwa!':'Pokój gotowy — czekamy na drugiego gracza…');
+      soccerOnlineGuestJoined=!!data.guest_joined;soccerOnlineNote(soccerOnlineGuestJoined?('Rzut monetą: górna bramka dla '+(soccer.topPlayer===0?'GRACZA 1':'GRACZA 2')+'. Mecz trwa!'):('Pokój gotowy — czekamy na drugiego gracza. Górna bramka: '+(soccer.topPlayer===0?'GRACZ 1':'GRACZ 2')+'.'));
       $('soccerPlayerOne').textContent='MORŚCISŁAW / GRACZ 1 · '+(soccer.topPlayer===0?'GÓRNA BRAMKA':'DOLNA BRAMKA');
       $('soccerPlayerTwo').textContent='HRABIA / GRACZ 2 · '+(soccer.topPlayer===1?'GÓRNA BRAMKA':'DOLNA BRAMKA');
       $('soccerUndo').disabled=true;
