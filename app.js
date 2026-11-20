@@ -1092,7 +1092,7 @@
       soccer.history.push({from,to:{...to},turn:soccer.turn,line});
       soccer.lines.add(line);soccer.position={...to};
       const goal=(to.r===0||to.r===soccerRows-1)&&to.c>=soccerGoals.min&&to.c<=soccerGoals.max;
-      if(goal){soccer.score[soccer.turn]++;soccer.over=true;soccerStatus.textContent='GOOOL! '+soccerName(soccer.turn)+' trafia do bramki! Morścisław żąda powtórki VAR z kałuży.';soccerSay('goal');soccerDraw();return}
+      if(goal){const goalOwner=to.r===0?soccer.topPlayer:1-soccer.topPlayer;const scorer=1-goalOwner;soccer.score[scorer]++;soccer.over=true;soccerStatus.textContent=(scorer===soccer.turn?'GOOOL! ':'GOL SAMOBÓJCZY! ')+soccerName(scorer)+' zdobywa punkt!';soccerSay('goal');soccerDraw();return}
       const sideLine=to.c===0||to.c===soccerCols-1;
       soccer.visits.set(to.c+','+to.r,prior+1);
       if(sideLine){
@@ -1144,8 +1144,8 @@
       soccer.score=Array.isArray(state.score)?state.score.map(Number):[0,0];
       soccer.history=Array.isArray(state.history)?state.history:[];
       soccerOnlineGuestJoined=!!data.guest_joined;soccerOnlineNote(soccerOnlineGuestJoined?'Przeciwnik dołączył. Mecz trwa!':'Pokój gotowy — czekamy na drugiego gracza…');
-      $('soccerPlayerOne').textContent='MORŚCISŁAW / GRACZ 1';
-      $('soccerPlayerTwo').textContent='HRABIA / GRACZ 2';
+      $('soccerPlayerOne').textContent='MORŚCISŁAW / GRACZ 1 · '+(soccer.topPlayer===0?'GÓRNA BRAMKA':'DOLNA BRAMKA');
+      $('soccerPlayerTwo').textContent='HRABIA / GRACZ 2 · '+(soccer.topPlayer===1?'GÓRNA BRAMKA':'DOLNA BRAMKA');
       $('soccerUndo').disabled=true;
       soccerDraw();
       if(!data.guest_joined&&!soccerOnlineRole)soccerTurn.textContent='OCZEKIWANIE NA PRZECIWNIKA…';
