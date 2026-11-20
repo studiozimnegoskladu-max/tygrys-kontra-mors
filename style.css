@@ -2826,3 +2826,39 @@ body.view-library.category-my-world #setup>.mors-zone-drawer{display:none!import
  .category-grid{grid-template-columns:1fr!important}
  .category-card,.category-card:nth-child(n){min-height:190px!important}
 }
+
+
+/* KATEGORIE — pokazuj tylko zawartość wybranego działu */
+body.view-library.category-games #setup>.daily-drawer,
+body.view-library.category-games #setup>.ranking-drawer,
+body.view-library.category-games #setup>.mors-journal-featured,
+body.view-library.category-games #setup>.collection-drawer{display:none!important}
+body.view-library.category-games #setup .mors-zone-drawer>.hangman-panel,
+body.view-library.category-games #setup .mors-zone-drawer>.hrabia-institute,
+body.view-library.category-games #setup .mors-zone-drawer>.quiz-panel{display:none!important}
+
+body.view-library.category-missions #setup>.panel-title,
+body.view-library.category-missions #setup>.character-picker,
+body.view-library.category-missions #setup>.side-choice,
+body.view-library.category-missions #setup>.setup-grid,
+body.view-library.category-missions #setup>.game-panel,
+body.view-library.category-missions #setup>.extra-modes,
+body.view-library.category-missions #setup>.profile-row{display:none!important}
+body.view-library.category-missions #setup .mors-zone-drawer>.hrabia-institute,
+body.view-library.category-missions #setup .mors-zone-drawer>.fortune-panel,
+body.view-library.category-missions #setup .mors-zone-drawer>.mini-arcade,
+body.view-library.category-missions #setup .mors-zone-drawer>.morscup-league-panel{display:none!important}
+
+body.view-library.category-chronicles #setup>:not(.mors-journal-featured):not(.mors-zone-drawer){display:none!important}
+body.view-library.category-chronicles #setup .mors-zone-drawer>.hangman-panel,
+body.view-library.category-chronicles #setup .mors-zone-drawer>.fortune-panel,
+body.view-library.category-chronicles #setup .mors-zone-drawer>.quiz-panel,
+body.view-library.category-chronicles #setup .mors-zone-drawer>.mini-arcade,
+body.view-library.category-chronicles #setup .mors-zone-drawer>.morscup-league-panel{display:none!important}
+
+body.view-library.category-my-world #setup>:not(.ranking-drawer):not(.collection-drawer){display:none!important}
+body.view-library.category-my-world #setup>.ranking-drawer,
+body.view-library.category-my-world #setup>.collection-drawer{display:block!important}
+body.view-library.category-my-world #setup .ranking-drawer .leaderboard-panel,
+body.view-library.category-my-world #setup .collection-drawer .sticker-panel,
+body.view-library.category-my-world #setup .collection-drawer .mors-club-panel{display:block!important}
