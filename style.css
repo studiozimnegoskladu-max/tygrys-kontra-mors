@@ -2747,3 +2747,19 @@ footer{font:400 16px Bangers,cursive;letter-spacing:1.5px;color:var(--ink)}
 .intro-art{display:flex;align-items:center;justify-content:center;min-width:0;padding:8px}
 .intro-art img{display:block;width:min(100%,480px);height:auto;max-height:70vh;object-fit:contain;filter:drop-shadow(5px 6px 0 rgba(33,31,32,.12))}
 @media(max-width:650px){.intro-content{grid-template-columns:1fr!important;gap:10px!important}.intro-copy{padding:18px 0 4px!important}.intro-art{padding:0 4px 8px}.intro-art img{width:min(82%,340px);max-height:42vh}}
+
+
+/* MORŚCISŁAW — losowana myśl w oryginalnej, pustej ramce */
+.intro-thought-frame{position:relative;width:min(100%,480px);padding:8px}
+.intro-thought-frame>img{display:block;width:100%;height:auto;max-height:none;object-fit:contain;filter:drop-shadow(5px 6px 0 rgba(33,31,32,.12))}
+.intro-thought{position:absolute;left:20.5%;top:22.2%;width:43.5%;height:34%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3px 5px;color:#171515;overflow:hidden;transform:rotate(-.5deg)}
+.intro-thought-label{font:400 clamp(8px,1vw,11px)/1 Bangers,cursive;letter-spacing:1.1px;color:#087d91;margin-bottom:7px}
+.intro-thought p{margin:0;font:400 clamp(15px,2.35vw,25px)/1.06 Bangers,cursive;letter-spacing:.25px;text-wrap:balance;overflow-wrap:anywhere}
+.intro-thought small{display:block;margin-top:7px;font:900 clamp(7px,.9vw,10px)/1 'Barlow Condensed',sans-serif;letter-spacing:1px}
+@media(max-width:650px){
+ .intro-thought-frame{width:min(82%,340px);padding:0 4px 8px}
+ .intro-thought{left:20.5%;top:22.2%;width:43.5%;height:34%;padding:2px 4px}
+ .intro-thought-label{font-size:8px;margin-bottom:4px;letter-spacing:.7px}
+ .intro-thought p{font-size:clamp(15px,4.5vw,20px);line-height:1.02}
+ .intro-thought small{font-size:7px;margin-top:4px}
+}
