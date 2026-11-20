@@ -1211,7 +1211,10 @@
       document.body.classList.add('soccer-fullscreen-open');startSoccerMusic();
       soccerPlay.classList.remove('hidden');$('soccerOnlineLobby').classList.add('hidden');
       $('soccerStart')?.classList.add('hidden');$('soccerTrain')?.classList.add('hidden');$('soccerTwoPlayers')?.classList.add('hidden');$('soccerOnlineStart')?.classList.add('hidden');
-      $('soccerExit').textContent='OPUŚĆ MECZ ↩';soccerDraw();
+      $('soccerExit').textContent='OPUŚĆ MECZ ↩';
+      const liveRoom=$('soccerLiveRoom');
+      if(liveRoom){liveRoom.classList.toggle('hidden',!soccerOnline);$('soccerLiveRoomCode').textContent=soccerOnlineRoom||'';}
+      soccerDraw();
     }
     async function soccerOnlineMove(to){
       if(soccerOnlineBusy||soccer.over||soccerOnlineRole!==soccer.turn)return;
@@ -1244,6 +1247,12 @@
     $('soccerJoinRoom')?.addEventListener('click',()=>soccerOnlineJoin($('soccerRoomInput').value));
     $('soccerRoomInput')?.addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));
     $('soccerRoomInput')?.addEventListener('keydown',e=>{if(e.key==='Enter')soccerOnlineJoin(e.target.value)});
+    $('soccerLiveCopy')?.addEventListener('click',async()=>{
+      if(!soccerOnlineRoom)return;
+      const url=location.origin+location.pathname+'?soccer='+soccerOnlineRoom;
+      try{await navigator.clipboard.writeText(url);soccerOnlineNote('Link skopiowany. Wyślij go przeciwnikowi!')}
+      catch{prompt('Skopiuj link do meczu:',url)}
+    });
     $('soccerCopyInvite')?.addEventListener('click',async()=>{
       const url=location.origin+location.pathname+'?soccer='+soccerOnlineRoom;
       try{await navigator.clipboard.writeText(url);soccerOnlineNote('Link skopiowany. Wyślij go przeciwnikowi!')}
