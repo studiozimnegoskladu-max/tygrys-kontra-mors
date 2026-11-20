@@ -110,9 +110,7 @@
     "Zamiast pytać „czy dam radę zawsze?”, zapytaj „co pomoże mi teraz?”. To pytanie ma znacznie lepszy charakter.",
     "Jeśli dziś udało ci się poprosić o pomoc, przyjmij ode mnie niewidzialny puchar. Jest wielki, żółty i trochę krzywo wydrukowany.",
     "Nie jesteś sam tylko dlatego, że akurat siedzisz sam. Zadzwoń do kogoś — nawet jeśli pierwsze zdanie będzie brzmiało: „no cześć, głupio mi”.",
-    "Niech nadzieja nie będzie batem, którym każesz sobie się uśmiechać. Niech będzie krzesłem, na którym możesz odpocząć.",
-    "Nie musisz dziś widzieć sensu we wszystkim. Wystarczy znaleźć jeden powód, żeby zrobić następny mały krok.",
-    "Po ciężkim dniu nie wystawiaj sobie oceny końcowej. Daj sobie koc, wodę i prawo do jutra."
+    "Niech nadzieja nie będzie batem, którym każesz sobie się uśmiechać. Niech będzie krzesłem, na którym możesz odpocząć."
   ];
   const morsThoughtText=$('morsThoughtText');
   if(morsThoughtText){
