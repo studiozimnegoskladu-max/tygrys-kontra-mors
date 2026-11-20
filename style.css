@@ -2899,3 +2899,7 @@ body.view-library.category-my-world #setup>.collection-drawer[open]{background:#
 body.view-library.category-my-world #setup .leaderboard-panel,
 body.view-library.category-my-world #setup .sticker-panel,
 body.view-library.category-my-world #setup .mors-club-panel{display:block!important}
+
+
+/* KATEGORIE — bez nagłówka pojedynku poza Strefą Gier */
+body.view-library:not(.category-games) .shell>.hero{display:none!important}
