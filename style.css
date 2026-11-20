@@ -2727,3 +2727,11 @@ footer{font:400 16px Bangers,cursive;letter-spacing:1.5px;color:var(--ink)}
  .extra-drawer>summary:after{right:9px;top:-9px;font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){.intro-mascot{animation:none!important}}
+
+
+/* 20.11.2026 — miejsce na nową, autorską grafikę powitalną */
+.intro-card:before{content:none!important;display:none!important}
+.intro-content{grid-template-columns:1fr!important;min-height:0!important}
+.intro-copy{max-width:760px;margin:0 auto;padding:28px 0!important}
+.intro-mascot-wrap{display:none!important}
+@media(max-width:650px){.intro-copy{padding:18px 0 8px!important}}
