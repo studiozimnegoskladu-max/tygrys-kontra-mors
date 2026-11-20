@@ -725,7 +725,7 @@
     // gdy panel konfiguracji (#setup) mógł pozostać ukryty.
     setup?.classList.remove('hidden');
     game?.classList.add('hidden');
-    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','soccer-fullscreen-open');
+    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','view-library','category-games','category-missions','category-chronicles','category-my-world','soccer-fullscreen-open');
     document.body.classList.add('view-'+which);
     // Muzyka Mors Cup ma grać od wejścia do sekcji, nie dopiero po uruchomieniu meczu.
     const cupTrack=$('morsCupMusic'),mainTrack=$('backgroundMusic');
