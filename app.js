@@ -619,6 +619,11 @@
     // Muzyka Mors Cup ma grać od wejścia do sekcji, nie dopiero po uruchomieniu meczu.
     const cupTrack=$('morsCupMusic'),mainTrack=$('backgroundMusic');
     if(which==='soccer'){
+      // Po wejściu z menu atrakcji pokaż najpierw wybór trybu meczu.
+      $('soccerPlay')?.classList.add('hidden');
+      $('soccerStart')?.classList.remove('hidden');
+      $('soccerOnlineLobby')?.classList.add('hidden');
+      $('soccerRoomCreated')?.classList.add('hidden');
       soccerMusicActive=true;
       if(mainTrack)mainTrack.pause();
       if(cupTrack){cupTrack.volume=.55;cupTrack.loop=true;if(musicOn)cupTrack.play().catch(err=>console.warn('Nie udało się uruchomić muzyki Morścisław Cup:',err));}
