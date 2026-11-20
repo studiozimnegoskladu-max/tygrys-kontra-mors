@@ -2903,3 +2903,33 @@ body.view-library.category-my-world #setup .mors-club-panel{display:block!import
 
 /* KATEGORIE — bez nagłówka pojedynku poza Strefą Gier */
 body.view-library:not(.category-games) .shell>.hero{display:none!important}
+
+
+/* Oryginalne ilustracje przypisane do pięciu działów */
+.category-card .category-icon{
+  width:100%!important;
+  max-width:230px;
+  height:142px!important;
+  min-height:142px;
+  align-self:center!important;
+  display:grid!important;
+  place-items:center;
+  padding:5px;
+  margin:0 auto 8px!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+.category-card .category-icon img{
+  display:block;
+  width:100%;
+  height:100%;
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  filter:drop-shadow(3px 4px 0 rgba(23,21,21,.12));
+}
+@media(max-width:600px){
+  .category-card .category-icon{height:118px!important;min-height:118px}
+}
