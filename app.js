@@ -716,8 +716,7 @@
     if(cup){cup.pause();cup.currentTime=0;}
     if(typeof soccerMusicActive!=='undefined'&&soccerMusicActive){soccerMusicActive=false;if(musicOn&&background)startBackgroundMusic();}
     $('soccerPlay')?.classList.add('hidden');
-    $('mors-zone-drawer')?.removeAttribute('open');
-    document.querySelector('.mors-zone-drawer')?.removeAttribute('open');
+    ['.mors-zone-drawer','.daily-drawer','.ranking-drawer','.collection-drawer'].forEach(selector=>document.querySelector(selector)?.removeAttribute('open'));
     window.scrollTo({top:0,behavior:'smooth'});
   }
   function openAttraction(which){
@@ -757,7 +756,7 @@
   function openLibraryCategory(category){
     setup?.classList.remove('hidden');
     game?.classList.add('hidden');
-    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','soccer-fullscreen-open');
+    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','view-library','category-games','category-missions','category-chronicles','category-my-world','soccer-fullscreen-open');
     document.body.classList.add('view-library','category-'+category);
     const zone=document.querySelector('.mors-zone-drawer');
     const daily=document.querySelector('.daily-drawer');
