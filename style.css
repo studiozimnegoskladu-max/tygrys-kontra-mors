@@ -2868,3 +2868,34 @@ body.view-library.category-my-world #setup .collection-drawer .mors-club-panel{d
 body.view-library:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone) .shell>.hero,
 body.view-library:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone) .shell>#setup{display:block!important}
 body.view-library .shell>.soccer-hero{display:none!important}
+
+
+/* MÓJ ŚWIAT — profil, ranking i kolekcja w jednym miejscu */
+body.view-library.category-my-world #setup>.profile-row{
+  display:flex!important;
+  align-items:center;
+  flex-wrap:wrap;
+  margin:12px 0 16px;
+  padding:16px;
+  border:3px solid var(--ink);
+  border-radius:12px;
+  background:#fff;
+  box-shadow:4px 4px 0 var(--ink);
+}
+body.view-library.category-my-world #setup>.profile-row:before{
+  content:"👤 TWÓJ PROFIL GRACZA";
+  display:block;
+  flex-basis:100%;
+  font:900 20px 'Barlow Condensed',sans-serif;
+  margin-bottom:8px;
+}
+body.view-library.category-my-world #setup>:not(.profile-row):not(.ranking-drawer):not(.collection-drawer){display:none!important}
+body.view-library.category-my-world #setup>.profile-row label{font-weight:900}
+body.view-library.category-my-world #setup>.profile-row input{min-width:100px}
+body.view-library.category-my-world #setup>.ranking-drawer,
+body.view-library.category-my-world #setup>.collection-drawer{display:block!important}
+body.view-library.category-my-world #setup>.ranking-drawer[open],
+body.view-library.category-my-world #setup>.collection-drawer[open]{background:#fff}
+body.view-library.category-my-world #setup .leaderboard-panel,
+body.view-library.category-my-world #setup .sticker-panel,
+body.view-library.category-my-world #setup .mors-club-panel{display:block!important}
