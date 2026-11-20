@@ -996,7 +996,7 @@
     let soccerVsMors=false,soccerAiTimer=null,soccerAiGeneration=0;
     const soccerRows=17,soccerCols=11,soccerX=c=>10+c*16,soccerY=r=>8+r*16;
     const soccerGoals={min:4,max:6};
-    let soccer={lines:new Set(),visits:new Map(),position:{c:5,r:8},turn:0,started:false,over:false,score:[0,0],history:[]};
+    let soccer={lines:new Set(),visits:new Map(),position:{c:5,r:8},turn:0,started:false,over:false,score:[0,0],history:[],topPlayer:0};
     const soccerNames=['MORŚCISŁAW','HRABIA'];
     const soccerName=i=>i===0?'MORŚCISŁAW':(soccerVsMors?'TY':'HRABIA');
     const soccerCommentEl=$('soccerComment');
@@ -1030,7 +1030,7 @@
       const gridLines=[];for(let c=0;c<soccerCols;c++){const x=soccerX(c);gridLines.push('M'+x+' 8V264')}for(let r=0;r<soccerRows;r++){const y=soccerY(r);gridLines.push('M10 '+y+'H170')}
       soccerBoard.innerHTML='<rect class="paper-sheet" x="0" y="0" width="180" height="280"/><path class="paper-grid" d="'+gridLines.join(' ')+'"/><rect class="goal-zone" x="74" y="0" width="32" height="8"/><rect class="goal-zone bottom" x="74" y="264" width="32" height="16"/><path class="field-line" d="M10 8H74 M106 8H170 M10 264H74 M106 264H170 M10 8V264H170V8 M10 136H170 M42 8V40H138V8 M42 264V232H138V264"/>'+lineMarkup+dots.join('')+'<circle class="ball" cx="'+soccerX(p.c)+'" cy="'+soccerY(p.r)+'" r="5.5"/>';
       $('soccerScoreOne').textContent=soccer.score[0];$('soccerScoreTwo').textContent=soccer.score[1];
-      $('soccerPlayerOne').textContent=soccerNames[0];$('soccerPlayerTwo').textContent=soccerVsMors?'TY':'HRABIA';
+      $('soccerPlayerOne').textContent=soccerNames[0]+' · '+(soccer.topPlayer===0?'GÓRNA BRAMKA':'DOLNA BRAMKA');$('soccerPlayerTwo').textContent=(soccerVsMors?'TY':'HRABIA')+' · '+(soccer.topPlayer===1?'GÓRNA BRAMKA':'DOLNA BRAMKA');
       soccerTurn.textContent=soccer.over?'KONIEC MECZU':soccer.started?'RUCH: '+soccerName(soccer.turn):'GOTOWI? ZACZYNAMY!';
       // AI is scheduled from the rendered live state, so no turn change can leave the match waiting.
       if(soccerVsMors&&soccer.started&&!soccer.over&&soccer.turn===0&&soccerAiTimer===null)soccerScheduleAi();
@@ -1039,7 +1039,7 @@
       if(soccerOnline){soccerOnlineReset();return}
       const score=keepScore?soccer.score:[0,0];
       clearTimeout(soccerAiTimer);soccerAiTimer=null;soccerAiGeneration++;
-      soccer={lines:new Set(),visits:new Map([['5,8',1]]),position:{c:5,r:8},turn:soccerVsMors?1:Math.random()<.5?0:1,started:true,over:false,score,history:[]};
+      soccer={lines:new Set(),visits:new Map([['5,8',1]]),position:{c:5,r:8},turn:soccerVsMors?1:Math.random()<.5?0:1,started:true,over:false,score,history:[],topPlayer:Math.random()<.5?0:1};
       soccerStatus.textContent='Start! Kliknij jedną z niebieskich kropek obok piłki.';
       soccerSay(keepScore?'reset':'start');
       soccerDraw();
@@ -1068,7 +1068,7 @@
           return;
         }
         const ranked=moves.map(m=>{
-          const goal=(m.r===0||m.r===soccerRows-1)&&m.c>=soccerGoals.min&&m.c<=soccerGoals.max;
+          const goal=(m.r===0||m.r===soccerRows-1)&&m.c>=soccerGoals.min&&m.c<=soccerGoals.max&&(m.r===0?soccer.topPlayer:1-soccer.topPlayer)!==0;
           const next=soccerNeighbors(m).filter(n=>!soccer.lines.has(soccerKey(m,n))&&!(n.c===soccer.position.c&&n.r===soccer.position.r)).length;
           const progress=soccer.position.r-m.r;
           const center=3-Math.abs(5-m.c);
@@ -1140,7 +1140,7 @@
       soccer.lines=new Set(state.lines||[]);
       soccer.visits=new Map(Object.entries(state.visits||{}).map(([k,v])=>[k,Number(v)]));
       soccer.position={c:Number(state.position.c),r:Number(state.position.r)};
-      soccer.turn=Number(state.turn)||0;soccer.started=state.started!==false;soccer.over=!!state.over;
+      soccer.turn=Number(state.turn)||0;soccer.topPlayer=Number(state.top_player??0);soccer.started=state.started!==false;soccer.over=!!state.over;
       soccer.score=Array.isArray(state.score)?state.score.map(Number):[0,0];
       soccer.history=Array.isArray(state.history)?state.history:[];
       soccerOnlineGuestJoined=!!data.guest_joined;soccerOnlineNote(soccerOnlineGuestJoined?'Przeciwnik dołączył. Mecz trwa!':'Pokój gotowy — czekamy na drugiego gracza…');
