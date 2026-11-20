@@ -42,7 +42,7 @@ body:before{content:"";position:fixed;z-index:-1;pointer-events:none;width:42vw;
 .achievement-notice{font:900 11px 'Barlow Condensed';color:#b3245e;text-align:center;margin:8px 0 0;min-height:12px}
 @media(max-width:400px){.achievement-grid{grid-template-columns:1fr}}
 
-.leaderboard-panel{margin-top:17px;border:2px solid var(--ink);border-radius:13px;padding:14px;background:#fff9df}
+.leaderboard-panel{margin-top:17px;border:2px solid var(--ink);border-radius:13px;padding:14px;background:#ffffff}
 .leaderboard-title{display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:'Barlow Condensed'}
 .leaderboard-title b,.leaderboard-title small{display:block}.leaderboard-title b{font-size:19px;font-weight:900}.leaderboard-title small{font:700 10px Nunito;color:#666}.leaderboard-title .btn{padding:8px 10px;font-size:10px}
 .rank-list{display:grid;gap:6px;margin-top:11px}
@@ -787,7 +787,7 @@ footer{font-weight:900;letter-spacing:.8px;text-shadow:1px 1px 0 var(--szs-paper
 .extra-drawer[open]>summary .drawer-arrow{transform:rotate(45deg)}
 .extra-drawer[open]>summary{border-bottom:1px dashed rgba(23,21,21,.25)}
 .extra-drawer>.leaderboard-panel,.extra-drawer>.daily-panel,.extra-drawer>.mors-journal-panel,.extra-drawer>.hrabia-institute,.extra-drawer>.fortune-panel,.extra-drawer>.sticker-panel,.extra-drawer>.mors-club-panel,.extra-drawer>.quiz-panel,.extra-drawer>.mini-arcade{margin:14px;padding:16px}
-.daily-drawer,.ranking-drawer{background:#fff9df}
+.daily-drawer,.ranking-drawer{background:#ffffff}
 .mors-zone-drawer{background:#fff4dc}
 .collection-drawer{margin:14px;background:#eff8ff;box-shadow:none}
 .collection-drawer>summary{padding:11px 13px}
@@ -2345,7 +2345,7 @@ body.view-soccer .soccer-hero-combo .soccer-cup-full{
    ========================================================= */
 :root{
   --yellow:#ffe600;--ink:#171515;--pink:#ec008c;--blue:#00aeef;
-  --cyan:#00aeef;--magenta:#ec008c;--paper:#fff9df;
+  --cyan:#00aeef;--magenta:#ec008c;--paper:#ffffff;
 }
 html,body{background:#ffe600!important}
 body{
@@ -2373,7 +2373,7 @@ body:after{
 body>*{position:relative;z-index:1}
 .topbar{
   max-width:1180px;margin:14px auto 10px;padding:13px 18px;
-  background:#fff9df;border:4px solid var(--ink);
+  background:#ffffff;border:4px solid var(--ink);
   border-radius:4px 18px 5px 14px;box-shadow:7px 7px 0 var(--ink);
   transform:rotate(-.35deg);
 }
@@ -2394,7 +2394,7 @@ body>*{position:relative;z-index:1}
 .attractions-menu{position:relative;padding:clamp(20px,4vw,42px) 0 30px}
 .attractions-menu:before{
   content:"";position:absolute;z-index:-1;inset:10px -8px 20px;
-  background:#fff9df;border:4px solid var(--ink);
+  background:#ffffff;border:4px solid var(--ink);
   box-shadow:10px 10px 0 var(--ink);
   clip-path:polygon(1% 0,99% 1%,100% 98%,2% 100%,0 55%);
 }
@@ -2481,7 +2481,7 @@ body>*{position:relative;z-index:1}
 }
 .hero{
   position:relative;margin:24px 0 26px;padding:clamp(24px,4vw,48px);
-  background:#fff9df;border:4px solid var(--ink);border-radius:3px 18px 5px 14px;
+  background:#ffffff;border:4px solid var(--ink);border-radius:3px 18px 5px 14px;
   box-shadow:9px 9px 0 var(--ink);overflow:hidden;
 }
 .hero:before{
@@ -2500,7 +2500,7 @@ body>*{position:relative;z-index:1}
 .mors-fighter{transform:rotate(1deg)}
 .vs{background:var(--magenta);border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);color:#fff}
 .panel,.setup-panel,.game-panel{
-  background:#fff9df!important;border:4px solid var(--ink)!important;
+  background:#ffffff!important;border:4px solid var(--ink)!important;
   border-radius:4px 18px 5px 14px!important;
   box-shadow:8px 8px 0 var(--ink)!important;
 }
@@ -2550,11 +2550,11 @@ footer{font:400 16px Bangers,cursive;letter-spacing:1.5px;color:var(--ink)}
   border:3px solid var(--ink)!important;border-radius:3px!important;
   background:#fff!important;box-shadow:4px 4px 0 var(--ink)!important;
 }
-.cell:nth-child(3n+2){background:#fff9df!important}
+.cell:nth-child(3n+2){background:#ffffff!important}
 .cell.winning{background:var(--yellow)!important;outline:3px solid var(--ink)!important}
 .soccer-hero{
   border:4px solid var(--ink)!important;border-radius:4px 16px!important;
-  box-shadow:8px 8px 0 var(--ink)!important;background:#fff9df!important;
+  box-shadow:8px 8px 0 var(--ink)!important;background:#ffffff!important;
   padding:10px;
 }
 @media(max-width:760px){
@@ -2593,7 +2593,7 @@ footer{font:400 16px Bangers,cursive;letter-spacing:1.5px;color:var(--ink)}
 }
 .intro-card{
   border:5px solid var(--ink)!important;border-radius:3px 22px 4px 18px!important;
-  background:#fff9df!important;box-shadow:14px 14px 0 var(--ink)!important;
+  background:#ffffff!important;box-shadow:14px 14px 0 var(--ink)!important;
   transform:rotate(-.35deg);isolation:isolate;
 }
 .intro-card:before{
