@@ -69,8 +69,8 @@
   $('hangmanNew')?.addEventListener('click',()=>newRound(false));
   $('hangmanShare')?.addEventListener('click',async()=>{
     const won=finished&&[...answer].every(ch=>ch===' '||used.has(ch));
-    const text='URZĄD OSTATECZNEJ LITERY · '+(won?'HASŁO ODGADNIĘTE!':'MOJA RUNDA')+'\nAwarie: '+mistakes+'/7 · Rozwiązane hasła: '+solved+'\nWszystko jest pod kontrolą. Oprócz tego, co nie jest.\nZagraj w Kółko, Krzyżyk i Dwa Promile Absurdu: https://studiozimnegoskladu-max.github.io/tygrys-kontra-mors/';
-    try{if(navigator.share)await navigator.share({title:'Urząd Ostatecznej Litery',text});else{await navigator.clipboard.writeText(text);$('hangmanFeedback').textContent='Wynik skopiowany. Roznoś absurd po świecie!';}}catch(e){if(e.name!=='AbortError')$('hangmanFeedback').textContent='Nie udało się udostępnić wyniku. Urząd przyjmuje skargi w środy.';}
+    const text='MORŚCaIELEC · URZĄD ZAMARZNIĘTEJ LITERY · '+(won?'HASŁO ODGADNIĘTE!':'MOJA RUNDA')+'\nAwarie: '+mistakes+'/7 · Rozwiązane hasła: '+solved+'\nWszystko jest pod kontrolą. Oprócz tego, co nie jest.\nZagraj w Kółko, Krzyżyk i Dwa Promile Absurdu: https://studiozimnegoskladu-max.github.io/tygrys-kontra-mors/';
+    try{if(navigator.share)await navigator.share({title:'MORŚCaIELEC — Urząd Zamarzniętej Litery',text});else{await navigator.clipboard.writeText(text);$('hangmanFeedback').textContent='Wynik skopiowany. Roznoś absurd po świecie!';}}catch(e){if(e.name!=='AbortError')$('hangmanFeedback').textContent='Nie udało się udostępnić wyniku. Urząd przyjmuje skargi w środy.';}
   });
   document.addEventListener('keydown',e=>{if(!document.getElementById('hangmanPanel')?.getClientRects().length)return;const key=e.key.toLocaleUpperCase('pl-PL');if(letters.includes(key))guess(key)});
   newRound(true);
