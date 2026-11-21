@@ -7,7 +7,7 @@
     removeItem(key){memory.delete(key);try{nativeStore?.removeItem(key)}catch{}}
   }})();
   // Ekran powitalny zamyka się niezależnie od późniejszych modułów.
-  $('introEnterBtn')?.addEventListener('click',()=>{$('introScreen')?.classList.add('intro-dismissed')},{once:true});
+  $('introEnterBtn')?.addEventListener('click',()=>{$('introScreen')?.classList.add('intro-dismissed');showAttractionsHome();window.scrollTo({top:0,behavior:'auto'});},{once:true});
 
   // Losowa myśl Morścisława — życiowa mądrość z ciepłym, morsowym absurdem.
   const morsThoughts=[
