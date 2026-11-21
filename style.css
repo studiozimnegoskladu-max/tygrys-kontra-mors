@@ -2823,3 +2823,79 @@ body.view-hangman .shell #setup #hangmanPanel .hangman-game{display:block!import
 .hangman-reward-ok{margin-top:6px}
 @keyframes hangmanRewardIn{from{opacity:0}to{opacity:1}}
 @media(max-width:600px){.hangman-reward-card{padding:22px 12px 14px}.hangman-reward-card img{max-height:55vh}}
+
+
+/* MOBILE FIX — fighter names must never collide with the VS badge */
+@media (max-width:650px){
+  .fighters{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:6px!important;
+    width:100%!important;
+    max-width:100%!important;
+    overflow:visible!important;
+  }
+  .fighter{
+    min-width:0!important;
+    width:100%!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:4px!important;
+    text-align:center!important;
+    overflow:visible!important;
+  }
+  .fighter img,
+  .mors-fighter img{
+    display:block!important;
+    flex:0 0 58px!important;
+    width:58px!important;
+    height:58px!important;
+    max-width:100%!important;
+    object-fit:contain!important;
+  }
+  .fighter>div{
+    display:block!important;
+    flex:0 0 auto!important;
+    width:100%!important;
+    min-width:0!important;
+    text-align:center!important;
+  }
+  .fighter b{
+    display:block!important;
+    width:100%!important;
+    font-size:clamp(12px,3.4vw,15px)!important;
+    line-height:1.05!important;
+    letter-spacing:0!important;
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+    word-break:normal!important;
+    text-align:center!important;
+  }
+  .fighter small{
+    display:block!important;
+    margin-top:3px!important;
+    font-size:10px!important;
+    line-height:1.1!important;
+  }
+  .vs{
+    position:relative!important;
+    z-index:1!important;
+    justify-self:center!important;
+    flex:none!important;
+    width:30px!important;
+    height:30px!important;
+    min-width:30px!important;
+    font-size:19px!important;
+    line-height:24px!important;
+    margin:0!important;
+  }
+}
+@media(max-width:390px){
+  .fighters{grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr)!important;gap:4px!important}
+  .fighter img,.mors-fighter img{flex-basis:52px!important;width:52px!important;height:52px!important}
+  .fighter b{font-size:12px!important}
+  .vs{width:27px!important;height:27px!important;min-width:27px!important;font-size:17px!important;line-height:21px!important}
+}
