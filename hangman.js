@@ -59,7 +59,7 @@
     overlay.setAttribute('role','dialog');
     overlay.setAttribute('aria-modal','true');
     overlay.setAttribute('aria-label','Nagroda za odgadnięcie hasła Łukasz');
-    overlay.innerHTML='<div class="hangman-reward-card"><button type="button" class="hangman-reward-close" aria-label="Zamknij nagrodę">×</button><p class="hangman-reward-kicker">HASŁO ODGADNIĘTE!</p><h2>NO I PIĘKNIE! 🎉</h2><p>Morścisław przyznaje Ci specjalną nagrodę!</p><img src="assets/mor%C5%9Bcieeelec%201.png" alt="Specjalna grafika nagrodowa MORŚCIELEC 1"><button type="button" class="btn btn-yellow hangman-reward-ok">ODBieram NAGRODĘ!</button></div>';
+    overlay.innerHTML='<div class="hangman-reward-card"><button type="button" class="hangman-reward-close" aria-label="Zamknij nagrodę">×</button><p class="hangman-reward-kicker">HASŁO ODGADNIĘTE!</p><h2>NO I PIĘKNIE! 🎉</h2><p>Morścisław przyznaje Ci specjalną nagrodę!</p><img src="assets/mor%C5%9Bcieeelec%201.png" alt="Specjalna grafika nagrodowa MORŚCIELEC 1"><button type="button" class="btn btn-yellow hangman-reward-ok">ODBIERAM NAGRODĘ!</button></div>';
     document.body.appendChild(overlay);
     const close=()=>overlay.remove();
     overlay.querySelector('.hangman-reward-close')?.addEventListener('click',close);
