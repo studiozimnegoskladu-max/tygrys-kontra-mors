@@ -3040,3 +3040,11 @@ body.view-hangman #setup > #hangmanPanel{display:block!important;visibility:visi
 body.view-hangman #setup > :not(#hangmanPanel){display:none!important}
 body.view-hangman #setup > #hangmanPanel .hangman-heading,
 body.view-hangman #setup > #hangmanPanel .hangman-intro{display:flex!important}
+
+
+/* MORŚCIELEC — nowa pełna ilustracja planszy, zachowujemy responsywność */
+body.view-hangman .hangman-chaos{display:flex!important;justify-content:center!important;align-items:center!important;min-height:0!important;padding:clamp(8px,2vw,18px)!important;background:#f2f0e9!important;}
+body.view-hangman .hangman-scene{width:min(100%,760px)!important;height:auto!important;aspect-ratio:2048 / 1342!important;overflow:hidden!important;background:transparent!important;border:0!important;border-radius:0!important;}
+body.view-hangman .hangman-scene .hangman-walrus{position:relative!important;display:block!important;inset:auto!important;width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important;object-position:center!important;clip-path:none!important;filter:none!important;}
+body.view-hangman .hangman-scene-caption{display:none!important;}
+@media(max-width:520px){body.view-hangman .hangman-chaos{padding:4px!important}body.view-hangman .hangman-scene{width:100%!important}}
