@@ -769,7 +769,16 @@
     if(which==='mors-zone')$('hrabiaInstituteHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
     if(which==='hangman'){
       const panel=$('hangmanPanel');
-      panel?.scrollIntoView({behavior:'auto',block:'start'});
+      if(panel){
+        panel.classList.remove('hidden');
+        panel.removeAttribute('hidden');
+        panel.style.setProperty('display','block','important');
+        panel.style.setProperty('visibility','visible','important');
+        panel.style.setProperty('opacity','1','important');
+      }
+      setup?.classList.remove('hidden');
+      setup?.classList.remove('playing');
+      requestAnimationFrame(()=>panel?.scrollIntoView({behavior:'auto',block:'start'}));
     }
   }
   $('openTicTacToe')?.addEventListener('click',()=>openAttraction('tictactoe'));
