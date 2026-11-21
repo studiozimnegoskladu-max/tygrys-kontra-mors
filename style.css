@@ -3019,3 +3019,12 @@ body.view-tictactoe .shell>.hero .vs{
 /* Nowa plansza Morścisława — grafika zastępuje dotychczasowy nagłówek pojedynku */
 .hero-art-replacement{padding:16px 0 26px;text-align:center}
 .hero-replacement-art{display:block;width:100%;height:auto;max-width:1200px;margin:0 auto}
+
+
+/* Korekta skali planszy Morścisława — proporcje desktop/mobile */
+.hero-art-replacement{padding:12px 0 20px}
+.hero-replacement-art{width:50%;max-width:620px;height:auto;margin:0 auto}
+@media(max-width:650px){
+  .hero-art-replacement{padding:8px 0 16px}
+  .hero-replacement-art{width:86%;max-width:420px}
+}
