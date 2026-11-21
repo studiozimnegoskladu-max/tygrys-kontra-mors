@@ -2756,3 +2756,10 @@ body:before{
 .hrabia-answers{display:grid;grid-template-columns:1fr;gap:8px}.hrabia-answers .btn{width:100%;white-space:normal;text-align:left;justify-content:flex-start;line-height:1.3;padding:12px}.hrabia-reaction{margin-top:12px;padding:12px;background:#e8faff;border:2px dashed #171515;border-radius:7px;font-size:13px;font-weight:850;min-height:48px}
 .hrabia-survival-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;font-size:13px}.hrabia-survival-footer .btn{white-space:normal}
 @media(min-width:620px){.hrabia-answers{grid-template-columns:repeat(3,minmax(0,1fr))}.hrabia-answers .btn{min-height:100px}}
+
+
+.hrabia-game-meter{margin-top:14px;padding:12px;background:#fff4bd;border:2px solid #171515;border-radius:7px}
+.hrabia-game-meter-top{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11px;font-weight:1000}
+.hrabia-game-meter-top strong{font-size:12px}
+.hrabia-game-meter .hrabia-meter-track{margin:8px 0}
+.hrabia-game-meter p{margin:0;font-size:12px;font-weight:800}
