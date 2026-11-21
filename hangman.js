@@ -69,12 +69,27 @@
     overlay.querySelector('.hangman-reward-ok')?.addEventListener('click',close);
     overlay.addEventListener('click',event=>{if(event.target===overlay)close()});
   }
+  function showLossReward(){
+    if(document.getElementById('hangmanSpecialReward'))return;
+    const overlay=document.createElement('div');
+    overlay.id='hangmanSpecialReward';
+    overlay.className='hangman-reward-overlay';
+    overlay.setAttribute('role','dialog');
+    overlay.setAttribute('aria-modal','true');
+    overlay.setAttribute('aria-label','Grafika po przegranej rundzie');
+    overlay.innerHTML='<div class="hangman-reward-card"><button type="button" class="hangman-reward-close" aria-label="Zamknij grafikę">×</button><p class="hangman-reward-kicker">URZĄD ULEGŁ AWARII!</p><h2>NO I KTO TU TERAZ WYMĄDRZA?</h2><p>Morścisław ma dla Ciebie bardzo wymowną odpowiedź.</p><img src="assets/mors-przegrana.png" alt="Morścisław wykonuje gest Kozakiewicza"><button type="button" class="btn btn-yellow hangman-reward-ok">ZAMYKAM, JUŻ WIEM!</button></div>';
+    document.body.appendChild(overlay);
+    const close=()=>overlay.remove();
+    overlay.querySelector('.hangman-reward-close')?.addEventListener('click',close);
+    overlay.querySelector('.hangman-reward-ok')?.addEventListener('click',close);
+    overlay.addEventListener('click',event=>{if(event.target===overlay)close()});
+  }
   function guess(letter){
     if(finished||used.has(letter))return;
     used.add(letter);
     if(!answer.includes(letter)){
       mistakes++;$('hangmanFeedback').textContent=pick(remarks.bad);
-      if(mistakes>=7){finished=true;$('hangmanFeedback').textContent=pick(remarks.lose)+' Hasło: '+answer+'.';setComment('Mówiłem, żeby nie dotykać formularza. Teraz mamy formularz do formularza.');}
+      if(mistakes>=7){finished=true;$('hangmanFeedback').textContent=pick(remarks.lose)+' Hasło: '+answer+'.';setComment('Mówiłem, żeby nie dotykać formularza. Teraz mamy formularz do formularza.');showLossReward();}
     }else{
       $('hangmanFeedback').textContent=pick(remarks.good);
       if([...answer].every(ch=>ch===' '||used.has(ch))){
