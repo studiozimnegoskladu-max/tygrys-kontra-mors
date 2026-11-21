@@ -2770,3 +2770,18 @@ body:before{
 .intro-thought p{flex:1 1 auto;min-height:0;max-height:100%;overflow:hidden;display:flex;align-items:center;justify-content:center;line-height:1.02;overflow-wrap:anywhere;word-break:normal;text-wrap:pretty}
 .intro-thought-label,.intro-thought small{flex:0 0 auto}
 @media(max-width:650px){.intro-thought{height:36%!important}.intro-thought p{line-height:1!important}}
+
+
+/* MORŚCIELec — samodzielna atrakcja główna, poza pozostałymi modułami Strefy Morścisława */
+body:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone):not(.view-hangman) .shell>.hero,
+body:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone):not(.view-hangman) .shell>#setup{display:none!important}
+body.view-hangman .attractions-menu{display:none!important}
+body.view-hangman .attractions-back{display:block}
+body.view-hangman .shell>.hero,
+body.view-hangman .shell>#setup{display:block!important}
+body.view-hangman #setup>:not(.mors-zone-drawer){display:none!important}
+body.view-hangman #setup .mors-zone-drawer{display:block!important}
+body.view-hangman #setup .mors-zone-drawer>summary{display:none!important}
+body.view-hangman #setup .mors-zone-drawer>:not(summary):not(.hangman-panel){display:none!important}
+body.view-hangman #setup .mors-zone-drawer>.hangman-panel{display:block!important}
+body.view-hangman #setup .mors-zone-drawer:not([open])>*:not(summary){display:block!important}
