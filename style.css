@@ -2403,7 +2403,7 @@ body>*{position:relative;z-index:1}
 }
 .attraction-card:nth-child(1){transform:rotate(-1.4deg);background:#fff8d2!important}
 .attraction-card:nth-child(2){transform:rotate(1.1deg);background:#eafaff!important}
-.attraction-card:nth-child(3){transform:rotate(-.7deg);background:#fff0f7!important}
+.attraction-card:nth-child(3){transform:rotate(-.7deg);background:#fff!important}
 .attraction-card:nth-child(4){grid-column:2/span 2;transform:rotate(1.2deg);background:#f1f9ff!important}
 .attraction-card:nth-child(5){grid-column:4/span 2;transform:rotate(-1.1deg);background:#fff8d2!important}
 .attraction-card:before{
@@ -2646,7 +2646,7 @@ footer{font:400 16px Bangers,cursive;letter-spacing:1.5px;color:var(--ink)}
 }
 .attraction-card:nth-child(1):before{background-image:radial-gradient(#171515 .9px,transparent 1px);background-size:6px 6px}
 .attraction-card:nth-child(2):before{background-image:repeating-linear-gradient(135deg,transparent 0 8px,rgba(0,174,239,.16) 8px 10px)}
-.attraction-card:nth-child(3):before{background-image:radial-gradient(#ec008c .9px,transparent 1px);background-size:7px 7px}
+.attraction-card:nth-child(3):before{background-image:radial-gradient(#171515 .9px,transparent 1px);background-size:6px 6px}
 .attraction-card:nth-child(4):before{background-image:repeating-linear-gradient(45deg,transparent 0 9px,rgba(0,174,239,.13) 9px 11px)}
 .attraction-card:nth-child(5):before{background-image:radial-gradient(#171515 .8px,transparent 1px);background-size:8px 8px}
 .panel-title .scribble{font:400 25px Bangers,cursive!important;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);border-radius:2px;transform:rotate(-7deg)}
