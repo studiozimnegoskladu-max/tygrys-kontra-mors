@@ -3014,3 +3014,8 @@ body.view-tictactoe .shell>.hero .vs{
     width:38px!important;height:38px!important;font-size:16px!important;
   }
 }
+
+
+/* Nowa plansza Morścisława — grafika zastępuje dotychczasowy nagłówek pojedynku */
+.hero-art-replacement{padding:16px 0 26px;text-align:center}
+.hero-replacement-art{display:block;width:100%;height:auto;max-width:1200px;margin:0 auto}
