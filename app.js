@@ -767,7 +767,10 @@
     if(which==='soccer')document.querySelector('.soccer-game')?.scrollIntoView({behavior:'smooth',block:'start'});
     if(which==='fortune')$('fortuneHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
     if(which==='mors-zone')$('hrabiaInstituteHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
-    if(which==='hangman')$('hangmanHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
+    if(which==='hangman'){
+      const panel=$('hangmanPanel');
+      panel?.scrollIntoView({behavior:'auto',block:'start'});
+    }
   }
   $('openTicTacToe')?.addEventListener('click',()=>openAttraction('tictactoe'));
   $('openSoccer')?.addEventListener('click',()=>openAttraction('soccer'));
