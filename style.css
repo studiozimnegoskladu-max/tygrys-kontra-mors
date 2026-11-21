@@ -2424,8 +2424,8 @@ body>*{position:relative;z-index:1}
   clip-path:polygon(3% 0,97% 2%,100% 94%,4% 100%,0 8%);
 }
 .attraction-card:nth-child(2) .attraction-art{background:var(--cyan)}
-.attraction-card:nth-child(3) .attraction-art{background:#fff!important}
-.attraction-card:nth-child(4) .attraction-art{background:#fff}
+.attraction-card:nth-child(3) .attraction-art{background:var(--magenta)!important}
+.attraction-card:nth-child(4) .attraction-art{background:#fff!important}
 .attraction-card:nth-child(5) .attraction-art{background:#ffcf00}
 .attraction-mascot{max-height:165px!important;filter:drop-shadow(3px 4px 0 rgba(0,0,0,.25))!important}
 .attraction-card>b{
