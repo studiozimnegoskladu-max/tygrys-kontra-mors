@@ -242,6 +242,15 @@
             <small>BIURO KOREKT</small><h3>✏️ Generator uwag Hrabiego</h3><p id="hrabiaCorrectionText" aria-live="polite">„Jest dobrze, ale proszę zrobić bardziej tak, jak sobie wyobrażam”.</p><button type="button" class="btn btn-yellow" id="hrabiaCorrectionBtn">WYGENERUJ POPRAWKĘ</button>
           </article>
         </div>
+        <section class="hrabia-survival" aria-labelledby="hrabiaSurvivalHeading">
+          <div class="hrabia-survival-head"><div><small>MINIGRA INSTYTUTU · 5 RUND</small><h3 id="hrabiaSurvivalHeading">🎭 PRZETRWAJ HRABIEGO</h3><p>Hrabia zgłasza uwagę. Ty wybierasz odpowiedź Morścisława. Sprawdź, czy ocalejesz z tej korekty.</p></div><div class="hrabia-round-stamp" id="hrabiaRoundStamp">RUNDA 0/5</div></div>
+          <label class="hrabia-category-label" for="hrabiaCategory">RODZAJ KLIENTOWEJ KATASTROFY</label>
+          <select id="hrabiaCategory" class="hrabia-category"><option value="all">Losowa mieszanka</option><option value="color">Kolory i odcienie</option><option value="logo">Logo i wielkość</option><option value="layout">Kompozycja</option><option value="font">Czcionki</option><option value="deadline">Terminy i pliki FINAL</option><option value="premium">Życzenia niemożliwe</option></select>
+          <div class="hrabia-case" id="hrabiaCase" aria-live="polite">Naciśnij START. Hrabia już ma przygotowaną uwagę.</div>
+          <div class="hrabia-answers" id="hrabiaAnswers"><button type="button" class="btn btn-yellow" id="hrabiaStartGame">ROZPOCZNIJ PRZETRWANIE ↗</button></div>
+          <div class="hrabia-reaction" id="hrabiaReaction" aria-live="polite">Morścisław czeka przy wyjściu ewakuacyjnym.</div>
+          <div class="hrabia-survival-footer"><b id="hrabiaGameScore">PUNKTY: 0</b><button type="button" class="btn btn-facebook" id="hrabiaShareResult" hidden>POCHWAL SIĘ WYNIKIEM</button></div>
+        </section>
         <div class="hrabia-meter-card">
           <div class="hrabia-meter-copy"><small>POZIOM HRABIOWSKIEGO NIEZADOWOLENIA</small><b id="hrabiaLevelLabel">3/10 · „Mam tylko jedną uwagę…”</b><p id="hrabiaLevelComment">Morścisław jeszcze wierzy w ludzi. To się zmieni.</p></div>
           <div class="hrabia-meter-track"><span id="hrabiaLevelFill" style="width:30%"></span></div>
