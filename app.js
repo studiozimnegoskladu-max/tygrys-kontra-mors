@@ -1496,8 +1496,6 @@
     function action(){count++;storage.setItem('szs_hrabia_actions',String(count));update()}
     $('hrabiaReportBtn')?.addEventListener('click',()=>{if(report)report.textContent=pick(reports);action()});
     $('hrabiaCorrectionBtn')?.addEventListener('click',()=>{if(correction)correction.textContent=pick(corrections);action()});
-    $('hrabiaLevelBtn')?.addEventListener('click',()=>{level=Math.min(10,level+1);storage.setItem('szs_hrabia_level',String(level));if(level===10&&comment)comment.textContent='Morścisław opuścił instytut. Zostawił tylko karteczkę: „Nie dzwońcie”.';update();action()});
-
     const cases=[
       {cat:'color',q:'„Ten niebieski jest za niebieski. Proszę zrobić go bardziej… eleganckim”.',a:['Zmienię na granat i nazwę go królewskim spokojem.','Poproszę Hrabiego o próbkę koloru z jego snów.','Zmieniam cały projekt na czarno-biały.'],best:1,reply:['Rozsądnie. Hrabia właśnie przyniósł próbnik z własnego snu.','Dobrze! Morścisław notuje: kolor Pantone „arystokratyczna mgła”.','Hrabia twierdzi, że czerń też jest za czarna.']},
       {cat:'logo',q:'„Logo proszę powiększyć, ale nie może zajmować więcej miejsca”.',a:['Powiększę je w wymiarze równoległym.','Zapytam, czy chodzi o większy prestiż, nie rozmiar.','Usunę logo, wtedy będzie nieskończenie duże.'],best:1,reply:['Hrabia kiwa głową. Nie rozumie, ale brzmi profesjonalnie.','Świetna odpowiedź! Morścisław wyciąga linijkę do mierzenia prestiżu.','Hrabia zgłasza uwagę, że brak logo jest zbyt mało widoczny.']},
@@ -1522,14 +1520,14 @@
       if(answers){answers.innerHTML='';activeCase.a.forEach((answer,i)=>{const b=document.createElement('button');b.type='button';b.className='btn '+(i===1?'btn-yellow':'btn-outline');b.textContent=String.fromCharCode(65+i)+'. '+answer;b.addEventListener('click',()=>chooseAnswer(i));answers.appendChild(b);});}
     }
     function chooseAnswer(i){
-      if(gameOver||!activeCase)return;gameOver=true;const good=i===activeCase.best;if(good)points++;
+      if(gameOver||!activeCase)return;gameOver=true;const good=i===activeCase.best;if(good)points++;else{level=Math.min(10,level+1);storage.setItem('szs_hrabia_level',String(level));update();}
       setText(gameScore,'PUNKTY: '+points);setText(reaction,(good?'✅ DOBRZE! ':'🫠 HRABIA ZGŁASZA SPRZECIW. ')+activeCase.reply[i]+' — Morścisław');
       if(answers){Array.from(answers.querySelectorAll('button')).forEach((b,n)=>{b.disabled=true;if(n===activeCase.best)b.classList.add('btn-yellow');});const next=document.createElement('button');next.type='button';next.className='btn btn-dark';next.textContent=round===4?'ZOBACZ WYNIK ↗':'NASTĘPNA UWAGA →';next.addEventListener('click',()=>{round++;showRound()});answers.appendChild(next);}
     }
     function finishGame(){
       gameOver=true;const title=points===5?'MISTRZ ZEN PO PIĘCIU KOREKTACH':points>=3?'OCALAŁY PLIKU FINAL':'OFIARA HRABIOWSKIEGO BIURA';const message='Koniec próby! '+title+' · wynik '+points+'/5. Morścisław wystawia certyfikat przetrwania.';
       setText(roundStamp,'KONIEC 5/5');setText(caseBox,'🏆 '+title);setText(reaction,message);if(answers){answers.innerHTML='';const again=document.createElement('button');again.type='button';again.className='btn btn-yellow';again.textContent='GRAM PONOWNIE ↻';again.addEventListener('click',startGame);answers.appendChild(again);}
-      if(share)share.hidden=false;storage.setItem('szs_hrabia_best',String(Math.max(Number(storage.getItem('szs_hrabia_best')||0),points)));action();
+      if(share)share.hidden=false;storage.setItem('szs_hrabia_best',String(Math.max(Number(storage.getItem('szs_hrabia_best')||0),points)));if(level===10&&comment)comment.textContent='Morścisław opuścił instytut. Zostawił tylko karteczkę: „Nie dzwońcie”.';update();action();
     }
     function startGame(){round=0;points=0;played=[];setText(gameScore,'PUNKTY: 0');if(share)share.hidden=true;showRound();}
     $('hrabiaStartGame')?.addEventListener('click',startGame);
