@@ -2926,3 +2926,14 @@ body.view-hangman .shell #setup #hangmanPanel .hangman-game{display:block!import
   box-shadow:none!important;
   text-shadow:none!important;
 }
+
+/* Logo SZS: białe pole pod napisem ma zlewać się z tłem, bez cienia */
+.intro-brand img,
+.topbar-logo,
+.brief-brand img,
+.footer-logo{
+  filter:none!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  mix-blend-mode:multiply!important;
+}
