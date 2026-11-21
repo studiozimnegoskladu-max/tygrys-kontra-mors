@@ -2785,3 +2785,13 @@ body.view-hangman #setup .mors-zone-drawer>summary{display:none!important}
 body.view-hangman #setup .mors-zone-drawer>:not(summary):not(.hangman-panel){display:none!important}
 body.view-hangman #setup .mors-zone-drawer>.hangman-panel{display:block!important}
 body.view-hangman #setup .mors-zone-drawer:not([open])>*:not(summary){display:block!important}
+
+
+/* MORŚCIELec: po wybraniu kafelka pokazujemy od razu samą grę, bez nagłówka głównego i innych modułów */
+body.view-hangman .shell>.hero{display:none!important}
+body.view-hangman #setup{display:block!important;visibility:visible!important}
+body.view-hangman #setup .mors-zone-drawer{display:block!important;visibility:visible!important}
+body.view-hangman #setup .mors-zone-drawer>#hangmanPanel{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;max-height:none!important;overflow:visible!important}
+body.view-hangman #setup .mors-zone-drawer>#hangmanPanel .hangman-game,
+body.view-hangman #setup .mors-zone-drawer>#hangmanPanel .hangman-heading,
+body.view-hangman #setup .mors-zone-drawer>#hangmanPanel .hangman-intro{display:block!important}
