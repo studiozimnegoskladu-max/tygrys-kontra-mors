@@ -758,8 +758,8 @@
       if(musicOn&&mainTrack)startBackgroundMusic();
     }
     const drawer=document.querySelector('.mors-zone-drawer');
-    if(drawer && (which==='soccer'||which==='fortune'||which==='mors-zone'||which==='hangman')) drawer.open=true;
-    if(which==='mors-zone'||which==='hangman'){
+    if(drawer && (which==='soccer'||which==='fortune'||which==='mors-zone')) drawer.open=true;
+    if(which==='mors-zone'){
       const zone=document.querySelector('.mors-zone-drawer');
       if(zone)zone.open=true;
     }
