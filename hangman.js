@@ -18,7 +18,7 @@
     lose:['URZĄD ULEGŁ AWARII. Morścisław ogłasza przerwę na rybę i odbudowę morale.','Koniec rundy. Hrabia Poprawek przejął urząd. Pierwsze zarządzenie: poprawić wszystko.']
   };
   const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
-  let answer='',category='',used=new Set(),mistakes=0,finished=false,solved=0;
+  let answer='',category='',used=new Set(),mistakes=0,finished=false,solved=0,isSpecialWord=false;
   try{solved=Number(storage.getItem('szs_hangman_solved')||0)}catch{}
   const pick=(arr)=>arr[Math.floor(Math.random()*arr.length)];
   function setComment(text){$('hangmanComment').textContent=text}
@@ -43,13 +43,28 @@
     if(daily){
       item=['Pytanie specjalne','ŁUKASZ'];
     }else item=pick(words);
-    [category,answer]=item;used=new Set();mistakes=0;finished=false;
+    [category,answer]=item;isSpecialWord=!!daily&&answer==='ŁUKASZ';used=new Set();mistakes=0;finished=false;
     $('hangmanFeedback').textContent=daily
       ? 'JAK MA NA IMIĘ TWÓJ ULUBIONY GRAFIK? Odpowiedź wpisz, odgadując litery!'
       : 'Wybierz literę. Urząd wierzy w Ciebie bardziej niż w swój system archiwizacji.';
     $('hangmanKeyboard').innerHTML=letters.map(l=>'<button type="button" data-letter="'+l+'" aria-label="Litera '+l+'">'+l+'</button>').join('');
     $('hangmanKeyboard').querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>guess(btn.dataset.letter)));
     setComment(remarks.start);render();
+  }
+  function showSpecialReward(){
+    if(document.getElementById('hangmanSpecialReward'))return;
+    const overlay=document.createElement('div');
+    overlay.id='hangmanSpecialReward';
+    overlay.className='hangman-reward-overlay';
+    overlay.setAttribute('role','dialog');
+    overlay.setAttribute('aria-modal','true');
+    overlay.setAttribute('aria-label','Nagroda za odgadnięcie hasła Łukasz');
+    overlay.innerHTML='<div class="hangman-reward-card"><button type="button" class="hangman-reward-close" aria-label="Zamknij nagrodę">×</button><p class="hangman-reward-kicker">HASŁO ODGADNIĘTE!</p><h2>NO I PIĘKNIE! 🎉</h2><p>Morścisław przyznaje Ci specjalną nagrodę!</p><img src="assets/mor%C5%9Bcieeelec%201.png" alt="Specjalna grafika nagrodowa MORŚCIELEC 1"><button type="button" class="btn btn-yellow hangman-reward-ok">ODBieram NAGRODĘ!</button></div>';
+    document.body.appendChild(overlay);
+    const close=()=>overlay.remove();
+    overlay.querySelector('.hangman-reward-close')?.addEventListener('click',close);
+    overlay.querySelector('.hangman-reward-ok')?.addEventListener('click',close);
+    overlay.addEventListener('click',event=>{if(event.target===overlay)close()});
   }
   function guess(letter){
     if(finished||used.has(letter))return;
@@ -63,6 +78,7 @@
         finished=true;solved++;try{storage.setItem('szs_hangman_solved',String(solved))}catch{}
         $('hangmanFeedback').textContent=pick(remarks.win);
         setComment('Wiedziałem, że dasz radę. W końcu ktoś tu czyta instrukcje. Ja ich nie czytam, ale mam pieczątkę.');
+        if(isSpecialWord)showSpecialReward();
       }
     }
     render();
