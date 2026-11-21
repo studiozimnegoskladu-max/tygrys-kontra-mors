@@ -2916,3 +2916,13 @@ body.view-hangman .shell #setup #hangmanPanel .hangman-game{display:block!import
     max-height:38vh!important;
   }
 }
+
+/* LOGO SZS — bez cieni i bez dodatkowych efektów */
+.intro-brand img,
+.topbar-logo,
+.brief-brand img,
+.footer-logo{
+  filter:none!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+}
