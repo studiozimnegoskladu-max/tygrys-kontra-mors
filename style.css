@@ -2268,38 +2268,6 @@ body.view-soccer .soccer-hero-combo .soccer-cup-full{
 }
 
 
-/* MORŚCISŁAW: ŚLEDZIO-MANIA — arcade w kresce SZS */
-.pacman-play{display:flex;flex-direction:column;gap:9px;padding:12px;background:#fff8df;border:3px solid #171515;border-radius:10px;box-shadow:5px 5px 0 #171515}
-.pacman-hud{display:flex;justify-content:space-between;gap:8px;font:1000 14px 'Barlow Condensed';}
-.pacman-hud b{background:#ffe600;border:2px solid #171515;padding:5px 8px;box-shadow:2px 2px 0 #171515}
-#pacmanBoard{display:block;width:min(100%,600px);height:auto;aspect-ratio:1;margin:0 auto;background:#171515;border:3px solid #171515;border-radius:5px;touch-action: none}
-#pacmanStatus{text-align:center;font-weight:900;margin:0;min-height:22px}
-.pacman-controls{display:flex;flex-direction:column;align-items:center;gap:5px}
-.pacman-controls>div{display:flex;gap:8px}
-.pacman-controls button{width:48px;height:42px;border:2px solid #171515;border-radius:7px;background:#ffe600;box-shadow:3px 3px 0 #171515;font-size:20px;font-weight:1000;touch-action:manipulation}
-.pacman-controls button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #171515}
-@media(min-width:700px){.pacman-play{max-width:660px;margin:0 auto}}
-
-
-.pacman-fullscreen-btn{margin-left:auto;border:2px solid #171515;border-radius:6px;background:#00b9d8;color:#171515;padding:5px 10px;font-weight:1000;cursor:pointer;box-shadow:2px 2px 0 #171515}
-.pacman-play:fullscreen{width:100vw;height:100vh;height:100dvh;max-width:none!important;margin:0;padding:12px 16px;box-sizing:border-box;border:0;border-radius:0;box-shadow:none;display:flex;align-items:center;justify-content:center;gap:clamp(6px,1.2vh,14px);background:#fff8df;overflow:auto}
-.pacman-play:fullscreen #pacmanBoard{width:auto;height:auto;max-width:min(94vw,calc(100vh - 190px));max-width:min(94vw,calc(100dvh - 190px));max-height:calc(100vh - 190px);max-height:calc(100dvh - 190px);object-fit:contain}
-.pacman-play:fullscreen .pacman-hud{width:min(94vw,900px);font-size:clamp(16px,2.2vh,24px)}
-.pacman-play:fullscreen #pacmanStatus{max-width:94vw;font-size:clamp(13px,1.8vh,18px)}
-.pacman-play:fullscreen .pacman-controls button{width:clamp(48px,6vh,66px);height:clamp(42px,5.5vh,58px)}
-.pacman-play:fullscreen #pacmanStart{min-height:42px}
-@media(max-width:600px){
- .pacman-play:fullscreen{padding:8px 6px;gap:6px}
- .pacman-play:fullscreen #pacmanBoard{max-width:96vw;max-height:calc(100dvh - 205px)}
- .pacman-play:fullscreen .pacman-controls button{width:54px;height:42px}
-}
-
-/* Widoczny przycisk powiększenia — osobny wiersz nad planszą */
-.pacman-play > #pacmanFullscreen{display:block!important;visibility:visible!important;opacity:1!important;position:relative!important;z-index:5!important;width:100%;max-width:600px;min-height:48px;margin:2px auto 6px;padding:10px 14px;background:#00b9d8;color:#171515;border:3px solid #171515;border-radius:8px;box-shadow:4px 4px 0 #171515;font-size:15px;font-weight:1000;cursor:pointer}
-.pacman-play:fullscreen > #pacmanFullscreen{width:min(94vw,900px);max-width:none}
-.pacman-play > #pacmanFullscreen:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #171515}
-
-
 /* Wisielec Morścisława — scenka składana etapami z oryginalnej grafiki maskotki */
 .hangman-chaos{display:block;min-height:250px;padding:10px;background:#f2f0e9;border:2px solid #242424;overflow:hidden}
 .hangman-scene{position:relative;width:min(100%,520px);height:250px;margin:0 auto;overflow:hidden;background:#fff8d6;border:2px solid #242424;border-radius:12px}
