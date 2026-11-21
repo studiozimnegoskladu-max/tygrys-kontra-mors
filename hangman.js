@@ -41,11 +41,12 @@
   function newRound(daily=false){
     let item;
     if(daily){
-      const seed=Number(today().replaceAll('-',''));
-      item=words[(seed*17+Math.floor(seed/7))%words.length];
+      item=['Pytanie specjalne','ŁUKASZ'];
     }else item=pick(words);
     [category,answer]=item;used=new Set();mistakes=0;finished=false;
-    $('hangmanFeedback').textContent='Wybierz literę. Urząd wierzy w Ciebie bardziej niż w swój system archiwizacji.';
+    $('hangmanFeedback').textContent=daily
+      ? 'JAK MA NA IMIĘ TWÓJ ULUBIONY GRAFIK? Odpowiedź wpisz, odgadując litery!'
+      : 'Wybierz literę. Urząd wierzy w Ciebie bardziej niż w swój system archiwizacji.';
     $('hangmanKeyboard').innerHTML=letters.map(l=>'<button type="button" data-letter="'+l+'" aria-label="Litera '+l+'">'+l+'</button>').join('');
     $('hangmanKeyboard').querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>guess(btn.dataset.letter)));
     setComment(remarks.start);render();
