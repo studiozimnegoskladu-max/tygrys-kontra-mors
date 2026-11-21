@@ -1496,7 +1496,44 @@
     function action(){count++;storage.setItem('szs_hrabia_actions',String(count));update()}
     $('hrabiaReportBtn')?.addEventListener('click',()=>{if(report)report.textContent=pick(reports);action()});
     $('hrabiaCorrectionBtn')?.addEventListener('click',()=>{if(correction)correction.textContent=pick(corrections);action()});
-    $('hrabiaLevelBtn')?.addEventListener('click',()=>{level=Math.min(10,level+1);storage.setItem('szs_hrabia_level',String(level));if(level===10&&comment)comment.textContent='Mors opuścił instytut. Zostawił tylko karteczkę: „Nie dzwońcie”.';update();action()});
+    $('hrabiaLevelBtn')?.addEventListener('click',()=>{level=Math.min(10,level+1);storage.setItem('szs_hrabia_level',String(level));if(level===10&&comment)comment.textContent='Morścisław opuścił instytut. Zostawił tylko karteczkę: „Nie dzwońcie”.';update();action()});
+
+    const cases=[
+      {cat:'color',q:'„Ten niebieski jest za niebieski. Proszę zrobić go bardziej… eleganckim”.',a:['Zmienię na granat i nazwę go królewskim spokojem.','Poproszę Hrabiego o próbkę koloru z jego snów.','Zmieniam cały projekt na czarno-biały.'],best:1,reply:['Rozsądnie. Hrabia właśnie przyniósł próbnik z własnego snu.','Dobrze! Morścisław notuje: kolor Pantone „arystokratyczna mgła”.','Hrabia twierdzi, że czerń też jest za czarna.']},
+      {cat:'logo',q:'„Logo proszę powiększyć, ale nie może zajmować więcej miejsca”.',a:['Powiększę je w wymiarze równoległym.','Zapytam, czy chodzi o większy prestiż, nie rozmiar.','Usunę logo, wtedy będzie nieskończenie duże.'],best:1,reply:['Hrabia kiwa głową. Nie rozumie, ale brzmi profesjonalnie.','Świetna odpowiedź! Morścisław wyciąga linijkę do mierzenia prestiżu.','Hrabia zgłasza uwagę, że brak logo jest zbyt mało widoczny.']},
+      {cat:'layout',q:'„Proszę dać więcej oddechu, ale nie zostawiać tyle pustego miejsca”.',a:['Wprowadzę kontrolowany przeciąg w projekcie.','Zagęszczę elementy, żeby oddychały grupowo.','Zostawię puste miejsce, ale nazwę je aktywną przestrzenią.'],best:2,reply:['Hrabia prosi o wiatrak do projektu.','Kompozycja dostała zadyszki. Spróbuj jeszcze raz.','Brawo! Pusta przestrzeń otrzymała stanowisko kierownicze.']},
+      {cat:'font',q:'„Czcionka jest prawie dobra. Proszę znaleźć tę właściwą, ale podobną”.',a:['Przedstawię trzy kroje i poproszę o wybór.','Zmieniam wszystkie litery na pismo odręczne Hrabiego.','Zostawiam obecną i zmieniam jej imię.'],best:0,reply:['Dobra taktyka. Hrabia lubi wybierać spośród rzeczy, których nie potrafi nazwać.','Hrabia twierdzi, że jego „H” ma bardziej arystokratyczny charakter.','Font zgłosił sprzeciw wobec zmiany tożsamości.']},
+      {cat:'deadline',q:'„To tylko drobna poprawka. Potrzebuję gotowego pliku za 10 minut”.',a:['Potwierdzę zakres i realny termin przed zmianą.','Zapiszę plik jako FINAL_NA_WCZORAJ.','Wyślę Hrabiego po kawę, zyskam 8 minut.'],best:0,reply:['Profesjonalnie! Nawet Hrabia uznaje moc ustalonego zakresu.','Plik otrzymał status zabytku jeszcze przed eksportem.','Hrabia wrócił z kawą i trzema nowymi uwagami.']},
+      {cat:'premium',q:'„Ma być minimalistycznie, premium, z energią, ale bez przesady i żeby przyciągało wzrok”.',a:['Poproszę o wskazanie dwóch najważniejszych priorytetów.','Dodam złoto, neon i siedem wykrzykników.','Zrobię dokładnie wszystko naraz.'],best:0,reply:['Brawo. Morścisław właśnie zatwierdził plan rozmowy.','Hrabia zakłada okulary przeciwsłoneczne. Projekt świeci z orbity.','Drukarnia prosi o nową paletę barw i urlop.']},
+      {cat:'color',q:'„Kolor jest dobry, ale na ekranie wygląda inaczej niż w próbniku”.',a:['Sprawdzę profil, podłoże i próbny wydruk.','Zwiększę jasność monitora do poziomu słońca.','Przekonam papier, żeby świecił jak ekran.'],best:0,reply:['Świetnie! Hrabia słyszy słowo „profil” i na chwilę milknie.','Monitor właśnie dostał przydział okularów.','Papier odmówił współpracy z technologią kosmiczną.']},
+      {cat:'logo',q:'„Wróćmy do pierwszej wersji, ale zostawmy wszystkie zmiany z ostatniej”.',a:['Zestawię wersje i poproszę o wskazanie elementów do zachowania.','Połączę pliki w jeden wielki FINAL.','Cofnę czas o trzy rundy korekt.'],best:0,reply:['Doskonałe! Historia wersji uratowała kolejną płetwę.','Plik FINAL_FINAL_FINAL właśnie zyskał potomstwo.','Hrabia pyta, czy można cofnąć tylko wtorek.']},
+      {cat:'deadline',q:'„Wysłałem poprawki w trzech plikach. Każdy ma inne uwagi”.',a:['Zbiorę je w jeden zatwierdzony dokument zmian.','Wylosuję plik. Niech zdecyduje przeznaczenie.','Wykonam wszystkie trzy zestawy jednocześnie.'],best:0,reply:['Tak jest! Jedno źródło prawdy ocala zespół.','Hrabia żąda ponownego losowania.','Projekt rozszczepił się na trzy równoległe rzeczywistości.']}
+    ];
+    const category=$('hrabiaCategory'),caseBox=$('hrabiaCase'),answers=$('hrabiaAnswers'),reaction=$('hrabiaReaction'),roundStamp=$('hrabiaRoundStamp'),gameScore=$('hrabiaGameScore'),share=$('hrabiaShareResult');
+    let round=0,points=0,activeCase=null,played=[],gameOver=false;
+    const setText=(el,value)=>{if(el)el.textContent=value};
+    function showRound(){
+      if(round>=5){finishGame();return}
+      const pool=cases.filter(x=>category?.value==='all'||x.cat===category.value);
+      const available=pool.filter(x=>!played.includes(x));
+      activeCase=pick(available.length?available:pool);played.push(activeCase);gameOver=false;
+      setText(roundStamp,'RUNDA '+(round+1)+'/5');setText(caseBox,'🐯 HRABIA POPRAWEK: '+activeCase.q);
+      setText(reaction,'🦭 MORŚCISŁAW: Wybierz odpowiedź. Zachowaj spokój. Jeśli możesz, zachowaj też plik źródłowy.');
+      if(answers){answers.innerHTML='';activeCase.a.forEach((answer,i)=>{const b=document.createElement('button');b.type='button';b.className='btn '+(i===1?'btn-yellow':'btn-outline');b.textContent=String.fromCharCode(65+i)+'. '+answer;b.addEventListener('click',()=>chooseAnswer(i));answers.appendChild(b);});}
+    }
+    function chooseAnswer(i){
+      if(gameOver||!activeCase)return;gameOver=true;const good=i===activeCase.best;if(good)points++;
+      setText(gameScore,'PUNKTY: '+points);setText(reaction,(good?'✅ DOBRZE! ':'🫠 HRABIA ZGŁASZA SPRZECIW. ')+activeCase.reply[i]+' — Morścisław');
+      if(answers){Array.from(answers.querySelectorAll('button')).forEach((b,n)=>{b.disabled=true;if(n===activeCase.best)b.classList.add('btn-yellow');});const next=document.createElement('button');next.type='button';next.className='btn btn-dark';next.textContent=round===4?'ZOBACZ WYNIK ↗':'NASTĘPNA UWAGA →';next.addEventListener('click',()=>{round++;showRound()});answers.appendChild(next);}
+    }
+    function finishGame(){
+      gameOver=true;const title=points===5?'MISTRZ ZEN PO PIĘCIU KOREKTACH':points>=3?'OCALAŁY PLIKU FINAL':'OFIARA HRABIOWSKIEGO BIURA';const message='Koniec próby! '+title+' · wynik '+points+'/5. Morścisław wystawia certyfikat przetrwania.';
+      setText(roundStamp,'KONIEC 5/5');setText(caseBox,'🏆 '+title);setText(reaction,message);if(answers){answers.innerHTML='';const again=document.createElement('button');again.type='button';again.className='btn btn-yellow';again.textContent='GRAM PONOWNIE ↻';again.addEventListener('click',startGame);answers.appendChild(again);}
+      if(share)share.hidden=false;storage.setItem('szs_hrabia_best',String(Math.max(Number(storage.getItem('szs_hrabia_best')||0),points)));action();
+    }
+    function startGame(){round=0;points=0;played=[];setText(gameScore,'PUNKTY: 0');if(share)share.hidden=true;showRound();}
+    $('hrabiaStartGame')?.addEventListener('click',startGame);
+    share?.addEventListener('click',()=>{const title=points===5?'MISTRZ ZEN PO PIĘCIU KOREKTACH':points>=3?'OCALAŁY PLIKU FINAL':'OFIARA HRABIOWSKIEGO BIURA';const msg='Przetrwałem '+points+'/5 rund z Hrabią Poprawek w grze Studio Zimnego Składu! Mój tytuł: '+title+'. A Ty dasz radę?';if(typeof shareOnFacebook==='function')shareOnFacebook(msg);else if(navigator.share)navigator.share({text:msg,url:location.href}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(msg+' '+location.href);});
     update();
   }
 
