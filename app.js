@@ -787,6 +787,13 @@
   $('openMorsZone')?.addEventListener('click',()=>openAttraction('mors-zone'));
   $('openHangman')?.addEventListener('click',()=>openAttraction('hangman'));
   $('attractionsBack')?.addEventListener('click',showAttractionsHome);
+
+  // Bezpośrednie linki do pojedynczych atrakcji: ?attraction=tictactoe|soccer|hangman|fortune|mors-zone
+  const directAttraction=new URLSearchParams(location.search).get('attraction');
+  const validAttractions=['tictactoe','soccer','hangman','fortune','mors-zone'];
+  if(validAttractions.includes(directAttraction)){
+    requestAnimationFrame(()=>openAttraction(directAttraction));
+  }
   function showGame(){resultOverlayDismissed=false;setup.classList.remove('hidden');setup.classList.add('playing');game.classList.remove('hidden');$('roomCode').textContent=room||'LOKALNIE';$('playerName').textContent=nick();if(mode==='online'){updateOnlineCharacters()}else{const ownCard=document.querySelector('.tiger-score');setScoreCharacter(ownCard,selectedCharacter);setScoreCharacter(document.querySelector('.mors-score'),'mors');}renderAchievements();newPrintBrief();}
   const printBriefs=[
     {title:'NA WCZORAJ, ALE TANIO',text:'Klient chce 5000 ulotek, projekt, druk i dostawę. Termin? Najlepiej 10 minut temu.'},
