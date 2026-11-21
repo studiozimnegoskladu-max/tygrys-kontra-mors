@@ -2802,3 +2802,11 @@ body.view-hangman .shell>.hero{display:none!important}
 body.view-hangman #setup{display:block!important;visibility:visible!important}
 body.view-hangman #setup>:not(#hangmanPanel){display:none!important}
 body.view-hangman #setup>#hangmanPanel{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;max-height:none!important;overflow:visible!important}
+
+
+/* MORŚCIELec — awaryjne odsłonięcie gry niezależnie od zagnieżdżenia kontenera */
+body.view-hangman .shell #setup{display:block!important;visibility:visible!important;height:auto!important;max-height:none!important;overflow:visible!important}
+body.view-hangman .shell #setup :has(>#hangmanPanel),
+body.view-hangman .shell #setup:has(#hangmanPanel){display:block!important;visibility:visible!important;height:auto!important;max-height:none!important;overflow:visible!important}
+body.view-hangman .shell #setup #hangmanPanel{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;max-height:none!important;overflow:visible!important;position:relative!important}
+body.view-hangman .shell #setup #hangmanPanel .hangman-game{display:block!important;visibility:visible!important}
