@@ -2795,3 +2795,10 @@ body.view-hangman #setup .mors-zone-drawer>#hangmanPanel{display:block!important
 body.view-hangman #setup .mors-zone-drawer>#hangmanPanel .hangman-game,
 body.view-hangman #setup .mors-zone-drawer>#hangmanPanel .hangman-heading,
 body.view-hangman #setup .mors-zone-drawer>#hangmanPanel .hangman-intro{display:block!important}
+
+
+/* MORŚCIELec jest osobną główną atrakcją, poza detalami Strefy Morścisława */
+body.view-hangman .shell>.hero{display:none!important}
+body.view-hangman #setup{display:block!important;visibility:visible!important}
+body.view-hangman #setup>:not(#hangmanPanel){display:none!important}
+body.view-hangman #setup>#hangmanPanel{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;max-height:none!important;overflow:visible!important}
