@@ -725,7 +725,7 @@
     updateOnlineCharacters();render();
   }
   function showAttractionsHome(){
-    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','soccer-fullscreen-open');
+    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','view-hangman','soccer-fullscreen-open');
     const cup=$('morsCupMusic'),background=$('backgroundMusic');
     if(cup){cup.pause();cup.currentTime=0;}
     if(typeof soccerMusicActive!=='undefined'&&soccerMusicActive){soccerMusicActive=false;if(musicOn&&background)startBackgroundMusic();}
@@ -739,7 +739,7 @@
     // gdy panel konfiguracji (#setup) mógł pozostać ukryty.
     setup?.classList.remove('hidden');
     game?.classList.add('hidden');
-    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','soccer-fullscreen-open');
+    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','view-hangman','soccer-fullscreen-open');
     document.body.classList.add('view-'+which);
     // Muzyka Mors Cup ma grać od wejścia do sekcji, nie dopiero po uruchomieniu meczu.
     const cupTrack=$('morsCupMusic'),mainTrack=$('backgroundMusic');
@@ -758,8 +758,8 @@
       if(musicOn&&mainTrack)startBackgroundMusic();
     }
     const drawer=document.querySelector('.mors-zone-drawer');
-    if(drawer && (which==='soccer'||which==='fortune'||which==='mors-zone')) drawer.open=true;
-    if(which==='mors-zone'){
+    if(drawer && (which==='soccer'||which==='fortune'||which==='mors-zone'||which==='hangman')) drawer.open=true;
+    if(which==='mors-zone'||which==='hangman'){
       const zone=document.querySelector('.mors-zone-drawer');
       if(zone)zone.open=true;
     }
@@ -767,12 +767,13 @@
     if(which==='soccer')document.querySelector('.soccer-game')?.scrollIntoView({behavior:'smooth',block:'start'});
     if(which==='fortune')$('fortuneHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
     if(which==='mors-zone')$('hrabiaInstituteHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
+    if(which==='hangman')$('hangmanHeading')?.scrollIntoView({behavior:'smooth',block:'start'});
   }
   $('openTicTacToe')?.addEventListener('click',()=>openAttraction('tictactoe'));
   $('openSoccer')?.addEventListener('click',()=>openAttraction('soccer'));
   $('openFortune')?.addEventListener('click',()=>openAttraction('fortune'));
   $('openMorsZone')?.addEventListener('click',()=>openAttraction('mors-zone'));
-  $('openHangman')?.addEventListener('click',()=>{openAttraction('mors-zone');document.querySelector('.mors-zone-drawer')?.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>$('hangmanHeading')?.scrollIntoView({behavior:'smooth',block:'start'}),180);});
+  $('openHangman')?.addEventListener('click',()=>openAttraction('hangman'));
   $('attractionsBack')?.addEventListener('click',showAttractionsHome);
   function showGame(){resultOverlayDismissed=false;setup.classList.remove('hidden');setup.classList.add('playing');game.classList.remove('hidden');$('roomCode').textContent=room||'LOKALNIE';$('playerName').textContent=nick();if(mode==='online'){updateOnlineCharacters()}else{const ownCard=document.querySelector('.tiger-score');setScoreCharacter(ownCard,selectedCharacter);setScoreCharacter(document.querySelector('.mors-score'),'mors');}renderAchievements();newPrintBrief();}
   const printBriefs=[
