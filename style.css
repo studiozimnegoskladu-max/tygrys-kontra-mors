@@ -3028,3 +3028,15 @@ body.view-tictactoe .shell>.hero .vs{
   .hero-art-replacement{padding:8px 0 16px}
   .hero-replacement-art{width:86%;max-width:420px}
 }
+
+
+/* MORŚCIELEC — całkowicie osobna zakładka, poza Strefą Morścisława */
+body.view-mors-zone #setup > #hangmanPanel{display:none!important}
+body.view-hangman .attractions-menu{display:none!important}
+body.view-hangman .attractions-back{display:block!important}
+body.view-hangman .shell > .hero{display:none!important}
+body.view-hangman #setup{display:block!important;visibility:visible!important}
+body.view-hangman #setup > #hangmanPanel{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;max-height:none!important;overflow:visible!important}
+body.view-hangman #setup > :not(#hangmanPanel){display:none!important}
+body.view-hangman #setup > #hangmanPanel .hangman-heading,
+body.view-hangman #setup > #hangmanPanel .hangman-intro{display:flex!important}
