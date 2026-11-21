@@ -114,9 +114,23 @@
   ];
   const morsThoughtText=$('morsThoughtText');
   if(morsThoughtText){
-    const thought=morsThoughts[Math.floor(Math.random()*morsThoughts.length)];
+    const thought= morsThoughts[Math.floor(Math.random()*morsThoughts.length)];
     morsThoughtText.textContent=thought;
-    morsThoughtText.style.fontSize=thought.length>105?'clamp(13px,1.8vw,19px)':thought.length>78?'clamp(15px,2vw,21px)':'';
+    const thoughtBox=morsThoughtText.closest('.intro-thought');
+    const fitMorsThought=()=>{
+      if(!thoughtBox)return;
+      morsThoughtText.style.fontSize='20px';
+      morsThoughtText.style.lineHeight='1.02';
+      let size=20;
+      while(size>8 && (morsThoughtText.scrollHeight>morsThoughtText.clientHeight+1 || thoughtBox.scrollHeight>thoughtBox.clientHeight+1)){
+        size-=.5;
+        morsThoughtText.style.fontSize=size+'px';
+      }
+    };
+    requestAnimationFrame(fitMorsThought);
+    window.addEventListener('resize',()=>requestAnimationFrame(fitMorsThought),{passive:true});
+    const thoughtImage=thoughtBox?.previousElementSibling;
+    thoughtImage?.addEventListener('load',()=>requestAnimationFrame(fitMorsThought),{once:true});
   }
 
   const setup=$('setup'), game=$('game'), msg=$('setupMessage');
