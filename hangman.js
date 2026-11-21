@@ -58,8 +58,11 @@
     overlay.className='hangman-reward-overlay';
     overlay.setAttribute('role','dialog');
     overlay.setAttribute('aria-modal','true');
-    overlay.setAttribute('aria-label','Nagroda za odgadnięcie hasła Łukasz');
-    overlay.innerHTML='<div class="hangman-reward-card"><button type="button" class="hangman-reward-close" aria-label="Zamknij nagrodę">×</button><p class="hangman-reward-kicker">HASŁO ODGADNIĘTE!</p><h2>NO I PIĘKNIE! 🎉</h2><p>Morścisław przyznaje Ci specjalną nagrodę!</p><img src="assets/mor%C5%9Bcieeelec%201.png" alt="Specjalna grafika nagrodowa MORŚCIELEC 1"><button type="button" class="btn btn-yellow hangman-reward-ok">ODBIERAM NAGRODĘ!</button></div>';
+    overlay.setAttribute('aria-label','Nagroda za odgadnięcie hasła');
+    const rewardImage=isSpecialWord?'assets/mor%C5%9Bcieeelec%201.png':'assets/mor%C5%9Bcieeelec%202.png';
+    const rewardAlt=isSpecialWord?'Specjalna grafika nagrodowa MORŚCIELEC 1':'Uniwersalna grafika nagrodowa MORŚCIELEC 2';
+    const rewardText=isSpecialWord?'Morścisław przyznaje Ci specjalną nagrodę!':'Morścisław przyznaje Ci nagrodę za zwycięstwo!';
+    overlay.innerHTML='<div class="hangman-reward-card"><button type="button" class="hangman-reward-close" aria-label="Zamknij nagrodę">×</button><p class="hangman-reward-kicker">HASŁO ODGADNIĘTE!</p><h2>NO I PIĘKNIE! 🎉</h2><p>'+rewardText+'</p><img src="'+rewardImage+'" alt="'+rewardAlt+'"><button type="button" class="btn btn-yellow hangman-reward-ok">ODBIERAM NAGRODĘ!</button></div>';
     document.body.appendChild(overlay);
     const close=()=>overlay.remove();
     overlay.querySelector('.hangman-reward-close')?.addEventListener('click',close);
@@ -78,7 +81,7 @@
         finished=true;solved++;try{storage.setItem('szs_hangman_solved',String(solved))}catch{}
         $('hangmanFeedback').textContent=pick(remarks.win);
         setComment('Wiedziałem, że dasz radę. W końcu ktoś tu czyta instrukcje. Ja ich nie czytam, ale mam pieczątkę.');
-        if(isSpecialWord)showSpecialReward();
+        showSpecialReward();
       }
     }
     render();
