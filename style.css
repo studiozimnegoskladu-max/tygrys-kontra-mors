@@ -3073,3 +3073,34 @@ body.view-hangman .hangman-scene-caption{display:none!important;}
  body.view-fortune .wheel-label-8{transform:translate(-50%,-50%) rotate(315deg) translateY(-34cqw) rotate(-315deg)!important}
  body.view-fortune .wheel-label{font-size:clamp(11px,3.2vw,16px)!important;min-width:0!important;padding:3px 5px!important;white-space:nowrap!important}
 }
+
+
+/* KOŁO FORTUNY — dopasowanie do szerokości ekranu telefonu */
+@media(max-width:600px){
+ body.view-fortune #setup,body.view-fortune .mors-zone-drawer,body.view-fortune .fortune-panel,body.view-fortune .fortune-feature-grid{min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
+ body.view-fortune .fortune-panel{padding:12px 8px!important;overflow:visible!important}
+ body.view-fortune .fortune-feature-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;width:100%!important;overflow:visible!important}
+ body.view-fortune .fortune-wheel-stage{box-sizing:border-box!important;width:min(100%,calc(100vw - 110px),300px)!important;max-width:300px!important;aspect-ratio:1!important;min-width:0!important;margin:18px auto 14px!important;justify-self:center!important}
+ body.view-fortune .fortune-wheel{box-sizing:border-box!important;width:100%!important;height:100%!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label{font-size:clamp(11px,3.3vw,16px)!important;min-width:0!important;padding:3px 5px!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-1{transform:translate(-50%,-50%) translateY(-100px)!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-2{transform:translate(-50%,-50%) rotate(45deg) translateY(-100px) rotate(-45deg)!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-3{transform:translate(-50%,-50%) rotate(90deg) translateY(-100px) rotate(-90deg)!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-4{transform:translate(-50%,-50%) rotate(135deg) translateY(-100px) rotate(-135deg)!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-5{transform:translate(-50%,-50%) rotate(180deg) translateY(-100px) rotate(-180deg)!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-6{transform:translate(-50%,-50%) rotate(225deg) translateY(-100px) rotate(-225deg)!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-7{transform:translate(-50%,-50%) rotate(270deg) translateY(-100px) rotate(-270deg)!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-8{transform:translate(-50%,-50%) rotate(315deg) translateY(-100px) rotate(-315deg)!important}
+ body.view-fortune .fortune-hand{right:-8px!important;bottom:0!important;width:60px!important}
+}
+@media(max-width:390px){
+ body.view-fortune .fortune-wheel-stage{width:min(100%,calc(100vw - 110px),260px)!important;max-width:260px!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-1{transform:translate(-50%,-50%) translateY(-82px)!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-2{transform:translate(-50%,-50%) rotate(45deg) translateY(-82px) rotate(-45deg)!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-3{transform:translate(-50%,-50%) rotate(90deg) translateY(-82px) rotate(-90deg)!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-4{transform:translate(-50%,-50%) rotate(135deg) translateY(-82px) rotate(-135deg)!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-5{transform:translate(-50%,-50%) rotate(180deg) translateY(-82px) rotate(-180deg)!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-6{transform:translate(-50%,-50%) rotate(225deg) translateY(-82px) rotate(-225deg)!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-7{transform:translate(-50%,-50%) rotate(270deg) translateY(-82px) rotate(-270deg)!important}
+ body.view-fortune .fortune-wheel-stage .wheel-label-8{transform:translate(-50%,-50%) rotate(315deg) translateY(-82px) rotate(-315deg)!important}
+}
