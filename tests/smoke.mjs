@@ -58,9 +58,6 @@ async function runProfile(name, contextOptions) {
     const paintOptions = page.locator('#paintChoices button');
     if (await paintOptions.count() !== 4) failures.push(`[${name}] Gra Morścisław kontra Plama nie pokazuje czterech kolorów.`);
     else await paintOptions.first().click();
-    await page.locator('#herringStart').click();
-    await page.waitForFunction(() => !document.querySelector('#herringPlay').classList.contains('hidden'));
-    if (await page.locator('#herringChoices').locator('button').count() < 1) failures.push(`[${name}] Gra w uciekające śledzie nie wygenerowała celów.`);
     await page.locator('#fontStart').click();
     await page.waitForFunction(() => !document.querySelector('#fontPlay').classList.contains('hidden'));
     if (await page.locator('#fontChoices button').count() < 4) failures.push(`[${name}] Fontowy Bałagan nie generuje odpowiedzi.`);
@@ -81,4 +78,4 @@ if (failures.length) {
   console.error(failures.join('\n'));
   process.exit(1);
 }
-console.log('OK: ekran startowy, menu, ruch w kółko i krzyżyk, Mors Cup, Urząd Litery, trzy minigry Parku Absurdu, Fontowy Bałagan i Koło Fortuny — desktop + mobile.');
+console.log('OK: ekran startowy, menu, ruch w kółko i krzyżyk, Mors Cup, Urząd Litery, minigra Morścisław kontra Plama, Fontowy Bałagan i Koło Fortuny — desktop + mobile.');
