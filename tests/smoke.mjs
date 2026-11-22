@@ -46,7 +46,7 @@ async function runProfile(name, contextOptions) {
     else { await soccerDots.first().click(); await page.waitForTimeout(120); if (await page.locator('#soccerBoard [data-soccer-point]').count() < 2) failures.push(`[${name}] Ruch na boisku nie odświeżył planszy.`); }
     await page.locator('#soccerExit').click();
     await page.locator('#openHangman').click();
-    await page.waitForFunction(() => document.body.classList.contains('view-mors-zone'));
+    await page.waitForFunction(() => document.body.classList.contains('view-hangman'));
     const letters = page.locator('#hangmanKeyboard button:not(:disabled)');
     if (await letters.count() < 10) failures.push(`[${name}] Klawiatura Urzędu Ostatecznej Litery nie działa.`);
     else await letters.first().click();
