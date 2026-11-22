@@ -43,7 +43,24 @@ async function runProfile(name, contextOptions) {
     await page.waitForFunction(() => !document.querySelector('#soccerPlay').classList.contains('hidden'));
     const soccerDots = page.locator('#soccerBoard [data-soccer-point]');
     if (await soccerDots.count() < 2) failures.push(`[${name}] Boisko nie wygenerowało punktów do gry.`);
-    else { await soccerDots.first().click(); await page.waitForFunction(() => !document.querySelector('#soccerStatus')?.textContent.includes('Morścisław myśli'), { timeout: 5000 }); if (await page.locator('#soccerBoard [data-soccer-point]').count() < 2) failures.push(`[${name}] Ruch na boisku nie odświeżył planszy po ruchu przeciwnika.`); }
+    else {
+      const ball = page.locator('#soccerBoard .ball');
+      const initialPosition = [await ball.getAttribute('cx'), await ball.getAttribute('cy')].join(',');
+      await soccerDots.first().click();
+      await page.waitForFunction(previous => {
+        const node = document.querySelector('#soccerBoard .ball');
+        return node && [node.getAttribute('cx'), node.getAttribute('cy')].join(',') !== previous;
+      }, initialPosition, { timeout: 3000 });
+      const playerPosition = [await ball.getAttribute('cx'), await ball.getAttribute('cy')].join(',');
+      await page.waitForFunction(previous => {
+        const node = document.querySelector('#soccerBoard .ball');
+        return node && [node.getAttribute('cx'), node.getAttribute('cy')].join(',') !== previous;
+      }, playerPosition, { timeout: 5000 });
+      if (await page.locator('#soccerBoard .move-line').count() < 2)
+        failures.push(`[${name}] Morścisław nie wykonał własnego ruchu po ruchu gracza.`);
+      if (await page.locator('#soccerBoard [data-soccer-point]').count() < 2)
+        failures.push(`[${name}] Boisko nie odświeżyło dostępnych ruchów po odpowiedzi AI.`);
+    }
     await page.locator('#soccerExit').click();
     await page.locator('#openHangman').click();
     await page.waitForFunction(() => document.body.classList.contains('view-hangman'));
