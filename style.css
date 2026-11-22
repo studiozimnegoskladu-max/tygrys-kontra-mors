@@ -3048,3 +3048,9 @@ body.view-hangman .hangman-scene{width:min(100%,760px)!important;height:auto!imp
 body.view-hangman .hangman-scene .hangman-walrus{position:relative!important;display:block!important;inset:auto!important;width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important;object-position:center!important;clip-path:none!important;filter:none!important;}
 body.view-hangman .hangman-scene-caption{display:none!important;}
 @media(max-width:520px){body.view-hangman .hangman-chaos{padding:4px!important}body.view-hangman .hangman-scene{width:100%!important}}
+
+
+/* Logo SZS — wymuszone wyświetlanie na ekranie powitalnym */
+#introScreen .intro-card .intro-brand{display:flex!important;visibility:visible!important;opacity:1!important;min-height:112px!important;position:relative!important;z-index:20!important;justify-content:center!important;align-items:center!important;overflow:visible!important;}
+#introScreen .intro-card .intro-brand img{display:block!important;visibility:visible!important;opacity:1!important;width:210px!important;height:auto!important;max-width:58vw!important;max-height:112px!important;object-fit:contain!important;object-position:center!important;margin:0 auto!important;position:relative!important;z-index:21!important;}
+@media(max-width:600px){#introScreen .intro-card .intro-brand{min-height:88px!important}#introScreen .intro-card .intro-brand img{width:165px!important;max-height:84px!important}}
