@@ -43,13 +43,16 @@ async function runProfile(name, contextOptions) {
     await page.waitForFunction(() => !document.querySelector('#soccerPlay').classList.contains('hidden'));
     const soccerDots = page.locator('#soccerBoard [data-soccer-point]');
     if (await soccerDots.count() < 2) failures.push(`[${name}] Boisko nie wygenerowało punktów do gry.`);
-    else { await soccerDots.first().click(); await page.waitForTimeout(120); if (await page.locator('#soccerBoard [data-soccer-point]').count() < 2) failures.push(`[${name}] Ruch na boisku nie odświeżył planszy.`); }
+    else { await soccerDots.first().click(); await page.waitForFunction(() => !document.querySelector('#soccerStatus')?.textContent.includes('Morścisław myśli'), { timeout: 5000 }); if (await page.locator('#soccerBoard [data-soccer-point]').count() < 2) failures.push(`[${name}] Ruch na boisku nie odświeżył planszy po ruchu przeciwnika.`); }
     await page.locator('#soccerExit').click();
     await page.locator('#openHangman').click();
     await page.waitForFunction(() => document.body.classList.contains('view-hangman'));
     const letters = page.locator('#hangmanKeyboard button:not(:disabled)');
     if (await letters.count() < 10) failures.push(`[${name}] Klawiatura Urzędu Ostatecznej Litery nie działa.`);
     else await letters.first().click();
+    await page.locator('#attractionsBack').click();
+    await page.locator('#openMorsZone').click();
+    await page.waitForFunction(() => document.body.classList.contains('view-mors-zone'));
     await page.locator('#paintStart').click();
     await page.waitForFunction(() => !document.querySelector('#paintPlay').classList.contains('hidden'));
     const paintOptions = page.locator('#paintChoices button');
