@@ -3054,3 +3054,22 @@ body.view-hangman .hangman-scene-caption{display:none!important;}
 #introScreen .intro-card .intro-brand{display:flex!important;visibility:visible!important;opacity:1!important;min-height:112px!important;position:relative!important;z-index:20!important;justify-content:center!important;align-items:center!important;overflow:visible!important;}
 #introScreen .intro-card .intro-brand img{display:block!important;visibility:visible!important;opacity:1!important;width:210px!important;height:auto!important;max-width:58vw!important;max-height:112px!important;object-fit:contain!important;object-position:center!important;margin:0 auto!important;position:relative!important;z-index:21!important;}
 @media(max-width:600px){#introScreen .intro-card .intro-brand{min-height:88px!important}#introScreen .intro-card .intro-brand img{width:165px!important;max-height:84px!important}}
+
+
+/* Koło Losu: na telefonie rozmiar zależy od rzeczywistej szerokości karty,
+   nie od viewportu. Zapobiega obcięciu prawej części koła. */
+@media(max-width:720px){
+ body.view-fortune .fortune-panel{box-sizing:border-box!important;min-width:0!important;max-width:100%!important;overflow:hidden!important}
+ body.view-fortune .fortune-feature-grid{width:100%!important;min-width:0!important;max-width:100%!important;grid-template-columns:minmax(0,1fr)!important}
+ body.view-fortune .fortune-wheel-stage{box-sizing:border-box!important;display:grid!important;place-items:center!important;width:100%!important;max-width:310px!important;min-width:0!important;aspect-ratio:1!important;height:auto!important;margin:16px auto!important;container-type:inline-size;}
+ body.view-fortune .fortune-wheel{box-sizing:border-box!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important}
+ body.view-fortune .wheel-label-1{transform:translate(-50%,-50%) translateY(-34cqw)!important}
+ body.view-fortune .wheel-label-2{transform:translate(-50%,-50%) rotate(45deg) translateY(-34cqw) rotate(-45deg)!important}
+ body.view-fortune .wheel-label-3{transform:translate(-50%,-50%) rotate(90deg) translateY(-34cqw) rotate(-90deg)!important}
+ body.view-fortune .wheel-label-4{transform:translate(-50%,-50%) rotate(135deg) translateY(-34cqw) rotate(-135deg)!important}
+ body.view-fortune .wheel-label-5{transform:translate(-50%,-50%) rotate(180deg) translateY(-34cqw) rotate(-180deg)!important}
+ body.view-fortune .wheel-label-6{transform:translate(-50%,-50%) rotate(225deg) translateY(-34cqw) rotate(-225deg)!important}
+ body.view-fortune .wheel-label-7{transform:translate(-50%,-50%) rotate(270deg) translateY(-34cqw) rotate(-270deg)!important}
+ body.view-fortune .wheel-label-8{transform:translate(-50%,-50%) rotate(315deg) translateY(-34cqw) rotate(-315deg)!important}
+ body.view-fortune .wheel-label{font-size:clamp(11px,3.2vw,16px)!important;min-width:0!important;padding:3px 5px!important;white-space:nowrap!important}
+}
