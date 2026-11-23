@@ -233,7 +233,7 @@
     const places=['w dziale kreatywnym','na zapleczu drukarni','pod lodem','w Morścisławowym Parku Absurdu','na samym środku planszy','w kolejce po święty spokój','w archiwum nieudanych pomysłów'];
     const reactions=['Nie panikowałem. Najpierw zrobiłem minę eksperta, a potem zapytałem, czy ktoś widział moją rybę.','Zwołałem komisję. Byłem ja, moje odbicie i bardzo niezadowolona kanapka.','Hrabia zaproponował trzy poprawki. Wprowadziłem czwartą: zamknąłem notes.','Uznałem, że to znak. Nie wiem czego, ale wyglądał profesjonalnie.','W raporcie wpisałem: sytuacja pod kontrolą. Raport sam uciekł.','Przez chwilę chciałem zareagować rozsądnie, ale nie miałem przy sobie odpowiedniego formularza.','Wszyscy patrzyli na mnie. Ja patrzyłem na rybę. Ryba zachowała się najbardziej dojrzale.'];
     const endings=['Wniosek? Nie każda katastrofa jest porażką. Niektóre są po prostu bardzo głośne.','Od dziś wprowadzam nową zasadę: najpierw ryba, potem decyzje.','Sprawa pozostaje otwarta, głównie dlatego, że zgubiłem klucz do szuflady.','Zapisałem to w dzienniku. Dziennik poprosił o przeniesienie.','Jutro przeprowadzę dalsze badania. Chyba że będzie drzemka.'];
-    const challenges=['Zagraj dziś jedną rundę i rzuć wyzwanie komuś, kto za bardzo wierzy we własne umiejętności.','Odwiedź Park Absurdu Morścisława i sprawdź, czy masz dziś refleks godny płetwy.','Wykonaj jedną misję dnia. Morścisław Śledziwój osobiście przybije Ci mentalną pieczątkę.','Zmień maskotkę i rozegraj nią partię. Niech nastąpi płetwiasta odmiana.','Zagraj rewanż. Pamiętaj: plansza nie przyjmuje reklamacji, ale Morścisław wysłucha.','Wymyśl dziś własną nazwę dla małej wpadki. To pierwszy krok do wielkiej kariery.','Zaproś znajomego do gry. Samotne zwycięstwa są podejrzanie ciche.','Zajrzyj do quizu i udowodnij, że wiesz coś więcej niż to, gdzie trzyma się ryby.'];
+    const challenges=['Zagraj dziś jedną rundę i rzuć wyzwanie komuś, kto za bardzo wierzy we własne umiejętności.','Odwiedź Park Absurdu Morścisława i sprawdź, czy masz dziś refleks godny płetwy.','Wykonaj jedną misję dnia. Morścisław osobiście przybije Ci mentalną pieczątkę.','Zmień maskotkę i rozegraj nią partię. Niech nastąpi płetwiasta odmiana.','Zagraj rewanż. Pamiętaj: plansza nie przyjmuje reklamacji, ale Morścisław wysłucha.','Wymyśl dziś własną nazwę dla małej wpadki. To pierwszy krok do wielkiej kariery.','Zaproś znajomego do gry. Samotne zwycięstwa są podejrzanie ciche.','Zajrzyj do quizu i udowodnij, że wiesz coś więcej niż to, gdzie trzyma się ryby.'];
     const moods=['RAPORT Z PŁETW','KOMISJA ABSURDU','NOTATKA SŁUŻBOWA','BADANIA TERENOWE','REFLEKSJA Z LODÓWKI','DZIAŁ KREATYWNY','ALARM MORŚCISŁAWA'];
     const subject=pick(subjects);
     return {
@@ -546,7 +546,7 @@
     if(hand){hand.classList.remove('dragging');hand.style.left='';hand.style.top='';hand.style.right='';hand.style.bottom='';hand.style.transform=''}
     const claim=$('fortuneClaimLink'),jackpot=$('candyJackpot');if(claim)claim.hidden=index!==7;
     if(index===7&&jackpot){jackpot.hidden=false;document.body.classList.add('jackpot-open');window.setTimeout(()=>{jackpot.hidden=true;document.body.classList.remove('jackpot-open')},7500)}
-    $('fortuneNote').textContent='Wylosowano! Morścisław Śledziwój zatwierdza tę decyzję, Koza Jołanna nie zgłasza reklamacji.';
+    $('fortuneNote').textContent='Wylosowano! Morścisław zatwierdza tę decyzję, KOZA nie zgłasza reklamacji.';
     unlockSticker('fortune-spin');
   }
   function setupFortuneDrag(){
@@ -578,8 +578,8 @@
       const direction=Math.sign(velocity||lastDelta||1),extraTurns=4+Math.min(2,Math.abs(velocity)*1.8);
       const target=rotation+direction*(360*extraTurns);
       stage.classList.remove('dragging');stage.classList.add('spinning');
-      $('fortuneResult').textContent='Koło nabiera obrotów! Morścisław Śledziwój zaleca nie mrugać.';
-      $('fortuneNote').textContent='Koza Jołanna pilnuje, żeby nikt nie próbował zatrzymać losu.';
+      $('fortuneResult').textContent='Koło nabiera obrotów! Morścisław zaleca nie mrugać.';
+      $('fortuneNote').textContent='KOZA pilnuje, żeby nikt nie próbował zatrzymać losu.';
       fortuneTickSequence();wheel.style.transition='transform 4.8s cubic-bezier(.12,.72,.12,1)';void wheel.offsetWidth;wheel.style.transform='rotate('+target+'deg)';
       wheel.dataset.rotation=String(target);
       let finished=false;
@@ -811,11 +811,11 @@
     if(title)title.textContent=brief.title;
     if(body)body.textContent=brief.text;
   }
-  const characterNames={tiger:'Hrabia Poprawek',mors:'Morścisław',goat:'Koza Jołanna',octopus:'Honda Drukara',bobr:'Bóbr',llama:'Lama Drama'};
+  const characterNames={tiger:'Hrabia Poprawek',mors:'Morścisław',goat:'KOZA',octopus:'Honda Drukara',bobr:'Bóbr',llama:'Lama Drama'};
   function applyCanonicalCharacterAssets(){document.querySelectorAll('img[data-character]').forEach(img=>{const character=img.dataset.character;if(characterAssets[character]){img.src=characterAssetUrl(character)+'?v=20261110-mascots-1';img.alt=characterNames[character]||img.alt;}});}
   const characterIcons={tiger:'👑',mors:'🦭',goat:'🐐',octopus:'🚗',bobr:'🦫',llama:'🦙'};
   const characterQuips={
-    goat:{move:['Koza Jołanna melduje: kopyto postawione, proszę nie regulować odbiorników.','Mee-e-eega ruch! Nawet Hrabia musi poprawić koronę.','Kozo Jołanno, to było Twoje kopyto czy pieczątka?','Koza Jołanna skacze po planszy. Kontrola jakości uciekła.','Beee-zdyskusyjny ruch. Komisja kopyt zatwierdza.','Koza Jołanna mówi: ja tu tylko przyszłam skubać zwycięstwo.','Uwaga na rogi! Strategia weszła na pełnej.','Kopytko w pole, rozum na urlopie.'],win:['KOZA JOŁANNA WYGRYWA! Reszta może iść skubać trawę.','BEEE-zapelacyjna wygrana! Kozo Jołanno, odbierz puchar!','Koza Jołanna rozniosła planszę. Dosłownie prawie ją zjadła.','Kopyta górą! Hrabia składa oficjalny protest.']},
+    goat:{move:['KOZA melduje: kopyto postawione, proszę nie regulować odbiorników.','Mee-e-eega ruch! Nawet Hrabia musi poprawić koronę.','KOZO, to było Twoje kopyto czy pieczątka?','KOZA skacze po planszy. Kontrola jakości uciekła.','Beee-zdyskusyjny ruch. Komisja kopyt zatwierdza.','KOZA mówi: ja tu tylko przyszłam skubać zwycięstwo.','Uwaga na rogi! Strategia weszła na pełnej.','Kopytko w pole, rozum na urlopie.'],win:['KOZA JOŁANNA WYGRYWA! Reszta może iść skubać trawę.','BEEE-zapelacyjna wygrana! KOZO, odbierz puchar!','KOZA rozniosła planszę. Dosłownie prawie ją zjadła.','Kopyta górą! Hrabia składa oficjalny protest.']},
     octopus:{move:['Honda Drukara wjeżdża z nowym pomysłem!','Honda Drukara wrzuca wyższy bieg!','Silnik odpala, zwycięstwo drukuje się samo!'],win:['HONDA DRUKARA I PEŁNA KONTROLA!','Honda Drukara dowiozła zwycięstwo w najwyższej jakości!']},
     bobr:{move:['Bóbr melduje: tama zbudowana, pole zajęte!','Zęby naostrzone, strategia dopięta.','Bóbr nie gryzie się w język. Ani w planszę!'],win:['BÓBR WYGRYWA! Tama zwycięstwa stoi!','To nie przypadek — to bobrza robota!']},
     llama:{move:['Lama Drama robi wejście. Będzie gorąco!','Uwaga, plucie… znaczy, precyzyjny ruch!','Lama ma dziś dramatycznie dobry plan!'],win:['LAMA DRAMA! Finał godny owacji na stojąco!','Ależ drama! Lama zgarnia zwycięstwo!']}
@@ -1460,7 +1460,7 @@
         $('morsCupSeasonStatus').textContent=season?'Sezon trwa. Zbieramy zgłoszenia i wyniki.':'Morścisław musi najpierw ogłosić nowy sezon.';
         const body=$('morsCupStandings');body.innerHTML='';
         if(!tableRes.data?.length){const tr=document.createElement('tr');tr.innerHTML='<td colspan="7">Brak zawodników. Zapisz profil jako pierwszy!</td>';body.append(tr)}
-        else tableRes.data.forEach((p,i)=>{const tr=document.createElement('tr');if(p.player_id===profileId())tr.classList.add('is-you');tr.innerHTML='<td>'+(i+1)+'</td><td><b>'+safe(p.nickname)+'</b><small>'+safe(({mors:'🦭 Morścisław',tiger:'Hrabia Poprawek',goat:'🐐 Koza Jołanna',bobr:'🦫 Bóbr',llama:'🦙 Lama Drama',octopus:'🚗 Honda Drukara'}[p.mascot]||'Zawodnik'))+'</small></td><td>'+Number(p.played||0)+'</td><td>'+Number(p.wins||0)+'</td><td>'+Number(p.draws||0)+'</td><td>'+Number(p.losses||0)+'</td><td><b>'+Number(p.points||0)+'</b></td>';body.append(tr)});
+        else tableRes.data.forEach((p,i)=>{const tr=document.createElement('tr');if(p.player_id===profileId())tr.classList.add('is-you');tr.innerHTML='<td>'+(i+1)+'</td><td><b>'+safe(p.nickname)+'</b><small>'+safe(({mors:'🦭 Morścisław',tiger:'Hrabia Poprawek',goat:'🐐 KOZA',bobr:'🦫 Bóbr',llama:'🦙 Lama Drama',octopus:'🚗 Honda Drukara'}[p.mascot]||'Zawodnik'))+'</small></td><td>'+Number(p.played||0)+'</td><td>'+Number(p.wins||0)+'</td><td>'+Number(p.draws||0)+'</td><td>'+Number(p.losses||0)+'</td><td><b>'+Number(p.points||0)+'</b></td>';body.append(tr)});
         const list=$('morsCupTournamentList');list.innerHTML='';
         if(!tournamentRes.data?.length){list.textContent='Na razie brak otwartych turniejów. Morścisław podobno szuka pucharu.'}
         else tournamentRes.data.forEach(t=>{const card=document.createElement('article');card.className='morscup-tournament-card';const title=document.createElement('b');title.textContent=t.name;const detail=document.createElement('small');detail.textContent='Miejsca: do '+t.capacity+' · '+(t.status==='registration'?'Zapisy otwarte':'Turniej w trakcie');card.append(title,detail);if(t.status==='registration'){const join=document.createElement('button');join.type='button';join.className='btn btn-yellow';join.textContent='ZGŁOŚ MNIE';join.addEventListener('click',async()=>{join.disabled=true;if(!storage.getItem(MORS_CUP_TOKEN_KEY)){note('Najpierw zapisz swój profil zawodnika.',true);join.disabled=false;return}const {data,error}=await client.rpc('szs_morscup_join_tournament',{p_tournament_id:t.id,p_player_id:profileId(),p_player_token:morsCupPlayerToken()});if(error){note(/duplicate|already/i.test(error.message||'')?'Już jesteś na liście tego turnieju.':('Nie udało się zapisać: '+error.message),true);join.disabled=false}else note(data?.already_joined?'Już jesteś na liście startowej tego turnieju.':'Zgłoszenie przyjęte. Morścisław dopisał Cię do listy startowej!')});card.append(join)}list.append(card)});
