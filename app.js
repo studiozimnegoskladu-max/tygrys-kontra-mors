@@ -737,7 +737,7 @@
     updateOnlineCharacters();render();
   }
   function showAttractionsHome(){
-    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','view-hangman','soccer-fullscreen-open');
+    document.body.classList.remove('view-tictactoe','view-soccer','view-fortune','view-mors-zone','view-hangman','view-hrabia-survival','soccer-fullscreen-open');
     const cup=$('morsCupMusic'),background=$('backgroundMusic');
     if(cup){cup.pause();cup.currentTime=0;}
     if(typeof soccerMusicActive!=='undefined'&&soccerMusicActive){soccerMusicActive=false;if(musicOn&&background)startBackgroundMusic();}
@@ -798,11 +798,12 @@
   $('openFortune')?.addEventListener('click',()=>openAttraction('fortune'));
   $('openMorsZone')?.addEventListener('click',()=>openAttraction('mors-zone'));
   $('openHangman')?.addEventListener('click',()=>openAttraction('hangman'));
+  $('openHrabiaSurvival')?.addEventListener('click',()=>openAttraction('hrabia-survival'));
   $('attractionsBack')?.addEventListener('click',showAttractionsHome);
 
   // Bezpośrednie linki do pojedynczych atrakcji: ?attraction=tictactoe|soccer|hangman|fortune|mors-zone
   const directAttraction=new URLSearchParams(location.search).get('attraction');
-  const validAttractions=['tictactoe','soccer','hangman','fortune','mors-zone'];
+  const validAttractions=['tictactoe','soccer','hangman','fortune','mors-zone','hrabia-survival'];
   if(validAttractions.includes(directAttraction)){
     requestAnimationFrame(()=>openAttraction(directAttraction));
   }
