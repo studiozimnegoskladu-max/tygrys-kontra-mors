@@ -3161,3 +3161,32 @@ body.view-hrabia-survival .hrabia-survival-page{display:block!important}
  .hrabia-survival-page{margin:14px 8px 32px;padding:14px;border-width:3px;box-shadow:5px 5px 0 #171515}
  .hrabia-survival-page-head h1{font-size:clamp(27px,8vw,38px)}
 }
+
+/* MENU ATRAKCJI — dokładnie 3 kolumny i 2 rzędy */
+.attraction-grid{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:clamp(8px,1.35vw,15px)!important;padding:12px 8px 18px!important;align-items:stretch!important}
+.attraction-card,.attraction-card:nth-child(n){grid-column:span 2!important;min-width:0!important;min-height:clamp(205px,22vw,255px)!important;padding:10px 10px 12px!important;gap:5px!important}
+.attraction-art{height:clamp(78px,10vw,112px)!important;min-height:clamp(78px,10vw,112px)!important;font-size:clamp(2.8rem,5vw,4.4rem)!important}
+.attraction-mascot{max-height:clamp(72px,9vw,104px)!important}
+.attraction-card>b{font-size:clamp(15px,1.55vw,21px)!important;line-height:1.02!important;margin:4px 0!important}
+.attraction-card>small{font-size:clamp(10px,.95vw,12px)!important;line-height:1.25!important;min-height:2.5em!important}
+.attraction-cta{margin-top:8px!important;padding:6px 9px!important;font-size:clamp(9px,.85vw,11px)!important}
+.attraction-number{top:7px!important;left:9px!important;font-size:10px!important}
+@media(max-width:760px){
+ .attraction-grid{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:7px!important;padding:10px 2px 16px!important}
+ .attraction-card,.attraction-card:nth-child(n){grid-column:span 2!important;min-height:185px!important;padding:8px 5px 9px!important;border-width:2px!important;border-radius:9px!important;box-shadow:3px 3px 0 var(--ink)!important;text-align:center!important;align-items:center!important}
+ .attraction-art{height:65px!important;min-height:65px!important;font-size:2.55rem!important;justify-content:center!important}
+ .attraction-mascot{max-height:62px!important}
+ .attraction-card>b{font-size:clamp(11px,2.3vw,16px)!important;overflow-wrap:anywhere}
+ .attraction-card>small{font-size:clamp(8px,1.55vw,10px)!important;line-height:1.2!important;min-height:3.6em!important}
+ .attraction-cta{font-size:8px!important;padding:5px 4px!important;margin-top:5px!important}
+ .attraction-number{top:4px!important;left:5px!important;font-size:8px!important}
+}
+@media(max-width:380px){
+ .attraction-grid{gap:5px!important}
+ .attraction-card,.attraction-card:nth-child(n){min-height:170px!important;padding:7px 3px!important}
+ .attraction-art{height:56px!important;min-height:56px!important;font-size:2.2rem!important}
+ .attraction-mascot{max-height:54px!important}
+ .attraction-card>b{font-size:10px!important}
+ .attraction-card>small{font-size:7.5px!important}
+ .attraction-cta{font-size:7px!important}
+}
