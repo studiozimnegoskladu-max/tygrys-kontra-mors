@@ -3141,3 +3141,23 @@ body.view-hangman .hangman-scene-caption{display:none!important;}
 .hrabia-survival .hrabia-answers button:disabled{
   pointer-events:none!important;
 }
+
+
+/* PRZETRWAJ HRABIEGO — samodzielna atrakcja z menu głównego */
+.attraction-hrabia{background:linear-gradient(145deg,#f7e8ff 0%,#e9c9ff 52%,#ffc5df 100%)}
+.attraction-hrabia .attraction-art{min-height:112px}
+.hrabia-survival-page{display:none;max-width:980px;margin:26px auto 48px;padding:clamp(16px,3vw,30px);position:relative;z-index:2;background:linear-gradient(145deg,#fff4c4,#ffe8a6);border:4px solid #171515;border-radius:16px;box-shadow:8px 8px 0 #171515}
+.hrabia-survival-page-head{text-align:center;margin:0 auto 22px;max-width:760px}
+.hrabia-survival-page-head>small{font-size:11px;font-weight:1000;letter-spacing:1.4px;color:#7c3db5}
+.hrabia-survival-page-head h1{font-size:clamp(30px,5vw,48px);line-height:1;margin:9px 0 10px;font-weight:1000}
+.hrabia-survival-page-head p{font-size:clamp(14px,2vw,17px);font-weight:750;line-height:1.45;margin:0}
+.hrabia-survival-page .hrabia-survival{margin-top:0}
+body.view-hrabia-survival .attractions-menu{display:none!important}
+body.view-hrabia-survival .attractions-back{display:block!important}
+body.view-hrabia-survival .shell>.hero,
+body.view-hrabia-survival .shell>#setup{display:none!important}
+body.view-hrabia-survival .hrabia-survival-page{display:block!important}
+@media(max-width:720px){
+ .hrabia-survival-page{margin:14px 8px 32px;padding:14px;border-width:3px;box-shadow:5px 5px 0 #171515}
+ .hrabia-survival-page-head h1{font-size:clamp(27px,8vw,38px)}
+}
