@@ -3118,3 +3118,26 @@ body.view-hangman .hangman-scene-caption{display:none!important;}
 #introScreen .intro-card>.intro-brand{display:flex!important;position:absolute!important;top:12px!important;left:12px!important;right:12px!important;width:auto!important;height:120px!important;min-height:0!important;margin:0!important;padding:0!important;align-items:center!important;justify-content:center!important;visibility:visible!important;opacity:1!important;z-index:50!important;overflow:visible!important;}
 #introScreen .intro-card>.intro-brand>img{display:block!important;width:190px!important;height:112px!important;max-width:70vw!important;max-height:112px!important;object-fit:contain!important;object-position:center!important;visibility:visible!important;opacity:1!important;position:relative!important;margin:0 auto!important;z-index:51!important;}
 @media(max-width:600px){#introScreen .intro-card{padding-top:132px!important}#introScreen .intro-card>.intro-brand{top:6px!important;height:112px!important}#introScreen .intro-card>.intro-brand>img{width:160px!important;height:104px!important;max-height:104px!important}}
+
+
+/* PRZETRWAJ HRABIEGO — przyciski odpowiedzi zawsze aktywne także na ekranach dotykowych */
+.hrabia-survival{
+  position:relative!important;
+  isolation:isolate;
+}
+.hrabia-survival .hrabia-answers{
+  position:relative!important;
+  z-index:5!important;
+  pointer-events:auto!important;
+}
+.hrabia-survival .hrabia-answers button{
+  position:relative!important;
+  z-index:6!important;
+  display:block!important;
+  pointer-events:auto!important;
+  touch-action:manipulation;
+  cursor:pointer!important;
+}
+.hrabia-survival .hrabia-answers button:disabled{
+  pointer-events:none!important;
+}
