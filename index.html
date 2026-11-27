@@ -58,7 +58,7 @@
 
   <main class="shell">
     <section class="attractions-menu" id="mainAttractions" aria-labelledby="attractionsTitle">
-      <div class="attractions-intro"><small>STUDIO ZIMNEGO SKŁADU ZAPRASZA</small><h1 id="attractionsTitle"><span class="cmyk-word cmyk-cyan">WYBIERZ</span> <span class="cmyk-word cmyk-magenta">ATRAKCJ<span class="szs-ogonek-e">E</span></span></h1><p>Trzy drogi do sławy. Każda podejrzana, każda morsowa.</p></div>
+      <div class="attractions-intro"><small>STUDIO ZIMNEGO SKŁADU ZAPRASZA</small><h1 id="attractionsTitle"><span class="cmyk-word cmyk-cyan">WYBIERZ</span> <span class="cmyk-word cmyk-magenta">ATRAKCJ<span class="szs-ogonek-e">E</span></span></h1><p>Sześć dróg do sławy. Każda podejrzana, każda morsowa.</p></div>
       <div class="attraction-grid">
         <button type="button" class="attraction-card attraction-tictactoe" id="openTicTacToe">
           <span class="attraction-number">01</span><span class="attraction-art"><img class="attraction-mascot" src="assets/mors kółko i krzyżyk.png" alt="Mors — kółko i krzyżyk"></span><b>KÓŁKO I KRZYŻYK</b><small>Pojedynek z Hrabią, Morsem albo znajomym.</small><span class="attraction-cta">WEJDŹ DO GRY ↗</span>
@@ -72,6 +72,9 @@
         <button type="button" class="attraction-card attraction-zone" id="openMorsZone">
           <span class="attraction-number">05</span><span class="attraction-art" style="background:#ec008c!important"><img class="attraction-mascot" src="assets/mors pisarz.png" alt="Mors — strefa Morsa"></span><b>STREFA MORŚCISŁAWA</b><small>Instytut absurdu, quiz, park gier i wyzwania Morścisława.</small><span class="attraction-cta">WEJDŹ DO STREFY ↗</span>
         </button>
+        <button type="button" class="attraction-card attraction-hrabia" id="openHrabiaSurvival">
+          <span class="attraction-number">06</span><span class="attraction-art"><img class="attraction-mascot" src="assets/mors-hrabia.png?v=20261109-institut" alt="Morścisław i Hrabia Poprawek"></span><b>PRZETRWAJ HRABIEGO</b><small>Pięć rund absurdalnych uwag. Wybierz odpowiedź Morścisława i ocal projekt!</small><span class="attraction-cta">PODEJMIJ WYZWANIE ↗</span>
+        </button>
         <button type="button" class="attraction-card attraction-fortune" id="openFortune">
           <span class="attraction-number">04</span><span class="attraction-art"><img class="attraction-mascot" src="assets/mors koło.png" alt="Mors — koło fortuny"></span><b>KOŁO FORTUNY</b><small>Zakreć łapką Morścisława. Los już coś kombinuje.</small><span class="attraction-cta">ZAKRĘĆ KOŁEM ↗</span>
         </button>
@@ -79,6 +82,19 @@
       <p class="attractions-footer">WYBIERZ, W CO GRAMY. MORŚCISŁAW NIE BIERZE ODPOWIEDZIALNOŚCI ZA WYNIKI.</p>
     </section>
     <button type="button" class="attractions-back btn btn-outline" id="attractionsBack">← WRÓĆ DO WYBORU ATRAKCJI</button>
+    <section class="hrabia-survival-page" id="hrabiaSurvivalPage" aria-labelledby="hrabiaSurvivalHeading">
+      <div class="hrabia-survival-page-head"><small>WYZWANIE SPECJALNE · INSTYTUT HRABIEGO POPRAWEK</small><h1>🎭 PRZETRWAJ HRABIEGO</h1><p>Pięć rund. Pięć trudnych decyzji. Jeden Morścisław, który próbuje uratować Cię przed kolejną poprawką.</p></div>
+      <section class="hrabia-survival" aria-labelledby="hrabiaSurvivalHeading">
+          <div class="hrabia-survival-head"><div><small>MINIGRA INSTYTUTU · 5 RUND</small><h3 id="hrabiaSurvivalHeading">🎭 PRZETRWAJ HRABIEGO</h3><p>Hrabia zgłasza uwagę. Ty wybierasz odpowiedź Morścisława. Sprawdź, czy ocalejesz z tej korekty.</p></div><div class="hrabia-round-stamp" id="hrabiaRoundStamp">RUNDA 0/5</div></div>
+          <label class="hrabia-category-label" for="hrabiaCategory">RODZAJ KLIENTOWEJ KATASTROFY</label>
+          <select id="hrabiaCategory" class="hrabia-category"><option value="all">Losowa mieszanka</option><option value="color">Kolory i odcienie</option><option value="logo">Logo i wielkość</option><option value="layout">Kompozycja</option><option value="font">Czcionki</option><option value="deadline">Terminy i pliki FINAL</option><option value="premium">Życzenia niemożliwe</option></select>
+          <div class="hrabia-case" id="hrabiaCase" aria-live="polite">Naciśnij START. Hrabia już ma przygotowaną uwagę.</div>
+          <div class="hrabia-answers" id="hrabiaAnswers"><button type="button" class="btn btn-yellow" id="hrabiaStartGame">ROZPOCZNIJ PRZETRWANIE ↗</button></div>
+          <div class="hrabia-reaction" id="hrabiaReaction" aria-live="polite">Morścisław czeka przy wyjściu ewakuacyjnym.</div>
+          <div class="hrabia-game-meter"><div class="hrabia-game-meter-top"><b>POZIOM NIEZADOWOLENIA HRABIEGO</b><strong id="hrabiaLevelLabel">3/10 · „Mam tylko jedną uwagę…”</strong></div><div class="hrabia-meter-track"><span id="hrabiaLevelFill" style="width:30%"></span></div><p id="hrabiaLevelComment">Morścisław jeszcze wierzy w ludzi. To się zmieni.</p></div>
+          <div class="hrabia-survival-footer"><b id="hrabiaGameScore">PUNKTY: 0</b><button type="button" class="btn btn-facebook" id="hrabiaShareResult" hidden>POCHWAL SIĘ WYNIKIEM</button></div>
+        </section>
+    </section>
     
     <section class="hero hero-art-replacement" aria-label="Plansza tytułowa pojedynku">
       <div class="tictactoe-title-board">
@@ -241,16 +257,7 @@
             <small>BIURO KOREKT</small><h3>✏️ Generator uwag Hrabiego</h3><p id="hrabiaCorrectionText" aria-live="polite">„Jest dobrze, ale proszę zrobić bardziej tak, jak sobie wyobrażam”.</p><button type="button" class="btn btn-yellow" id="hrabiaCorrectionBtn">WYGENERUJ POPRAWKĘ</button>
           </article>
         </div>
-        <section class="hrabia-survival" aria-labelledby="hrabiaSurvivalHeading">
-          <div class="hrabia-survival-head"><div><small>MINIGRA INSTYTUTU · 5 RUND</small><h3 id="hrabiaSurvivalHeading">🎭 PRZETRWAJ HRABIEGO</h3><p>Hrabia zgłasza uwagę. Ty wybierasz odpowiedź Morścisława. Sprawdź, czy ocalejesz z tej korekty.</p></div><div class="hrabia-round-stamp" id="hrabiaRoundStamp">RUNDA 0/5</div></div>
-          <label class="hrabia-category-label" for="hrabiaCategory">RODZAJ KLIENTOWEJ KATASTROFY</label>
-          <select id="hrabiaCategory" class="hrabia-category"><option value="all">Losowa mieszanka</option><option value="color">Kolory i odcienie</option><option value="logo">Logo i wielkość</option><option value="layout">Kompozycja</option><option value="font">Czcionki</option><option value="deadline">Terminy i pliki FINAL</option><option value="premium">Życzenia niemożliwe</option></select>
-          <div class="hrabia-case" id="hrabiaCase" aria-live="polite">Naciśnij START. Hrabia już ma przygotowaną uwagę.</div>
-          <div class="hrabia-answers" id="hrabiaAnswers"><button type="button" class="btn btn-yellow" id="hrabiaStartGame">ROZPOCZNIJ PRZETRWANIE ↗</button></div>
-          <div class="hrabia-reaction" id="hrabiaReaction" aria-live="polite">Morścisław czeka przy wyjściu ewakuacyjnym.</div>
-          <div class="hrabia-game-meter"><div class="hrabia-game-meter-top"><b>POZIOM NIEZADOWOLENIA HRABIEGO</b><strong id="hrabiaLevelLabel">3/10 · „Mam tylko jedną uwagę…”</strong></div><div class="hrabia-meter-track"><span id="hrabiaLevelFill" style="width:30%"></span></div><p id="hrabiaLevelComment">Morścisław jeszcze wierzy w ludzi. To się zmieni.</p></div>
-          <div class="hrabia-survival-footer"><b id="hrabiaGameScore">PUNKTY: 0</b><button type="button" class="btn btn-facebook" id="hrabiaShareResult" hidden>POCHWAL SIĘ WYNIKIEM</button></div>
-        </section>
+
         <div class="hrabia-badges">
           <div><small>ODZNAKI OCALAŁYCH</small><h3>🏅 Czy przetrwasz współpracę?</h3><p id="hrabiaBadgeProgress">Wygeneruj raporty i poprawki, aby zdobywać odznaki instytutu.</p></div>
           <div class="hrabia-badge-list" id="hrabiaBadgeList"><span>🗂️ Stażysta od poprawek</span><span>🧯 Strażak plików FINAL</span><span>🧘 Mistrz zen po 17 rundach</span></div>
