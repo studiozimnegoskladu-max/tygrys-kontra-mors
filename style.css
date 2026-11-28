@@ -3658,3 +3658,20 @@ html body.view-mors-zone main.shell > section.hero {
 }
 .hangman-scene-caption{z-index:2;background:rgba(255,248,214,.88);border-radius:8px;padding:4px 8px}
 @media(max-width:520px){.hangman-walrus{height:min(76%,175px)!important;max-width:76%!important}}
+
+
+/* Rozdzielenie atrakcji: MORŚCIELEC jest osobnym panelem, nie częścią MORŚCISŁAW CUP. */
+html body.view-soccer .shell > #hangmanPanel,
+html body.view-tictactoe .shell > #hangmanPanel,
+html body.view-fortune .shell > #hangmanPanel,
+html body.view-mors-zone .shell > #hangmanPanel,
+html body.view-hrabia-survival .shell > #hangmanPanel,
+html body:not(.view-hangman) .shell > #hangmanPanel {
+  display:none!important;
+  visibility:hidden!important;
+}
+html body.view-hangman .shell > #hangmanPanel {
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
