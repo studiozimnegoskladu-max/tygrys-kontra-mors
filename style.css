@@ -3524,3 +3524,45 @@ h1,h2,h3,.panel-title h2,.panel-title h3,
     border-radius:12px;
   }
 }
+
+
+/* TRZY DZIAŁY STREFY MORŚCISŁAWA */
+.mors-zone-department{
+  scroll-margin-top:88px;
+  display:flex;align-items:center;gap:14px;
+  width:min(100%,980px);margin:30px auto 14px;padding:15px 18px;
+  border:3px solid var(--ink);border-radius:14px;
+  background:#ffe600;box-shadow:5px 5px 0 var(--ink);
+  position:relative;overflow:hidden;
+}
+.mors-zone-department:after{
+  content:"";position:absolute;right:-35px;top:-45px;width:150px;height:150px;
+  border:16px dotted rgba(23,21,21,.12);border-radius:50%;pointer-events:none;
+}
+.mors-zone-department>span{
+  flex:0 0 48px;height:48px;display:grid;place-items:center;
+  border:3px solid var(--ink);border-radius:10px;
+  background:#ec008c;color:#fff;font:400 25px var(--szs-display-font,'Bangers',Impact,cursive);
+  box-shadow:3px 3px 0 var(--ink);transform:rotate(-5deg);
+}
+.mors-zone-department>div{min-width:0;flex:1}
+.mors-zone-department small{display:block;font-size:9px;font-weight:1000;letter-spacing:1.8px}
+.mors-zone-department h2{
+  margin:1px 0!important;font:400 clamp(26px,4vw,38px) var(--szs-display-font,'Bangers',Impact,cursive)!important;
+  letter-spacing:.06em!important;line-height:1!important;
+}
+.mors-zone-department p{margin:3px 0 0;font-size:12px;font-weight:800;color:#454040}
+.mors-zone-department>b{font-size:34px;flex:0 0 auto}
+#mors-zone-fun{background:#fff0f7}
+#mors-zone-fun>span{background:#12a8d3;color:#171515}
+#mors-zone-competition{background:#eafaff}
+#mors-zone-competition>span{background:#171515;color:#ffe600}
+.mors-zone-nav a{flex:1 1 0;min-width:0}
+@media(max-width:600px){
+  .mors-zone-department{gap:10px;margin:20px auto 10px;padding:12px;border-radius:11px;box-shadow:3px 3px 0 var(--ink)}
+  .mors-zone-department>span{flex-basis:40px;height:40px;font-size:21px}
+  .mors-zone-department h2{font-size:28px!important}
+  .mors-zone-department p{font-size:10px;line-height:1.25}
+  .mors-zone-department>b{font-size:27px}
+  .mors-zone-nav a{flex:1 1 calc(33.333% - 6px)}
+}
