@@ -32,12 +32,23 @@
       scene.dataset.mistakes=String(mistakes);
       const walrus=$('hangmanWalrus');
       const frame=Math.max(0,Math.min(7,mistakes));
-      const frameSrc='assets/mors-'+String(frame).padStart(2,'0')+'.png';
-      if(walrus && !walrus.getAttribute('src')?.endsWith(frameSrc)){
+      // Osobne pozy Morścisława dobrane w logiczną sekwencję reakcji.
+      const reactionFrames=[
+        'assets/mors-08.png',          // 0 — spokojne przywitanie
+        'assets/mors-03.png',          // 1 — zaskoczenie
+        'assets/mors-09.png',          // 2 — irytacja
+        'assets/mors-04.png',          // 3 — złość
+        'assets/mors-13.png',          // 4 — obrażony
+        'assets/mors-10.png',          // 5 — zmartwiony
+        'assets/mors-14.png',          // 6 — załamany
+        'assets/mors-przegrana.png'    // 7 — finałowa reakcja
+      ];
+      const frameSrc=reactionFrames[frame]+'?v=20261128-reaction-sequence';
+      if(walrus && !walrus.getAttribute('src')?.includes(frameSrc)){
         walrus.setAttribute('src',frameSrc);
         walrus.classList.remove('mors-react');void walrus.offsetWidth;walrus.classList.add('mors-react');
       }
-      const captions=['MORŚCISŁAW JESZCZE SPOKOJNY','COŚ TU NIE GRA…','MORŚCISŁAW ZACZYNA SIĘ NIEPOKOIĆ','OCZYWIŚCIE. ZNOWU PUDŁO.','MORS TRACI CIERPLIWOŚĆ','TO JUŻ NIE WYGLĄDA DOBRZE','MORŚCISŁAW WZYWA POMOC','KONIEC. MORS SKŁADA REKLAMACJĘ.'];
+      const captions=['MORŚCISŁAW WITA GRACZA','COŚ TU NIE GRA…','MORŚCISŁAW ZACZYNA SIĘ DENERWOWAĆ','MORS TRACI CIERPLIWOŚĆ','MORŚCISŁAW SIĘ OBRAZIŁ','TO JUŻ NIE WYGLĄDA DOBRZE','MORŚCISŁAW TRACI NADZIEJĘ','KONIEC. MORS SKŁADA REKLAMACJĘ.'];
       $('hangmanSceneCaption').textContent=captions[frame]||captions[0];
     }
     $('hangmanKeyboard').querySelectorAll('button').forEach(btn=>{btn.disabled=finished||used.has(btn.dataset.letter)});
