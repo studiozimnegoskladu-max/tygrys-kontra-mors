@@ -3421,3 +3421,29 @@ h1,h2,h3,.panel-title h2,.panel-title h3,
     touch-action:manipulation;
   }
 }
+
+
+/* PORTRETY MASKOTEK — komiksowe kółka, bez ingerencji w ilustracje */
+.character-option>.character-avatar{
+  display:block!important;
+  width:clamp(76px,9vw,92px)!important;
+  height:clamp(76px,9vw,92px)!important;
+  flex:0 0 auto!important;
+  box-sizing:border-box!important;
+  object-fit:contain!important;
+  padding:3px!important;
+  border:3px solid #171515!important;
+  border-radius:50%!important;
+  background:#ffe600!important;
+  box-shadow:3px 3px 0 #ec008c, inset 0 0 0 2px rgba(255,255,255,.35)!important;
+  filter:none!important;
+}
+.character-option.selected>.character-avatar{
+  box-shadow:3px 3px 0 #171515, 0 0 0 3px #ec008c!important;
+}
+@media(max-width:480px){
+  .character-option>.character-avatar{
+    width:clamp(72px,19vw,88px)!important;
+    height:clamp(72px,19vw,88px)!important;
+  }
+}
