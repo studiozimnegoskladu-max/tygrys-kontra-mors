@@ -3617,3 +3617,11 @@ body.view-tictactoe .hero-art-replacement{
     margin-bottom:8px!important;
   }
 }
+
+
+/* STREFA MORŚCISŁAWA — ukryj nagłówek pojedynku Kółko i Krzyżyk */
+body.view-mors-zone .shell>.hero,
+body.view-mors-zone .shell>.hero-art-replacement,
+body.view-mors-zone .shell>.tictactoe-title-board{
+  display:none!important;
+}
