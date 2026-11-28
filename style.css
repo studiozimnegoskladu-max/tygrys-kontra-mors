@@ -3447,3 +3447,20 @@ h1,h2,h3,.panel-title h2,.panel-title h3,
     height:clamp(72px,19vw,88px)!important;
   }
 }
+
+
+/* CIAŚNIEJSZY KADR PORTRETÓW — większe głowy KOZY i LAMY */
+.character-option>.character-avatar[data-character="goat"]{
+  object-fit:cover!important;
+  object-position:54% 23%!important;
+  transform:scale(1.34)!important;
+  transform-origin:54% 24%!important;
+  overflow:hidden!important;
+}
+.character-option>.character-avatar[data-character="llama"]{
+  object-fit:cover!important;
+  object-position:84% 15%!important;
+  transform:scale(1.55)!important;
+  transform-origin:84% 16%!important;
+  overflow:hidden!important;
+}
