@@ -3717,3 +3717,22 @@ body.view-hangman #setup>#hangmanPanel{
   -webkit-user-select:none;
   overscroll-behavior:contain;
 }
+
+
+/* MORŚCISŁAW CUP — liga, profil i tabela należą do osobnego widoku atrakcji. */
+body:not(.view-soccer) .shell > #morsCupLeague{display:none!important}
+body.view-soccer .shell > #morsCupLeague{
+  display:block!important;
+  width:min(100%,980px)!important;
+  max-width:980px!important;
+  margin:18px auto 28px!important;
+  position:relative;
+  z-index:1;
+}
+@media(max-width:600px){
+  body.view-soccer .shell > #morsCupLeague{
+    width:100%!important;
+    margin:12px auto 20px!important;
+    padding:clamp(12px,3.5vw,18px)!important;
+  }
+}
