@@ -1464,8 +1464,8 @@ body.soccer-fullscreen-open{overflow:hidden}
 .attraction-cta{display:inline-block;margin-top:20px;padding:10px 14px;border:2px solid #24211f;border-radius:9px;background:#fff;font-weight:1000;font-size:.82rem}
 .attractions-footer{text-align:center;font-size:.75rem;font-weight:900;letter-spacing:.08em;margin:28px 0 0;color:#514941}
 .attractions-back{display:none;margin:0 auto 20px}
-body:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone) .shell>.hero,
-body:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone) .shell>#setup{display:none!important}
+body:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone):not(.view-hangman) .shell>.hero,
+body:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone):not(.view-hangman) .shell>#setup{display:none!important}
 body.view-tictactoe .attractions-menu,
 body.view-soccer .attractions-menu,
 body.view-fortune .attractions-menu{display:none!important}
@@ -1513,8 +1513,8 @@ body.view-tictactoe #setup>.mors-journal-featured,body.view-tictactoe #setup>.so
 .attraction-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 .attraction-zone{background:linear-gradient(145deg,#fff4a0 0%,#ffd34d 55%,#ffad63 100%)}
 .attraction-zone .attraction-art{font-size:clamp(4rem,7vw,6rem)}
-body:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone) .shell>.hero,
-body:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone) .shell>#setup{display:none!important}
+body:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone):not(.view-hangman) .shell>.hero,
+body:not(.view-tictactoe):not(.view-soccer):not(.view-fortune):not(.view-mors-zone):not(.view-hangman) .shell>#setup{display:none!important}
 body.view-mors-zone .attractions-menu{display:none!important}
 body.view-mors-zone .attractions-back{display:block}
 body.view-mors-zone .shell>.hero,
@@ -3692,4 +3692,19 @@ body.view-soccer .soccer-hero .soccer-cup-full{
     width:100%!important;
     max-width:100%!important;
   }
+}
+
+
+/* MORŚCIELEC — samodzielny widok gry, bez ukrywania panelu nadrzędnego */
+body.view-hangman .attractions-menu{display:none!important}
+body.view-hangman .attractions-back{display:block!important}
+body.view-hangman .shell>#setup{display:block!important;visibility:visible!important}
+body.view-hangman #setup>:not(#hangmanPanel){display:none!important}
+body.view-hangman #setup>#hangmanPanel{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%;
+  max-width:100%;
+  margin:0 auto;
 }
