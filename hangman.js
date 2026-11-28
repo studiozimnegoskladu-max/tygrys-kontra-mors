@@ -30,10 +30,15 @@
     const scene=$('hangmanScene');
     if(scene){
       scene.dataset.mistakes=String(mistakes);
-      const reveal=Math.max(0,Math.min(100,mistakes/7*100));
-      $('hangmanWalrus').style.setProperty('--walrus-reveal',reveal+'%');
-      const captions=['MORŚCISŁAW JESZCZE SPOKOJNY','POJAWIA SIĘ PODSTAWA','URZĄD BUDUJE KONSTRUKCJĘ','BELKA JUŻ JEST. NIEDOBRZE.','LINA WISI. MORS ZACZYNA SIĘ POCIĆ','MORŚCISŁAW POJAWIA SIĘ NA PLANSZY','CAŁY MORŚCISŁAW! OSTATNIA SZANSA','MORŚCISŁAW WISI NA WŁOSKU!'];
-      $('hangmanSceneCaption').textContent=captions[mistakes]||captions[0];
+      const walrus=$('hangmanWalrus');
+      const frame=Math.max(0,Math.min(7,mistakes));
+      const frameSrc='assets/mors-'+String(frame).padStart(2,'0')+'.png';
+      if(walrus && !walrus.getAttribute('src')?.endsWith(frameSrc)){
+        walrus.setAttribute('src',frameSrc);
+        walrus.classList.remove('mors-react');void walrus.offsetWidth;walrus.classList.add('mors-react');
+      }
+      const captions=['MORŚCISŁAW JESZCZE SPOKOJNY','COŚ TU NIE GRA…','MORŚCISŁAW ZACZYNA SIĘ NIEPOKOIĆ','OCZYWIŚCIE. ZNOWU PUDŁO.','MORS TRACI CIERPLIWOŚĆ','TO JUŻ NIE WYGLĄDA DOBRZE','MORŚCISŁAW WZYWA POMOC','KONIEC. MORS SKŁADA REKLAMACJĘ.'];
+      $('hangmanSceneCaption').textContent=captions[frame]||captions[0];
     }
     $('hangmanKeyboard').querySelectorAll('button').forEach(btn=>{btn.disabled=finished||used.has(btn.dataset.letter)});
     $('hangmanRecord').textContent='TWÓJ REJESTR: '+solved+' ROZWIĄZANYCH HASEŁ';
