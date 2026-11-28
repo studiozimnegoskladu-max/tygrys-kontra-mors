@@ -141,7 +141,7 @@
   const cells=[...document.querySelectorAll('.cell')];
   const TIGER='tiger', MORS='mors';
   const CHARACTER_EMOJI={};
-  const characterAssets={tiger:'assets/hrabia-poprawek-transparent.svg',mors:'assets/mascot-mors.png',goat:'assets/koza-krzycha.jpg',bobr:'assets/mascot-bobr.png',llama:'assets/mascot-lama.png',octopus:'assets/honda-drukara.png'};
+  const characterAssets={tiger:'assets/hrabia-poprawek-transparent.svg',mors:'assets/mascot-mors.png',goat:'assets/koza-krzycha.jpg',bobr:'assets/mascot-bobr.png',llama:'assets/mascot-lama-avatar.svg',octopus:'assets/honda-drukara.png'};
   const characterAssetUrl=character=>characterAssets[character]||characterAssets.mors;
   let selectedCharacter=storage.getItem('tkm_character')||'tiger';if(selectedCharacter==='mole'){selectedCharacter='bobr';storage.setItem('tkm_character','bobr');}
   const characterForMark=mark=>mode==='online'?(mark===role?selectedCharacter:(remoteCharacter|| (mark===TIGER?'tiger':'mors'))):(mark===TIGER?selectedCharacter:'mors');
