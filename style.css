@@ -3464,3 +3464,63 @@ h1,h2,h3,.panel-title h2,.panel-title h3,
   transform-origin:84% 16%!important;
   overflow:hidden!important;
 }
+
+
+/* STREFA MORŚCISŁAWA — czytelny podział na pięć przystanków */
+.mors-zone-nav{
+  position:sticky;top:8px;z-index:8;
+  display:flex;flex-wrap:wrap;justify-content:center;gap:8px;
+  width:min(100%,980px);margin:0 auto 22px;padding:10px;
+  border:2px solid var(--ink);border-radius:14px;
+  background:#fffdf2;box-shadow:4px 4px 0 var(--ink);
+}
+.mors-zone-nav a{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:38px;padding:8px 12px;border:2px solid var(--ink);
+  border-radius:9px;background:#ffe600;color:var(--ink);
+  box-shadow:2px 2px 0 var(--ink);text-decoration:none;
+  font:400 16px var(--szs-display-font,'Bangers','Barlow Condensed',Impact,cursive);
+  letter-spacing:.04em;line-height:1.05;
+}
+.mors-zone-nav a:nth-child(even){background:#fff0f7}
+.mors-zone-nav a:focus-visible{outline:3px solid #12a8d3;outline-offset:3px}
+.mors-zone-drawer>.hrabia-institute,
+.mors-zone-drawer>.fortune-panel,
+.mors-zone-drawer>.quiz-panel,
+.mors-zone-drawer>.mini-arcade,
+.mors-zone-drawer>.morscup-league-panel{
+  width:min(100%,980px)!important;max-width:980px!important;
+  margin:22px auto!important;
+  scroll-margin-top:86px;
+}
+.mors-zone-drawer>.hrabia-institute,
+.mors-zone-drawer>.fortune-panel,
+.mors-zone-drawer>.quiz-panel,
+.mors-zone-drawer>.mini-arcade,
+.mors-zone-drawer>.morscup-league-panel{
+  border-radius:16px;
+}
+.mors-zone-drawer .hrabia-tools-grid,
+.mors-zone-drawer .mini-game-grid{align-items:stretch}
+.mors-zone-drawer .hrabia-tool-card,
+.mors-zone-drawer .mini-game-card{min-width:0;height:100%}
+.mors-zone-drawer .morscup-table-wrap{max-width:100%;min-width:0}
+@media(max-width:600px){
+  .mors-zone-nav{
+    position:relative;top:auto;gap:6px;padding:8px;margin:0 auto 16px;
+    border-radius:11px;box-shadow:3px 3px 0 var(--ink);
+  }
+  .mors-zone-nav a{
+    flex:1 1 calc(33.333% - 6px);min-width:0;
+    padding:8px 5px;font-size:14px;text-align:center;
+  }
+  .mors-zone-drawer>.hrabia-institute,
+  .mors-zone-drawer>.fortune-panel,
+  .mors-zone-drawer>.quiz-panel,
+  .mors-zone-drawer>.mini-arcade,
+  .mors-zone-drawer>.morscup-league-panel{
+    width:100%!important;margin:14px auto!important;
+    padding:clamp(12px,3.5vw,18px)!important;
+    border-radius:12px;
+  }
+}
