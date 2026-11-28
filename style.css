@@ -3736,3 +3736,25 @@ body.view-soccer .shell > #morsCupLeague{
     padding:clamp(12px,3.5vw,18px)!important;
   }
 }
+
+
+/* KOŁO FORTUNY — osobna atrakcja, niezależna od Strefy Morścisława. */
+body:not(.view-fortune) .shell > .fortune-panel{display:none!important}
+body.view-fortune .shell > .fortune-panel{
+  display:block!important;
+  width:min(100%,980px)!important;
+  max-width:980px!important;
+  margin:18px auto 28px!important;
+  position:relative;
+}
+body.view-fortune .shell > #setup{display:none!important}
+body.view-fortune .shell > .hero,
+body.view-fortune .shell > .soccer-hero,
+body.view-fortune .shell > #morsCupLeague{display:none!important}
+@media(max-width:600px){
+  body.view-fortune .shell > .fortune-panel{
+    width:100%!important;
+    margin:12px auto 20px!important;
+    padding:clamp(12px,3.5vw,18px)!important;
+  }
+}
