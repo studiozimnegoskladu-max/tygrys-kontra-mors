@@ -3350,3 +3350,22 @@ h1,h2,h3,.panel-title h2,.panel-title h3,
   letter-spacing:.025em!important;
  }
 }
+
+
+/* NAZWY 6 ATRAKCJI — wyraźne komiksowe logotypy na kafelkach menu */
+.attraction-card>b{
+ display:block!important;width:100%!important;
+ font-family:'Bangers','Barlow Condensed',Impact,cursive!important;
+ font-size:clamp(19px,2.35vw,29px)!important;font-weight:400!important;
+ line-height:.98!important;letter-spacing:.055em!important;text-transform:uppercase!important;
+ color:#171515!important;
+ text-shadow:1.5px 1.5px 0 #fff,3px 3px 0 rgba(23,21,21,.16)!important;
+ transform:rotate(-1.2deg)!important;transform-origin:center!important;
+ margin:7px 0 5px!important;
+}
+.attraction-card:nth-child(2)>b,.attraction-card:nth-child(5)>b{transform:rotate(1.1deg)!important}
+.attraction-card:nth-child(3)>b,.attraction-card:nth-child(6)>b{transform:rotate(-.6deg)!important}
+@media(max-width:760px){
+ .attraction-card>b{font-size:clamp(15px,3vw,21px)!important;letter-spacing:.035em!important;line-height:1!important;text-shadow:1px 1px 0 #fff,2px 2px 0 rgba(23,21,21,.14)!important}
+}
+@media(max-width:380px){.attraction-card>b{font-size:clamp(13px,3.5vw,17px)!important}}
