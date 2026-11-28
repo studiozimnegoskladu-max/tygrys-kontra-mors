@@ -3290,3 +3290,38 @@ body.view-tictactoe .tictactoe-title-board .fighters{
     margin:4px auto 8px!important;
   }
 }
+
+
+/* JEDEN CZYTELNY UKŁAD ATRAKCJI — baner + treść, bez powtarzania tytułów */
+.attraction-feature-banner{
+  display:block!important;width:min(100%,760px)!important;
+  max-width:100%!important;height:auto!important;aspect-ratio:10/3!important;
+  object-fit:contain!important;margin:0 auto 14px!important;
+}
+@media(max-width:600px){
+  .attraction-feature-banner{width:100%!important;margin-bottom:10px!important}
+}
+
+/* PRZETRWAJ HRABIEGO: baner zostaje, powtórzony nagłówek strony znika */
+.hrabia-survival-page>.hrabia-survival-page-head{display:none!important}
+.hrabia-survival-page .hrabia-survival-head h3{display:none!important}
+.hrabia-survival-page .hrabia-survival-head{align-items:center!important}
+.hrabia-survival-page .hrabia-survival-head p{margin-top:4px!important}
+
+/* MORŚCISŁAW CUP: nie pokazuj drugiego, wielkiego banera pod planszą tytułową */
+.soccer-hero .soccer-hero-combo{display:none!important}
+
+/* MORŚCIELEC: bez drugiego tytułu pod planszą atrakcji */
+.hangman-panel>.hangman-heading h2{display:none!important}
+.hangman-panel>.hangman-heading small{display:none!important}
+.hangman-panel>.hangman-heading{margin-top:0!important}
+
+/* KOŁO FORTUNY: plansza tytułowa zastępuje powtarzany nagłówek */
+.fortune-panel>.fortune-heading h2,
+.fortune-panel>.fortune-heading small{display:none!important}
+.fortune-panel>.fortune-heading{margin-top:0!important}
+
+/* STREFA MORŚCISŁAWA: uproszczony nagłówek instytutu pod banerem */
+.mors-zone-drawer>.hrabia-institute .hrabia-institute-head h2,
+.mors-zone-drawer>.hrabia-institute .hrabia-institute-head small{display:none!important}
+.mors-zone-drawer>.hrabia-institute .hrabia-institute-head{margin-top:0!important}
