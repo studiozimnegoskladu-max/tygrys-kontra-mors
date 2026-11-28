@@ -3625,3 +3625,15 @@ body.view-mors-zone .shell>.hero-art-replacement,
 body.view-mors-zone .shell>.tictactoe-title-board{
   display:none!important;
 }
+
+
+/* STREFA MORŚCISŁAWA: ukryj główną planszę Kółko i Krzyżyk */
+html body.view-mors-zone main.shell > section.hero {
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+}
