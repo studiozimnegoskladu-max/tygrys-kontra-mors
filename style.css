@@ -3758,3 +3758,19 @@ body.view-fortune .shell > #morsCupLeague{display:none!important}
     padding:clamp(12px,3.5vw,18px)!important;
   }
 }
+
+/* PORTRETY MASKOTEK — korekta kadru KOZY i LAMY */
+.character-option>.character-avatar[data-character="goat"]{
+  width:80px!important;height:80px!important;flex:0 0 80px!important;
+  transform:none!important;object-fit:contain!important;object-position:center!important;
+  padding:3px!important;
+}
+.character-option>.character-avatar[data-character="llama"]{
+  width:92px!important;height:92px!important;flex:0 0 92px!important;
+  transform:none!important;object-fit:contain!important;object-position:center!important;
+  padding:3px!important;
+}
+@media(max-width:480px){
+  .character-option>.character-avatar[data-character="goat"]{width:76px!important;height:76px!important;flex-basis:76px!important}
+  .character-option>.character-avatar[data-character="llama"]{width:88px!important;height:88px!important;flex-basis:88px!important}
+}
