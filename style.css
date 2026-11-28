@@ -3572,3 +3572,48 @@ h1,h2,h3,.panel-title h2,.panel-title h3,
 .attraction-hrabia .attraction-mascot{
   filter:none!important;
 }
+
+
+/* MNIEJ GRAFICZNEGO TŁOKU — KÓŁKO I KRZYŻYK + STREFA MORŚCISŁAWA */
+body.view-tictactoe .hero-art-replacement>.attraction-feature-banner{
+  width:min(100%,540px)!important;
+  margin:0 auto 10px!important;
+}
+body.view-tictactoe .hero-art-replacement .hero-replacement-art{
+  width:min(82%,500px)!important;
+  max-width:500px!important;
+  margin:0 auto!important;
+}
+body.view-tictactoe .hero-art-replacement{
+  padding-top:4px!important;
+  padding-bottom:8px!important;
+}
+.mors-zone-drawer>.attraction-feature-banner{
+  width:min(100%,760px)!important;
+  margin:12px auto 14px!important;
+}
+.mors-zone-drawer>.mors-zone-nav{
+  margin-bottom:14px!important;
+}
+.mors-zone-drawer .mors-zone-department{
+  margin-top:18px!important;
+  margin-bottom:10px!important;
+}
+@media(max-width:600px){
+  body.view-tictactoe .hero-art-replacement>.attraction-feature-banner{
+    width:min(100%,520px)!important;
+    margin-bottom:8px!important;
+  }
+  body.view-tictactoe .hero-art-replacement .hero-replacement-art{
+    width:86%!important;
+    max-width:440px!important;
+  }
+  .mors-zone-drawer>.attraction-feature-banner{
+    width:100%!important;
+    margin:8px auto 10px!important;
+  }
+  .mors-zone-drawer .mors-zone-department{
+    margin-top:14px!important;
+    margin-bottom:8px!important;
+  }
+}
