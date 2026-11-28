@@ -3252,3 +3252,41 @@ body.view-tictactoe .cell{min-width:0!important;aspect-ratio:1/1!important}
   body.view-tictactoe .board-wrap{width:min(100%,calc(100vw - 52px))!important}
   .attraction-feature-banner{width:100%!important;max-width:100%!important;height:auto!important}
 }
+
+
+/* KÓŁKO I KRZYŻYK — mniej powtórzeń, szybszy dostęp do gry */
+body.view-tictactoe .hero-art-replacement{
+  padding-top:8px!important;padding-bottom:12px!important;
+}
+body.view-tictactoe .hero-art-replacement>.attraction-feature-banner{
+  width:min(100%,620px)!important;
+  max-width:100%!important;
+  margin:0 auto 14px!important;
+}
+body.view-tictactoe .tictactoe-title-board{
+  display:block!important;
+  margin:0 auto!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+body.view-tictactoe .tictactoe-title-board>.eyebrow,
+body.view-tictactoe .tictactoe-title-board>h1,
+body.view-tictactoe .tictactoe-title-board>.lead{
+  display:none!important;
+}
+body.view-tictactoe .hero-replacement-art{
+  display:none!important;
+}
+body.view-tictactoe .tictactoe-title-board .fighters{
+  margin:8px auto 12px!important;
+}
+@media(max-width:600px){
+  body.view-tictactoe .hero-art-replacement>.attraction-feature-banner{
+    width:100%!important;margin-bottom:10px!important;
+  }
+  body.view-tictactoe .tictactoe-title-board .fighters{
+    margin:4px auto 8px!important;
+  }
+}
