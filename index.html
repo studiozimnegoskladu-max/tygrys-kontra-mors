@@ -120,6 +120,24 @@
 
     <section class="soccer-hero" aria-label="Morścisław na boisku"><img class="attraction-feature-banner" src="assets/plansza-atrakcja-cup.svg?v=20261128" alt="Morścisław Cup — puchar, chwała i śliska sprawa."><div class="soccer-hero-combo"><img class="soccer-cup-full" src="assets/mors%20pi%C5%82karzyki%20baner%20g%C5%82%C3%B3wny.png?v=20261119-user-uploaded-main-banner" alt="Morścisław Cup — oryginalny baner turnieju"></div></section>
 
+    <section class="morscup-league-panel" id="morsCupLeague" aria-labelledby="morsCupLeagueTitle">
+        <div class="morscup-league-heading"><div><small>OFICJALNE ROZGRYWKI STUDIA ZIMNEGO SKŁADU</small><h2 id="morsCupLeagueTitle">🏆 MORŚCISŁAW CUP — LIGA ABSURDU</h2><p>Załóż profil, zgłoś się do rozgrywek i sprawdź, kto rządzi na papierowym boisku.</p></div><div class="morscup-league-stamp">MORŚCISŁAW<br>CUP<br>★</div></div>
+        <div class="morscup-profile">
+          <div><b>TWÓJ ZAWODNIK</b><small>Profil zapisujemy pod pseudonimem na tym urządzeniu.</small></div>
+          <label for="morsCupNickname">PSEUDONIM</label><input id="morsCupNickname" maxlength="18" autocomplete="nickname" placeholder="np. Płetwa Lewa">
+          <label for="morsCupMascot">MASKOTKA</label><select id="morsCupMascot"><option value="mors">Morścisław</option><option value="tiger">Hrabia Poprawek</option><option value="goat">KOZA</option><option value="bobr">Bóbr</option><option value="llama">Lama Drama</option><option value="octopus">Honda Drukara</option></select>
+          <button type="button" class="btn btn-yellow" id="morsCupSaveProfile">ZAPISZ PROFIL ↗</button>
+          <p id="morsCupProfileStatus" class="morscup-feedback" aria-live="polite">Uzupełnij pseudonim i dołącz do ligi.</p>
+        </div>
+        <div class="morscup-season"><small>AKTYWNY SEZON</small><strong id="morsCupSeasonName">Ładowanie sezonu…</strong><span id="morsCupSeasonStatus">Sprawdzam rozgrywki w bazie Morścisława.</span></div>
+        <div class="morscup-table-wrap"><div class="morscup-subheading"><h3>📋 TABELA LIGOWA</h3><button type="button" class="btn btn-outline" id="morsCupRefresh">ODŚWIEŻ ↻</button></div>
+          <div class="morscup-table-scroll"><table class="morscup-table"><thead><tr><th>#</th><th>ZAWODNIK</th><th>MECZE</th><th>W</th><th>R</th><th>P</th><th>PKT</th></tr></thead><tbody id="morsCupStandings"><tr><td colspan="7">Tabela czeka na pierwszych zawodników.</td></tr></tbody></table></div>
+          <p class="morscup-footnote">W = wygrane · R = remisy · P = porażki · 3 pkt za wygraną, 1 pkt za remis.</p>
+        </div>
+        <div class="morscup-tournaments"><div class="morscup-subheading"><h3>🎟️ TURNIEJE OTWARTE</h3></div><div id="morsCupTournamentList" class="morscup-tournament-list"><p>Sprawdzam, czy Morścisław już coś organizuje…</p></div></div>
+      </section>
+
+
     <section id="setup" class="panel setup-panel">
       <div class="panel-title"><span class="scribble">01</span><div><h2>ZRÓBMY POKÓJ</h2><p>Jedna osoba zakłada grę, druga dołącza jednym kliknięciem w link.</p></div></div>
       <section class="character-picker"><div class="character-heading"><b>WYBIERZ SWOJĄ MASKOTKĘ</b><small>Kim dziś wchodzisz na arenę?</small></div><div class="character-grid"><label class="character-option selected"><input type="radio" name="character" value="tiger" checked><img class="character-avatar" data-character="tiger" src="assets/hrabia-poprawek-transparent.svg" alt="Hrabia Poprawek"><b>Hrabia Poprawek</b><small>Władca drobnych korekt</small></label><label class="character-option"><input type="radio" name="character" value="mors"><img class="character-avatar" data-character="mors" src="assets/mascot-mors.png" alt="Morścisław"><b>Morścisław</b><small>Pan lodowiska</small></label><label class="character-option"><input type="radio" name="character" value="goat"><img class="character-avatar" data-character="goat" src="assets/koza-krzycha.jpg" alt="KOZA"><b>KOZA</b><small>Skacze po nakładzie</small></label><label class="character-option"><input type="radio" name="character" value="octopus"><img class="character-avatar" data-character="octopus" src="assets/honda-drukara.png?v=20261115-original-color" alt="Honda Drukara"><b>Honda Drukara</b><small>Wjeżdża bez zapowiedzi</small></label><label class="character-option"><input type="radio" name="character" value="bobr"><img class="character-avatar" data-character="bobr" src="assets/mascot-bobr.png" alt="Bóbr"><b>Bóbr</b><small>Buduje tamy z poprawek</small></label><label class="character-option"><input type="radio" name="character" value="llama"><img class="character-avatar" data-character="llama" src="assets/mascot-lama.png" alt="Lama Drama"><b>Lama Drama</b><small>Pluje na błędy</small></label></div><p class="character-note">Wybór zapamięta się na tym urządzeniu. W grze online przeciwnik zobaczy Twoją maskotkę na swojej planszy.</p></section>
@@ -367,24 +385,7 @@
             </div>
                       </article>
         </div>
-                  <div class="morscup-league-divider"></div>
-      <div class="mors-zone-department" id="mors-zone-competition"><span>03</span><div><small>DZIAŁ III</small><h2>RYWALIZACJA</h2><p>Profile, liga, wyniki i miejsce na sportową dumę.</p></div><b>🏆</b></div>
-       <section class="morscup-league-panel" id="morsCupLeague" aria-labelledby="morsCupLeagueTitle">
-        <div class="morscup-league-heading"><div><small>OFICJALNE ROZGRYWKI STUDIA ZIMNEGO SKŁADU</small><h2 id="morsCupLeagueTitle">🏆 MORŚCISŁAW CUP — LIGA ABSURDU</h2><p>Załóż profil, zgłoś się do rozgrywek i sprawdź, kto rządzi na papierowym boisku.</p></div><div class="morscup-league-stamp">MORŚCISŁAW<br>CUP<br>★</div></div>
-        <div class="morscup-profile">
-          <div><b>TWÓJ ZAWODNIK</b><small>Profil zapisujemy pod pseudonimem na tym urządzeniu.</small></div>
-          <label for="morsCupNickname">PSEUDONIM</label><input id="morsCupNickname" maxlength="18" autocomplete="nickname" placeholder="np. Płetwa Lewa">
-          <label for="morsCupMascot">MASKOTKA</label><select id="morsCupMascot"><option value="mors">Morścisław</option><option value="tiger">Hrabia Poprawek</option><option value="goat">KOZA</option><option value="bobr">Bóbr</option><option value="llama">Lama Drama</option><option value="octopus">Honda Drukara</option></select>
-          <button type="button" class="btn btn-yellow" id="morsCupSaveProfile">ZAPISZ PROFIL ↗</button>
-          <p id="morsCupProfileStatus" class="morscup-feedback" aria-live="polite">Uzupełnij pseudonim i dołącz do ligi.</p>
-        </div>
-        <div class="morscup-season"><small>AKTYWNY SEZON</small><strong id="morsCupSeasonName">Ładowanie sezonu…</strong><span id="morsCupSeasonStatus">Sprawdzam rozgrywki w bazie Morścisława.</span></div>
-        <div class="morscup-table-wrap"><div class="morscup-subheading"><h3>📋 TABELA LIGOWA</h3><button type="button" class="btn btn-outline" id="morsCupRefresh">ODŚWIEŻ ↻</button></div>
-          <div class="morscup-table-scroll"><table class="morscup-table"><thead><tr><th>#</th><th>ZAWODNIK</th><th>MECZE</th><th>W</th><th>R</th><th>P</th><th>PKT</th></tr></thead><tbody id="morsCupStandings"><tr><td colspan="7">Tabela czeka na pierwszych zawodników.</td></tr></tbody></table></div>
-          <p class="morscup-footnote">W = wygrane · R = remisy · P = porażki · 3 pkt za wygraną, 1 pkt za remis.</p>
-        </div>
-        <div class="morscup-tournaments"><div class="morscup-subheading"><h3>🎟️ TURNIEJE OTWARTE</h3></div><div id="morsCupTournamentList" class="morscup-tournament-list"><p>Sprawdzam, czy Morścisław już coś organizuje…</p></div></div>
-      </section>
+
 
 
       </section></details>
