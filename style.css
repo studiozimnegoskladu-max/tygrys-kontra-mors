@@ -3213,3 +3213,42 @@ body.view-hrabia-survival .hrabia-survival-page{display:block!important}
  .attraction-feature-banner{width:100%!important;aspect-ratio:10/4!important;margin-bottom:14px!important;border-radius:8px!important}
  .mors-zone-drawer>.attraction-feature-banner{padding:0 6px!important}
 }
+
+
+/* RESPONSYWNE SKALOWANIE GRAFIK I PLANSZY — TELEFONY */
+*,*::before,*::after{box-sizing:border-box}
+html,body{max-width:100%;overflow-x:hidden}
+body{min-width:0}
+.shell,#setup,.panel,.hero,.game-panel,.soccer-hero,.fortune-panel,
+.hrabia-survival-page,.hangman-panel,.mors-zone-drawer{
+  min-width:0!important;max-width:100%!important;
+}
+.shell img,.panel img,.hero img,.game-panel img,
+.soccer-hero img,.fortune-panel img,.hrabia-survival-page img,
+.hangman-panel img,.mors-zone-drawer img{
+  max-width:100%;height:auto;
+}
+body.view-tictactoe .hero-art-replacement{
+  width:100%!important;max-width:100%!important;min-width:0!important;
+  overflow:hidden!important;padding-left:clamp(6px,2vw,16px)!important;
+  padding-right:clamp(6px,2vw,16px)!important;
+}
+body.view-tictactoe .hero-replacement-art{
+  display:block!important;width:min(100%,620px)!important;
+  max-width:100%!important;height:auto!important;object-fit:contain!important;
+  margin:0 auto!important;
+}
+body.view-tictactoe .board-wrap{
+  width:min(100%,390px)!important;max-width:100%!important;
+  min-width:0!important;margin-left:auto!important;margin-right:auto!important;
+}
+body.view-tictactoe .board{
+  width:100%!important;min-width:0!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+}
+body.view-tictactoe .cell{min-width:0!important;aspect-ratio:1/1!important}
+@media(max-width:600px){
+  body.view-tictactoe .hero-replacement-art{width:100%!important;max-width:100%!important}
+  body.view-tictactoe .board-wrap{width:min(100%,calc(100vw - 52px))!important}
+  .attraction-feature-banner{width:100%!important;max-width:100%!important;height:auto!important}
+}
