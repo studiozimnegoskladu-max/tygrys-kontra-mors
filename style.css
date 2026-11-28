@@ -3566,3 +3566,9 @@ h1,h2,h3,.panel-title h2,.panel-title h3,
   .mors-zone-department>b{font-size:27px}
   .mors-zone-nav a{flex:1 1 calc(33.333% - 6px)}
 }
+
+
+/* KAFEL PRZETRWAJ HRABIEGO — bez cienia za ilustracją Morścisława i Hrabiego */
+.attraction-hrabia .attraction-mascot{
+  filter:none!important;
+}
