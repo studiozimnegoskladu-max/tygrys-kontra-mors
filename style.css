@@ -3325,3 +3325,28 @@ body.view-tictactoe .tictactoe-title-board .fighters{
 .mors-zone-drawer>.hrabia-institute .hrabia-institute-head h2,
 .mors-zone-drawer>.hrabia-institute .hrabia-institute-head small{display:none!important}
 .mors-zone-drawer>.hrabia-institute .hrabia-institute-head{margin-top:0!important}
+
+
+/* KOMIKSOWA TYPOGRAFIA SZS — Bangers na nagłówki, czytelny krój w opisach */
+:root{--szs-display-font:'Bangers','Barlow Condensed',Impact,cursive}
+h1,h2,h3,.panel-title h2,.panel-title h3,
+.attraction-card>b,.attractions-intro h1,
+.hrabia-survival-page-head h1,.hangman-heading h2,
+.fortune-heading h2,.hrabia-institute-head h2,
+.character-heading>b{
+  font-family:var(--szs-display-font)!important;
+  font-weight:400!important;letter-spacing:.045em!important;line-height:1.02!important;
+}
+.attraction-card>b,.panel-title h2,.panel-title h3,
+.hangman-heading h2,.fortune-heading h2,.hrabia-survival-page-head h1{
+  text-shadow:1px 1px 0 rgba(255,255,255,.8),2px 2px 0 rgba(23,21,21,.12);
+}
+.btn,.attraction-cta,.attractions-back,.hrabia-category-label,.turn-banner{
+  font-family:var(--szs-display-font)!important;
+  font-weight:400!important;letter-spacing:.045em!important;
+}
+@media(max-width:600px){
+ h1,h2,h3,.panel-title h2,.panel-title h3,.attraction-card>b{
+  letter-spacing:.025em!important;
+ }
+}
