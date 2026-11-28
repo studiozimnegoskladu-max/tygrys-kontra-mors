@@ -3393,3 +3393,31 @@ h1,h2,h3,.panel-title h2,.panel-title h3,
     overflow-wrap:anywhere!important;
   }
 }
+
+
+/* DOTYKOWE EKRANY — wygodniejsze pola klikania w minigrach */
+@media(max-width:650px){
+  .hangman-keyboard button{
+    min-height:42px!important;
+    font-size:15px!important;
+    touch-action:manipulation;
+  }
+  .hrabia-survival .hrabia-answers .btn{
+    min-height:48px!important;
+    padding:12px 13px!important;
+    line-height:1.25!important;
+  }
+  .soccer-game .soccer-play:not(.hidden) .soccer-actions .btn,
+  body.soccer-fullscreen-open .soccer-game .soccer-play:not(.hidden) .soccer-actions .btn{
+    min-height:42px!important;
+    padding:8px 7px!important;
+    font-size:12px!important;
+    line-height:1.15!important;
+    touch-action:manipulation;
+  }
+  .fortune-panel .btn,
+  .hangman-actions .btn{
+    min-height:44px!important;
+    touch-action:manipulation;
+  }
+}
