@@ -3196,3 +3196,20 @@ body.view-hrabia-survival .hrabia-survival-page{display:block!important}
  .attraction-card>small{font-size:8px!important}
  .attraction-cta{font-size:8px!important}
 }
+
+/* BANERY GRAFICZNE WEWNĄTRZ WŁAŚCIWYCH ATRAKCJI */
+.attraction-feature-banner{
+ display:block!important;width:min(100%,1180px)!important;height:auto!important;
+ aspect-ratio:10/3!important;object-fit:contain!important;
+ margin:0 auto 22px!important;border:0!important;border-radius:12px!important;
+ box-shadow:none!important;
+}
+.hrabia-survival-page>.attraction-feature-banner{margin-bottom:20px!important}
+.hangman-panel>.attraction-feature-banner,
+.fortune-panel>.attraction-feature-banner{margin-bottom:20px!important}
+.mors-zone-drawer>.attraction-feature-banner{margin:18px auto 24px!important;padding:0 12px!important;box-sizing:border-box!important}
+.soccer-hero>.attraction-feature-banner{margin-bottom:18px!important}
+@media(max-width:600px){
+ .attraction-feature-banner{width:100%!important;aspect-ratio:10/4!important;margin-bottom:14px!important;border-radius:8px!important}
+ .mors-zone-drawer>.attraction-feature-banner{padding:0 6px!important}
+}
